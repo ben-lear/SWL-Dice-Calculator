@@ -11,19 +11,15 @@ Ion X keyword updated.
 
 - Mobile keyword updated.
 
-11.11. 2 025
+11.11.2025
 
 - My Mood Is Based On Profit keyword added
 
 - Doctrine upgrade added.
 
-- Upgrading and Downgrading Dice section to the attack
+- Upgrading and Downgrading Dice section to the attack sequence added.
 
-sequence added.
-
-- Anti-Materiel X, Anti-Personnel X, COMMAND Vehicle X
-
-and Mobile keywords added.
+- Anti-Material X, Anti-Personnel X, Command Vehicle X and Mobile keywords added.
 
 - Cumbersome keyword updated.
 
@@ -31,15 +27,15 @@ and Mobile keywords added.
 
 - My Mood Is Based On Profit keyword added
 
-04. 30.2025
+04.30.2025
 
 - Area terrain section updated
 
-- Building a COMMAND Hand section updated
+- Building a Command Hand section updated
 
-- DETERMINE Blue Player section updated -
+- Determine Blue Player section updated -
 
-Select and Play COMMAND Cards section updated
+Select and Play Command Cards section updated
 
 - Nominate Commanders and Issue Orders section updated -
 
@@ -69,7 +65,7 @@ Shien Mastery keyword added
 
 Small keyord updated 62
 
-LEG A CYTOK ENS
+LEGACY TOKENS
 
 Observation Token
 
@@ -77,11 +73,11 @@ Smoke Token
 
 Standby Token
 
-Suppression TOKENS
+Suppression Tokens
 
 Panic Token
 
-Condition TOKENS
+Condition Tokens
 
 Aim Token
 
@@ -89,7 +85,7 @@ Dodge Token
 
 Surge Token
 
-Objective TOKENS
+Objective Tokens
 
 Ion Token
 
@@ -99,20 +95,20 @@ Immobilize Token
 
 Operative Marker Token
 
-Order TOKENS
+Order Tokens
 
-Vehicle Damage TOKENS
+Vehicle Damage Tokens
 
-Active and Inactive Shield TOKENS
+Active and Inactive Shield Tokens
 
-Charge TOKENS
+Charge Tokens
 
 Commander Token
 
-Wound TOKENS
+Wound Tokens
 
-Red and Blue Graffiti TOKENS
+Red and Blue Graffiti Tokens
 
-Bane TOKENS
+Bane Tokens
 
 LINE OF SIGH TSILHOUE TTET EMPLAT ES

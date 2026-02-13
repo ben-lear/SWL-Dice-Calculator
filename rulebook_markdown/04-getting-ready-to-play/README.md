@@ -1,12 +1,10 @@
 # GETTING READY TO PLAY
 
-GETTING READY TO
-PLAY
+GETTING READY TO PLAY
 
 SETUP
 
-The process of getting ready to play a game of Star Wars: Legion is called Setup. Setup consists of the
-following steps:
+The process of getting ready to play a game of Star Wars: Legion is called Setup. Setup consists of the following steps:
 
 1.
 
@@ -32,13 +30,11 @@ Build a Mission
 
 8. Deploy in Prepared Positions
 
-BUILD AN ARMY, A C OMMAND HAND,
-AND A BATTLE DECK
+BUILD AN ARMY, A C OMMAND HAND, AND A BATTLE DECK
 
 Before the game begins, each player builds an army using the Star Wars: Legion miniatures in their collections. In addition to their miniatures, each player prepares a COMMAND Hand, a Battle Deck, and the Unit and Upgrade Cards containing the rules for their units.
 
-FACTIONS, LIGHT SIDE, AND
-DARK SIDE
+FACTIONS, LIGHT SIDE, AND DARK SIDE
 
 Units in Star Wars: Legion are grouped together in Factions:
 the Galactic Empire (Empire t), the Rebel Alliance (Rebel s), the Separatist Alliance (Separatist v), and the Galactic Republic (Republic u). A unit's Faction is shown by the Faction icon printed in the top left corner of its Unit Card. All units in an army must share the same Faction, unless otherwise specified by a special rule.
@@ -52,8 +48,7 @@ Each army is made up of a collection of miniatures organized into units. These u
 RANK S AND RANK
 REQUIREMENTS
 
-Each unit in Star Wars: Legion has a Rank. When building an army, a player is restricted on the number of units of each Rank
-they may include as follows:
+Each unit in Star Wars: Legion has a Rank. When building an army, a player is restricted on the number of units of each Rank they may include as follows:
 
 Operative: Each army may include up to 2 Operative units.
 
@@ -73,8 +68,7 @@ UPGRADE CARDS
 
 Upgrade Cards contain additional rules that can be equipped by units during Army Building. Upgrades vary between additional miniatures, weapons, equipment, or even special training or programming.
 
-The types of upgrades available for a unit to equip are shown on
-the unit's upgrade bar. The types of upgrades are as follows:
+The types of upgrades available for a unit to equip are shown on the unit's upgrade bar. The types of upgrades are as follows:
 
        
 
@@ -159,9 +153,7 @@ FORCE UPGRAD E
 CARDS
 If a unit has a  Upgrade Card equipped, measure the Range of any effects on the card from the unit's unit leader.
 
-BUILD ING ACOMMAND H AND
-
-Each player prepares a COMMAND hand of exactly seven COMMAND Cards. A player must include two 1 pip cards, two 2 pip cards, and two 3 pip cards, with no duplicates. Additionally, players must always include the 4 pip card "Standing Orders."
+BUILD ING ACOMMAND H AND Each player prepares a COMMAND hand of exactly seven COMMAND Cards. A player must include two 1 pip cards, two 2 pip cards, and two 3 pip cards, with no duplicates. Additionally, players must always include the 4 pip card "Standing Orders."
 
 Some COMMAND Cards require certain units, subtitles, Factions, or Battle Forces. These restrictions are printed on the COMMAND Card. The required unit must be in a player's army for these COMMAND Cards to be included in a COMMAND Hand. If a restriction mentions multiple units, at least 1 of the named units must be included in a player's army if they are referenced with "or", and all of the characters must be included in a player's army if they are referenced with "and".
 
@@ -197,37 +189,25 @@ BUI LDING A MISSION
 
 Now that the blue player is determined, it is time to build the mission. Place the game dashboard with the mission side face up near the table. Then each player separates their Battle Deck by type-Advantage, Objective, and SECONDARY OBJECTIVEand shuffles each of their three decks, placing them near the Mission Dashboard.
 
-Place a token on the Mission Dashboard to indicate which player is the blue player. The blue player then chooses to reveal the top card of either their Objective Deck or Secondary Objective Deck, placing the revealed card in the designated
+Place a token on the Mission Dashboard to indicate which player is the blue player. The blue player then chooses to reveal the top card of either their Objective Deck or Secondary Objective Deck, placing the revealed card in the designated space on the Mission Dashboard. Their opponent reveals the top card of either their Objective Deck or SECONDARY OBJECTIVE Deck, whichever was not already placed, and places it on the designated space on the Mission Dashboard. Then each player reveals the top card of their Advantage Deck and places it on the designated space on their side of the dashboard.
 
-space on the Mission Dashboard. Their opponent reveals the top card of either their Objective Deck or SECONDARY OBJECTIVE Deck, whichever was not already placed, and places it on the designated space on the Mission Dashboard. Then each player reveals the top card of their Advantage Deck and places it on the designated space on their side of the dashboard.
+Then, starting with the blue player, players alternate modifying the mission. A player can modify the mission in the following ways:
 
-Then, starting with the blue player, players alternate modifying the mission. A player can modify the mission in the
-following ways:
+- Reveal the top card of your Objective Deck, discard the current card on the Objective space of the Mission Dashboard, and replace it with the newly revealed Objective Card.
 
-- Reveal the top card of your Objective Deck, discard
-
-the current card on the Objective space of the Mission Dashboard, and replace it with the newly revealed Objective Card.
-
-- Reveal the top card of your SECONDARY OBJECTIVE Deck,
-
-discard the current card on the SECONDARY OBJECTIVE space of the Mission Dashboard, and replace it with the newly revealed SECONDARY OBJECTIVE Card.
+- Reveal the top card of your SECONDARY OBJECTIVE Deck, discard the current card on the SECONDARY OBJECTIVE space of the Mission Dashboard, and replace it with the newly revealed SECONDARY OBJECTIVE Card.
 
 - Reveal the top card of your Advantage Deck, discard the current card on your Advantage space on the Mission Dashboard, and replace it with the newly revealed Advantage Card.
 
 - Your opponent reveals the top card of their Advantage Deck, discards the current card on their Advantage space on the Mission Dashboard, and replaces it with the newly revealed Advantage Card.
 
-- Move the token indicating the blue player to your side of the
-
-Dashboard. You are now the blue player.
+- Move the token indicating the blue player to your side of the Dashboard. You are now the blue player.
 
 - Pass. There is no effect.
 
-After each player has modified the mission twice, the mission is built. Before the first round, the players set up the mission in
-the following order:
+After each player has modified the mission twice, the mission is built. Before the first round, the players set up the mission in the following order:
 
-1. The blue player chooses one of the long edges of the
-
-battlefield as their side. The red player gets the opposite side. The player Territory that shares an edge with a player's side is that player's allied Territory and the other player's Territory is enemy Territory.
+1. The blue player chooses one of the long edges of the battlefield as their side. The red player gets the opposite side. The player Territory that shares an edge with a player's side is that player's allied Territory and the other player's Territory is enemy Territory.
 
 2. Follow any setup instructions on the Objective Card.
 
@@ -235,9 +215,7 @@ battlefield as their side. The red player gets the opposite side. The player Ter
 
 Objective Card.
 
-4. Starting with the blue player, each player follows any setup
-
-instructions on their Advantage Card.
+4. Starting with the blue player, each player follows any setup instructions on their Advantage Card.
 
 EMPTY DECKS
 
@@ -269,42 +247,29 @@ PLACING OBJECTIVE S
 
 TYPES OF OBJECTIVE TOKENS
 
-Objective TOKENS must meet the following conditions when they
-are placed:
+Objective TOKENS must meet the following conditions when they are placed:
 
 There are two types of Objective TOKENS:
 
-1. Asset TOKENS: Assets are valuable OBJECTS that can be
-
-carried around.
+1. Asset TOKENS: Assets are valuable OBJECTS that can be carried around.
 
 2. Point-of-Interest TOKENS: Also referred to as POIs. POIs represent critical locations, vantage points, or particularly interesting areas that armies attempt to Secure throughout a battle.
 
 - When determining the number of obscured miniatures and determining Cover during an attack sequence, treat POIs as a piece of area terrain consisting of the volume of their Silhouette that provides heavy Cover. The Silhouette for a POI is a cylinder as wide as the token and 7 tall. For all other rules purposes, POIs do not block LOS.
 
-- Objective TOKENS cannot be placed overlapping
+- Objective TOKENS cannot be placed overlapping impassable terrain.
 
-impassable terrain.
+- Objective TOKENS cannot be placed partially overlapping a non-area terrain feature.
 
-- Objective TOKENS cannot be placed partially overlapping a
-
-non-area terrain feature.
-
-- Objective TOKENS cannot be placed overlapping obstacle
-
-terrain that is height 2 or greater.
+- Objective TOKENS cannot be placed overlapping obstacle terrain that is height 2 or greater.
 
 During Setup, if an Objective token should be placed at a position where the above conditions are not met, players must adjust terrain placement in a mutually agreeable manner so that the conditions are met. After Setup, if an Objective token must be placed and there is not a position in Range where the above conditions are met, that token is placed in the closest position that meets the above conditions instead.
 
-- Miniatures, Advantage TOKENS, and other Objective TOKENS
-
-cannot overlap or be overlapped by POIs.
+- Miniatures, Advantage TOKENS, and other Objective TOKENS cannot overlap or be overlapped by POIs.
 
 WINNING THE GAME
 
-- POIs can be represented by a miniature on a 2-inch base
-
-instead of using a token. A POI represented by a miniature still counts as a token and does not count as a miniature for all rules purposes.
+- POIs can be represented by a miniature on a 2-inch base instead of using a token. A POI represented by a miniature still counts as a token and does not count as a miniature for all rules purposes.
 
 CON TESTING OBJECTIVE
 TOKENS
@@ -314,10 +279,7 @@ A unit is Contesting an Objective token if its unit leader is within 7 of the Ob
 CLAIM ING A SSET OBJECT IVE
 TOKENS
 
-Battle Cards describe which units are eligible to claim Asset TOKENS in that mission by granting them a Claim free action. An
-
-Each game of Star Wars: Legion ends when one of the following
-conditions has been met:
+Battle Cards describe which units are eligible to claim Asset TOKENS in that mission by granting them a Claim free action. An Each game of Star Wars: Legion ends when one of the following conditions has been met:
 -
 
 If, at the end of the End Phase of any Round, a player has 12 or more Victory Points (VPs) and has more VPs than each opponent, they win the game.

@@ -1,106 +1,42 @@
-# COMPONENTS
+﻿# COMPONENTS
 
+Legacy Tokens can be found on Page 63
 
-Legacy TOKENS can be found on Page 63
-
-- L S Hero of the Rebellion trooper
-
-© LFL © A
-
-MG
-
-r t i s
-
-A
-
-t N
-
-a
-
-m
-
-e H
-
-r e
-
-e
-
-Unit Card
-
-Counterpart Card
-
-Dice
-
-© LFL © A
-
-MG
-
-Upgrade Card
-
-COMMAND Card
-
-Map Card
-
-Movement Tools
-
-Objective Card
-
-SECONDARY OBJECTIVE Card
-
-Advantage Card
-
-Range Rulers
-
-Observation Token
-
-Smoke Token
-
-Incognito Token
-
-Suppression TOKENS
-
-Advantage Token
-
-Asset Token
-
-Round Tracker Token
-
-Standby Token
-
-Vehicle Damage Token
-
-Panic Token
-
-Aim Token
-
-Dodge Token
-
-Surge Token
-
-Order TOKENS
-
-Objective TOKENS
-
-Commander TOKENS
-
-Charge TOKENS
-
-Active and Inactive Shield TOKENS
-
-Red and Blue Graﬃti TOKENS
-
-Player Marker
-TOKENS
-
-Score Tracker
-TOKENS
-
-Ion Token
-
-Poison Token
-
-Immobilize Token
-
-Wound TOKENS
-
-Bane TOKENS
+- Luke Skywalker Hero of the Rebellion trooper
+- Unit Card
+- Counterpart Card
+- Dice
+- Upgrade Card
+- Command Card
+- Map Card
+- Movement Tools
+- Objective Card
+- Secondary Objective Card
+- Advantage Card
+- Range Rulers
+- Observation Token
+- Smoke Token
+- Incognito Token
+- Suppression Tokens
+- Advantage Token
+- Asset Token
+- Round Tracker Token
+- Standby Token
+- Vehicle Damage Token
+- Panic Token
+- Aim Token
+- Dodge Token
+- Surge Token
+- Order Tokens
+- Objective Tokens
+- Commander Tokens
+- Charge Tokens
+- Active and Inactive Shield Tokens
+- Red and Blue Graffiti Tokens
+- Player Marker Tokens
+- Score Tracker Tokens
+- Ion Token
+- Poison Token
+- Immobilize Token
+- Wound Tokens
+- Bane Tokens
