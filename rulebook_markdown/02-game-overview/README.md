@@ -1,0 +1,4 @@
+# GAME OVERVIEW
+
+
+In Star Wars™: Legion, players build, paint, and COMMAND entire armies from the various factions of the Star Wars galaxy. Each of these characters is represented on the tabletop by a highly detailed hobby miniature. Before the game, players assemble and paint their miniatures to create an army of Star Wars characters that is truly their own. Each miniature brings with it a host of rules and abilities for players to use in order to complete their mission and achieve victory.
