@@ -35,18 +35,26 @@ The app is a Progressive Web App that can be installed on any device:
 - Deploy `dist/` folder to any static hosting (Vercel, Netlify, GitHub Pages)
 - Users can install it to their home screen for offline access
 
-### Desktop Executable
-The app can be packaged as a native desktop application using **Tauri**:
-- See [DESKTOP_DEPLOYMENT.md](DESKTOP_DEPLOYMENT.md) for full setup instructions
-- Produces ~3-5 MB executables for Windows, macOS, and Linux
-- Uses system webview (no Chromium bundling)
+### Desktop Executable ✨ CONFIGURED
+The app is **ready to build** as a native desktop application using Tauri!
 
-Quick setup:
+**To run the desktop app:**
+1. Install Rust: `winget install Rustlang.Rustup`
+2. Run: `npm run tauri:dev`
+
+**To build executables:**
 ```bash
-npm install -D @tauri-apps/cli
-npx tauri init
-npm run tauri:dev
+npm run tauri:build
 ```
+
+See [TAURI_QUICKSTART.md](TAURI_QUICKSTART.md) for detailed instructions.
+
+Key features:
+- ✅ Already configured and ready to use
+- 📦 ~3-5 MB executables (not 100+ MB!)
+- 🚀 Fast startup, low memory usage
+- 💻 Windows, macOS, and Linux support
+- 🔄 Same codebase as web app (zero extra code)
 
 ## 🧪 Testing
 
