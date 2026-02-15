@@ -326,3 +326,74 @@ export interface RolledDefenseDie {
   color: DefenseDieColor;
   face: DefenseFace;
 }
+
+// ============================================================================
+// Simulation Results
+// ============================================================================
+
+/**
+ * Distribution entry: maps a wound count to its probability.
+ */
+export interface DistributionEntry {
+  wounds: number;         // X wounds
+  count: number;          // Number of iterations that produced exactly X wounds
+  probability: number;    // count / totalIterations (0–1)
+  cumulative: number;     // P(≥ X wounds) (0–1)
+}
+
+/**
+ * Core statistical summary for a set of simulation results.
+ */
+export interface StatsSummary {
+  mean: number;
+  median: number;
+  mode: number;
+  min: number;
+  max: number;
+  standardDeviation: number;
+}
+
+/**
+ * Points efficiency metrics derived from simulation results and unit costs.
+ */
+export interface EfficiencyMetrics {
+  attackerWoundsPerPoint: number;     // mean wounds / attacker cost
+  attackerPointsPerWound: number;     // attacker cost / mean wounds
+  defenderWoundsPerPoint: number;     // mean wounds / defender cost
+  defenderPointsPerWound: number;     // defender cost / mean wounds
+  attackerEfficiencyRatio: number;    // (mean wounds / attacker cost) / defender cost
+}
+
+/**
+ * Full simulation output returned to the UI.
+ */
+export interface SimulationResult {
+  // Config echo (for verifying results match the current config)
+  iterations: number;
+  durationMs: number;
+
+  // Primary results — total wounds (with pierce)
+  totalWounds: StatsSummary;
+  totalWoundsDistribution: DistributionEntry[];
+
+  // Secondary results — guardian wounds (without pierce)
+  guardianWounds: StatsSummary;
+  guardianWoundsDistribution: DistributionEntry[];
+
+  // Secondary results — main target wounds (without pierce)
+  mainTargetWounds: StatsSummary;
+  mainTargetWoundsDistribution: DistributionEntry[];
+
+  // Reflection damage to attacker
+  deflectWounds: StatsSummary;
+  deflectWoundsDistribution: DistributionEntry[];
+
+  djemSoWounds: StatsSummary;
+  djemSoWoundsDistribution: DistributionEntry[];
+
+  // Suppression (constant per config, but included for completeness)
+  suppressionPerAttack: number;
+
+  // Points efficiency
+  efficiency: EfficiencyMetrics;
+}

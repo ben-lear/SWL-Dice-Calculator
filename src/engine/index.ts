@@ -17,6 +17,12 @@ export {
   applyDieModification,
 } from './dice';
 
+// Simulator
+export { simulate, DEFAULT_ITERATIONS } from './simulator';
+
+// Worker client
+export { SimulationWorkerClient } from './worker/simulationWorkerClient';
+
 // Types
 export type {
   AttackConfig,
@@ -28,6 +34,10 @@ export type {
   AggregatedWeaponKeywords,
   RolledAttackDie,
   MarksmanDecision,
+  SimulationResult,
+  StatsSummary,
+  DistributionEntry,
+  EfficiencyMetrics,
 } from './types';
 
 export {
@@ -42,3 +52,10 @@ export {
   MarksmanStrategy,
   RerollStrategy,
 } from './types';
+
+// Simulator
+export { simulate, DEFAULT_ITERATIONS } from './simulator';
+
+// Worker client
+export { SimulationWorkerClient } from './worker/simulationWorkerClient';
+

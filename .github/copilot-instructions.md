@@ -58,6 +58,7 @@ When generating or editing code:
 
 ## TypeScript & API Design Guidelines
 - Keep TypeScript strict-safe; avoid `any` unless unavoidable.
+- **Always use enum members** (e.g., `DefenseDieColor.White`, `CoverType.None`) instead of raw string or numeric literals when a type is backed by an enum. Never use a bare `'white'`, `'none'`, `0`, etc. where the type expects an enum value.
 - Use discriminated unions or explicit types for mode-specific behavior.
 - Prefer small pure helper functions over large monolithic procedures.
 - Keep public function signatures stable unless a broader refactor is required.
