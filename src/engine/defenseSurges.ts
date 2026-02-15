@@ -13,9 +13,10 @@ import { DefenseFace, AttackType, DefenseSurgeChart } from './types';
 export function convertDefenseSurges(
   results: RolledDefenseDie[],
   config: AttackConfig,
-  dodgeWasSpent: boolean
+  dodgeWasSpent: boolean,
+  highVelocity: boolean
 ): RolledDefenseDie[] {
-  const { defender, attacker } = config;
+  const { defender } = config;
   let workingResults = results.map(d => ({ ...d }));
 
   let surgeCount = workingResults.filter(d => d.face === DefenseFace.Surge).length;
@@ -36,7 +37,7 @@ export function convertDefenseSurges(
   // But High Velocity disables ALL Deflect effects.
   if (
     defender.deflect &&
-    !attacker.highVelocity &&
+    !highVelocity &&
     config.attackType === AttackType.Ranged &&
     surgeCount > 0
   ) {

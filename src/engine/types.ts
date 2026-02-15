@@ -207,6 +207,7 @@ export interface DefenderConfig {
   // Defense
   dieColor: DefenseDieColor;
   surgeChart: DefenseSurgeChart;
+  disableDefenseDice?: boolean;  // Custom Pool mode: when true, defense rolls 0 dice
 
   // Cover
   coverType: CoverType;

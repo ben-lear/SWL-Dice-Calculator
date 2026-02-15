@@ -1,35 +1,127 @@
 # Copilot Instructions — Just Roll Crits
 
-## Project Overview
-A React + TypeScript web app that simulates Star Wars: Legion attack dice sequences. Users configure attacker/defender dice pools, keywords, and tokens, then calculate expected wounds or run Monte Carlo simulations.
+## Mission
+This repository is a Star Wars: Legion attack/damage calculator with both deterministic and Monte Carlo analysis.
 
-## Tech Stack
-- **Framework:** React 18+ with TypeScript (strict mode)
-- **Build:** Vite
-- **Styling:** Tailwind CSS (utility-first, dark theme — gray-950 background, gray-100 text)
-- **State Management:** Zustand
+When generating or editing code:
+- Prioritize **rules correctness** over UI polish.
+- Keep logic changes **small, testable, and explicit**.
+- Preserve existing architecture boundaries (engine ↔ state ↔ UI).
+
+## Tech Stack & Runtime
+- **Frontend:** React 18 + TypeScript (strict mode)
+- **Build tool:** Vite
+- **Styling:** Tailwind CSS (dark UI design language)
+- **State management:** Zustand
 - **Testing:** Vitest + React Testing Library
-- **Charts:** Recharts
-- **PWA:** vite-plugin-pwa
+- **Data viz:** Recharts
+- **PWA:** `vite-plugin-pwa`
+- **Desktop packaging:** Tauri (`src-tauri/`)
 
-## Code Conventions
-- Functional components only — no class components
-- Named exports for components, default exports for page-level components (App, Layout)
-- Co-locate tests next to source files as `*.test.tsx` / `*.test.ts`
-- Test setup file at `src/test/setup.ts` (imports `@testing-library/jest-dom`)
-- Use Tailwind utility classes for all styling — no CSS modules or styled-components
+## Repository Map
+- `src/` — web app entry, layout, app composition
+- `src/components/` — UI panels and shared components
+	- `AttackerPanel/`, `DefenderPanel/`, `ResultsPanel/`, `DiceDisplay/`, `shared/`
+- `src/engine/` — pure game logic (dice math, sequence steps, modifiers, simulation)
+- `src/stores/` — Zustand stores and selectors
+- `src/hooks/` — React hooks
+- `src/data/` — presets and static data
+- `src/utils/` — generic helpers
+- `src/test/` — shared test setup/utilities
+- `rulebook_markdown/` — source material for rule interpretation
+- `plans/` — implementation plans/history and design intent
+- `src-tauri/` — desktop wrapper and Rust/Tauri config
 
-## Project Structure
-- `src/` — App entry point, App shell, Layout
-- `src/components/` — UI panels (AttackerPanel, DefenderPanel, ResultsPanel, DiceDisplay, shared)
-- `src/engine/` — Pure dice logic, probability math, Monte Carlo simulator
-- `src/hooks/` — Custom React hooks
-- `src/utils/` — Helper functions
-- `src/data/` — Unit preset JSON data
-- `src/test/` — Test setup
+## Architectural Rules
 
-## Domain Context
-- The app models the full Star Wars: Legion attack sequence (Steps 1–9)
-- Key dice types: Attack (White/Black/Red, d8), Defense (White/Red, d6)
-- Important keywords: Impact, Pierce, Critical, Surge conversions, Cover, Dodge, Armor, etc.
-- Refer to files in `rulebook_markdown/` for detailed game rules
+### Engine (`src/engine`) is pure
+- No React imports.
+- No direct Zustand/store access.
+- No DOM, browser APIs, random global state, or side effects.
+- Prefer deterministic functions with explicit inputs/outputs.
+
+### UI and Store responsibilities
+- Components handle presentation and user interaction.
+- Zustand store manages app/session state.
+- Derived combat results should be computed by engine functions, not duplicated in components.
+
+### Data flow
+- User input/state → normalize/validate → engine calculation/simulation → presentation.
+- Keep conversion/normalization close to boundaries (store or adapter helpers), not scattered across components.
+
+## Domain Modeling Expectations
+- Model the Legion attack sequence in clear stages (attack roll, surges, modifiers, cover/dodge, defense roll, pierce/blocks, wounds).
+- Keep keyword interactions explicit (Impact, Pierce, Critical, Armor, Cover, Dodge, surge conversions, etc.).
+- Avoid “magic” transformations; name intermediate values so combat steps are auditable.
+- If a rule interaction is ambiguous, prefer the existing engine/test behavior and note assumptions in tests.
+- Use `rulebook_markdown/` as the authoritative in-repo rules reference.
+
+## TypeScript & API Design Guidelines
+- Keep TypeScript strict-safe; avoid `any` unless unavoidable.
+- Use discriminated unions or explicit types for mode-specific behavior.
+- Prefer small pure helper functions over large monolithic procedures.
+- Keep public function signatures stable unless a broader refactor is required.
+- Use named exports for components/utilities; default exports only for page-level shells (`App`, `Layout`).
+
+## React & UI Conventions
+- Functional components only.
+- Co-locate component tests with component code (`*.test.tsx`).
+- Use Tailwind utilities for styling; avoid CSS modules/styled-components.
+- Reuse shared UI components before introducing new primitives.
+- Keep the dark-theme design consistent; do not introduce ad-hoc color systems.
+
+## Testing Requirements
+- Co-locate tests as `*.test.ts` / `*.test.tsx`.
+- Engine changes should include or update focused unit tests in `src/engine/`.
+- UI behavior changes should include React Testing Library coverage where practical.
+- Prefer targeted tests first, then broader suites.
+- Do not rewrite large snapshots unnecessarily.
+
+## Quality Bar for Changes
+- Fix root causes, not surface symptoms.
+- Keep diffs minimal and scoped to the requested behavior.
+- Avoid unrelated refactors while implementing feature/fix work.
+- Maintain naming and file organization patterns already used in nearby code.
+- Update docs when behavior or workflow meaningfully changes.
+
+## Performance & Simulation Notes
+- Keep Monte Carlo logic efficient and side-effect free.
+- Avoid unnecessary allocations in hot loops.
+- Keep deterministic and simulation pathways behaviorally aligned where intended.
+- If adding random behavior, ensure seeding/control patterns remain testable.
+
+## Build, Test, and Dev Commands
+Use these standard workflows unless task-specific instructions say otherwise:
+- `npm run dev` — local web development
+- `npm run test` — run test suite
+- `npm run build` — production build
+- `npm run preview` — preview built web app
+- Tauri commands should follow existing docs (`TAURI_QUICKSTART.md`, `DESKTOP_DEPLOYMENT.md`).
+
+## Guidance for Copilot-generated Changes
+When asked to implement work:
+1. Identify whether the change belongs in engine, store, UI, or data.
+2. Implement with minimal API surface changes.
+3. Add/update tests nearest to changed logic.
+4. Run relevant tests.
+5. Summarize assumptions, especially for rules interactions.
+
+For bug fixes:
+- Add or adjust a failing test that demonstrates the bug when feasible.
+- Then implement the fix.
+
+For feature work:
+- Prefer extending existing modules over creating new abstractions unless duplication is clear.
+
+## Source of Truth Priority
+When instructions conflict, use this precedence:
+1. Direct user request
+2. This `copilot-instructions.md`
+3. Existing code patterns/tests
+4. Plan/docs in `plans/` and top-level markdown docs
+
+## Non-Goals
+- Do not add new frameworks.
+- Do not migrate state management away from Zustand.
+- Do not introduce class components.
+- Do not move engine logic into UI components.

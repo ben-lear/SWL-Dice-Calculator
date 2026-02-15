@@ -66,7 +66,7 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
     rollDefenseDice({ hits, crits }, config, lethalPierce, pierceBonus, dodgeWasSpent, poolKeywords.pierceX, poolKeywords.highVelocity);
 
   // Step 7e — Convert Defense Surges
-  const defenseAfterSurgeConversion = convertDefenseSurges(defenseResults, config, dodgeWasSpent);
+  const defenseAfterSurgeConversion = convertDefenseSurges(defenseResults, config, dodgeWasSpent, poolKeywords.highVelocity);
 
   // Step 8 — Modify Defense Dice
   const { blocks: mainTargetBlocks } = modifyDefenseDice(defenseAfterSurgeConversion, config, dodgeWasSpent);

@@ -16,7 +16,7 @@ Phase 2.6 consists of four sub-phases:
 - **2.6D:** Defender Panel UI — implement mode toggle, Custom Pool view (current UI), Unit Builder view (preset selection + upgrade slots)
 
 Phase 2.6 depends on:
-- **Phase 5.5** (complete) — preset data layer, unit resolver, upgrade system
+- **Phase 5.5** (NOT YET IMPLEMENTED) — preset data layer, unit resolver, upgrade system. Steps 2.6B-2.6C cannot be implemented until Phase 5.5 is complete. Step 2.6A (config review) and Step 2.6D (UI shell) can proceed independently.
 - **Phase 2.5** (complete) — attacker two-mode design pattern
 - **Phase 6B** (partial) — existing DefenderPanel component
 
@@ -79,15 +79,15 @@ All defender keywords remain as flat fields on `DefenderConfig`. No restructurin
 | Keyword | Engine Field | Type | Preset Source | User Adjustable |
 |---------|-------------|------|---------------|-----------------|
 | Disable defense dice | `disableDefenseDice` | `boolean` | — | Custom Pool only |
-| Defense die color | `defenseColor` | `DefenseDieColor` | Preset | Custom Pool only |
-| Defense surge chart | `defenseSurgeChart` | `DefenseSurgeChart` | Preset | Custom Pool only |
+| Defense die color | `dieColor` | `DefenseDieColor` | Preset | Custom Pool only |
+| Defense surge chart | `surgeChart` | `DefenseSurgeChart` | Preset | Custom Pool only |
 | Minis in LOS | `minisInLOS` | `number` | Preset | Always |
-| Cover type | `cover` | `CoverType` | — | Always (situational) |
+| Cover type | `coverType` | `CoverType` | — | Always (situational) |
 | Cover X | `coverX` | `number` | Preset | Always (situational) |
 | Smoke tokens | `smokeTokens` | `number` | — | Always (situational) |
 | Suppressed | `suppressed` | `boolean` | — | Always (situational) |
 | Dodge tokens | `dodgeTokens` | `number` | — | Always (token count) |
-| Surge tokens | `surgeTokensDefense` | `number` | — | Always (token count) |
+| Surge tokens | `surgeTokens` | `number` | — | Always (token count) |
 | Armor X | `armorX` | `number` | Preset | Editable |
 | Weak Point X | `weakPointX` | `number` | Preset | Editable (situational arc) |
 | Immune: Pierce | `immunePierce` | `boolean` | Preset | Editable |
@@ -109,12 +109,12 @@ All defender keywords remain as flat fields on `DefenderConfig`. No restructurin
 | Backup | `backup` | `boolean` | Preset | Editable |
 | Hold the Line | `holdTheLine` | `boolean` | Preset | Editable |
 | Guardian X | `guardianX` | `number` | Preset (nearby unit) | Editable (situational) |
-| Guardian die color | `guardianDefenseColor` | `DefenseDieColor` | — | Editable (situational) |
-| Guardian surge | `guardianDefenseSurge` | `DefenseSurgeChart` | — | Editable (situational) |
+| Guardian die color | `guardianDieColor` | `DefenseDieColor` | — | Editable (situational) |
+| Guardian surge | `guardianSurgeChart` | `DefenseSurgeChart` | — | Editable (situational) |
 | Guardian Deflect | `guardianDeflect` | `boolean` | — | Editable (situational) |
 | Guardian Soresu | `guardianSoresuMastery` | `boolean` | — | Editable (situational) |
 | Guardian Dodge tokens | `guardianDodgeTokens` | `number` | — | Editable (situational) |
-| Unit cost | `defenderUnitCost` | `number` | Preset (base + upgrades) | Read-only in Unit Builder |
+| Unit cost | `unitCost` | `number` | Preset (base + upgrades) | Read-only in Unit Builder |
 
 **Preset Source** = Auto-populated when loading a unit preset in Unit Builder mode.
 **User Adjustable** = Can be changed by the user even in Unit Builder mode.
@@ -133,22 +133,22 @@ Review `DefenderConfig` to confirm all fields are flat (no nested weapon arrays 
 ```ts
 export interface DefenderConfig {
   // Defense dice
-  defenseColor: DefenseDieColor;
-  defenseSurgeChart: DefenseSurgeChart;
+  dieColor: DefenseDieColor;
+  surgeChart: DefenseSurgeChart;
   disableDefenseDice?: boolean; // NEW: when true, Step 7 returns 0 defense dice
   
   // Context
   minisInLOS: number;
   
   // Cover
-  cover: CoverType;
+  coverType: CoverType;
   coverX: number;
   smokeTokens: number;
   suppressed: boolean;
   
   // Tokens
   dodgeTokens: number;
-  surgeTokensDefense: number;
+  surgeTokens: number;
   suppressionTokens: number; // for Danger Sense
   
   // Unit keywords
@@ -174,14 +174,14 @@ export interface DefenderConfig {
   
   // Guardian (situational)
   guardianX: number;
-  guardianDefenseColor: DefenseDieColor;
-  guardianDefenseSurge: DefenseSurgeChart;
+  guardianDieColor?: DefenseDieColor;
+  guardianSurgeChart?: DefenseSurgeChart;
   guardianDeflect: boolean;
   guardianSoresuMastery: boolean;
   guardianDodgeTokens: number;
   
   // Points
-  defenderUnitCost: number;
+  unitCost: number;
 }
 ```
 One new optional field added: `disableDefenseDice?: boolean` for Custom Pool mode's "disable defense" feature
@@ -202,8 +202,8 @@ export interface UnitEnrichment {
   // ... existing attacker fields ...
   
   // Defender fields
-  defenseColor?: DefenseDieColor;
-  defenseSurgeChart?: DefenseSurgeChart;
+  dieColor?: DefenseDieColor;
+  surgeChart?: DefenseSurgeChart;
   defenderKeywords?: {
     armorX?: number;
     dangerSenseX?: number;
@@ -241,8 +241,8 @@ Add defender data to curated units in `src/data/enrichment/units.ts`. Example:
     // ... attacker fields ...
     
     // Defender fields
-    defenseColor: DefenseDieColor.Red,
-    defenseSurgeChart: DefenseSurgeChart.None,
+    dieColor: DefenseDieColor.Red,
+    surgeChart: DefenseSurgeChart.None,
     defenderKeywords: {
       immunePierce: true,
       deflect: true,
@@ -255,8 +255,8 @@ Add defender data to curated units in `src/data/enrichment/units.ts`. Example:
   enrichment: {
     // ... attacker fields ...
     
-    defenseColor: DefenseDieColor.Red,
-    defenseSurgeChart: DefenseSurgeChart.None,
+    dieColor: DefenseDieColor.Red,
+    surgeChart: DefenseSurgeChart.None,
     defenderKeywords: {},
   },
 },
@@ -266,8 +266,8 @@ Add defender data to curated units in `src/data/enrichment/units.ts`. Example:
   enrichment: {
     // ... attacker fields ...
     
-    defenseColor: DefenseDieColor.White,
-    defenseSurgeChart: DefenseSurgeChart.SurgeToBlock,
+    dieColor: DefenseDieColor.White,
+    surgeChart: DefenseSurgeChart.ToBlock,
     defenderKeywords: {},
   },
 },
@@ -283,8 +283,8 @@ export interface DefenderPreset {
   id: string;
   name: string;
   faction: Faction;
-  defenseColor: DefenseDieColor;
-  defenseSurgeChart: DefenseSurgeChart;
+  dieColor: DefenseDieColor;
+  surgeChart: DefenseSurgeChart;
   upgradeBar: UpgradeSlot[];
   minisInLOS: number; // default from unit data
   keywords: {
@@ -314,13 +314,13 @@ export interface DefenderPreset {
 
 export function generateDefenderPresets(resolvedUnits: ResolvedUnit[]): DefenderPreset[] {
   return resolvedUnits
-    .filter(unit => unit.enrichment?.defenseColor != null) // only enriched units
+    .filter(unit => unit.enrichment?.dieColor != null) // only enriched units
     .map(unit => ({
       id: unit.id,
       name: unit.name,
       faction: unit.faction,
-      defenseColor: unit.enrichment!.defenseColor!,
-      defenseSurgeChart: unit.enrichment!.defenseSurgeChart ?? DefenseSurgeChart.None,
+      dieColor: unit.enrichment!.dieColor!,
+      surgeChart: unit.enrichment!.surgeChart ?? DefenseSurgeChart.None,
       upgradeBar: unit.upgradeBar,
       minisInLOS: unit.unitSize ?? 1, // default to 1 if not specified
       keywords: unit.enrichment!.defenderKeywords ?? {},
@@ -354,14 +354,14 @@ describe('generateDefenderPresets', () => {
   it('generates defender presets for enriched units', () => {
     const presets = generateDefenderPresets(mockResolvedUnits);
     expect(presets.length).toBeGreaterThan(0);
-    expect(presets[0]).toHaveProperty('defenseColor');
-    expect(presets[0]).toHaveProperty('defenseSurgeChart');
+    expect(presets[0]).toHaveProperty('dieColor');
+    expect(presets[0]).toHaveProperty('surgeChart');
     expect(presets[0]).toHaveProperty('keywords');
   });
   
   it('filters out units without defender enrichment data', () => {
     const presets = generateDefenderPresets(mockResolvedUnits);
-    expect(presets.every(p => p.defenseColor != null)).toBe(true);
+    expect(presets.every(p => p.dieColor != null)).toBe(true);
   });
   
   it('includes upgrade bar from unit data', () => {
@@ -387,7 +387,7 @@ describe('getDefenderPresets', () => {
 
 ## Step 2.6C — Defender Store Enhancements
 
-**File:** `src/hooks/useDefenseConfig.ts` (or wherever defender store is defined)
+**File:** `src/stores/defenseConfigStore.ts`
 
 ### 2.6C.1 — Add Mode and Preset Fields
 
@@ -416,7 +416,7 @@ interface DefenderStore {
 ### 2.6C.2 — Implement Actions
 
 ```ts
-export const useDefenseConfig = create<DefenderStore>((set) => ({
+export const useDefenseConfigStore = create<DefenderStore>((set) => ({
   // ... existing fields with defaults ...
   
   activeDefenderMode: 'custom',
@@ -433,12 +433,12 @@ export const useDefenseConfig = create<DefenderStore>((set) => ({
   loadDefenderPreset: (id, preset) => {
     set({
       selectedDefenderPresetId: id,
-      defenseColor: preset.defenseColor,
-      defenseSurgeChart: preset.defenseSurgeChart,
+      dieColor: preset.dieColor,
+      surgeChart: preset.surgeChart,
       minisInLOS: preset.minisInLOS,
       defenderUpgradeBar: preset.upgradeBar,
       equippedDefenderUpgradeIds: preset.upgradeBar.map(() => null),
-      defenderUnitCost: preset.unitCost,
+      unitCost: preset.unitCost,
       
       // Populate keywords
       armorX: preset.keywords.armorX ?? 0,
@@ -463,9 +463,9 @@ export const useDefenseConfig = create<DefenderStore>((set) => ({
       weakPointX: preset.keywords.weakPointX ?? 0,
       
       // Reset situational fields (user must set these per-attack)
-      cover: CoverType.None,
+      coverType: CoverType.None,
       dodgeTokens: 0,
-      surgeTokensDefense: 0,
+      surgeTokens: 0,
       suppressionTokens: 0,
       suppressed: false,
       smokeTokens: 0,
@@ -501,17 +501,17 @@ Extend the `getFullDefenderConfig()` selector to apply equipped defender upgrade
 
 ```ts
 export function getFullDefenderConfig(): DefenderConfig {
-  const state = useDefenseConfig.getState();
+  const state = useDefenseConfigStore.getState();
   let config: DefenderConfig = {
-    defenseColor: state.defenseColor,
-    defenseSurgeChart: state.defenseSurgeChart,
+    dieColor: state.dieColor,
+    surgeChart: state.surgeChart,
     // ... all flat fields ...
-    defenderUnitCost: state.defenderUnitCost,
+    unitCost: state.unitCost,
   };
   
   // If defense is disabled (Custom Pool mode), we can handle this in two ways:
   // Option 1: Set a flag on the config that the engine checks
-  // Option 2: Force defenseColor to a special "None" value that makes engine skip defense roll
+  // Option 2: Force dieColor to a special "None" value that makes engine skip defense roll
   // Recommended: Add a `disableDefenseDice` field to DefenderConfig
   if (state.disableDefenseDice) {
     config.disableDefenseDice = true;
@@ -581,7 +581,7 @@ export function applyDefenderUpgrades(
     }
   }
   
-  config.defenderUnitCost += additionalCost;
+    config.unitCost += additionalCost;
   return config;
 }
 ```
@@ -590,18 +590,18 @@ export function applyDefenderUpgrades(
 
 ### 2.6C.5 — Tests
 
-Add tests to `src/hooks/useDefenseConfig.test.ts`:
+Add tests to `src/stores/defenseConfigStore.test.ts`:
 
 ```ts
 describe('defender mode actions', () => {
   beforeEach(() => {
-    useDefenseConfig.getState().resetDefenderConfig();
+    useDefenseConfigStore.getState().resetDefenderConfig();
   });
   
   it('sets defender mode', () => {
-    const { setDefenderMode } = useDefenseConfig.getState();
+    const { setDefenderMode } = useDefenseConfigStore.getState();
     setDefenderMode('unit-builder');
-    expect(useDefenseConfig.getState().activeDefenderMode).toBe('unit-builder');
+    expect(useDefenseConfigStore.getState().activeDefenderMode).toBe('unit-builder');
   });
   
   it('loads defender preset', () => {
@@ -609,46 +609,46 @@ describe('defender mode actions', () => {
       id: 'ba',
       name: 'Rebel Troopers',
       faction: Faction.RebelAlliance,
-      defenseColor: DefenseDieColor.White,
-      defenseSurgeChart: DefenseSurgeChart.SurgeToBlock,
+      dieColor: DefenseDieColor.White,
+      surgeChart: DefenseSurgeChart.ToBlock,
       upgradeBar: [UpgradeSlot.HeavyWeapon, UpgradeSlot.Personnel],
       minisInLOS: 5,
       keywords: {},
       unitCost: 40,
     };
     
-    const { loadDefenderPreset } = useDefenseConfig.getState();
+    const { loadDefenderPreset } = useDefenseConfigStore.getState();
     loadDefenderPreset('ba', mockPreset);
     
-    const state = useDefenseConfig.getState();
+    const state = useDefenseConfigStore.getState();
     expect(state.selectedDefenderPresetId).toBe('ba');
-    expect(state.defenseColor).toBe(DefenseDieColor.White);
-    expect(state.defenseSurgeChart).toBe(DefenseSurgeChart.SurgeToBlock);
+    expect(state.dieColor).toBe(DefenseDieColor.White);
+    expect(state.surgeChart).toBe(DefenseSurgeChart.ToBlock);
     expect(state.minisInLOS).toBe(5);
     expect(state.defenderUpgradeBar).toEqual(mockPreset.upgradeBar);
-    expect(state.defenderUnitCost).toBe(40);
+    expect(state.unitCost).toBe(40);
   });
   
   it('equips defender upgrade', () => {
     const mockPreset: DefenderPreset = { /* ... */ };
-    const { loadDefenderPreset, equipDefenderUpgrade } = useDefenseConfig.getState();
+    const { loadDefenderPreset, equipDefenderUpgrade } = useDefenseConfigStore.getState();
     loadDefenderPreset('ba', mockPreset);
     
     equipDefenderUpgrade(0, 'up123');
-    expect(useDefenseConfig.getState().equippedDefenderUpgradeIds[0]).toBe('up123');
+    expect(useDefenseConfigStore.getState().equippedDefenderUpgradeIds[0]).toBe('up123');
   });
 });
 
 describe('getFullDefenderConfig', () => {
   it('applies equipped defender upgrades', () => {
     const mockPreset: DefenderPreset = { /* ... */ };
-    const { loadDefenderPreset, equipDefenderUpgrade } = useDefenseConfig.getState();
+    const { loadDefenderPreset, equipDefenderUpgrade } = useDefenseConfigStore.getState();
     loadDefenderPreset('ba', mockPreset);
     equipDefenderUpgrade(0, 'up-armor-1'); // mock upgrade that grants Armor 1
     
     const config = getFullDefenderConfig();
     expect(config.armorX).toBe(1); // base 0 + upgrade 1
-    expect(config.defenderUnitCost).toBeGreaterThan(mockPreset.unitCost); // base + upgrade cost
+    expect(config.unitCost).toBeGreaterThan(mockPreset.unitCost); // base + upgrade cost
   });
 });
 ```
@@ -709,7 +709,7 @@ export function DefenderUnitBuilderView() {
     loadDefenderPreset,
     equipDefenderUpgrade,
     // ... other fields for situational inputs ...
-  } = useDefenseConfig();
+  } = useDefenseConfigStore();
   
   const factionPresets = getDefenderPresets(selectedDefenderFaction ?? undefined);
   const availableUpgrades = defenderUpgradeBar
@@ -783,7 +783,7 @@ export function DefenderUnitBuilderView() {
       
       <SectionHeader>Tokens</SectionHeader>
       <NumberSpinner label="Dodge tokens" value={dodgeTokens} onChange={setDodgeTokens} min={0} max={5} />
-      <NumberSpinner label="Surge tokens" value={surgeTokensDefense} onChange={setSurgeTokensDefense} min={0} max={5} />
+      <NumberSpinner label="Surge tokens" value={surgeTokens} onChange={setSurgeTokens} min={0} max={5} />
       <NumberSpinner label="Suppression tokens" value={suppressionTokens} onChange={setSuppressionTokens} min={0} max={10} />
       
       {/* Guardian section (situational, user must configure nearby Guardian unit) */}
@@ -791,8 +791,8 @@ export function DefenderUnitBuilderView() {
       <NumberSpinner label="Guardian X" value={guardianX} onChange={setGuardianX} min={0} max={3} />
       {guardianX > 0 && (
         <>
-          <Select label="Guardian die color" value={guardianDefenseColor} onChange={setGuardianDefenseColor} options={...} />
-          <Select label="Guardian surge" value={guardianDefenseSurge} onChange={setGuardianDefenseSurge} options={...} />
+          <Select label="Guardian die color" value={guardianDieColor} onChange={setGuardianDieColor} options={...} />
+          <Select label="Guardian surge" value={guardianSurgeChart} onChange={setGuardianSurgeChart} options={...} />
           <Toggle label="Guardian Deflect" checked={guardianDeflect} onChange={setGuardianDeflect} />
           <Toggle label="Guardian Soresu" checked={guardianSoresuMastery} onChange={setGuardianSoresuMastery} />
           <NumberSpinner label="Guardian Dodge tokens" value={guardianDodgeTokens} onChange={setGuardianDodgeTokens} min={0} max={5} />
@@ -809,7 +809,7 @@ Update `DefenderPanel.tsx` to conditionally render the two views:
 
 ```tsx
 export function DefenderPanel() {
-  const { activeDefenderMode } = useDefenseConfig();
+  const { activeDefenderMode } = useDefenseConfigStore();
   
   return (
     <div className="defender-panel">
@@ -819,13 +819,13 @@ export function DefenderPanel() {
       <div className="flex gap-2 mb-4">
         <button
           className={activeDefenderMode === 'custom' ? 'active' : ''}
-          onClick={() => useDefenseConfig.getState().setDefenderMode('custom')}
+          onClick={() => useDefenseConfigStore.getState().setDefenderMode('custom')}
         >
           Custom Pool
         </button>
         <button
           className={activeDefenderMode === 'unit-builder' ? 'active' : ''}
-          onClick={() => useDefenseConfig.getState().setDefenderMode('unit-builder')}
+          onClick={() => useDefenseConfigStore.getState().setDefenderMode('unit-builder')}
         >
           Unit Builder
         </button>
@@ -855,7 +855,7 @@ describe('DefenderPanel', () => {
     render(<DefenderPanel />);
     const unitBuilderButton = screen.getByText('Unit Builder');
     fireEvent.click(unitBuilderButton);
-    expect(useDefenseConfig.getState().activeDefenderMode).toBe('unit-builder');
+    expect(useDefenseConfigStore.getState().activeDefenderMode).toBe('unit-builder');
   });
   
   it('renders custom pool view by default', () => {
@@ -865,7 +865,7 @@ describe('DefenderPanel', () => {
   });
   
   it('renders unit builder view when mode is unit-builder', () => {
-    useDefenseConfig.getState().setDefenderMode('unit-builder');
+    useDefenseConfigStore.getState().setDefenderMode('unit-builder');
     render(<DefenderPanel />);
     // Check for unit builder-specific elements (e.g., faction dropdown)
     expect(screen.getByLabelText('Faction')).toBeInTheDocument();
