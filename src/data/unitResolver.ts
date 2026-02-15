@@ -23,10 +23,22 @@ import processedUnitsJson from './processed/units.json';
  */
 let _cachedUnits: ResolvedUnit[] | null = null;
 
+type ProcessedUnitJson = Omit<ProcessedUnit, 'apiId'> & {
+  apiId: number | string;
+};
+
+function normalizeProcessedUnit(unit: ProcessedUnitJson): ProcessedUnit {
+  return {
+    ...unit,
+    apiId: typeof unit.apiId === 'string' ? Number(unit.apiId) : unit.apiId,
+  };
+}
+
 export function getAllResolvedUnits(): ResolvedUnit[] {
   if (_cachedUnits) return _cachedUnits;
 
-  const processedUnits = processedUnitsJson as ProcessedUnit[];
+  const processedUnits = (processedUnitsJson as ProcessedUnitJson[])
+    .map(normalizeProcessedUnit);
   _cachedUnits = processedUnits.map((pu) => resolveUnit(pu));
   return _cachedUnits;
 }
@@ -90,6 +102,9 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
     defenseDieColor: processed.defenseDieColor,
     rank: processed.rank,
     unitType: processed.unitType,
+
+    attackSurgeChart:
+      enrichment?.attackSurgeChart ?? null,
 
     defenseSurgeChart:
       enrichment?.defenseSurgeChart ?? null,

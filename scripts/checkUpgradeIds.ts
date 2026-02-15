@@ -14,7 +14,7 @@ function findKeyUpgrades() {
     const matches = upgrades.filter(u => u.name.toLowerCase().includes(keyName));
     if (matches.length > 0) {
       console.log(`Key: ${keyName}`);
-      matches.forEach(m => console.log(`  - ID: ${m.id}, Name: ${m.name}, Slot: ${m.slot}`));
+      matches.forEach(m => console.log(`  - ID: ${m.id}, Name: ${m.name}, Slot: ${m.upgradeSlot}`));
       console.log('');
     }
   }
@@ -22,7 +22,7 @@ function findKeyUpgrades() {
   // Also look for dug in upgrades
   console.log('Looking for dug in upgrades...');
   const dugInUpgrades = upgrades.filter(u => u.name.toLowerCase().includes('dug in'));
-  dugInUpgrades.forEach(m => console.log(`  - ID: ${m.id}, Name: ${m.name}, Slot: ${m.slot}`));
+  dugInUpgrades.forEach(m => console.log(`  - ID: ${m.id}, Name: ${m.name}, Slot: ${m.upgradeSlot}`));
 }
 
 findKeyUpgrades();

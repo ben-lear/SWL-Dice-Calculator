@@ -128,12 +128,14 @@ export const ATTACKER_KEYWORD_FIELD_MAP: Record<string, string> = {
  */
 export const DEFENDER_KEYWORD_FIELD_MAP: Record<string, string> = {
   // Numeric Keywords
+  'Armor': 'armorX',
   'Armor [X]': 'armorX',
   'Weak Point': 'weakPointX',
   'Danger Sense': 'dangerSenseX',
   'Uncanny Luck': 'uncannyLuckX', 
   'Shielded': 'shieldedX',
   'Guardian': 'guardianX',
+  'Cover': 'coverX',
   
   // Boolean Keywords
   'Immune: Pierce': 'immunePierce',

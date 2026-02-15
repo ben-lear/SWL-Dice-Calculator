@@ -60,7 +60,7 @@ async function testUpgradeApplicator() {
     console.log('\n=== Defender Dug In Test ===');
     const dugInDefender = applyDefenderUpgrades(defenderConfig, ['training-dug-in']);
     console.log('With dug in upgrade:', dugInDefender);
-    console.log('Dug in flag set:', dugInDefender.dugIn === true);
+    console.log('Dug in flag set:', (dugInDefender as Record<string, unknown>).dugIn === true);
 
     // Test additive numeric keywords
     console.log('\n=== Additive Keywords Test ===');

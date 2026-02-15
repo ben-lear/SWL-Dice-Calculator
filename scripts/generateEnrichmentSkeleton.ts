@@ -20,6 +20,7 @@ type RawUnit = {
 type RawUpgrade = {
   id: string | number;
   revamp?: boolean | null;
+  keywords?: number[] | null;
   keyword_ids?: number[] | null;
 };
 
@@ -63,20 +64,20 @@ for (const keyword of processedKeywords) {
   keywordById.set(String(keyword.id), keyword);
 }
 
-const ATTACKER_KEYWORD_MAP: Record<string, string> = {
+const ATTACKER_KEYWORD_MAP: Record<string, string | string[]> = {
   Precise: 'preciseX',
   Sharpshooter: 'sharpshooterX',
   Marksman: 'marksman',
   'Jedi Hunter': 'jediHunter',
   "Jar'Kai Mastery": 'jarKaiMastery',
-  Duelist: 'duelistAttacker',
+  Duelist: ['duelistAttacker', 'duelistDefender'],
   'Makashi Mastery': 'makashiMastery',
   'Immune: Deflect': 'immuneDeflect',
   'Death from Above': 'deathFromAbove',
   'Hold the Line': 'holdTheLine',
 };
 
-const DEFENDER_KEYWORD_MAP: Record<string, string> = {
+const DEFENDER_KEYWORD_MAP: Record<string, string | string[]> = {
   Armor: 'armorX',
   'Armor [X]': 'armorX',
   'Weak Point': 'weakPointX',
@@ -96,12 +97,12 @@ const DEFENDER_KEYWORD_MAP: Record<string, string> = {
   'Low Profile': 'lowProfile',
   'Djem So Mastery': 'djemSoMastery',
   'Soresu Mastery': 'soresuMastery',
-  Duelist: 'duelistDefender',
+  Duelist: ['duelistAttacker', 'duelistDefender'],
   Backup: 'backup',
   'Dug In': 'dugIn',
 };
 
-const WEAPON_KEYWORD_MAP: Record<string, string> = {
+const WEAPON_KEYWORD_MAP: Record<string, string | string[]> = {
   Pierce: 'pierceX',
   Impact: 'impactX',
   Critical: 'criticalX',
@@ -126,6 +127,10 @@ function isMagnitudeField(fieldName: string): boolean {
   return fieldName.endsWith('X');
 }
 
+function toFieldNames(fieldValue: string | string[]): string[] {
+  return Array.isArray(fieldValue) ? fieldValue : [fieldValue];
+}
+
 function mapKeywordIdsToFields(keywordIds: number[] | null | undefined): Record<string, true | '<need human>'> {
   const mapped: Record<string, true | '<need human>'> = {};
 
@@ -133,13 +138,19 @@ function mapKeywordIdsToFields(keywordIds: number[] | null | undefined): Record<
     const keyword = keywordById.get(String(keywordId));
     if (!keyword) continue;
 
-    const fieldName = ALL_KEYWORD_MAP[keyword.name];
-    if (!fieldName) continue;
+    const fieldValue = ALL_KEYWORD_MAP[keyword.name];
+    if (!fieldValue) continue;
 
-    mapped[fieldName] = isMagnitudeField(fieldName) ? '<need human>' : true;
+    for (const fieldName of toFieldNames(fieldValue)) {
+      mapped[fieldName] = isMagnitudeField(fieldName) ? '<need human>' : true;
+    }
   }
 
   return mapped;
+}
+
+function getRawKeywordIds(record: { keywords?: number[] | null; keyword_ids?: number[] | null }): number[] {
+  return record.keywords ?? record.keyword_ids ?? [];
 }
 
 function formatKeywordsObject(keywords: Record<string, true | '<need human>'>): string {
@@ -193,7 +204,7 @@ const mergedUnitKeywords = new Map<string, Record<string, true | '<need human>'>
 
 for (const processedUnit of processedUnits) {
   const rawUnit = rawUnitById.get(String(processedUnit.apiId));
-  const sourceKeywords = rawUnit?.keywords ?? rawUnit?.keyword_ids ?? [];
+  const sourceKeywords = rawUnit ? getRawKeywordIds(rawUnit) : [];
   const keywords = mapKeywordIdsToFields(sourceKeywords);
 
   const existing = mergedUnitKeywords.get(processedUnit.id) ?? {};
@@ -220,7 +231,7 @@ const sortedUnitIds = Array.from(mergedUnitKeywords.keys()).sort((a, b) => {
 
 for (const unitId of sortedUnitIds) {
   const keywords = mergedUnitKeywords.get(unitId) ?? {};
-  unitEntries.push(`  '${unitId}': {\n    keywords: ${formatKeywordsObject(keywords)},\n    weapons: [],\n  }`);
+  unitEntries.push(`  '${unitId}': {\n    attackSurgeChart: undefined,\n    defenseSurgeChart: undefined,\n    keywords: ${formatKeywordsObject(keywords)},\n    weapons: [],\n  }`);
 }
 
 // Multiple raw upgrades can share the same processed upgrade id (slot+name).
@@ -230,7 +241,7 @@ const mergedUpgradeKeywords = new Map<string, Record<string, true | '<need human
 
 for (const processedUpgrade of processedUpgrades) {
   const rawUpgrade = rawUpgradeById.get(String(processedUpgrade.apiId));
-  const keywords = mapKeywordIdsToFields(rawUpgrade?.keyword_ids ?? []);
+  const keywords = mapKeywordIdsToFields(rawUpgrade ? getRawKeywordIds(rawUpgrade) : []);
 
   const existing = mergedUpgradeKeywords.get(processedUpgrade.id) ?? {};
   for (const [fieldName, value] of Object.entries(keywords)) {

@@ -3,7 +3,7 @@ import DefenderCustomPoolView from './DefenderCustomPoolView';
 import DefenderUnitBuilderView from './DefenderUnitBuilderView';
 
 export default function DefenderPanel() {
-  const { activeDefenderMode, setDefenderMode } = useDefenseConfigStore();
+  const { activeMode, setActiveMode } = useDefenseConfigStore();
 
   return (
     <div className="defender-panel border border-gray-700 rounded-lg p-4 bg-gray-900">
@@ -13,29 +13,29 @@ export default function DefenderPanel() {
       <div className="flex gap-2 mb-4">
         <button
           className={`px-4 py-2 rounded transition-colors ${
-            activeDefenderMode === 'custom'
+            activeMode === 'custom'
               ? 'bg-blue-600 text-white'
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
-          onClick={() => setDefenderMode('custom')}
+          onClick={() => setActiveMode('custom')}
         >
           Custom Pool
         </button>
         <button
           className={`px-4 py-2 rounded transition-colors ${
-            activeDefenderMode === 'unit-builder'
+            activeMode === 'unit-builder'
               ? 'bg-blue-600 text-white'
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
-          onClick={() => setDefenderMode('unit-builder')}
+          onClick={() => setActiveMode('unit-builder')}
         >
           Unit Builder
         </button>
       </div>
 
       {/* Conditional View */}
-      {activeDefenderMode === 'custom' && <DefenderCustomPoolView />}
-      {activeDefenderMode === 'unit-builder' && <DefenderUnitBuilderView />}
+      {activeMode === 'custom' && <DefenderCustomPoolView />}
+      {activeMode === 'unit-builder' && <DefenderUnitBuilderView />}
     </div>
   );
 }

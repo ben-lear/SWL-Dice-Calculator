@@ -94,6 +94,8 @@ When generating or editing code:
 ## Build, Test, and Dev Commands
 Use these standard workflows unless task-specific instructions say otherwise:
 - `npm run dev` — local web development
+- `npm run lint` — REQUIRED for all code changes (must pass with 0 errors)
+- `npm run typecheck` — REQUIRED for all code changes (must pass with 0 errors)
 - `npm run test` — run test suite
 - `npm run build` — production build
 - `npm run preview` — preview built web app
@@ -104,8 +106,14 @@ When asked to implement work:
 1. Identify whether the change belongs in engine, store, UI, or data.
 2. Implement with minimal API surface changes.
 3. Add/update tests nearest to changed logic.
-4. Run relevant tests.
-5. Summarize assumptions, especially for rules interactions.
+4. Run `npm run typecheck` and `npm run lint`.
+5. Run relevant tests.
+6. Summarize assumptions, especially for rules interactions.
+
+### Mandatory Quality Gate
+- Do not treat a change as complete if `npm run typecheck` or `npm run lint` fails.
+- Fix introduced TypeScript/lint issues before finalizing.
+- If unrelated pre-existing failures block completion, explicitly report them and scope them apart from your change.
 
 For bug fixes:
 - Add or adjust a failing test that demonstrates the bug when feasible.

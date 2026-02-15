@@ -7,11 +7,6 @@ import type { AttackerPreset, DefenderPreset } from './presets';
 import type { ResolvedUnit } from './types';
 import { Faction } from './presets';
 import { getAllResolvedUnits } from './unitResolver';
-import type {
-  AttackSurgeChart,
-  DefenseSurgeChart,
-  DefenseDieColor,
-} from '../engine/types';
 import { AttackSurgeChart } from '../engine/types';
 
 // ============================================================================
@@ -115,8 +110,7 @@ function generateAttackerPreset(
   // Handle Duelist special case (field name is duelistAttacker on attacker side,
   // but enrichment might use either duelistAttacker or duelistDefender as this is
   // a dual-role keyword)
-  if (unit.keywords['duelistAttacker'] || unit.keywords['duelistDefender'] || 
-      weapon.keywords['duelistAttacker']) {
+  if (unit.keywords['duelistAttacker'] || unit.keywords['duelistDefender']) {
     profile['duelistAttacker'] = true;
   }
 
@@ -156,7 +150,7 @@ function generateSkeletonAttackerPreset(
 
   const profile: Record<string, any> = {
     weapons: [emptyWeapon],
-    surgeChart: AttackSurgeChart.None,
+    surgeChart: unit.attackSurgeChart ?? AttackSurgeChart.None,
     unitCost: unit.cost,
   };
 

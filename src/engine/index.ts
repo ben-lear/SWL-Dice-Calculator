@@ -52,10 +52,3 @@ export {
   MarksmanStrategy,
   RerollStrategy,
 } from './types';
-
-// Simulator
-export { simulate, DEFAULT_ITERATIONS } from './simulator';
-
-// Worker client
-export { SimulationWorkerClient } from './worker/simulationWorkerClient';
-

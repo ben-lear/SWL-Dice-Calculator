@@ -6,8 +6,8 @@ import { useAttackConfigStore } from '../src/stores/attackConfigStore.js';
 import { useDefenseConfigStore } from '../src/stores/defenseConfigStore.js';
 import { getFullConfig } from '../src/stores/configSelectors.js';
 import { getAttackerPresetById, getDefenderPresetById } from '../src/data/presetHelpers.js';
-import { getResolvedUpgrade } from '../src/data/resolvers.js';
-import { UpgradeSlot } from '../src/data/upgradeSlot.js';
+import { getResolvedUpgradeById } from '../src/data/upgradeResolver.js';
+import { UpgradeSlot } from '../src/data/types.js';
 
 async function testComprehensiveUpgrades() {
   console.log('=== Comprehensive Phase 5.5 Upgrade Test ===\n');
@@ -50,7 +50,7 @@ async function testComprehensiveUpgrades() {
       .filter(({ slot }) => slot === UpgradeSlot.Personnel);
 
     if (personnelSlots.length > 0) {
-      const hqUplink = getResolvedUpgrade('personnel-hq-uplink');
+      const hqUplink = getResolvedUpgradeById('personnel-hq-uplink');
       if (hqUplink) {
         const slotIndex = personnelSlots[0].index;
         useAttackConfigStore.getState().equipUpgrade(slotIndex, hqUplink.id);
@@ -59,8 +59,8 @@ async function testComprehensiveUpgrades() {
         const configWithUplink = getFullConfig();
         console.log(`Unit cost with HQ Uplink: ${configWithUplink.attacker.unitCost} (was ${baseConfig.attacker.unitCost})`);
         
-        if (hqUplink.pointCost) {
-          const expectedCost = baseConfig.attacker.unitCost + hqUplink.pointCost;
+        if (hqUplink.cost) {
+          const expectedCost = baseConfig.attacker.unitCost + hqUplink.cost;
           console.log(`Expected: ${expectedCost}, Actual: ${configWithUplink.attacker.unitCost}`);
           if (expectedCost === configWithUplink.attacker.unitCost) {
             console.log('✅ Point cost correctly applied');
@@ -73,7 +73,7 @@ async function testComprehensiveUpgrades() {
 
     // Test equipping targeting scopes in gear slot
     if (gearSlots.length > 0) {
-      const targetingScopes = getResolvedUpgrade('gear-targeting-scopes');
+      const targetingScopes = getResolvedUpgradeById('gear-targeting-scopes');
       if (targetingScopes) {
         const slotIndex = gearSlots[0].index;
         useAttackConfigStore.getState().equipUpgrade(slotIndex, targetingScopes.id);
@@ -120,7 +120,7 @@ async function testComprehensiveUpgrades() {
         .filter(({ slot }) => slot === UpgradeSlot.Gear);
 
       if (defenseGearSlots.length > 0) {
-        const emergencyStims = getResolvedUpgrade('gear-emergency-stims');
+        const emergencyStims = getResolvedUpgradeById('gear-emergency-stims');
         if (emergencyStims) {
           const slotIndex = defenseGearSlots[0].index;
           useDefenseConfigStore.getState().equipUpgrade(slotIndex, emergencyStims.id);

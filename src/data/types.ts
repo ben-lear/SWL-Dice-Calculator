@@ -260,6 +260,9 @@ export interface ResolvedUnit {
   rank: UnitRank;
   unitType: UnitType;
 
+  /** Attack surge chart fallback from unit enrichment (null if unspecified) */
+  attackSurgeChart: AttackSurgeChart | null;
+
   /** Defense surge chart (from enrichment; null if un-enriched) */
   defenseSurgeChart: DefenseSurgeChart | null;
 

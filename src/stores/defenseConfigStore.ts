@@ -5,7 +5,6 @@ import {
   CoverType,
   DefenderConfig,
 } from '../engine/types';
-import { applyDefenderUpgrades, getEquippedDefenderUpgrades } from './defenseUpgradeApplicator';
 import type { UpgradeSlot } from '../data/types';
 import type { Faction, DefenderPresetProfile } from '../data/presets';
 
@@ -87,6 +86,7 @@ export interface DefenseConfigState {
   ) => void;
   
   setSelectedFaction: (faction: Faction | null) => void;
+  setActiveMode: (mode: 'custom' | 'unit-builder') => void;
   loadPreset: (
     presetId: string,
     profile: DefenderPresetProfile,
@@ -105,6 +105,7 @@ type DefenseConfigFields = Omit<
   DefenseConfigState,
   | 'setField'
   | 'setSelectedFaction'
+  | 'setActiveMode'
   | 'loadPreset'
   | 'reset'
   | 'selectedFaction'
@@ -203,6 +204,10 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   setSelectedFaction: (faction) =>
     set({ selectedFaction: faction }),
 
+  // Setter for mode toggle
+  setActiveMode: (mode) =>
+    set({ activeMode: mode }),
+
   // Load a preset: reset to defaults, then apply preset overrides
   loadPreset: (presetId, profile, upgradeBar = []) =>
     set(() => ({
@@ -255,6 +260,7 @@ export function selectDefenderConfig(state: DefenseConfigState): DefenderConfig 
     equippedUpgradeIds,
     setField,
     setSelectedFaction,
+    setActiveMode,
     loadPreset,
     reset,
     equipUpgrade,

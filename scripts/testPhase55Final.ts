@@ -3,6 +3,7 @@
  */
 
 import { getAttackerPresets, getDefenderPresets, getAttackerPresetById, getDefenderPresetById } from '../src/data/index.js';
+import { UpgradeSlot } from '../src/data/types.js';
 
 async function testPhase55Final() {
   console.log('=== Final Phase 5.5 Verification ===\n');
@@ -21,7 +22,7 @@ async function testPhase55Final() {
     const vaderAttacker = getAttackerPresetById('galactic-empire-darth-vader-vader-s-lightsaber');
     console.log(`✅ Vader attacker: ${vaderAttacker?.name}`);
     console.log(`   Upgrade bar: ${vaderAttacker?.upgradeBar?.join(', ')}`);
-    console.log(`   Weapon: ${vaderAttacker?.profile.weapons[0]?.name}`);
+    console.log(`   Weapon: ${vaderAttacker?.profile.weapons?.[0]?.name}`);
     console.log(`   Unit cost: ${vaderAttacker?.profile.unitCost}`);
 
     const vaderDefender = getDefenderPresetById('galactic-empire-darth-vader');
@@ -39,8 +40,8 @@ async function testPhase55Final() {
     console.log(`✅ Found ${presetsWithWeapons.length} presets with weapon data`);
     
     presetsWithWeapons.slice(0, 5).forEach(preset => {
-      console.log(`   - ${preset.name}: ${preset.profile.weapons[0]?.name || 'unnamed weapon'}`);
-      console.log(`     Dice: ${preset.profile.weapons[0]?.redDice || 0}r ${preset.profile.weapons[0]?.blackDice || 0}b ${preset.profile.weapons[0]?.whiteDice || 0}w`);
+      console.log(`   - ${preset.name}: ${preset.profile.weapons?.[0]?.name || 'unnamed weapon'}`);
+      console.log(`     Dice: ${preset.profile.weapons?.[0]?.redDice || 0}r ${preset.profile.weapons?.[0]?.blackDice || 0}b ${preset.profile.weapons?.[0]?.whiteDice || 0}w`);
     });
 
     // Test upgrade bars
@@ -57,12 +58,12 @@ async function testPhase55Final() {
 
     // Test a few specific upgrade types
     const gearUpgrades = presetsWithUpgrades.filter(preset => 
-      preset.upgradeBar?.includes('gear')
+      preset.upgradeBar?.includes(UpgradeSlot.Gear)
     );
     console.log(`✅ ${gearUpgrades.length} presets have gear slots`);
 
     const forceUpgrades = presetsWithUpgrades.filter(preset => 
-      preset.upgradeBar?.includes('force')
+      preset.upgradeBar?.includes(UpgradeSlot.Force)
     );
     console.log(`✅ ${forceUpgrades.length} presets have force slots`);
 

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { rollAttackDice, rerollAttackDice } from './attackRoll';
-import { AttackDieColor, AttackFace, AttackSurgeChart, AttackType, MarksmanStrategy, RerollStrategy } from './types';
-import { createMinimalAttacker, createMinimalWeapon, createMinimalWeaponKeywords } from './testHelpers';
+import { AttackDieColor, AttackFace, AttackSurgeChart, AttackType } from './types';
+import { createMinimalAttacker } from './testHelpers';
 import { rollAttackDie } from './dice';
 
 // Mock the dice roll to get predictable results

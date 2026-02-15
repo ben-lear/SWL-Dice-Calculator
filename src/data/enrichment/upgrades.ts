@@ -26,6 +26,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'armament-beskar-spear': {
     keywords: {
+      duelistAttacker: true,
       duelistDefender: true,
     },
   },
@@ -736,6 +737,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'heavy-weapon-beskad-duelist': {
     keywords: {
+      duelistAttacker: true,
       duelistDefender: true,
     },
   },

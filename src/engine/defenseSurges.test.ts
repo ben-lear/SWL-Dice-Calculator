@@ -6,7 +6,6 @@ import {
   AttackSurgeChart,
   DefenseSurgeChart,
   DefenseDieColor,
-  CoverType,
 } from './types';
 import { createMinimalAttacker, createMinimalDefender, createMinimalWeapon } from './testHelpers';
 

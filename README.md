@@ -14,6 +14,10 @@ npm run dev
 # Run tests
 npm test
 
+# Validate code quality
+npm run lint
+npm run typecheck
+
 # Build for production
 npm run build
 ```
@@ -67,7 +71,22 @@ npm run test:run
 
 # Coverage report
 npm run test:coverage
+
+# Required for code changes
+npm run lint
+npm run typecheck
 ```
+
+## ✅ Required Checks
+
+Every code change must pass both commands before it is considered complete:
+
+```bash
+npm run typecheck
+npm run lint
+```
+
+If either command fails, resolve those issues before submitting or merging changes.
 
 ## 📁 Project Structure
 

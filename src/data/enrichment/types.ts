@@ -22,6 +22,9 @@ import type { UnitKeywords, UpgradeKeywords } from './keywordTypes';
  * The resolver merges enrichment on top of processed data.
  */
 export interface UnitEnrichment {
+  /** Attack surge chart fallback for units without enriched weapon profiles */
+  attackSurgeChart?: AttackSurgeChart;
+
   /** Defense surge chart (not available from API) */
   defenseSurgeChart?: DefenseSurgeChart;
 

@@ -63,6 +63,13 @@ export interface AttackerUnitKeywords {
   immuneDeflect?: boolean;
   deathFromAbove?: boolean;
   holdTheLine?: boolean;
+
+  // Some unit cards provide always-on weapon-style effects in generated
+  // enrichment data prior to explicit weapon profile curation.
+  blast?: boolean;
+  suppressive?: boolean;
+  highVelocity?: boolean;
+  cumbersome?: boolean;
 }
 
 // ============================================================================

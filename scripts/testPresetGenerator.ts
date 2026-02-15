@@ -34,7 +34,7 @@ async function testPresetGenerator() {
       console.log('\n=== Skeleton Attacker Example ===');
       const example = skeletonPresets[0];
       console.log(`Name: ${example.name}`);
-      console.log('Weapon dice:', example.profile.weapons[0]);
+      console.log('Weapon dice:', example.profile.weapons?.[0]);
     }
 
     // Test defender preset

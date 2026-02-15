@@ -104,7 +104,7 @@ export function rerollAttackDice(
   poolKeywords: AggregatedWeaponKeywords
 ): { results: RolledAttackDie[]; aimsSpent: number; pierceBonus: number; aimsSavedForMarksman: number } {
   const { attacker } = config;
-  let workingResults = results.map(d => ({ ...d })); // Deep clone
+  const workingResults = results.map(d => ({ ...d })); // Deep clone
   let aimsSpent = 0;
   let pierceBonus = 0;
   let aimsSavedForMarksman = 0;

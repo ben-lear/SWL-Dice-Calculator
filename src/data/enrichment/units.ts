@@ -10,6 +10,8 @@ import type { UnitEnrichment } from './types';
 
 export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'han-solo-unorthodox-general': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       uncannyLuckX: '<need human>',
       sharpshooterX: '<need human>',
@@ -19,6 +21,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'lando-calrissian-canny-general': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       uncannyLuckX: '<need human>',
     },
@@ -26,6 +30,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'leia-organa-fearless-and-inventive': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -33,6 +39,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'luke-skywalker-hero-of-the-rebellion': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       immunePierce: true,
       sharpshooterX: '<need human>',
@@ -42,6 +50,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'luke-skywalker-commander-skywalker': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       immunePierce: true,
     },
@@ -49,11 +59,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-officer-fighting-for-freedom': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'ahsoka-tano-fulcrum': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       jarKaiMastery: true,
@@ -63,6 +77,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'cassian-andor-capable-intelligence-agent': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       dangerSenseX: '<need human>',
       marksman: true,
@@ -72,6 +88,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'chewbacca-walking-carpet': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       guardianX: '<need human>',
     },
@@ -79,6 +97,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'han-solo-reluctant-hero': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       uncannyLuckX: '<need human>',
     },
@@ -86,6 +106,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'jyn-erso-stardust': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
       suppressive: true,
@@ -94,6 +116,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'k-2so-sardonic-security-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -101,6 +125,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'luke-skywalker-jedi-knight': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -109,6 +135,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'r2-d2-hero-of-a-thousand-devices': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       suppressive: true,
     },
@@ -116,11 +144,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-agent-defender-of-democracy': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'sabine-wren-explosive-artist': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
     },
@@ -128,11 +160,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'fleet-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'mark-ii-medium-blaster-trooper': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       cumbersome: true,
     },
@@ -140,11 +176,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'rebel-veterans': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
     },
@@ -152,6 +192,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-resistance': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
     },
@@ -159,6 +201,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-resistance-clan-wren': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
     },
@@ -166,6 +210,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-commandos': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
       sharpshooterX: '<need human>',
@@ -174,6 +220,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-commandos-strike-team': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
       sharpshooterX: '<need human>',
@@ -182,6 +230,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-sleeper-cell-ready-to-strike': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       suppressive: true,
     },
@@ -189,13 +239,18 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-freedom-fighters': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
+      duelistAttacker: true,
       duelistDefender: true,
     },
     weapons: [],
   },
 
   'wookiee-warriors-kashyyyk-resistance': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -203,11 +258,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   '1-4-fd-laser-cannon-team': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'at-rt': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -215,6 +274,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'tauntaun-riders': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -222,6 +283,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'a-a5-speeder-truck': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -229,6 +292,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   't-47-airspeeder': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       coverX: '<need human>',
@@ -238,6 +303,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'x-34-landspeeder': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
       armorX: '<need human>',
@@ -246,6 +313,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'darth-vader-dark-lord-of-the-sith': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -254,11 +323,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'director-orson-krennic-architect-of-terror': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'general-veers-master-tactician': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -266,18 +339,25 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'grand-admiral-thrawn-imperial-high-command': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
+      duelistAttacker: true,
       duelistDefender: true,
     },
     weapons: [],
   },
 
   'grand-moff-tarkin-imperial-high-command': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'iden-versio-inferno-squad-leader': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       marksman: true,
       highVelocity: true,
@@ -286,11 +366,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-officer-ruthless-efficiency': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'moff-gideon-long-live-the-empire': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -298,6 +382,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'agent-kallus-hunter-of-spectres': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       immuneMeleePierce: true,
     },
@@ -305,6 +391,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'boba-fett-infamous-bounty-hunter': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -313,11 +401,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'bossk-trandoshan-terror': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'darth-vader-the-emperor-s-apprentice': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -328,6 +420,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'fifth-brother-the-kill-is-mine': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       immunePierce: true,
       block: true,
@@ -336,11 +430,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-agent-bringing-order-to-the-galaxy': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'seventh-sister-compelled-to-inflict-pain': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       block: true,
       immunePierce: true,
@@ -349,6 +447,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'df-90-mortar-trooper': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       cumbersome: true,
       suppressive: true,
@@ -357,16 +457,22 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'shoretroopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'snowtroopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'stormtrooper-riot-squad': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       holdTheLine: true,
       suppressive: true,
@@ -375,6 +481,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'stormtroopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       preciseX: '<need human>',
     },
@@ -382,6 +490,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'stormtroopers-heavy-response-unit': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       preciseX: '<need human>',
     },
@@ -389,6 +499,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-death-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       preciseX: '<need human>',
     },
@@ -396,11 +508,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-probe-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'imperial-special-forces': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       marksman: true,
     },
@@ -408,6 +524,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-special-forces-inferno-squad': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       marksman: true,
     },
@@ -415,6 +533,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'scout-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
       lowProfile: true,
@@ -423,6 +543,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'scout-troopers-strike-team': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
       sharpshooterX: '<need human>',
@@ -431,6 +553,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   '74-z-speeder-bikes': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
     },
@@ -438,6 +562,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'dewback-rider': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       suppressive: true,
@@ -446,6 +572,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'e-web-heavy-blaster-team': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       cumbersome: true,
     },
@@ -453,6 +581,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'range-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -460,6 +590,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'at-st': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -467,6 +599,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-dark-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -474,6 +608,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'laat-le-patrol-transport-galactic-empire': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       immuneBlast: true,
       coverX: '<need human>',
@@ -483,6 +619,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'major-marquand-tempest-scout-2': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       blast: true,
@@ -491,6 +629,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'tx-225-gavw-occupier-tank': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       suppressive: true,
@@ -499,6 +639,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ahsoka-tano-padawan-commander': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       shienMastery: true,
       deflect: true,
@@ -508,6 +650,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'anakin-skywalker-the-chosen-one': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       djemSoMastery: true,
       immunePierce: true,
@@ -517,6 +661,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'chewbacca-hero-of-kashyyyk': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       guardianX: '<need human>',
     },
@@ -524,6 +670,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-captain-rex-honorable-soldier': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -531,6 +679,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commander-trained-for-leadership': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -538,11 +688,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commander-cody-leader-of-the-212th': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'jedi-knight-general-strong-in-the-force': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -551,6 +705,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'obi-wan-kenobi-civilized-warrior': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       guardianX: '<need human>',
       immunePierce: true,
@@ -561,13 +717,18 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-chieftain-clan-leader': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
+      duelistAttacker: true,
       duelistDefender: true,
     },
     weapons: [],
   },
 
   'yoda-grand-master-of-the-jedi-order': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       immunePierce: true,
       deflect: true,
@@ -578,6 +739,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'hondo-ohnaka-trustworthy-compatriot': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       uncannyLuckX: '<need human>',
     },
@@ -585,6 +748,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'jedi-knight-keeper-of-the-peace': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -593,6 +758,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'padme-amidala-spirited-senator': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -600,6 +767,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'r2-d2-independent-astromech': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       suppressive: true,
     },
@@ -607,6 +776,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'the-bad-batch-clone-force-99': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -615,11 +786,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-trooper-infantry': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'clone-trooper-marksmen': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       marksman: true,
     },
@@ -627,11 +802,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'weequay-pirates': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'arc-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -640,6 +819,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'arc-troopers-strike-team': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -648,6 +829,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'arf-troopers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
     },
@@ -655,6 +838,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-kashyyyk-defenders': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -662,13 +847,18 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-noble-fighters': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
+      duelistAttacker: true,
       duelistDefender: true,
     },
     weapons: [],
   },
 
   'at-rt-republic': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -676,6 +866,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'barc-speeder': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
     },
@@ -683,6 +875,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commandos': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       suppressive: true,
       shieldedX: '<need human>',
@@ -691,6 +885,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commandos-ds-delta-squad': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       shieldedX: '<need human>',
       suppressive: true,
@@ -699,6 +895,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'raddaugh-gnasp-fluttercraft': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
       immuneBlast: true,
@@ -707,6 +905,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'raddaugh-gnasp-fluttercraft-attack-craft': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
       immuneBlast: true,
@@ -715,6 +915,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'infantry-support-platform': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       coverX: '<need human>',
@@ -723,6 +925,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'laat-le-patrol-transport': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
       immuneBlast: true,
@@ -732,6 +936,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'saber-class-tank': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       outmaneuver: true,
       armorX: '<need human>',
@@ -740,6 +946,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'count-dooku-darth-tyranus': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -750,6 +958,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'general-grievous-sinister-cyborg': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       jediHunter: true,
       block: true,
@@ -759,6 +969,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'general-grievous-wheel-bike-warlord': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       immuneMeleePierce: true,
@@ -767,6 +979,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'kalani-super-tactical-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -774,6 +988,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'kraken-super-tactical-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -781,21 +997,29 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'poggle-the-lesser-public-leader-of-the-geonosians': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'super-tactical-command-droid-command-and-control-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   't-series-tactical-droid-programmed-for-strategy': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'asajj-ventress-separatist-assassin': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -805,6 +1029,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'cad-bane-needs-no-introduction': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       dangerSenseX: '<need human>',
       sharpshooterX: '<need human>',
@@ -813,6 +1039,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'maul-impatient-apprentice': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -821,6 +1049,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'sun-fac-ruthless-lieutenant': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
       suppressive: true,
@@ -829,26 +1059,36 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'super-tactical-command-droid-auxiliary-command-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'b1-battle-droids': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'b2-super-battle-droids': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'geonosian-warriors-soldiers-of-the-hive': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'bx-series-droid-commandos': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -857,6 +1097,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'bx-series-droid-commandos-strike-team': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -865,6 +1107,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'drk-1-sith-probe-droids': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       suppressive: true,
     },
@@ -872,6 +1116,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-100-magnaguard': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       guardianX: '<need human>',
       immuneMeleePierce: true,
@@ -880,6 +1126,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-100-magnaguard-prototype-assassin-droids': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       immuneMeleePierce: true,
     },
@@ -887,6 +1135,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'tsmeu-6-wheel-bikes': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -894,6 +1144,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'droidekas': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       shieldedX: '<need human>',
       suppressive: true,
@@ -903,6 +1155,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'dsd1-dwarf-spider-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -910,6 +1164,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'lm-432-crab-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -917,6 +1173,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'stap-riders': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
     },
@@ -924,6 +1182,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'aat-battle-tank': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       highVelocity: true,
@@ -932,6 +1192,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'aqua-droids': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -939,6 +1201,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'persuader-class-tank-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -946,6 +1210,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'persuader-class-tank-droid-prototype-tank-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -953,16 +1219,22 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'black-sun-vigo': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'c-3p0-golden-god': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {},
     weapons: [],
   },
 
   'gar-saxon-militant-commando': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -971,6 +1243,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'logray-superstitious-shaman': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
       suppressive: true,
@@ -979,6 +1253,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'pyke-syndicate-capo': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       dangerSenseX: '<need human>',
     },
@@ -986,6 +1262,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wicket-hero-of-bright-tree': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
     },
@@ -993,6 +1271,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'boba-fett-infamous-bounty-hunter-mercenaries': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -1001,6 +1281,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'boba-fett-daimyo-of-mos-espa': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -1009,6 +1291,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'bossk-trandoshan-terror-mercenaries': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       suppressive: true,
     },
@@ -1016,6 +1300,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'cad-bane-needs-no-introduction-mercenaries': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       dangerSenseX: '<need human>',
       sharpshooterX: '<need human>',
@@ -1024,6 +1310,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'din-djarin-the-mandalorian': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
     },
@@ -1031,6 +1319,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-11-nurse-and-protect': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
       impervious: true,
@@ -1040,6 +1330,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-88-notorious-assassin-droid': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       sharpshooterX: '<need human>',
       impervious: true,
@@ -1049,6 +1341,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'maul-a-rival': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -1057,6 +1351,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'the-bad-batch-clone-force-99-mercenaries': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -1065,6 +1361,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'black-sun-enforcers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       preciseX: '<need human>',
     },
@@ -1072,6 +1370,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ewok-skirmishers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
     },
@@ -1079,6 +1379,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'pyke-syndicate-foot-soldiers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       outmaneuver: true,
       dangerSenseX: '<need human>',
@@ -1087,6 +1389,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ewok-slingers': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
     },
@@ -1094,6 +1398,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-super-commandos': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
     },
@@ -1101,6 +1407,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'swoop-bike-riders': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
     },
@@ -1108,6 +1416,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'a-a5-speeder-truck-mercenaries': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },
@@ -1115,6 +1425,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'chewbacca-let-the-wookiee-win': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
       blast: true,
@@ -1123,6 +1435,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wlo-5-speeder-tank': {
+    attackSurgeChart: undefined,
+    defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
     },

@@ -6,6 +6,7 @@ import { useAttackConfigStore } from '../src/stores/attackConfigStore.js';
 import { useDefenseConfigStore } from '../src/stores/defenseConfigStore.js';
 import { getFullConfig } from '../src/stores/configSelectors.js';
 import { getAttackerPresetById, getDefenderPresetById } from '../src/data/presetHelpers.js';
+import { UpgradeSlot } from '../src/data/types.js';
 
 async function testStoreIntegration() {
   console.log('=== Store Integration Test ===\n');
@@ -50,8 +51,8 @@ async function testStoreIntegration() {
 
     // Test equipping an upgrade
     console.log('\n=== Testing Upgrade Equipment ===');
-    if (attackState.upgradeBar.includes('gear')) {
-      const gearSlotIndex = attackState.upgradeBar.indexOf('gear');
+    if (attackState.upgradeBar.includes(UpgradeSlot.Gear)) {
+      const gearSlotIndex = attackState.upgradeBar.indexOf(UpgradeSlot.Gear);
       useAttackConfigStore.getState().equipUpgrade(gearSlotIndex, 'gear-targeting-scopes');
       
       const newAttackState = useAttackConfigStore.getState();

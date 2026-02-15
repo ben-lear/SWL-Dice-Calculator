@@ -14,8 +14,8 @@ async function testPhase55() {
     const vaderPreset = getAttackerPresetById('galactic-empire-darth-vader-vader-s-lightsaber');
     console.log(`✅ Found Vader preset: ${vaderPreset?.name}`);
     console.log(`   Upgrade bar: ${vaderPreset?.upgradeBar?.join(', ')}`);
-    console.log(`   Weapon: ${vaderPreset?.profile.weapons[0]?.name}`);
-    console.log(`   Dice pool: ${vaderPreset?.profile.weapons[0]?.redDice}r`);
+    console.log(`   Weapon: ${vaderPreset?.profile.weapons?.[0]?.name}`);
+    console.log(`   Dice pool: ${vaderPreset?.profile.weapons?.[0]?.redDice}r`);
 
     const stormtrooperDefender = getDefenderPresetById('galactic-empire-stormtroopers');
     console.log(`✅ Found Stormtrooper preset: ${stormtrooperDefender?.name}`);
@@ -34,7 +34,7 @@ async function testPhase55() {
     const hasUpgradeBars = Boolean(vaderPreset?.upgradeBar && stormtrooperDefender?.upgradeBar && rebelPreset?.upgradeBar);
     console.log(`✅ All presets have upgrade bars: ${hasUpgradeBars}`);
     
-    const hasWeaponData = Boolean(vaderPreset?.profile.weapons[0] && rebelPreset?.profile.weapons[0]);
+    const hasWeaponData = Boolean(vaderPreset?.profile.weapons?.[0] && rebelPreset?.profile.weapons?.[0]);
     console.log(`✅ Weapon data present: ${hasWeaponData}`);
     
     const hasDefenseData = Boolean(stormtrooperDefender?.profile.dieColor);

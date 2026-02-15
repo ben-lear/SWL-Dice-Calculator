@@ -161,7 +161,7 @@ export function rerollDefenseDice(
   poolHighVelocity: boolean
 ): RolledDefenseDie[] {
   const { defender } = config;
-  let workingResults = results.map(d => ({ ...d }));
+  const workingResults = results.map(d => ({ ...d }));
 
   // Track which dice have been rerolled (each die can only be rerolled once)
   const rerolled = new Set<number>();

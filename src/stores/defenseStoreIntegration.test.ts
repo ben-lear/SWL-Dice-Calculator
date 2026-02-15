@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useDefenseConfigStore } from './defenseConfigStore';
 import { getFullConfig } from './configSelectors';
+import { UpgradeSlot } from '../data/types';
+import { Faction } from '../data/presets';
 
 describe('Defense Store Integration', () => {
   beforeEach(() => {
@@ -15,7 +17,7 @@ describe('Defense Store Integration', () => {
     expect(store.equippedUpgradeIds).toHaveLength(0);
     
     // Need upgrade bar first
-    store.upgradeBar = ['gear', 'training'];
+    store.upgradeBar = [UpgradeSlot.Gear, UpgradeSlot.Training];
     store.equippedUpgradeIds = [null, null];
     
     // Equip an upgrade
@@ -39,7 +41,7 @@ describe('Defense Store Integration', () => {
     store.setField('armorX', 1);
     
     // Setup upgrade bar and equip armor upgrade
-    store.upgradeBar = ['gear'];
+    store.upgradeBar = [UpgradeSlot.Gear];
     store.equippedUpgradeIds = [null];
     store.equipUpgrade(0, 'stub-armor-upgrade');
     
@@ -54,7 +56,7 @@ describe('Defense Store Integration', () => {
     const store = useDefenseConfigStore.getState();
     
     // Setup upgrade bar and equip some upgrades
-    store.upgradeBar = ['gear', 'training'];
+    store.upgradeBar = [UpgradeSlot.Gear, UpgradeSlot.Training];
     store.equippedUpgradeIds = [null, null];
     store.equipUpgrade(0, 'stub-armor-upgrade');
     store.equipUpgrade(1, 'stub-defensive-upgrade');
@@ -69,7 +71,7 @@ describe('Defense Store Integration', () => {
     const store = useDefenseConfigStore.getState();
     
     // Setup upgrade bar with multiple slots
-    store.upgradeBar = ['gear', 'gear'];
+    store.upgradeBar = [UpgradeSlot.Gear, UpgradeSlot.Gear];
     store.equippedUpgradeIds = [null, null];
     
     // Equip upgrade in first slot
@@ -88,28 +90,28 @@ describe('Defense Store Integration', () => {
   it('should handle mode switching', () => {
     const store = useDefenseConfigStore.getState();
     
-    expect(store.mode).toBe('custom');
+    expect(store.activeMode).toBe('custom');
     
-    store.setField('mode', 'unit-builder');
-    expect(store.mode).toBe('unit-builder');
+    store.setActiveMode('unit-builder');
+    expect(store.activeMode).toBe('unit-builder');
     
-    store.setField('mode', 'custom');
-    expect(store.mode).toBe('custom');
+    store.setActiveMode('custom');
+    expect(store.activeMode).toBe('custom');
   });
 
   it('should track selected faction and preset', () => {
     const store = useDefenseConfigStore.getState();
     
-    expect(store.faction).toBeNull();
-    expect(store.presetId).toBeNull();
+    expect(store.selectedFaction).toBeNull();
+    expect(store.selectedPresetId).toBeNull();
     
-    store.setField('faction', 'galactic-empire');
-    expect(store.faction).toBe('galactic-empire');
+    store.setSelectedFaction(Faction.GalacticEmpire);
+    expect(store.selectedFaction).toBe(Faction.GalacticEmpire);
     
     // Load a preset
-    store.loadPreset('test-preset', { unitCost: 50 }, ['heavy-weapon']);
-    expect(store.presetId).toBe('test-preset');
+    store.loadPreset('test-preset', { unitCost: 50 }, [UpgradeSlot.HeavyWeapon]);
+    expect(store.selectedPresetId).toBe('test-preset');
     expect(store.unitCost).toBe(50);
-    expect(store.upgradeBar).toEqual(['heavy-weapon']);
+    expect(store.upgradeBar).toEqual([UpgradeSlot.HeavyWeapon]);
   });
 });

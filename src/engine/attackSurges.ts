@@ -114,7 +114,7 @@ export function applyMarksman(
     return results;
   }
 
-  let workingResults = results.map(d => ({ ...d })); // Clone
+  const workingResults = results.map(d => ({ ...d })); // Clone
   let aimsRemaining = aimsSavedForMarksman;
 
   // Iterative conversion loop:
@@ -186,7 +186,7 @@ export function applyJarKai(
   if (config.attackType !== AttackType.Melee) return results;
   if (attacker.dodgeTokensAttacker <= 0) return results;
 
-  let workingResults = results.map(d => ({ ...d })); // Clone
+  const workingResults = results.map(d => ({ ...d })); // Clone
   let dodgeRemaining = attacker.dodgeTokensAttacker;
 
   while (dodgeRemaining > 0) {

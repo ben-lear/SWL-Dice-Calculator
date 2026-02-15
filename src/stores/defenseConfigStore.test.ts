@@ -28,7 +28,7 @@ describe('defenseConfigStore', () => {
   });
 
   it('initializes with custom mode', () => {
-    expect(useDefenseConfigStore.getState().mode).toBe('custom');
+    expect(useDefenseConfigStore.getState().activeMode).toBe('custom');
   });
 
   it('initializes with defense dice enabled', () => {
@@ -66,14 +66,14 @@ describe('defenseConfigStore', () => {
 
   it('sets defender mode', () => {
     const store = useDefenseConfigStore.getState();
-    store.setField('mode', 'unit-builder');
-    expect(useDefenseConfigStore.getState().mode).toBe('unit-builder');
+    store.setActiveMode('unit-builder');
+    expect(useDefenseConfigStore.getState().activeMode).toBe('unit-builder');
   });
 
   it('sets defender faction', () => {
     const store = useDefenseConfigStore.getState();
-    store.setField('faction', 'galactic-empire');
-    expect(useDefenseConfigStore.getState().faction).toBe('galactic-empire');
+    store.setSelectedFaction('galactic-empire' as any);
+    expect(useDefenseConfigStore.getState().selectedFaction).toBe('galactic-empire');
   });
 
   // ── loadDefenderPreset (Phase 2.6) ──
@@ -90,7 +90,7 @@ describe('defenseConfigStore', () => {
     store.loadPreset('test-preset', mockConfig, []);
 
     const state = useDefenseConfigStore.getState();
-    expect(state.presetId).toBe('test-preset');
+    expect(state.selectedPresetId).toBe('test-preset');
     expect(state.dieColor).toBe(DefenseDieColor.Red);
     expect(state.surgeChart).toBe(DefenseSurgeChart.None);
     expect(state.minisInLOS).toBe(4);
@@ -135,16 +135,16 @@ describe('defenseConfigStore', () => {
   it('resets all fields to defaults', () => {
     useDefenseConfigStore.getState().setField('dieColor', DefenseDieColor.Red);
     useDefenseConfigStore.getState().setField('armorX', 5);
-    useDefenseConfigStore.getState().setField('mode', 'unit-builder');
+    useDefenseConfigStore.getState().setActiveMode('unit-builder');
     useDefenseConfigStore.getState().setField('disableDefenseDice', true);
     useDefenseConfigStore.getState().reset();
 
     const state = useDefenseConfigStore.getState();
     expect(state.dieColor).toBe(DefenseDieColor.White);
     expect(state.armorX).toBe(0);
-    expect(state.mode).toBe('custom');
+    expect(state.activeMode).toBe('custom');
     expect(state.disableDefenseDice).toBe(false);
-    expect(state.presetId).toBe(null);
+    expect(state.selectedPresetId).toBe(null);
   });
 
   // ── Config Selection ──

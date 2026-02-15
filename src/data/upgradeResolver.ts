@@ -15,10 +15,29 @@ import processedUpgradesJson from './processed/upgrades.json';
 
 let _cachedUpgrades: ResolvedUpgrade[] | null = null;
 
+type ProcessedUpgradeJson = Omit<ProcessedUpgrade, 'apiId' | 'restrictedToUnitApiId'> & {
+  apiId: number | string;
+  restrictedToUnitApiId: number | string | null;
+};
+
+function normalizeProcessedUpgrade(
+  upgrade: ProcessedUpgradeJson,
+): ProcessedUpgrade {
+  return {
+    ...upgrade,
+    apiId: typeof upgrade.apiId === 'string' ? Number(upgrade.apiId) : upgrade.apiId,
+    restrictedToUnitApiId:
+      typeof upgrade.restrictedToUnitApiId === 'string'
+        ? Number(upgrade.restrictedToUnitApiId)
+        : upgrade.restrictedToUnitApiId,
+  };
+}
+
 export function getAllResolvedUpgrades(): ResolvedUpgrade[] {
   if (_cachedUpgrades) return _cachedUpgrades;
 
-  const processedUpgrades = processedUpgradesJson as ProcessedUpgrade[];
+  const processedUpgrades = (processedUpgradesJson as ProcessedUpgradeJson[])
+    .map(normalizeProcessedUpgrade);
   _cachedUpgrades = processedUpgrades.map((pu) => resolveUpgrade(pu));
   return _cachedUpgrades;
 }
@@ -64,6 +83,15 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
     UPGRADE_ENRICHMENTS[processed.id];
   const isEnriched = enrichment !== undefined;
 
+  const normalizedKeywords: Record<string, number | boolean> = {};
+  if (enrichment?.keywords) {
+    for (const [key, value] of Object.entries(enrichment.keywords)) {
+      if (typeof value === 'number' || typeof value === 'boolean') {
+        normalizedKeywords[key] = value;
+      }
+    }
+  }
+
   return {
     id: processed.id,
     apiId: processed.apiId,
@@ -71,7 +99,7 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
     cost: processed.cost,
     upgradeSlot: processed.upgradeSlot as UpgradeSlot,
     restrictedToUnitApiId: processed.restrictedToUnitApiId,
-    keywords: enrichment?.keywords ?? {},
+    keywords: normalizedKeywords,
     isEnriched,
   };
 }

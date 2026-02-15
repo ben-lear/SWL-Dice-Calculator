@@ -4,6 +4,7 @@ import { useDefenseConfigStore } from './defenseConfigStore';
 import { useAttackTypeStore } from './attackTypeStore';
 import { getFullConfig } from './configSelectors';
 import { AttackType, AttackSurgeChart, DefenseDieColor } from '../engine/types';
+import { Faction } from '../data/presets';
 
 describe('getFullConfig', () => {
   beforeEach(() => {
@@ -45,15 +46,16 @@ describe('getFullConfig', () => {
 
   it('does not include UI-only fields', () => {
     useAttackConfigStore.getState().setSelectedFaction('empire' as any);
-    useDefenseConfigStore.getState().setDefenderFaction('rebels');
+    useDefenseConfigStore.getState().setSelectedFaction(Faction.RebelAlliance);
 
     const config = getFullConfig();
     
     expect(config.attacker).not.toHaveProperty('selectedFaction');
     expect(config.attacker).not.toHaveProperty('selectedPresetId');
     expect(config.attacker).not.toHaveProperty('activeMode');
-    expect(config.defender).not.toHaveProperty('selectedDefenderFaction');
-    expect(config.defender).not.toHaveProperty('selectedDefenderPresetId');
+    expect(config.defender).not.toHaveProperty('selectedFaction');
+    expect(config.defender).not.toHaveProperty('selectedPresetId');
+    expect(config.defender).not.toHaveProperty('activeMode');
   });
 
   it('attacker config includes weapons array', () => {

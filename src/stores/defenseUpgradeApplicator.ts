@@ -22,7 +22,7 @@ export function applyDefenderUpgrades(
   }
 
   // Start with a copy of the base config
-  let result = { ...baseConfig };
+  const result = { ...baseConfig };
 
   // Apply each upgrade's effects
   for (const upgrade of equippedUpgrades) {

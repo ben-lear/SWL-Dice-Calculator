@@ -95,6 +95,27 @@ function buildBaseUnitId(name: string, title?: string | null): string {
   return titleSlug ? `${nameSlug}-${titleSlug}` : nameSlug;
 }
 
+function unique<T>(items: T[]): T[] {
+  return Array.from(new Set(items));
+}
+
+function getRawKeywordIds(
+  record: { keywords?: Array<number | string> | null; keyword_ids?: Array<number | string> | null },
+): Array<number | string> {
+  return record.keywords ?? record.keyword_ids ?? [];
+}
+
+function mapKeywordIdsToNames(
+  keywordIds: Array<number | string> | null | undefined,
+  keywordIdToName: Map<number, string>,
+): string[] {
+  const names = (keywordIds ?? [])
+    .map((kid) => keywordIdToName.get(Number(kid)))
+    .filter((name): name is string => Boolean(name));
+
+  return unique(names);
+}
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 function processData() {
@@ -178,6 +199,8 @@ function processData() {
       }
       usedUnitIds.add(uniqueId);
 
+      const keywordNames = mapKeywordIdsToNames(getRawKeywordIds(u), keywordIdToName);
+
       return {
         apiId: u.id,
         id: uniqueId,
@@ -189,9 +212,7 @@ function processData() {
         defenseDieColor: u.red_defense ? 'red' : 'white',
         rank,
         unitType,
-        keywordNames: (u.keyword_ids ?? [])
-          .map((kid: number | string) => keywordIdToName.get(Number(kid)))
-          .filter(Boolean),
+        keywordNames,
         upgradeBar,
       };
     })
@@ -206,6 +227,8 @@ function processData() {
         return null;
       }
 
+      const keywordNames = mapKeywordIdsToNames(getRawKeywordIds(up), keywordIdToName);
+
       return {
         apiId: up.id,
         // Upgrade IDs intentionally use slot + name only.
@@ -217,9 +240,7 @@ function processData() {
         cost: up.cost ?? 0,
         upgradeSlot,
         restrictedToUnitApiId: up.unit_fkey ?? null,
-        keywordNames: (up.keyword_ids ?? [])
-          .map((kid: number | string) => keywordIdToName.get(Number(kid)))
-          .filter(Boolean),
+        keywordNames,
       };
     })
     .filter(Boolean);

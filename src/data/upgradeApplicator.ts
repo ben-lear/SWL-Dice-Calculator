@@ -3,7 +3,6 @@
  * Phase 5.5C.5: Create upgrade applicator
  */
 
-import type { ResolvedUpgrade } from './types';
 import { getResolvedUpgradeById } from './upgradeResolver';
 
 // ============================================================================
@@ -30,10 +29,10 @@ interface ConfigWithCost {
  *
  * Returns a new config object (does not mutate the input).
  */
-export function applyAttackerUpgrades(
-  config: ConfigWithCost,
+export function applyAttackerUpgrades<T extends ConfigWithCost>(
+  config: T,
   equippedUpgradeIds: (string | null)[],
-): ConfigWithCost {
+): T {
   return applyUpgrades(config, equippedUpgradeIds);
 }
 
@@ -41,10 +40,10 @@ export function applyAttackerUpgrades(
  * Apply equipped defender upgrades to the defender config.
  * Same logic as attacker.
  */
-export function applyDefenderUpgrades(
-  config: ConfigWithCost,
+export function applyDefenderUpgrades<T extends ConfigWithCost>(
+  config: T,
   equippedUpgradeIds: (string | null)[],
-): ConfigWithCost {
+): T {
   return applyUpgrades(config, equippedUpgradeIds);
 }
 
@@ -52,12 +51,12 @@ export function applyDefenderUpgrades(
 // Core Logic
 // ============================================================================
 
-function applyUpgrades(
-  config: ConfigWithCost,
+function applyUpgrades<T extends ConfigWithCost>(
+  config: T,
   equippedUpgradeIds: (string | null)[],
-): ConfigWithCost {
+): T {
   // Shallow clone to avoid mutating the original
-  const result = { ...config };
+  const result: ConfigWithCost = { ...config };
 
   let totalUpgradeCost = 0;
 
@@ -93,5 +92,5 @@ function applyUpgrades(
   // Add total upgrade cost to unit cost
   result.unitCost = (result.unitCost ?? 0) + totalUpgradeCost;
 
-  return result;
+  return result as T;
 }

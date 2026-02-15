@@ -14,8 +14,7 @@
       "Climbing Vehicle",
       "Expert Climber",
       "Armor",
-      "Scout X",
-      "Impact X"
+      "Scout X"
     ],
     "upgradeBar": [
       "hardpoint",
@@ -2433,9 +2432,7 @@
       "Sharpshooter",
       "Impervious",
       "Armor [X]",
-      "Arsenal",
-      "Pierce X",
-      "Versatile"
+      "Arsenal"
     ],
     "upgradeBar": [
       "training",

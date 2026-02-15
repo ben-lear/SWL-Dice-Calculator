@@ -1,5 +1,6 @@
 import type { DefenderConfig } from '../engine/types';
 import type { DefenderPreset } from './defenseTypes';
+import type { UpgradeSlot } from '../data/types';
 import { getDefenderPresetById } from './defensePresetHelpers';
 import { useDefenseConfigStore } from './defenseConfigStore';
 
@@ -51,7 +52,11 @@ export function loadDefenderPresetById(presetId: string): boolean {
   };
   
   // Load the preset into the store
-  useDefenseConfigStore.getState().loadDefenderPreset(presetId, config, preset.upgradeBar);
+  useDefenseConfigStore.getState().loadPreset(
+    presetId,
+    config,
+    preset.upgradeBar as UpgradeSlot[],
+  );
   
   return true;
 }

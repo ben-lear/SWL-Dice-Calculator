@@ -1,6 +1,6 @@
 // Stores
 export { useAttackConfigStore } from './attackConfigStore';
-export { useDefenseConfigStore, selectDefenderConfig, getFullDefenderConfig } from './defenseConfigStore';
+export { useDefenseConfigStore, selectDefenderConfig } from './defenseConfigStore';
 export { useAttackTypeStore } from './attackTypeStore';
 export { useResultsStore } from './resultsStore';
 
