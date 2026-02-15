@@ -4,7 +4,7 @@
  */
 
 import type { ProcessedUnit, ResolvedUnit } from './types';
-import type { UnitEnrichment } from './enrichment/types';
+import type { UnitEnrichment, EnrichmentWeaponProfile } from './enrichment/types';
 import { UNIT_ENRICHMENTS } from './enrichment/units';
 import { KEYWORD_MAP, ATTACKER_KEYWORD_FIELD_MAP, DEFENDER_KEYWORD_FIELD_MAP } from './keywordMap';
 
@@ -110,8 +110,31 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
       enrichment?.defenseSurgeChart ?? null,
 
     keywords,
-    weapons: enrichment?.weapons ?? [],
+    weapons: normalizeEnrichmentWeapons(enrichment?.weapons),
     upgradeBar: enrichment?.upgradeBarOverride ?? processed.upgradeBar,
     isEnriched,
   };
+}
+
+function normalizeEnrichmentWeapons(
+  weapons: EnrichmentWeaponProfile[] | undefined,
+): ResolvedUnit['weapons'] {
+  if (!weapons || weapons.length === 0) {
+    return [];
+  }
+
+  return weapons.map((weapon) => ({
+    name: weapon.name,
+    weaponType: weapon.weaponType,
+    redDice: normalizeDiceCount(weapon.redDice),
+    blackDice: normalizeDiceCount(weapon.blackDice),
+    whiteDice: normalizeDiceCount(weapon.whiteDice),
+    keywords: weapon.keywords ?? {},
+    minRange: weapon.minRange,
+    maxRange: weapon.maxRange,
+  }));
+}
+
+function normalizeDiceCount(value: number | null | undefined): number {
+  return value ?? 0;
 }

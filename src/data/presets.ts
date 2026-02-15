@@ -1,4 +1,5 @@
 import type {
+  AttackType,
   AttackSurgeChart,
   DefenseSurgeChart,
   DefenseDieColor,
@@ -129,6 +130,7 @@ export interface AttackerPreset {
   id: string;
   faction: Faction;
   name: string;             // e.g., "Darth Vader (Lightsaber)"
+  attackType: AttackType;
   profile: AttackerPresetProfile;
   upgradeBar: UpgradeSlot[];  // Available upgrade slots
 }

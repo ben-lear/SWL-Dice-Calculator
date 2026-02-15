@@ -5,6 +5,7 @@
 
 import type { AttackerPreset, DefenderPreset } from './presets';
 import { Faction, FACTION_LABELS } from './presets';
+import type { AttackType } from '../engine/types';
 import { generateAllPresets } from './presetGenerator';
 
 // ============================================================================
@@ -16,10 +17,18 @@ import { generateAllPresets } from './presetGenerator';
  */
 export function getAttackerPresets(
   faction?: Faction | null,
+  attackType?: AttackType,
 ): AttackerPreset[] {
   const { attackerPresets } = generateAllPresets();
-  if (!faction) return attackerPresets;
-  return attackerPresets.filter((p) => p.faction === faction);
+  return attackerPresets.filter((preset) => {
+    if (faction && preset.faction !== faction) {
+      return false;
+    }
+    if (attackType && preset.attackType !== attackType) {
+      return false;
+    }
+    return true;
+  });
 }
 
 /**
@@ -38,9 +47,9 @@ export function getDefenderPresets(
  */
 export function getAttackerPresetById(
   id: string,
+  attackType?: AttackType,
 ): AttackerPreset | undefined {
-  const { attackerPresets } = generateAllPresets();
-  return attackerPresets.find((p) => p.id === id);
+  return getAttackerPresets(undefined, attackType).find((p) => p.id === id);
 }
 
 /**

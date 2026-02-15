@@ -1,7 +1,9 @@
 import type {
+  AttackType,
   AttackSurgeChart,
   DefenseSurgeChart,
   DefenseDieColor,
+  WeaponKeywords,
 } from '../engine/types';
 import type { Faction } from './presets';
 
@@ -237,12 +239,12 @@ export interface ProcessedKeyword {
  */
 export interface WeaponProfile {
   name: string;
+  weaponType: AttackType;
   redDice: number;
   blackDice: number;
   whiteDice: number;
-  surgeChart: AttackSurgeChart;
   /** Weapon-specific keywords using the engine's typed WeaponKeywords */
-  keywords: Partial<import('../engine/types').WeaponKeywords>;
+  keywords: Partial<WeaponKeywords>;
   minRange?: number;
   maxRange?: number;
 }

@@ -2,6 +2,8 @@
 // Defender Preset Types (stub for Phase 5.5)
 // ============================================================================
 
+import type { DefenseDieColor, DefenseSurgeChart } from '../engine/types';
+
 export interface DefenderPreset {
   id: string;
   name: string;
@@ -9,8 +11,8 @@ export interface DefenderPreset {
   unitType: 'trooper' | 'commander' | 'operative' | 'support' | 'heavy';
   
   // Core defense configuration that gets loaded into DefenseConfigState
-  dieColor: import('../engine/types').DefenseDieColor;
-  surgeChart: import('../engine/types').DefenseSurgeChart;
+  dieColor: DefenseDieColor;
+  surgeChart: DefenseSurgeChart;
   unitCost: number;
   
   // Unit keywords (base, before upgrades)
@@ -37,8 +39,8 @@ export interface DefenderPreset {
   
   // Guardian configuration (if applicable)
   guardianX: number;
-  guardianDieColor: import('../engine/types').DefenseDieColor;
-  guardianSurgeChart: import('../engine/types').DefenseSurgeChart;
+  guardianDieColor: DefenseDieColor;
+  guardianSurgeChart: DefenseSurgeChart;
   guardianDeflect: boolean;
   guardianSoresuMastery: boolean;
   

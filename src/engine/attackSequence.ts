@@ -1,5 +1,10 @@
 import type { AttackConfig, AttackResult } from './types';
-import { formAttackPool, upgradeDowgradeAttackDice, aggregateWeaponKeywords } from './attackPool';
+import {
+  formAttackPool,
+  upgradeDowgradeAttackDice,
+  aggregateWeaponKeywords,
+  getWeaponsForAttackType,
+} from './attackPool';
 import { rollAttackDice, rerollAttackDice } from './attackRoll';
 import { convertAttackSurges, applyMarksman, applyJarKai } from './attackSurges';
 import { applyDodgeAndCover } from './dodgeCover';
@@ -21,7 +26,7 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
   const poolAfterStep2 = formAttackPool(config);
 
   // Aggregate weapon keywords for pool-level usage
-  const poolKeywords = aggregateWeaponKeywords(config.attacker.weapons);
+  const poolKeywords = aggregateWeaponKeywords(getWeaponsForAttackType(config));
 
   // Step 4a — Upgrade/Downgrade Attack Dice
   const poolAfterStep4a = upgradeDowgradeAttackDice(poolAfterStep2, config);

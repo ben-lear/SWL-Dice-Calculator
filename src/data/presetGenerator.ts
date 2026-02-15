@@ -7,7 +7,8 @@ import type { AttackerPreset, DefenderPreset } from './presets';
 import type { ResolvedUnit } from './types';
 import { Faction } from './presets';
 import { getAllResolvedUnits } from './unitResolver';
-import { AttackSurgeChart } from '../engine/types';
+import type { WeaponProfile } from '../engine/types';
+import { AttackSurgeChart, AttackType } from '../engine/types';
 
 // ============================================================================
 // Generator
@@ -71,8 +72,9 @@ function generateAttackerPreset(
   // Build profile — weapons[] replaces flat dice fields (Phase 2.5)
   // Data-layer WeaponProfile now uses typed Partial<WeaponKeywords>, so we can
   // directly use the keywords (fill in defaults for missing fields)
-  const engineWeapon: import('../engine/types').WeaponProfile = {
+  const engineWeapon: WeaponProfile = {
     name: weapon.name,
+    weaponType: weapon.weaponType,
     redDice: weapon.redDice,
     blackDice: weapon.blackDice,
     whiteDice: weapon.whiteDice,
@@ -97,7 +99,7 @@ function generateAttackerPreset(
 
   const profile: Record<string, any> = {
     weapons: [engineWeapon],
-    surgeChart: weapon.surgeChart,
+    surgeChart: unit.attackSurgeChart ?? AttackSurgeChart.None,
     unitCost: unit.cost,
   };
 
@@ -118,6 +120,7 @@ function generateAttackerPreset(
     id: `${unit.id}-${slugifyWeapon(weapon.name)}`,
     faction: unit.faction as Faction,
     name: `${unit.name} (${weapon.name})`,
+    attackType: weapon.weaponType,
     profile,
     upgradeBar: unit.upgradeBar,
   };
@@ -127,8 +130,9 @@ function generateSkeletonAttackerPreset(
   unit: ResolvedUnit,
 ): AttackerPreset {
   // Create empty weapon profile for un-enriched units
-  const emptyWeapon: import('../engine/types').WeaponProfile = {
+  const emptyWeapon: WeaponProfile = {
     name: 'Unknown',
+    weaponType: AttackType.Ranged,
     redDice: 0,
     blackDice: 0,
     whiteDice: 0,
@@ -161,6 +165,7 @@ function generateSkeletonAttackerPreset(
     id: `${unit.id}-base`,
     faction: unit.faction as Faction,
     name: `${unit.name} (no weapon data)`,
+    attackType: AttackType.Ranged,
     profile,
     upgradeBar: unit.upgradeBar,
   };

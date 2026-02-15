@@ -127,6 +127,8 @@ export interface WeaponKeywords {
 export interface WeaponProfile {
   /** Optional display name (e.g., "DLT-19", "Lightsaber") */
   name?: string;
+  /** Weapon attack type; if omitted, treated as valid for all attack types. */
+  weaponType?: AttackType;
 
   // Dice contributed by this weapon
   redDice: number;

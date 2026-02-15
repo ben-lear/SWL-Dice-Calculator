@@ -1,6 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import type { SimulationResult } from '../types';
 import type { WorkerResponse } from './protocol';
+import { SimulationWorkerClient } from './simulationWorkerClient';
 
 // ============================================================================
 // Mock Worker
@@ -38,14 +39,6 @@ vi.stubGlobal('Worker', class {
 // ============================================================================
 // Tests
 // ============================================================================
-
-// Dynamic import after mocking Worker
-let SimulationWorkerClient: typeof import('./simulationWorkerClient').SimulationWorkerClient;
-
-beforeEach(async () => {
-  const mod = await import('./simulationWorkerClient');
-  SimulationWorkerClient = mod.SimulationWorkerClient;
-});
 
 describe('SimulationWorkerClient', () => {
   it('posts a run message to the worker', () => {

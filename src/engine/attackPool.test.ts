@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { executeAttackSequence } from './attackSequence';
-import { aggregateWeaponKeywords, formAttackPool } from './attackPool';
+import { aggregateWeaponKeywords, formAttackPool, getWeaponsForAttackType } from './attackPool';
 import type { AttackConfig } from './types';
 import { AttackType, AttackSurgeChart, AttackDieColor } from './types';
 import { createAttackerWithWeapon, createMinimalDefender, createMinimalAttacker, createMinimalWeapon } from './testHelpers';
@@ -160,6 +160,43 @@ describe('formAttackPool — multi-weapon', () => {
 
     expect(whiteCount).toBe(3); // NOT multiplied
     expect(redCount).toBe(4); // 1 × 4
+  });
+
+  it('only includes weapons matching selected attack type', () => {
+    const config: AttackConfig = {
+      attacker: createMinimalAttacker({
+        weapons: [
+          createMinimalWeapon({ redDice: 2, weaponType: AttackType.Ranged }),
+          createMinimalWeapon({ blackDice: 3, weaponType: AttackType.Melee }),
+        ],
+      }),
+      defender: createMinimalDefender(),
+      attackType: AttackType.Ranged,
+    };
+
+    const pool = formAttackPool(config);
+    const redCount = pool.filter(d => d === AttackDieColor.Red).length;
+    const blackCount = pool.filter(d => d === AttackDieColor.Black).length;
+
+    expect(redCount).toBe(2);
+    expect(blackCount).toBe(0);
+  });
+
+  it('treats missing weapon type as valid for all attack types', () => {
+    const config: AttackConfig = {
+      attacker: createMinimalAttacker({
+        weapons: [
+          createMinimalWeapon({ redDice: 1 }),
+          createMinimalWeapon({ blackDice: 2, weaponType: AttackType.Melee }),
+        ],
+      }),
+      defender: createMinimalDefender(),
+      attackType: AttackType.Ranged,
+    };
+
+    const filteredWeapons = getWeaponsForAttackType(config);
+    expect(filteredWeapons).toHaveLength(1);
+    expect(filteredWeapons[0].redDice).toBe(1);
   });
 });
 

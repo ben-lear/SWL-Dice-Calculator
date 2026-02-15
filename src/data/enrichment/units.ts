@@ -6,108 +6,247 @@
  * - Numeric (X) keywords are set to '<need human>'.
  */
 
+import { AttackSurgeChart, AttackType, DefenseSurgeChart } from '../../engine';
 import type { UnitEnrichment } from './types';
 
 export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'han-solo-unorthodox-general': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      uncannyLuckX: '<need human>',
-      sharpshooterX: '<need human>',
+      uncannyLuckX: 3,
+      sharpshooterX: 1,
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Brawl',
+        weaponType: AttackType.Melee,
+        whiteDice: 3,
+      },
+      {
+        name: 'Han\'s DL-44 Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        keywords: {
+          pierceX: 2
+        }
+      }
+    ],
   },
 
   'lando-calrissian-canny-general': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      uncannyLuckX: '<need human>',
+      uncannyLuckX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Backup Plan',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Lando\'s X-8 Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 3,
+      }
+    ],
   },
 
   'leia-organa-fearless-and-inventive': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Martial Arts',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Leia\'s Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+      }
+    ],
   },
 
   'luke-skywalker-hero-of-the-rebellion': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       immunePierce: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
       block: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Anakin\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+        redDice: 2,
+        keywords: {
+          pierceX: 1,
+          impactX: 2,
+        }
+      },
+      {
+        name: 'Luke\'s Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 3,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'luke-skywalker-commander-skywalker': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Lightsaber & Horn',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+        whiteDice: 3,
+        keywords: {
+          pierceX: 1,
+          impactX: 2,
+          lethalX: 1,
+          ramX: 1,
+        }
+      },
+      {
+        name: 'Luke\'s Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 3,
+      }
+    ],
   },
 
   'rebel-officer-fighting-for-freedom': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 2
+      }
+    ],
   },
 
   'ahsoka-tano-fulcrum': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       jarKaiMastery: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Ahsoka\'s Lightsabers',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+        whiteDice: 2,
+        redDice: 2,
+        keywords: {
+          pierceX: 2,
+          impactX: 2,
+        }
+      }
+    ],
   },
 
   'cassian-andor-capable-intelligence-agent': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      dangerSenseX: '<need human>',
+      dangerSenseX: 3,
       marksman: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Martial Arts',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Cassian\'s Covert Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 2,
+      }
+    ],
   },
 
   'chewbacca-walking-carpet': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      guardianX: '<need human>',
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Overwhelm',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+        keywords: {
+          lethalX: 1
+        }
+      },
+      {
+        name: 'Chewbacca\'s Bowcaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 2,
+        keywords: {
+          impactX: 1,
+          pierceX: 1
+        }
+      }
+    ],
   },
 
   'han-solo-reluctant-hero': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      uncannyLuckX: '<need human>',
+      uncannyLuckX: 3,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Stampede',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+        blackDice: 2,
+        
+      }
+    ],
   },
 
   'jyn-erso-stardust': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       sharpshooterX: '<need human>',
       suppressive: true,
@@ -116,8 +255,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'k-2so-sardonic-security-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       armorX: '<need human>',
     },
@@ -125,8 +264,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'luke-skywalker-jedi-knight': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -135,8 +274,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'r2-d2-hero-of-a-thousand-devices': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       suppressive: true,
     },
@@ -144,15 +283,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-agent-defender-of-democracy': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
     weapons: [],
   },
 
   'sabine-wren-explosive-artist': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
     },
@@ -160,15 +299,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'fleet-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
     weapons: [],
   },
 
   'mark-ii-medium-blaster-trooper': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       cumbersome: true,
     },
@@ -176,15 +315,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
     weapons: [],
   },
 
   'rebel-veterans': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       lowProfile: true,
     },
@@ -192,8 +331,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-resistance': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
     },
@@ -201,8 +340,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-resistance-clan-wren': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
     },
@@ -210,8 +349,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-commandos': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       lowProfile: true,
       sharpshooterX: '<need human>',
@@ -220,8 +359,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-commandos-strike-team': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       lowProfile: true,
       sharpshooterX: '<need human>',
@@ -230,8 +369,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-sleeper-cell-ready-to-strike': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       suppressive: true,
     },
@@ -239,8 +378,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-freedom-fighters': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       duelistAttacker: true,
       duelistDefender: true,
@@ -249,8 +388,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-kashyyyk-resistance': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -258,15 +397,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   '1-4-fd-laser-cannon-team': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
     weapons: [],
   },
 
   'at-rt': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       armorX: '<need human>',
     },
@@ -274,8 +413,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'tauntaun-riders': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -283,8 +422,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'a-a5-speeder-truck': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       armorX: '<need human>',
     },
@@ -292,8 +431,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   't-47-airspeeder': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       armorX: '<need human>',
       coverX: '<need human>',
@@ -303,8 +442,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'x-34-landspeeder': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       coverX: '<need human>',
       armorX: '<need human>',

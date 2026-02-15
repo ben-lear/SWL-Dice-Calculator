@@ -1,6 +1,12 @@
 import type { AttackConfig, WeaponProfile, AggregatedWeaponKeywords } from './types';
 import { AttackDieColor } from './types';
 
+export function getWeaponsForAttackType(config: AttackConfig): WeaponProfile[] {
+  return config.attacker.weapons.filter((weapon) => (
+    weapon.weaponType === undefined || weapon.weaponType === config.attackType
+  ));
+}
+
 /**
  * Aggregate weapon keywords across all weapons in an attack pool.
  * - Numeric keywords: summed
@@ -71,10 +77,11 @@ export function aggregateWeaponKeywords(
  * This correctly handles mixed pools where only some weapons have Spray.
  */
 export function formAttackPool(config: AttackConfig): AttackDieColor[] {
-  const { attacker, defender } = config;
+  const { defender } = config;
   const pool: AttackDieColor[] = [];
+  const weaponsForAttackType = getWeaponsForAttackType(config);
 
-  for (const weapon of attacker.weapons) {
+  for (const weapon of weaponsForAttackType) {
     let red = weapon.redDice;
     let black = weapon.blackDice;
     let white = weapon.whiteDice;

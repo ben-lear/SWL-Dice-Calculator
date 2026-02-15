@@ -4,11 +4,30 @@
  */
 
 import type {
+  AttackType,
   AttackSurgeChart,
   DefenseSurgeChart,
+  WeaponKeywords,
 } from '../../engine/types';
-import type { UpgradeSlot, WeaponProfile } from '../types';
+import type { UpgradeSlot } from '../types';
 import type { UnitKeywords, UpgradeKeywords } from './keywordTypes';
+
+/**
+ * Weapon profile shape used by manual unit enrichment.
+ *
+ * Dice values are optional during manual entry and default to 0 in resolver
+ * normalization when omitted/null/undefined.
+ */
+export interface EnrichmentWeaponProfile {
+  name: string;
+  weaponType: AttackType;
+  redDice?: number | null;
+  blackDice?: number | null;
+  whiteDice?: number | null;
+  keywords?: Partial<WeaponKeywords>;
+  minRange?: number;
+  maxRange?: number;
+}
 
 // ============================================================================
 // Unit Enrichment
@@ -22,7 +41,7 @@ import type { UnitKeywords, UpgradeKeywords } from './keywordTypes';
  * The resolver merges enrichment on top of processed data.
  */
 export interface UnitEnrichment {
-  /** Attack surge chart fallback for units without enriched weapon profiles */
+  /** Unit-level attack surge chart used by all unit weapons */
   attackSurgeChart?: AttackSurgeChart;
 
   /** Defense surge chart (not available from API) */
@@ -33,7 +52,7 @@ export interface UnitEnrichment {
    * Each entry generates a separate attacker preset.
    * If empty/omitted, the unit only generates a defender preset.
    */
-  weapons?: WeaponProfile[];
+  weapons?: EnrichmentWeaponProfile[];
 
   /**
    * Override the upgrade bar derived from the API.

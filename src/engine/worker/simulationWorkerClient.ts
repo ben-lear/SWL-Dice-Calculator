@@ -1,6 +1,25 @@
 import type { AttackConfig, SimulationResult } from '../types';
 import type { SimulationRequest, WorkerResponse } from './protocol';
 
+interface WorkerMessageEvent<T> {
+  data: T;
+}
+
+interface WorkerErrorEvent {
+  message?: string;
+}
+
+interface WorkerLike {
+  onmessage: ((event: WorkerMessageEvent<WorkerResponse>) => void) | null;
+  onerror: ((event: WorkerErrorEvent) => void) | null;
+  postMessage(message: SimulationRequest): void;
+  terminate(): void;
+}
+
+interface WorkerConstructorLike {
+  new (url: URL, options: { type: 'module' }): WorkerLike;
+}
+
 /**
  * Client wrapper for the simulation Web Worker.
  *
@@ -9,25 +28,31 @@ import type { SimulationRequest, WorkerResponse } from './protocol';
  * supersedes a previous one.
  */
 export class SimulationWorkerClient {
-  private worker: Worker;
+  private worker: WorkerLike;
   private currentRequestId: string | null = null;
   private pendingResolve: ((result: SimulationResult) => void) | null = null;
   private pendingReject: ((error: Error) => void) | null = null;
   private requestCounter = 0;
 
   constructor() {
-    this.worker = new Worker(
+    const WorkerCtor = (globalThis as { Worker?: WorkerConstructorLike }).Worker;
+    if (!WorkerCtor) {
+      throw new Error('Web Worker is not supported in this environment.');
+    }
+
+    this.worker = new WorkerCtor(
       new URL('./simulation.worker.ts', import.meta.url),
       { type: 'module' }
     );
 
-    this.worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
+    this.worker.onmessage = (event) => {
       this.handleMessage(event.data);
     };
 
-    this.worker.onerror = (event: ErrorEvent) => {
+    this.worker.onerror = (event) => {
       if (this.pendingReject) {
-        this.pendingReject(new Error(`Worker error: ${event.message}`));
+        const message = event.message ?? 'Unknown worker error';
+        this.pendingReject(new Error(`Worker error: ${message}`));
         this.pendingResolve = null;
         this.pendingReject = null;
         this.currentRequestId = null;
