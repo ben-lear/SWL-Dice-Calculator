@@ -48,6 +48,16 @@ export interface UnitEnrichment {
   defenseSurgeChart?: DefenseSurgeChart;
 
   /**
+   * Override the base miniature count for this unit.
+   * When present, overrides the API's `figures` field.
+   * When absent, the API `figures` value is used (default: 1 if API is also absent).
+   *
+   * This is the number of miniatures in the base unit BEFORE upgrades.
+   * Personnel upgrades may add additional miniatures on top of this count.
+   */
+  miniatureCount?: number;
+
+  /**
    * Weapon profiles for this unit.
    * Each entry generates a separate attacker preset.
    * If empty/omitted, the unit only generates a defender preset.
@@ -97,4 +107,68 @@ export interface UpgradeEnrichment {
    * the defender to roll red defense dice during the Roll Cover step.
    */
   keywords?: UpgradeKeywords;
+
+  /**
+   * Weapon profiles this upgrade provides.
+   * Used by: Heavy Weapon upgrades (add a miniature with this weapon),
+   * Squad Leader upgrades (add a miniature with this weapon),
+   * Armament upgrades (add/modify weapon options), Grenade upgrades
+   * (add one weapon entry per grenade instance — each grenade upgrade
+   * contributes once per pool, but multiple different grenades each
+   * contribute independently), Personnel upgrades
+   * (provide the weapon profile for the added miniature).
+   *
+   * If a weapon has sidearmMelee/sidearmRanged in its keywords,
+   * it is only usable in the matching attack type.
+   */
+  weapons?: EnrichmentWeaponProfile[];
+
+  /**
+   * Whether this upgrade adds a miniature to the unit.
+   * Implicit defaults based on upgrade slot type:
+   *   - Heavy Weapon: 1 (adds the heavy weapon specialist mini)
+   *   - Personnel: 1 (adds a trooper/support mini)
+   *   - Squad Leader: 1 (adds a leader mini)
+   *   - All other slots: 0 (does not add a mini)
+   *
+   * Only set this explicitly when the upgrade differs from the slot default.
+   * For example, "squad" personnel upgrades that add 2 minis should set
+   * `addsMiniature: 2` to override the default of 1.
+   *
+   * The resolver applies slot-based defaults when this field is absent.
+   */
+  addsMiniature?: number;
+
+  /**
+   * Whether the miniature added by this upgrade is a noncombatant.
+   * Noncombatant miniatures increase the unit's mini count (for wound allocation
+   * and model count purposes) but cannot contribute weapons to the attack pool.
+   *
+   * Used by: Medical droids (2-1B, FX-9, EV-series), astromech droids,
+   * protocol droids, comms technicians, etc.
+   */
+  noncombatant?: boolean;
+
+  /**
+   * Whether this is a grenade-type weapon.
+   * Grenade weapons can only contribute once per attack pool per grenade
+   * upgrade instance, regardless of how many miniatures carry them.
+   * A unit may equip multiple different grenade upgrades — each one
+   * independently adds its weapon once to the pool.
+   * When true, the upgrade applicator ensures exactly one entry per
+   * grenade upgrade (not one total across all grenades).
+   */
+  isGrenade?: boolean;
+
+  /**
+   * Additional upgrade slot(s) this upgrade adds to the unit when equipped.
+   * For example, Agent Kallus adds a Heavy Weapon slot; Stormtrooper Captain
+   * adds a Training slot.
+   *
+   * When this upgrade is equipped, the UI dynamically adds these slot(s)
+   * to the unit's upgrade bar, allowing the user to equip additional upgrades.
+   * Unequipping this upgrade removes the dynamically-added slot(s) and any
+   * upgrades equipped in them.
+   */
+  addsUpgradeSlot?: UpgradeSlot[];
 }

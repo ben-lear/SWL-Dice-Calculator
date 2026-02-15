@@ -107,7 +107,11 @@ Keywords are split into two sections:
 
 The preset-driven mode. The user selects a unit and weapon loadout, and the app auto-populates dice, keywords, and upgrade slots from the data layer.
 
-Weapons are displayed as individual rows, each showing their dice contribution and weapon-level keywords. A checkbox on each row enables/disables that weapon's contribution to the pool. This lets the user model "I'm only shooting with these weapons" scenarios.
+For **multi-miniature units** (trooper squads), each miniature in the unit contributes one weapon to the attack pool. The panel displays per-miniature weapon assignment rows showing which weapon each mini is contributing. Upgrades (Heavy Weapon, Personnel, Squad Leader) add additional miniatures to the unit, each contributing its own weapon to the pool. Grenades contribute once per pool regardless of unit size. Additionally, some upgrades add new upgrade slots to the unit (e.g., Agent Kallus adds a Heavy Weapon slot, Stormtrooper Captain adds a Training slot), causing the upgrade section to dynamically update.
+
+For **single-miniature units** (heroes, vehicles, operatives), a simpler weapon selection is shown since there is only one contributing mini (possibly with Arsenal X allowing multiple weapons).
+
+### Multi-Mini Unit (e.g., Stormtroopers)
 
 ```
 ┌──────────────────────────────────────┐
@@ -122,26 +126,35 @@ Weapons are displayed as individual rows, each showing their dice contribution a
 │                                      │
 │  ─── Upgrades ───────────────────    │
 │  Heavy Wpn:  [DLT-19 Stormtpr ▼]    │
-│  Personnel:  [None             ▼]    │
+│  Personnel:  [Stormtrooper Cpt ▼]    │
 │  Gear:       [None             ▼]    │
 │  Grenades:   [Impact Grenades  ▼]    │
 │  Training:   [None             ▼]    │
-│  Base: 44 pts  Upgrades: +38 pts     │
-│  Total: 82 pts                       │
+│  ── Added by upgrades ───────────    │
+│  Training:   [None             ▼] ←Cpt│
+│  Base: 44 pts  Upgrades: +48 pts     │
+│  Total: 92 pts                       │
 │                                      │
-│  ─── Weapon Pool ────────────────    │
-│  ☑ E-11 Blaster Rifle               │
-│    🔴 0  ⚫ 0  ⚪ 3                  │
-│    (no weapon keywords)              │
+│  ─── Weapon Pool (6 minis) ──────    │
+│  ┌────────────────────────────────┐  │
+│  │ Mini 1 (Leader)  E-11 Blstr 1W│  │
+│  ├────────────────────────────────┤  │
+│  │ Mini 2           E-11 Blstr 1W│  │
+│  ├────────────────────────────────┤  │
+│  │ Mini 3           E-11 Blstr 1W│  │
+│  ├────────────────────────────────┤  │
+│  │ Mini 4           E-11 Blstr 1W│  │
+│  ├────────────────────────────────┤  │
+│  │ Mini 5 (Heavy)   ◆ DLT-19 1R │  │
+│  │                   Impact 1    │  │
+│  ├────────────────────────────────┤  │
+│  │ Mini 6 (Pers.)  E-11 Blstr 1W│  │
+│  ├────────────────────────────────┤  │
+│  │ [+] Imp. Grenades 1B Imp.1 🔒│  │
+│  └────────────────────────────────┘  │
 │                                      │
-│  ☑ DLT-19                           │
-│    🔴 1  ⚫ 0  ⚪ 1                  │
-│    Impact 1, Spray                   │
-│                                      │
-│  ───────────────────────────────     │
-│  Pool total: 🔴 1  ⚫ 0  ⚪ 4       │
-│  (spray applied: DLT multiplied      │
-│   by minis in LOS on its dice only)  │
+│  Pool: 5W + 1R + 1B                 │
+│  Impact 2 · Precise 1               │
 │                                      │
 │  ─── Tokens ─────────────────────    │
 │  Aim tokens:        [1]  ◀ ─ ▶      │
@@ -158,42 +171,106 @@ Weapons are displayed as individual rows, each showing their dice contribution a
 │  Strategy: [Conservative ▼]         │
 │                                      │
 │  ─── Points ─────────────────────    │
-│  Total: 82 pts                       │
+│  Total: 92 pts                       │
 │                                      │
 └──────────────────────────────────────┘
 ```
 
-### Weapon Row Detail
+### Single-Mini Unit (e.g., Darth Vader)
 
-Each weapon row in Unit Builder mode displays:
+```
+┌──────────────────────────────────────┐
+│  ATTACKER                            │
+│  [Custom Pool] [Unit Builder]        │
+│                                      │
+│  ─── Unit Selection ─────────────    │
+│  Faction:    [Galactic Empire ▼]     │
+│  Unit:       [Darth Vader      ▼]    │
+│                                      │
+│  ─── Upgrades ───────────────────    │
+│  Force: [Force Push        ▼]       │
+│  Force: [Saber Throw       ▼]       │
+│  Force: [Force Reflexes    ▼]       │
+│  Command: [None            ▼]       │
+│  Total: 195 pts                      │
+│                                      │
+│  ─── Weapon ─────────────────────    │
+│  ┌────────────────────────────────┐  │
+│  │ Vader's Lightsaber    6R      │  │
+│  │ Impact 3 · Pierce 3           │  │
+│  └────────────────────────────────┘  │
+│                                      │
+│  ─── Tokens ─────────────────────    │
+│  (tokens, keywords, etc.)            │
+└──────────────────────────────────────┘
+```
+
+**Single-mini behavior note:** No per-miniature assignment list is shown for single-mini units. The Weapon section renders a single row/card for the selected weapon profile.
+
+### Per-Miniature Weapon Row Detail
+
+Each miniature row in the Weapon Pool section displays:
 
 ```
 ┌─────────────────────────────────────────────┐
-│ ☑ DLT-19 Stormtrooper                      │
-│   🔴 1  ⚫ 0  ⚪ 1    Impact 1 · Spray     │
-│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
-│ ☐ Impact Grenades (if equipped)             │
-│   🔴 0  ⚫ 0  ⚪ 1    Blast · Impact 1     │
+│ Mini 1 (Leader)       E-11 Blaster ▾    1W │
+│ Mini 2                E-11 Blaster ▾    1W │
+│ Mini 3                E-11 Blaster ▾    1W │
+│ Mini 4                E-11 Blaster ▾    1W │
+│ Mini 5 (Heavy)       ◆ DLT-19       1R+1W │
+│                       Impact 1 · Spray      │
+│ Mini 6 (Personnel)    E-11 Blaster ▾    1W │
+│─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
+│ [+] Impact Grenades   1B  Impact 1      🔒 │
+│     (1 per pool)                            │
 └─────────────────────────────────────────────┘
 ```
 
-- **Checkbox** (☑/☐): Enables/disables weapon in the pool. Disabled weapons are excluded from aggregation.
-- **Weapon name**: From the `WeaponProfile.name` field.
-- **Dice icons**: Compact display of dice counts. 🔴 = red, ⚫ = black, ⚪ = white.
-- **Keyword badges**: Inline display of weapon-level keywords with values (e.g., "Impact 1", "Blast", "Spray"). Only non-default keywords are shown.
-- Weapon rows are read-only in Unit Builder mode — dice and keywords come from the data layer. The user adjusts the pool by checking/unchecking weapons or selecting different upgrades.
+**Row types:**
+- **Base miniature rows**: Show the unit's default weapon. If the unit has multiple ranged/melee weapon options, a dropdown allows choosing between them. Otherwise, weapon is locked.
+- **Heavy Weapon row**: Labeled "(Heavy)", marked with ◆ indicator, locked to the heavy weapon upgrade's profile. Only shown when a heavy weapon upgrade is equipped. This is an ADDITIONAL mini beyond the base count (e.g., 4 base + 1 heavy = 5 total). The heavy weapon specialist contributes its weapon to the pool alongside base minis.
+- **Personnel row(s)**: Labeled "(Personnel)" or "(Pers.)", shows the personnel upgrade's weapon. Additional rows appear when personnel upgrades are equipped (1 row per `addsMiniature`). These are ADDITIONAL minis beyond the base count.
+- **Squad Leader row**: Labeled "(Sq.Ldr.)", shows the squad leader's weapon. This is an ADDITIONAL mini beyond the base count. Only shown when a squad leader upgrade is equipped.
+- **Noncombatant row**: Labeled "(Noncombatant)", grayed out, no weapon. Noncombatant miniatures (medical droids, astromechs) cannot contribute weapons to the attack pool. Shown for reference (model count) only.
+- **Grenade row**: Separate from miniature rows, with a "1 per pool" indicator and 🔒 lock icon. Grenades contribute only one weapon entry regardless of unit size. Only shown when a grenade upgrade is equipped.
+
+**Dice indicators**: Compact colored badges. R = red, B = black, W = white.
+**Keyword badges**: Inline display of weapon-level keywords (e.g., "Impact 1", "Blast"). Only non-default keywords shown.
+**Pool summary line**: Aggregated dice by color and stacked keywords across all contributing weapons.
 
 ### Unit Builder Store Mapping
 
 | UI Element          | Store Field                             |
 |---------------------|------------------------------------------|
 | Faction select      | `store.selectedFaction` via `setSelectedFaction(v)` |
-| Unit combobox       | `store.selectedPresetId` via `loadPreset(id, profile)` |
+| Unit combobox       | `store.selectedPresetId` via `loadPreset(id, profile, upgradeBar)` |
 | Upgrade combobox    | `store.equippedUpgradeIds[i]` via `equipUpgrade(i, id)` |
-| Weapon checkbox     | `store.weapons[i].enabled` (boolean flag on each weapon) |
+| Upgrade bar slots   | `store.effectiveUpgradeBar` (base bar + dynamic slots from equipped upgrades) |
+| Miniature count     | `store.baseMiniatureCount` (set by `loadPreset`, read-only in UI) |
+| Weapons array       | `store.weapons[]` (computed by preset generator + upgrade applicator) |
 | Precise spinner     | `store.preciseX` via `setField('preciseX', v)` |
 | Aim tokens spinner  | `store.aimTokens` via `setField('aimTokens', v)` |
 | Reroll strategy     | `store.rerollStrategy` via `setField('rerollStrategy', v)` |
+
+### Multi-Mini Store Flow
+
+When a multi-mini unit is selected:
+1. `loadPreset` sets `baseMiniatureCount` (e.g., 4 for Stormtroopers) and `weapons[]` with `baseMiniatureCount` copies of the default weapon.
+2. Equipping a **Heavy Weapon** upgrade → `upgradeApplicator` adds the heavy weapon's weapon entry to the pool. The heavy weapon mini is an additional miniature beyond the base count (e.g., 4 base + 1 heavy = 5 total).
+3. Equipping a **Personnel** upgrade → `upgradeApplicator` adds weapon entries (1 per `addsMiniature`). Noncombatant personnel add no weapons. Personnel are additional minis beyond the base count.
+4. Equipping a **Squad Leader** upgrade → `upgradeApplicator` adds the squad leader's weapon entry. Additional mini beyond the base count.
+5. Equipping a **Grenade** upgrade → `upgradeApplicator` adds exactly 1 grenade entry to the pool.
+6. **Sidearm filtering**: weapons with `sidearmMelee`/`sidearmRanged` are excluded from the pool when the attack type doesn't match.
+7. The resulting `weapons[]` is passed to the engine's `formAttackPool` and `aggregateWeaponKeywords`, which handle repeated entries naturally (summation/OR/AND).
+
+### Dynamic Upgrade Slots
+
+Some upgrades add additional upgrade slots to the unit via `addsUpgradeSlot`. When equipped:
+1. The store recomputes `effectiveUpgradeBar` by combining the base `upgradeBar` with dynamic slots from equipped upgrades.
+2. The UI renders upgrade dropdowns from `effectiveUpgradeBar`, showing dynamic slots with a visual indicator of their source upgrade.
+3. Unequipping the source upgrade cascades — dynamic slot(s) are removed and any upgrades equipped in them are unequipped.
+
+Example: Stormtroopers base bar = [HeavyWeapon, Personnel, Gear, Grenades, Training]. Equipping "Stormtrooper Captain" (Personnel, `addsUpgradeSlot: [Training]`) → effectiveUpgradeBar = [HeavyWeapon, Personnel, Gear, Grenades, Training, Training←Cpt].
 
 ---
 
@@ -452,6 +529,8 @@ For implementors — which keywords appear in which section:
 | Cumbersome | boolean | Toggle | Read-only badge |
 | Anti-Materiel X | numeric | Spinner | Read-only badge |
 | Anti-Personnel X | numeric | Spinner | Read-only badge |
+| Sidearm: Melee | boolean | Toggle | Read-only badge |
+| Sidearm: Ranged | boolean | Toggle | Read-only badge |
 
 ### Attacker — Unit Keywords (flat on store)
 | Keyword | Type | Both Modes UI |

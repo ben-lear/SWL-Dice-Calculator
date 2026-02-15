@@ -20,10 +20,13 @@ export function getFullConfig(): AttackConfig {
   const baseAttacker = selectAttackerConfig(attackState);
   const baseDefender = selectDefenderConfig(defenseState);
 
-  // Apply equipped upgrades (adds cost + keywords)
+  // Apply equipped upgrades (adds cost + keywords + per-mini weapon assembly)
+  // Pass attackType and unitBaseWeapons for per-mini weapon selection
   const attacker = applyAttackerUpgrades(
     baseAttacker,
     attackState.equippedUpgradeIds,
+    attackTypeState.attackType,       // ← NEW: for weapon selection
+    attackState.unitBaseWeapons ?? [], // ← NEW: for sidearm fallback
   );
   const defender = applyDefenderUpgrades(
     baseDefender,
@@ -46,13 +49,22 @@ export function useFullConfig(): AttackConfig {
   const attackerUpgradeIds = useAttackConfigStore(
     (s) => s.equippedUpgradeIds,
   );
+  const unitBaseWeapons = useAttackConfigStore(
+    (s) => s.unitBaseWeapons,
+  );
   const defenderConfig = useDefenseConfigStore(selectDefenderConfig);
   const defenderUpgradeIds = useDefenseConfigStore(
     (s) => s.equippedUpgradeIds,
   );
   const attackType = useAttackTypeStore((s) => s.attackType);
 
-  const attacker = applyAttackerUpgrades(attackerConfig, attackerUpgradeIds);
+  // Pass attackType and unitBaseWeapons for per-mini weapon assembly
+  const attacker = applyAttackerUpgrades(
+    attackerConfig,
+    attackerUpgradeIds,
+    attackType,              // ← NEW
+    unitBaseWeapons ?? [],   // ← NEW
+  );
   const defender = applyDefenderUpgrades(defenderConfig, defenderUpgradeIds);
 
   return {

@@ -33,6 +33,7 @@ export enum DefenseFace {
 export enum AttackType {
   Ranged = 'ranged',
   Melee = 'melee',
+  Hybrid = 'hybrid',
   Overrun = 'overrun',
 }
 
@@ -114,6 +115,8 @@ export interface WeaponKeywords {
   antiMaterielX: number;
   antiPersonnelX: number;
   cumbersome: boolean;
+  sidearmMelee: boolean;    // Weapon only usable in melee attack pools
+  sidearmRanged: boolean;   // Weapon only usable in ranged attack pools
 }
 
 // ============================================================================
@@ -184,6 +187,7 @@ export interface AttackerConfig {
   // Unit keywords (numeric)
   preciseX: number;
   sharpshooterX: number;
+  arsenalX: number;
 
   // Unit keywords (boolean)
   marksman: boolean;

@@ -6,6 +6,7 @@
  * - Numeric (X) keywords are set to '<need human>'.
  */
 
+import { AttackType } from '../../engine';
 import type { UpgradeEnrichment } from './types';
 
 export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
@@ -65,10 +66,24 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'armament-e-11d': {
-    keywords: {
-      suppressive: true,
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'E-11D Focused Fire',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        keywords: {
+          suppressive: true
+        }
+      },
+      {
+        name: 'E-11D Grenade Launcher',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        keywords: {
+          blast: true
+        }
+      }
+    ]
   },
 
   'armament-electro-gauntlets': {
@@ -590,7 +605,16 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'grenades-impact-grenades': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Impact Grenade',
+        weaponType: AttackType.Hybrid,
+        blackDice: 1,
+        keywords: {
+          impactX: 4
+        }
+      }
+    ]
   },
 
   'grenades-smoke-grenades': {
@@ -712,7 +736,17 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-agent-kallus': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'J-19 Bo-Rifle',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 1,
+        blackDice: 2,
+        keywords: {
+          sidearmRanged: true
+        }
+      }
+    ]
   },
 
   'heavy-weapon-axe-ewok': {
@@ -800,7 +834,17 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-dlt-19d-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'DLT-19D Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        redDice: 2,
+        keywords: {
+          impactX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dlt-19x-sniper': {

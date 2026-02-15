@@ -7,7 +7,7 @@ import {
   WeaponKeywords,
 } from '../engine/types';
 import type { Faction, AttackerPresetProfile } from '../data/presets';
-import type { UpgradeSlot } from '../data/types';
+import type { UpgradeSlot, WeaponProfile as DataLayerWeaponProfile } from '../data/types';
 
 // ============================================================================
 // State Interface
@@ -30,6 +30,7 @@ export interface AttackConfigState {
   // ── Unit-Level Keywords (numeric) ──
   preciseX: number;
   sharpshooterX: number;
+  arsenalX: number;
 
   // ── Unit-Level Keywords (boolean) ──
   marksman: boolean;
@@ -50,6 +51,23 @@ export interface AttackConfigState {
   selectedFaction: Faction | null;
   selectedPresetId: string | null;
   activeMode: 'custom' | 'unit-builder';  // Track which mode is active
+
+  /**
+   * Base miniature count for the selected unit (before upgrades).
+   * Determines how many weapon entries start in the weapons array.
+   * Set by loadPreset from the preset's baseMiniatureCount field.
+   * Defaults to 1 for Custom Pool mode.
+   */
+  baseMiniatureCount: number;
+
+  /**
+   * All weapon profiles available on the unit card (ALL attack types).
+   * Used by the config selector to pass to applyAttackerUpgrades for
+   * per-miniature weapon resolution (base weapon expansion + sidearm fallback).
+   * Set by loadPreset from the preset's unitBaseWeapons field.
+   * Not used in Custom Pool mode (empty array).
+   */
+  unitBaseWeapons: DataLayerWeaponProfile[];
 
   // ── Upgrade System ──
   /** Available upgrade slots for the selected unit (set by loadPreset) */
@@ -99,6 +117,8 @@ type AttackConfigFields = Omit<
   | 'selectedFaction'
   | 'selectedPresetId'
   | 'activeMode'
+  | 'baseMiniatureCount'
+  | 'unitBaseWeapons'
   | 'upgradeBar'
   | 'equippedUpgradeIds'
   | 'equipUpgrade'
@@ -127,6 +147,8 @@ function createEmptyWeapon(): WeaponProfile {
       antiMaterielX: 0,
       antiPersonnelX: 0,
       cumbersome: false,
+      sidearmMelee: false,
+      sidearmRanged: false,
     },
   };
 }
@@ -147,6 +169,7 @@ const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
   // Unit-level keywords (numeric)
   preciseX: 0,
   sharpshooterX: 0,
+  arsenalX: 0,
 
   // Unit-level keywords (boolean)
   marksman: false,
@@ -176,6 +199,8 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   selectedFaction: null,
   selectedPresetId: null,
   activeMode: 'custom',  // Default to Custom Pool mode
+  baseMiniatureCount: 1,    // ← NEW: default for Custom Pool
+  unitBaseWeapons: [],      // ← NEW: empty in Custom Pool mode
 
   // Upgrade system
   upgradeBar: [],
@@ -230,6 +255,8 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
     set(() => ({
       ...DEFAULT_ATTACK_CONFIG,
       ...profile,
+      baseMiniatureCount: profile.baseMiniatureCount ?? 1,  // ← NEW
+      unitBaseWeapons: profile.unitBaseWeapons ?? [],        // ← NEW
       selectedPresetId: presetId,
       upgradeBar,
       equippedUpgradeIds: new Array(upgradeBar.length).fill(null),
@@ -251,6 +278,8 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       selectedFaction: null,
       selectedPresetId: null,
       activeMode: 'custom',
+      baseMiniatureCount: 1,
+      unitBaseWeapons: [],
       upgradeBar: [],
       equippedUpgradeIds: [],
     })),
@@ -266,6 +295,8 @@ export function selectAttackerConfig(state: AttackConfigState) {
     selectedFaction,
     selectedPresetId,
     activeMode,
+    baseMiniatureCount,      // ← NEW: exclude from engine config
+    unitBaseWeapons,          // ← NEW: exclude (passed separately)
     upgradeBar,
     equippedUpgradeIds,
     setField,

@@ -52,7 +52,19 @@ The app follows the official attack timing:
 *(Implicit — the user sets up the pools.)*
 
 ### Step 2 — Form Attack Pool
-The attack pool is formed from one or more **weapons**, each contributing its own dice and weapon keywords. In **Custom Pool mode**, the user defines a single weapon with all dice and keywords. In **Unit Builder mode**, the user selects specific weapons from a unit's weapon loadout.
+The attack pool is formed from one or more **weapons**, each contributing its own dice and weapon keywords. Each **miniature** in a unit contributes exactly one eligible weapon to the pool.
+
+**Multi-miniature units** (trooper squads): Each mini independently contributes one weapon entry to the `weapons[]` array. A 4-miniature Stormtrooper squad produces 4× E-11 entries. Keyword values are additive across all entries — 4× Impact 1 = Impact 4 in the aggregated pool. This is the natural result of the engine iterating all weapon entries.
+
+**Single-miniature units** (heroes, vehicles, operatives): One mini contributes one weapon (or multiple weapons with Arsenal X). In **Custom Pool mode**, the user defines a single weapon with all dice and keywords. In **Unit Builder mode**, the user selects from the unit's weapon options.
+
+**Upgrade effects on the weapon pool:**
+- **Heavy Weapon upgrade**: Adds a miniature (the heavy weapon specialist) that contributes the heavy weapon to the pool alongside base minis. A 4-mini Stormtrooper squad with a DLT-19 becomes 5 minis total: 4× E-11 + 1× DLT-19.
+- **Personnel upgrade**: Adds additional miniature(s) to the unit, each contributing their own weapon to the pool. Noncombatant personnel (medical droids, astromechs) add a miniature for model/wound count purposes but do NOT contribute a weapon.
+- **Squad Leader upgrade**: Adds a miniature (the squad leader) that contributes its weapon to the pool.
+- **Grenade upgrade**: Adds exactly one grenade weapon entry to the pool per grenade instance, regardless of unit size (rules: "only one miniature in the unit may add a grenade weapon"). A unit may equip multiple different grenade upgrades — each contributes its weapon once independently.
+- **Sidearm weapons**: Sidearm is enforced per-miniature. When the sidearm type matches the current attack type, that miniature must use its sidearm weapon; when not enforced, that miniature may use any compatible weapon available to it.
+- **Dynamic upgrade slots**: Some upgrades add additional upgrade slots to the unit when equipped (e.g., Agent Kallus adds a Heavy Weapon slot; Stormtrooper Captain adds a Training slot). The UI dynamically updates the available upgrade slots as selections change.
 
 Per-weapon keywords (Spray, Cumbersome, Anti-Materiel X, Anti-Personnel X) are applied to each weapon's dice individually during pool formation. Pool-level weapon keywords (Impact X, Pierce X, Lethal X, Critical X, Ram X, Blast, High Velocity, Suppressive) are aggregated across all weapons for use in later steps.
 
@@ -62,6 +74,10 @@ Per-weapon keywords (Spray, Cumbersome, Anti-Materiel X, Anti-Personnel X) are a
 - Numeric weapon keywords (**Impact X**, **Pierce X**, **Lethal X**, **Critical X**, **Ram X**) are **summed** across all weapons.
 
 - **2b. Choose Weapons and Gather Dice** — Makashi Mastery (attacker) may reduce Pierce X by 1 here to disable Immune: Pierce and Impervious for the attack.
+
+**Arsenal X simplification:** No unit in the game simultaneously has Arsenal X and multiple miniatures. All Arsenal X units are single-figure vehicles or heroes. This eliminates the need for per-miniature multi-weapon selection.
+
+**Counterpart (deferred):** Counterpart upgrade cards (C-3PO, Grogu, ID10 Seeker Droid, Omega) add a miniature that may only use weapons from its own card. Full counterpart support is deferred to a future release.
 
 ### Step 3 — Declare Additional Defender
 *(Skipped — this calculator models a single attack pool. Arsenal X, Gunslinger, and Beam X interactions are not modeled in MVP.)*
@@ -164,6 +180,8 @@ In Custom Pool mode, the user configures a single flat dice pool and all keyword
 | **High Velocity** | Toggle | Defender can't spend Dodge tokens; Deflect has no effect |
 | **Suppressive** | Toggle | +1 extra Suppression (informational) |
 | **Spray** | Toggle | Weapon dice are multiplied by number of defending minis in LOS |
+| **Sidearm: Melee** | Toggle | Weapon can only be used in Melee attack pools |
+| **Sidearm: Ranged** | Toggle | Weapon can only be used in Ranged attack pools |
 
 ##### Dice Upgrade/Downgrade (maps to `weapons[0].keywords`)
 
@@ -181,25 +199,32 @@ In Custom Pool mode, the user configures a single flat dice pool and all keyword
 
 ### 4.1b Attacker Panel — Unit Builder Mode
 
-In Unit Builder mode, the user selects a unit preset and configures its weapon loadout. This produces a multi-weapon `weapons[]` array.
+In Unit Builder mode, the user selects a unit preset and configures its weapon loadout. This produces a multi-weapon `weapons[]` array where each miniature contributes one weapon entry.
 
 #### Unit Preset Dropdowns
 Two **searchable dropdowns** at the top:
 
 1. **Faction** — Select: All (default) / Rebel Alliance / Galactic Empire / Republic / Separatist Alliance / Mercenaries.
-2. **Unit** — Searchable combobox listing units within the selected faction. Selecting a unit auto-populates unit keywords, surge chart, and available weapons.
+2. **Unit** — Searchable combobox listing units within the selected faction. Selecting a unit auto-populates unit keywords, surge chart, and the weapon pool with per-miniature weapon entries.
 
-#### Weapon Selection
-After selecting a unit, the panel displays the unit's available weapons. Each weapon shows:
-- Weapon name and dice profile
-- A toggle or checkbox to include/exclude the weapon from the attack pool
-- Weapon keywords displayed as read-only tags (Pierce X, Impact X, Spray, etc.)
-- If Spray is on the weapon, dice are auto-multiplied by Minis in LOS from defender panel
+#### Weapon Assignment Panel (Multi-Mini Units)
+For multi-miniature units (trooper squads), the panel displays a **per-miniature weapon assignment view**. Each miniature is shown as a row with its weapon contribution:
 
-Multiple weapons can be included (per Arsenal X rules). The combined pool and aggregated weapon keywords are computed automatically.
+- **Base miniature rows** (1 to `baseMiniatureCount`): Show the unit's default weapon with dice and keyword badges. If the unit has multiple weapon options for the current attack type, a dropdown allows choosing between them.
+- **Heavy Weapon row**: Shown when a heavy weapon upgrade is equipped. Labeled with ◆ indicator, locked to the heavy weapon's profile. Adds an additional miniature beyond the base count (does NOT replace a base mini).
+- **Squad Leader row**: Shown when a squad leader upgrade is equipped. Labeled with ★ indicator, locked to the squad leader's weapon profile. Adds an additional miniature beyond the base count.
+- **Personnel row(s)**: Shown when a personnel upgrade is equipped. Adds additional miniature rows with the personnel's weapon.
+- **Noncombatant row**: Shown when a noncombatant personnel upgrade is equipped (medical droids, astromechs). Grayed out — noncombatant miniatures cannot contribute weapons to the attack pool.
+- **Grenade row**: Shown when a grenade upgrade is equipped. Separate from miniature rows, with a "1 per pool" constraint indicator.
+- **Pool summary**: Aggregated dice totals by color and stacked keywords across all contributing weapons.
+
+#### Weapon Selection (Single-Mini Units)
+For single-miniature units (heroes, vehicles, operatives), the panel shows the unit's available weapons. Each weapon shows weapon name, dice profile, and keyword tags. Multiple weapons can be included per Arsenal X rules. The combined pool and aggregated weapon keywords are computed automatically.
+
+If Spray is on a weapon, dice are auto-multiplied by Minis in LOS from the defender panel.
 
 #### Upgrade Slots
-When a unit is selected, upgrade slots appear as searchable dropdowns. Equipping an upgrade adds its cost and keywords.
+When a unit is selected, upgrade slots appear as searchable dropdowns based on the unit's **effective upgrade bar** (base upgrade bar + any slots added dynamically by equipped upgrades). Equipping an upgrade adds its cost and keywords. If an upgrade adds additional upgrade slots (e.g., Agent Kallus adds a Heavy Weapon slot), the UI immediately shows new dropdowns for those slots. Unequipping such an upgrade cascades: any upgrade in the dynamically-added slot is also unequipped.
 
 #### Unit Keywords (auto-populated, manually adjustable)
 Unit-level keywords (Precise X, Marksman, Sharpshooter X, etc.) are auto-populated from the preset but remain editable.
@@ -314,8 +339,8 @@ Even in Unit Builder mode, the user must set situational battlefield conditions:
 
 **Attack type behavior:**
 - **Ranged** (default) — Melee-only keywords are ignored: Djem So Mastery, Duelist (Immune: Pierce), Immune: Melee Pierce. Defender may use Cover, Dodge, Deflect, Soresu Mastery.
-- **Melee** — Ranged-only keywords are ignored: Cover, Deflect, Soresu Mastery, Backup, Shielded (cancel), High Velocity has no effect. Defender CAN spend Dodge tokens to cancel hits normally. Djem So Mastery and Duelist apply.
-- **Overrun** — Neither Ranged nor Melee. Cover and Deflect do not apply and Engaged rules do not apply. Defender CAN still spend Dodge tokens (unless High Velocity). Only 1 attack pool allowed; weapon dice added once regardless of unit size.
+- **Melee** — Ranged-only keywords are ignored: Cover, Deflect, Soresu Mastery, Backup, Shielded (cancel), Guardian, Low Profile, High Velocity has no effect. Defender CAN spend Dodge tokens to cancel hits normally. Djem So Mastery and Duelist apply.
+- **Overrun** — Neither Ranged nor Melee. Cover, Deflect, Guardian, Low Profile, Soresu Mastery, and Hold the Line do not apply and Engaged rules do not apply. Defender CAN still spend Dodge tokens (unless High Velocity). Only 1 attack pool allowed; weapon dice added once regardless of unit size.
 
 ---
 
@@ -446,14 +471,25 @@ This allows users on Android and iOS to install the app to their home screen and
 The following is a distilled list of every keyword from the rulebook that modifies dice during the attack sequence, organized by when they take effect:
 
 ### Form Attack Pool (Step 2)
-*(In Custom Pool mode, the user manually configures a single-weapon attack pool. In Unit Builder mode, multiple weapons can contribute dice and per-weapon keywords. Step 3—Declare Additional Defender—is skipped; Arsenal X, Gunslinger, and Beam X are not modeled in MVP.)*
+*(In Custom Pool mode, the user manually configures a single-weapon attack pool. In Unit Builder mode, each miniature contributes one weapon entry to the pool — multi-mini units produce multiple weapon entries with additive keyword stacking. Step 3—Declare Additional Defender—is skipped; Arsenal X, Gunslinger, and Beam X are not modeled in MVP.)*
+
+**Multi-mini weapon contribution:** Each miniature independently adds one weapon entry to `weapons[]`. 4× E-11 (Impact 1) = Impact 4 in the aggregated pool. Heavy Weapon, Personnel, and Squad Leader upgrades each add additional miniature(s) (and their weapon entries) beyond the base count. Grenades add exactly 1 entry per pool.
 
 **Per-weapon keyword handling:** Spray multiplies only that weapon's dice. Cumbersome, Anti-Materiel X, and Anti-Personnel X apply per-weapon during pool formation. Pool-level keywords (Impact X, Pierce X, etc.) are summed across all weapons. High Velocity requires ALL weapons to have it. Blast and Suppressive apply if ANY weapon has them.
+
+**Sidearm handling:** Sidearm is applied per-miniature during weapon selection. It is not a global pool filter. The sidearm miniature is restricted only when the sidearm type matches the current attack type; otherwise it can use other compatible weapons.
+
+**Noncombatant:** Miniatures with Noncombatant (e.g., medical droids) do not contribute weapons to the pool.
+
+**Grenade restriction:** Only one miniature in the unit may add a grenade weapon to the attack pool per attack. Each grenade upgrade contributes independently — a unit with multiple different grenade upgrades adds one entry per grenade instance.
 
 | Keyword | Effect |
 |---------|--------|
 | **Spray** | Multiply weapon dice by number of defending minis in LOS |
 | **Makashi Mastery** | (Step 2b) Attacker reduces Pierce X by 1 → disables Immune: Pierce and Impervious |
+| **Sidearm: Melee** | In melee attacks, that miniature can only add melee sidearm weapons from its upgrade card |
+| **Sidearm: Ranged** | In ranged attacks, that miniature can only add ranged sidearm weapons from its upgrade card |
+| **Noncombatant** | Miniature cannot add weapons to the attack pool |
 
 ### Upgrade/Downgrade Attack Dice (Step 4a)
 | Keyword | Effect |
@@ -550,6 +586,9 @@ The following is a distilled list of every keyword from the rulebook that modifi
 ### MVP (v1.0)
 - **Two-mode attacker panel:** Custom Pool (manual single-weapon config) and Unit Builder (preset-based multi-weapon config)
 - **Per-weapon keyword engine:** weapons array with per-weapon Spray, aggregated pool-level keywords (Impact, Pierce, Blast, etc.)
+- **Multi-miniature attack pools:** Each miniature contributes one weapon entry to `weapons[]`; keyword values stack additively across entries (4× Impact 1 = Impact 4)
+- **Upgrade weapon effects:** Heavy weapon / personnel / squad leader add (each adds miniature(s) with their weapon), grenade dedup (1 per pool), per-mini sidearm handling, noncombatant exclusion, dynamic upgrade slots (`addsUpgradeSlot`)
+- **Per-miniature weapon assignment UI:** Unit Builder mode shows per-mini weapon rows with pool summary for multi-mini units
 - Manual dice pool configuration (red/black/white counts) in Custom Pool mode
 - All core keywords that affect dice rolls (classified as unit vs weapon keywords)
 - Cover (none/light/heavy) + Suppressed cover bonus
@@ -563,17 +602,19 @@ The following is a distilled list of every keyword from the rulebook that modifi
 - Cover X (unit keyword), Smoke tokens
 - Immune: Deflect, Death From Above
 - Duelist (attacker + defender), Makashi Mastery (attacker)
+- Sidearm: Melee / Sidearm: Ranged (per-miniature weapon restriction during matching attack type)
 - Ranged vs Melee toggle
 - **Unit preset dropdowns** for quick attacker/defender configuration (Unit Builder mode)
 - **API-backed unit database** — all ~150+ units imported from TableTopAdmiral API
-- **Enriched unit data** — curated subset with full weapon profiles, keyword X values, surge charts
-- **Upgrade slot system** — equip upgrades per slot for cost tracking and keyword additions
+- **Enriched unit data** — curated subset with full weapon profiles, keyword X values, surge charts, miniature counts
+- **Upgrade slot system** — equip upgrades per slot for cost tracking, keyword additions, and weapon pool manipulation
 - Monte Carlo simulation with bar chart + stats
 - **PWA support** — installable on Android/iOS, offline-capable
 - Responsive UI
 
 ### Future (v2.0+)
 - **Expanded unit enrichment**: comprehensive weapon profiles for all units, not just the curated subset
+- **Counterpart support**: Counterpart upgrade cards (C-3PO, Grogu, ID10, Omega) — weapon-locked miniatures with separate defeat tracking
 - **Wound assignment**: model multi-wound units and wound thresholds
 - **Token economy**: model full token flow (Aim/Dodge generation from keywords like Tactical, Agile, Defend, Target, etc.)
 - **Standby / Fire Support** scenarios
@@ -653,4 +694,4 @@ High-level layout (Custom Pool mode shown):
 
 This application faithfully models the Star Wars: Legion attack sequence from Form Attack Pool through Compare Results. Every keyword that modifies dice — whether upgrading, downgrading, rerolling, converting, or canceling — is accounted for in the design. The engine separates unit keywords from weapon keywords and supports multi-weapon attack pools where per-weapon effects (like Spray) apply correctly to individual weapons' dice.
 
-The React UI presents two modes: **Custom Pool** for quick manual calculations, and **Unit Builder** for preset-based unit configuration with accurate per-weapon modeling. Both modes feed the same pure TypeScript engine, which supports both exact probability math and Monte Carlo simulation.
+The React UI presents two modes: **Custom Pool** for quick manual calculations, and **Unit Builder** for preset-based unit configuration with accurate per-miniature weapon modeling. Multi-miniature units produce attack pools with per-mini weapon entries and additive keyword stacking. Upgrade effects (heavy weapons, personnel, squad leaders, grenades, sidearm) modify the weapon pool according to game rules — heavy weapons, personnel, and squad leaders each add miniatures with their own weapon contribution, and sidearm is applied as a per-miniature restriction rather than a global filter. Some upgrades dynamically add upgrade slots to the unit. Both modes feed the same pure TypeScript engine, which supports both exact probability math and Monte Carlo simulation.

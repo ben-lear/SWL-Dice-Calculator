@@ -3,8 +3,9 @@
  * Phase 5.5C.2: Create upgrade resolver
  */
 
-import type { ProcessedUpgrade, ResolvedUpgrade, UpgradeSlot } from './types';
-import type { UpgradeEnrichment } from './enrichment/types';
+import type { ProcessedUpgrade, ResolvedUpgrade, WeaponProfile } from './types';
+import { UpgradeSlot } from './types';
+import type { UpgradeEnrichment, EnrichmentWeaponProfile } from './enrichment/types';
 import { UPGRADE_ENRICHMENTS } from './enrichment/upgrades';
 
 import processedUpgradesJson from './processed/upgrades.json';
@@ -78,6 +79,65 @@ export function getUpgradesForSlot(
 // Resolution Logic
 // ============================================================================
 
+/**
+ * Normalize enrichment weapon profiles to engine WeaponProfile format.
+ */
+function normalizeEnrichmentWeapons(
+  weapons: EnrichmentWeaponProfile[] | undefined,
+): WeaponProfile[] {
+  if (!weapons || weapons.length === 0) return [];
+
+  return weapons.map((weapon) => ({
+    name: weapon.name,
+    weaponType: weapon.weaponType,
+    redDice: weapon.redDice ?? 0,
+    blackDice: weapon.blackDice ?? 0,
+    whiteDice: weapon.whiteDice ?? 0,
+    keywords: {
+      pierceX: 0,
+      impactX: 0,
+      criticalX: 0,
+      lethalX: 0,
+      ramX: 0,
+      blast: false,
+      suppressive: false,
+      highVelocity: false,
+      spray: false,
+      antiMaterielX: 0,
+      antiPersonnelX: 0,
+      cumbersome: false,
+      sidearmMelee: false,
+      sidearmRanged: false,
+      ...weapon.keywords,
+    },
+    minRange: weapon.minRange,
+    maxRange: weapon.maxRange,
+  }));
+}
+
+/**
+ * Resolve the addsMiniature value with slot-based defaults.
+ * Heavy Weapon, Personnel, and Squad Leader slots default to 1.
+ * All other slots default to 0.
+ * Enrichment overrides take precedence when specified.
+ */
+function resolveAddsMiniature(
+  enrichment: UpgradeEnrichment | undefined,
+  slot: UpgradeSlot,
+): number {
+  // Explicit enrichment override always wins
+  if (enrichment?.addsMiniature !== undefined) {
+    return enrichment.addsMiniature;
+  }
+  // Slot-based implicit defaults
+  const ADDS_MINI_SLOTS = new Set([
+    UpgradeSlot.HeavyWeapon,
+    UpgradeSlot.Personnel,
+    UpgradeSlot.SquadLeader,
+  ]);
+  return ADDS_MINI_SLOTS.has(slot) ? 1 : 0;
+}
+
 function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
   const enrichment: UpgradeEnrichment | undefined =
     UPGRADE_ENRICHMENTS[processed.id];
@@ -100,6 +160,11 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
     upgradeSlot: processed.upgradeSlot as UpgradeSlot,
     restrictedToUnitApiId: processed.restrictedToUnitApiId,
     keywords: normalizedKeywords,
+    weapons: normalizeEnrichmentWeapons(enrichment?.weapons),
+    addsMiniature: resolveAddsMiniature(enrichment, processed.upgradeSlot as UpgradeSlot),
+    noncombatant: enrichment?.noncombatant ?? false,
+    isGrenade: enrichment?.isGrenade ?? false,
+    addsUpgradeSlot: enrichment?.addsUpgradeSlot ?? [],
     isEnriched,
   };
 }

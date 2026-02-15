@@ -1,10 +1,38 @@
 import type { AttackConfig, WeaponProfile, AggregatedWeaponKeywords } from './types';
-import { AttackDieColor } from './types';
+import { AttackDieColor, AttackType } from './types';
+
+function isWeaponUsableForAttackType(
+  weaponType: AttackType | undefined,
+  attackType: AttackType,
+): boolean {
+  if (weaponType === undefined) return true;
+  if (weaponType === attackType) return true;
+
+  if (
+    weaponType === AttackType.Hybrid &&
+    (attackType === AttackType.Ranged || attackType === AttackType.Melee)
+  ) {
+    return true;
+  }
+
+  return false;
+}
 
 export function getWeaponsForAttackType(config: AttackConfig): WeaponProfile[] {
-  return config.attacker.weapons.filter((weapon) => (
-    weapon.weaponType === undefined || weapon.weaponType === config.attackType
-  ));
+  return config.attacker.weapons.filter((weapon) => {
+    // Basic attack type compatibility
+    if (!isWeaponUsableForAttackType(weapon.weaponType, config.attackType)) {
+      return false;
+    }
+    // Sidearm safety net: exclude sidearm weapons that don't match attack type
+    if (weapon.keywords.sidearmMelee && config.attackType !== AttackType.Melee) {
+      return false;
+    }
+    if (weapon.keywords.sidearmRanged && config.attackType !== AttackType.Ranged) {
+      return false;
+    }
+    return true;
+  });
 }
 
 /**

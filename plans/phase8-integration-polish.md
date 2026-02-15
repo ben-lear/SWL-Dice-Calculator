@@ -149,7 +149,9 @@ export const ATTACKER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
 
   // Ranged+Melee (disabled for Overrun)
   deathFromAbove: 'ranged',    // Cover interaction (ranged context)
-  holdTheLine: 'ranged-melee', // While Engaged (not applicable in Overrun)
+
+  // Melee-only attacker keywords (Hold the Line offensive surge→hit only while Engaged)
+  holdTheLine: 'melee',        // While Engaged — attacker can only be engaged in Melee
 };
 
 // ── Defender Keywords ──
@@ -171,12 +173,15 @@ export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
   uncannyLuckX: 'all',
   block: 'all',
   outmaneuver: 'all',
-  lowProfile: 'all',
-  guardianX: 'all',
-  guardianDieColor: 'all',
-  guardianSurgeChart: 'all',
   unitCost: 'all',
   holdTheLine: 'ranged-melee',
+
+  // Ranged-only defender keywords (cover/guardian/shielded ecosystem)
+  lowProfile: 'ranged',       // Modifies cover pool roll (cover is ranged-only)
+  guardianX: 'ranged',        // Guardian only works vs Ranged attacks
+  guardianDieColor: 'ranged', // Guardian sub-config (shown only when Guardian X > 0)
+  guardianSurgeChart: 'ranged', // Guardian sub-config
+  dugIn: 'ranged',            // Red cover dice (cover pools are ranged-only)
 
   // Ranged-only defender keywords
   coverType: 'ranged',         // Cover only applies to ranged attacks
@@ -187,7 +192,7 @@ export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
   shienMastery: 'ranged',      // Modifies Deflect (ranged-only)
   soresuMastery: 'ranged',     // Reroll all defense dice (Ranged only)
   backup: 'ranged',            // Cancel up to 2 hits (Ranged only)
-  shieldedX: 'ranged',            // Shielded cancels hits/crits (Ranged attacks only)
+  shieldedX: 'ranged',         // Shielded cancels hits/crits (Ranged attacks only)
 
   // Melee-only defender keywords
   djemSoMastery: 'melee',      // Melee: attacker suffers wounds per blank
@@ -231,6 +236,32 @@ export function isFieldActiveForAttackType(
 - `isFieldActiveForAttackType('melee', AttackType.Overrun)` returns `false`
 - `isFieldActiveForAttackType('ranged-melee', AttackType.Overrun)` returns `false`
 - `isFieldActiveForAttackType('all', AttackType.Overrun)` returns `true`
+
+### Engine-Side Cover Guard (Required Fix)
+
+The UI keyword restrictions correctly disable cover-related inputs for non-Ranged attacks. However, stored values are **preserved** when the user switches attack type. This means a previously-set `coverType: Heavy` value will flow through `getFullConfig()` into `determineCoverValue` in the engine.
+
+**Problem:** The engine's `determineCoverValue` in `src/engine/cover.ts` applies base cover type, `suppressed` (+1), and smoke tokens **without checking attack type**. Only `coverX` is gated on `AttackType.Ranged`. Per the rules, cover does not apply to Melee or Overrun attacks at all.
+
+**Fix (must be applied in this phase):** Add an early return in `determineCoverValue` for non-Ranged attacks:
+
+```ts
+export function determineCoverValue(
+  config: AttackConfig,
+  poolBlast: boolean
+): number {
+  // Cover only applies to Ranged attacks (per rulebook §03)
+  if (config.attackType !== AttackType.Ranged) {
+    return 0;
+  }
+
+  // ... existing logic unchanged ...
+}
+```
+
+This is a one-line safety net that prevents stale cover values from affecting Melee/Overrun simulations even when the UI disabling correctly prevents new input.
+
+**Alternative:** Zero out cover-related fields in `getFullConfig()` / `selectDefenderConfig()` when attack type is not Ranged. This is heavier and less appropriate — the engine is the correct place for rules enforcement.
 
 ---
 
@@ -619,6 +650,24 @@ describe('DEFENDER_KEYWORD_RESTRICTIONS', () => {
 
   it('coverType is ranged-only', () => {
     expect(DEFENDER_KEYWORD_RESTRICTIONS['coverType']).toBe('ranged');
+  });
+
+  it('guardianX is ranged-only', () => {
+    expect(DEFENDER_KEYWORD_RESTRICTIONS['guardianX']).toBe('ranged');
+  });
+
+  it('lowProfile is ranged-only', () => {
+    expect(DEFENDER_KEYWORD_RESTRICTIONS['lowProfile']).toBe('ranged');
+  });
+
+  it('dugIn is ranged-only', () => {
+    expect(DEFENDER_KEYWORD_RESTRICTIONS['dugIn']).toBe('ranged');
+  });
+});
+
+describe('ATTACKER_KEYWORD_RESTRICTIONS (additional)', () => {
+  it('holdTheLine (attacker) is melee-only', () => {
+    expect(ATTACKER_KEYWORD_RESTRICTIONS['holdTheLine']).toBe('melee');
   });
 });
 ```

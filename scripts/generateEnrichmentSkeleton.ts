@@ -43,6 +43,7 @@ type ProcessedKeyword = {
   id: string;
   name: string;
   hasMagnitude: boolean;
+  isWeaponKeyword: boolean;
 };
 
 const rawUnitsJson = JSON.parse(fs.readFileSync('src/data/raw/units.json', 'utf-8'));
@@ -67,6 +68,8 @@ for (const keyword of processedKeywords) {
 const ATTACKER_KEYWORD_MAP: Record<string, string | string[]> = {
   Precise: 'preciseX',
   Sharpshooter: 'sharpshooterX',
+  Arsenal: 'arsenalX',
+  'Arsenal X': 'arsenalX',
   Marksman: 'marksman',
   'Jedi Hunter': 'jediHunter',
   "Jar'Kai Mastery": 'jarKaiMastery',
@@ -131,12 +134,17 @@ function toFieldNames(fieldValue: string | string[]): string[] {
   return Array.isArray(fieldValue) ? fieldValue : [fieldValue];
 }
 
-function mapKeywordIdsToFields(keywordIds: number[] | null | undefined): Record<string, true | '<need human>'> {
+function mapKeywordIdsToFields(
+  keywordIds: number[] | null | undefined,
+  includeWeaponKeywords: boolean,
+): Record<string, true | '<need human>'> {
   const mapped: Record<string, true | '<need human>'> = {};
 
   for (const keywordId of keywordIds ?? []) {
     const keyword = keywordById.get(String(keywordId));
     if (!keyword) continue;
+
+    if (!includeWeaponKeywords && keyword.isWeaponKeyword) continue;
 
     const fieldValue = ALL_KEYWORD_MAP[keyword.name];
     if (!fieldValue) continue;
@@ -205,7 +213,7 @@ const mergedUnitKeywords = new Map<string, Record<string, true | '<need human>'>
 for (const processedUnit of processedUnits) {
   const rawUnit = rawUnitById.get(String(processedUnit.apiId));
   const sourceKeywords = rawUnit ? getRawKeywordIds(rawUnit) : [];
-  const keywords = mapKeywordIdsToFields(sourceKeywords);
+  const keywords = mapKeywordIdsToFields(sourceKeywords, false);
 
   const existing = mergedUnitKeywords.get(processedUnit.id) ?? {};
   for (const [fieldName, value] of Object.entries(keywords)) {
@@ -241,7 +249,10 @@ const mergedUpgradeKeywords = new Map<string, Record<string, true | '<need human
 
 for (const processedUpgrade of processedUpgrades) {
   const rawUpgrade = rawUpgradeById.get(String(processedUpgrade.apiId));
-  const keywords = mapKeywordIdsToFields(rawUpgrade ? getRawKeywordIds(rawUpgrade) : []);
+  const keywords = mapKeywordIdsToFields(
+    rawUpgrade ? getRawKeywordIds(rawUpgrade) : [],
+    true,
+  );
 
   const existing = mergedUpgradeKeywords.get(processedUpgrade.id) ?? {};
   for (const [fieldName, value] of Object.entries(keywords)) {

@@ -41,6 +41,8 @@ function createWeapon(
       cumbersome: false,
       antiMaterielX: 0,
       antiPersonnelX: 0,
+      sidearmMelee: false,
+      sidearmRanged: false,
       ...keywords,
     },
   };
@@ -78,6 +80,7 @@ function createTestConfig(overrides?: {
       holdTheLine: false,
       unitCost: 0,
       ...overrides?.attacker,
+      arsenalX: overrides?.attacker?.arsenalX ?? 0,
     },
     defender: {
       dieColor: DefenseDieColor.White,

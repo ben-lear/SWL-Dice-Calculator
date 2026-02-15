@@ -44,6 +44,9 @@ export enum UpgradeSlot {
   StrikeAndFade = 'strike-and-fade',
   ImperialMarch = 'imperial-march',
   Doctrine = 'doctrine',
+
+  // Deferred (counterpart support is future work)
+  Counterpart = 'counterpart',
 }
 
 /** Slots where upgrade enrichment includes dice/keyword data */
@@ -92,6 +95,7 @@ export const UPGRADE_SLOT_LABELS: Record<UpgradeSlot, string> = {
   [UpgradeSlot.ImperialMarch]: 'Imperial March',
   [UpgradeSlot.DugIn]: 'Dug In',
   [UpgradeSlot.Doctrine]: 'Doctrine',
+  [UpgradeSlot.Counterpart]: 'Counterpart',
 };
 
 // ============================================================================
@@ -304,6 +308,30 @@ export interface ResolvedUpgrade {
    * but enrichment data should use the typed UpgradeKeywords interface.
    */
   keywords: Record<string, number | boolean>;
+
+  /** Weapon profiles this upgrade provides (from enrichment). Empty array if none. */
+  weapons: WeaponProfile[];
+
+  /**
+   * Number of additional miniatures this upgrade adds to the unit.
+   * Resolved from enrichment with slot-based defaults:
+   *   - Heavy Weapon / Personnel / Squad Leader: defaults to 1 if not specified
+   *   - All other slots: defaults to 0
+   * Enrichment can override to any value (e.g., 2 for squad personnel, 0 for
+   * an upgrade that explicitly does NOT add a mini despite being in a slot that
+   * normally would).
+   */
+  addsMiniature: number;
+
+  /** Whether the added miniature is a noncombatant (cannot contribute weapons). */
+  noncombatant: boolean;
+
+  /** Whether this upgrade provides a grenade weapon (1 entry per grenade instance per pool). */
+  isGrenade: boolean;
+
+  /** Additional upgrade slot(s) this upgrade adds to the unit when equipped. Empty array if none. */
+  addsUpgradeSlot: UpgradeSlot[];
+
   /** Whether this upgrade has been manually enriched with keyword/dice data */
   isEnriched: boolean;
 }

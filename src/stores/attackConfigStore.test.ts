@@ -139,6 +139,8 @@ describe('attackConfigStore', () => {
           antiMaterielX: 0,
           antiPersonnelX: 0,
           cumbersome: false,
+          sidearmMelee: false,
+          sidearmRanged: false,
         },
       }],
       surgeChart: AttackSurgeChart.ToCrit,

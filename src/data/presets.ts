@@ -8,6 +8,7 @@ import type {
   WeaponProfile,
 } from '../engine/types';
 import type { UpgradeSlot } from './types';
+import type { WeaponProfile as DataLayerWeaponProfile } from './types';
 
 // ============================================================================
 // Factions
@@ -48,6 +49,21 @@ export const FACTION_LABELS: Record<Faction, string> = {
 export interface AttackerPresetProfile {
   // Dice pool and weapon keywords — packaged as weapons array
   weapons?: WeaponProfile[];  // One or more weapon profiles with dice + weapon keywords
+
+  /**
+   * Base miniature count for this unit (before upgrades).
+   * Used to determine how many base weapon entries to expand.
+   * Defaults to 1 if not specified (single-mini unit).
+   */
+  baseMiniatureCount?: number;
+
+  /**
+   * All weapon profiles available on the unit card (ALL attack types).
+   * Used by the config assembly to select the correct weapon per miniature
+   * based on the current attack type, and for sidearm fallback.
+   * In Custom Pool mode this is not used; only in Unit Builder mode.
+   */
+  unitBaseWeapons?: DataLayerWeaponProfile[];
   
   // Surge chart (unit-level)
   surgeChart?: AttackSurgeChart;
@@ -61,6 +77,7 @@ export interface AttackerPresetProfile {
   // Unit-level keywords (numeric)
   preciseX?: number;
   sharpshooterX?: number;
+  arsenalX?: number;
   
   // Unit-level keywords (boolean)
   marksman?: boolean;

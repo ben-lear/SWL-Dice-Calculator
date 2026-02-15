@@ -22,6 +22,8 @@ Phase 7 depends on:
 - **Phase 4** (Shared UI components) — reuses component patterns and Tailwind design tokens
 - **Phase 5A** (Zustand stores) — `useFullConfig` selector from `configSelectors.ts`, `useResultsStore` for simulation output state
 
+> **Dependency note:** `useResultsStore` (`src/stores/resultsStore.ts`) does not yet exist in the codebase. It must be created either as Phase 5A.5 or as a prerequisite Step 7A.0 at the start of this phase. The store should contain: `result: SimulationResult | null`, `loading: boolean`, `error: string | null`, and actions `setResult`, `setLoading`, `setError`, `clear`.
+
 Phase 7 does **not** depend on:
 - Phase 5.5 (Unit Data & Upgrades — Phase 5.5 modifies `getFullConfig()` upstream so that `unitCost` already includes equipped upgrade costs via `upgradeApplicator`. The results panel is unaware of upgrades; it simply consumes the merged config and displays whatever efficiency metrics the engine returns.)
 - Phase 6 (UI Panels — the results panel reads from stores, not from panel components)

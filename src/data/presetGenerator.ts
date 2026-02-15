@@ -22,6 +22,26 @@ interface GeneratedPresets {
 let _cached: GeneratedPresets | null = null;
 
 /**
+ * Helper: Check if a weapon is usable for a given attack type.
+ */
+function isWeaponUsableForAttackType(
+  weaponType: AttackType | undefined,
+  attackType: AttackType,
+): boolean {
+  if (weaponType === undefined) return true;
+  if (weaponType === attackType) return true;
+
+  if (
+    weaponType === AttackType.Hybrid &&
+    (attackType === AttackType.Ranged || attackType === AttackType.Melee)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Generate all presets from resolved unit data.
  * Results are cached — subsequent calls return the same arrays.
  */
@@ -37,9 +57,14 @@ export function generateAllPresets(): GeneratedPresets {
     defenderPresets.push(generateDefenderPreset(unit));
 
     if (unit.weapons.length > 0) {
-      // Enriched units: one attacker preset per weapon
-      for (let i = 0; i < unit.weapons.length; i++) {
-        attackerPresets.push(generateAttackerPreset(unit, i));
+      if (unit.figures <= 1) {
+        // Single-mini: one preset per weapon (existing behavior)
+        for (let i = 0; i < unit.weapons.length; i++) {
+          attackerPresets.push(generateAttackerPreset(unit, i));
+        }
+      } else {
+        // Multi-mini: single preset with all unit weapons + expanded base pool
+        attackerPresets.push(generateMultiMiniAttackerPreset(unit));
       }
     } else {
       // Un-enriched units: skeleton attacker preset with 0 dice
@@ -92,6 +117,8 @@ function generateAttackerPreset(
       antiMaterielX: 0,
       antiPersonnelX: 0,
       cumbersome: false,
+      sidearmMelee: false,
+      sidearmRanged: false,
       // Override with enrichment values
       ...weapon.keywords,
     },
@@ -126,6 +153,87 @@ function generateAttackerPreset(
   };
 }
 
+function generateMultiMiniAttackerPreset(unit: ResolvedUnit): AttackerPreset {
+  // Determine the default attack type (prefer ranged if available)
+  const rangedWeapons = unit.weapons.filter(w =>
+    isWeaponUsableForAttackType(w.weaponType, AttackType.Ranged)
+  );
+  const defaultAttackType = rangedWeapons.length > 0
+    ? AttackType.Ranged
+    : AttackType.Melee;
+
+  // Pick the default weapon for the default attack type
+  const defaultWeapon = rangedWeapons.length > 0
+    ? rangedWeapons[0]
+    : unit.weapons.filter(w =>
+        isWeaponUsableForAttackType(w.weaponType, AttackType.Melee)
+      )[0];
+
+  // Expand: N copies of the default weapon for the base pool
+  const expandedWeapons: WeaponProfile[] = Array.from({ length: unit.figures }, () => ({
+    name: defaultWeapon.name,
+    weaponType: defaultWeapon.weaponType,
+    redDice: defaultWeapon.redDice,
+    blackDice: defaultWeapon.blackDice,
+    whiteDice: defaultWeapon.whiteDice,
+    keywords: {
+      pierceX: 0,
+      impactX: 0,
+      criticalX: 0,
+      lethalX: 0,
+      ramX: 0,
+      blast: false,
+      suppressive: false,
+      highVelocity: false,
+      spray: false,
+      antiMaterielX: 0,
+      antiPersonnelX: 0,
+      cumbersome: false,
+      sidearmMelee: false,
+      sidearmRanged: false,
+      ...defaultWeapon.keywords,
+    },
+  }));
+
+  // Convert all unit weapons to data-layer format for unitBaseWeapons
+  // (keeps full weapon profile with minRange/maxRange for upgrade applicator)
+  const unitBaseWeapons = unit.weapons.map(weapon => ({
+    name: weapon.name,
+    weaponType: weapon.weaponType,
+    redDice: weapon.redDice,
+    blackDice: weapon.blackDice,
+    whiteDice: weapon.whiteDice,
+    keywords: weapon.keywords,
+    minRange: weapon.minRange,
+    maxRange: weapon.maxRange,
+  }));
+
+  const profile: Record<string, any> = {
+    weapons: expandedWeapons,
+    baseMiniatureCount: unit.figures,
+    unitBaseWeapons: unitBaseWeapons,  // ALL unit weapon profiles (all attack types)
+    surgeChart: unit.attackSurgeChart ?? AttackSurgeChart.None,
+    unitCost: unit.cost,
+  };
+
+  // Copy unit-level keywords to profile
+  copyKeywordsToProfile(unit.keywords, profile);
+
+  // Handle Duelist special case
+  if (unit.keywords['duelistAttacker'] || unit.keywords['duelistDefender']) {
+    profile['duelistAttacker'] = true;
+  }
+
+  return {
+    id: unit.id,
+    faction: unit.faction as Faction,
+    name: `${unit.name} (${defaultWeapon.name})`,
+    attackType: defaultAttackType,
+    profile,
+    upgradeBar: unit.upgradeBar,
+  };
+}
+
 function generateSkeletonAttackerPreset(
   unit: ResolvedUnit,
 ): AttackerPreset {
@@ -149,6 +257,8 @@ function generateSkeletonAttackerPreset(
       antiMaterielX: 0,
       antiPersonnelX: 0,
       cumbersome: false,
+      sidearmMelee: false,
+      sidearmRanged: false,
     },
   };
 

@@ -73,7 +73,7 @@
   },
   {
     "id": "79",
-    "name": "Armor [X]",
+    "name": "Armor X",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },
@@ -85,7 +85,7 @@
   },
   {
     "id": "53",
-    "name": "Arsenal",
+    "name": "Arsenal X",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },
@@ -457,7 +457,7 @@
   },
   {
     "id": "128",
-    "name": "Flexible Response [X]",
+    "name": "Flexible Response X",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },
@@ -517,7 +517,7 @@
   },
   {
     "id": "111",
-    "name": "Hover: Air [X]",
+    "name": "Hover: Air X",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },
@@ -697,7 +697,7 @@
   },
   {
     "id": "59",
-    "name": "Light Transport [X]: Open",
+    "name": "Light Transport X: Open",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },
@@ -1171,7 +1171,7 @@
   },
   {
     "id": "78",
-    "name": "Transport [X]: Open",
+    "name": "Transport X: Open",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },
@@ -1219,13 +1219,13 @@
   },
   {
     "id": "76",
-    "name": "Weak Point [X]: Rear",
+    "name": "Weak Point X: Rear",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },
   {
     "id": "77",
-    "name": "Weak Point [X]: Sides",
+    "name": "Weak Point X: Sides",
     "hasMagnitude": true,
     "isWeaponKeyword": false
   },

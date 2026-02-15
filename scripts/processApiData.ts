@@ -99,6 +99,15 @@ function unique<T>(items: T[]): T[] {
   return Array.from(new Set(items));
 }
 
+function normalizeKeywordName(name: string): string {
+  const withoutBracketedMagnitude = name.replace(/\[X\]/g, 'X');
+  const normalizedArsenal = withoutBracketedMagnitude === 'Arsenal'
+    ? 'Arsenal X'
+    : withoutBracketedMagnitude;
+
+  return normalizedArsenal.replace(/\s{2,}/g, ' ').trim();
+}
+
 function getRawKeywordIds(
   record: { keywords?: Array<number | string> | null; keyword_ids?: Array<number | string> | null },
 ): Array<number | string> {
@@ -111,9 +120,26 @@ function mapKeywordIdsToNames(
 ): string[] {
   const names = (keywordIds ?? [])
     .map((kid) => keywordIdToName.get(Number(kid)))
-    .filter((name): name is string => Boolean(name));
+    .filter((name): name is string => Boolean(name))
+    .map(normalizeKeywordName);
 
   return unique(names);
+}
+
+function resolveCost(record: {
+  recent_active_cost?: number | null;
+  curren_cost?: number | null;
+  current_cost?: number | null;
+  original_cost?: number | null;
+  cost?: number | null;
+}): number {
+  return (
+    record.recent_active_cost ??
+    record.current_cost ??
+    record.original_cost ??
+    record.cost ??
+    0
+  );
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -206,7 +232,7 @@ function processData() {
         id: uniqueId,
         name: u.name,
         faction,
-        cost: u.current_cost ?? u.original_cost ?? 0,
+        cost: resolveCost(u),
         health: u.health ?? 1,
         figures: u.figures ?? 1,
         defenseDieColor: u.red_defense ? 'red' : 'white',
@@ -237,7 +263,7 @@ function processData() {
         // the same logical upgrade ID.
         id: `${upgradeSlot}-${slugify(up.name)}`,
         name: up.name,
-        cost: up.cost ?? 0,
+        cost: resolveCost(up),
         upgradeSlot,
         restrictedToUnitApiId: up.unit_fkey ?? null,
         keywordNames,
@@ -263,7 +289,7 @@ function processData() {
   // 6. Also write out the keyword map for runtime use
   const keywordMeta = rawKeywords.map((kw: any) => ({
     id: kw.id,
-    name: kw.name,
+    name: normalizeKeywordName(kw.name),
     hasMagnitude: kw.has_magnitude ?? false,
     isWeaponKeyword: kw.weapon ?? false,
   }));

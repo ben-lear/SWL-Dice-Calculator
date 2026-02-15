@@ -67,6 +67,10 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
   for (const kwName of processed.keywordNames) {
     const meta = KEYWORD_MAP.get(kwName);
     if (meta) {
+      if (meta.isWeaponKeyword) {
+        continue;
+      }
+
       // Try to map to attacker or defender field name
       const attackerField = ATTACKER_KEYWORD_FIELD_MAP[kwName];
       const defenderField = DEFENDER_KEYWORD_FIELD_MAP[kwName];
@@ -98,7 +102,7 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
     faction: processed.faction,
     cost: processed.cost,
     health: processed.health,
-    figures: processed.figures,
+    figures: enrichment?.miniatureCount ?? processed.figures ?? 1,
     defenseDieColor: processed.defenseDieColor,
     rank: processed.rank,
     unitType: processed.unitType,

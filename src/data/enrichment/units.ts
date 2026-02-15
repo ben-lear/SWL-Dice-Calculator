@@ -232,6 +232,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       uncannyLuckX: 3,
+      arsenalX: 2,
     },
     weapons: [
       {
@@ -239,7 +240,19 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Melee,
         whiteDice: 1,
         blackDice: 2,
-        
+        keywords: {
+          ramX: 1,
+        }
+      },
+      {
+        name: 'Han\'s DL-44 Blaster',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          pierceX: 1,
+        }
       }
     ],
   },
@@ -248,10 +261,27 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      sharpshooterX: '<need human>',
-      suppressive: true,
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Collapsible Tonfa',
+        weaponType: AttackType.Melee,
+        blackDice: 4,
+        keywords: {
+          suppressive: true,
+        }
+      },
+      {
+        name: 'A-180 Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 1,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'k-2so-sardonic-security-droid': {
@@ -260,7 +290,13 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       armorX: '<need human>',
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Overpower',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+      }
+    ],
   },
 
   'luke-skywalker-jedi-knight': {
@@ -270,23 +306,51 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       deflect: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Luke\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        blackDice: 7,
+        keywords: {
+          pierceX: 2,
+          impactX: 2,
+        }
+      }
+    ],
   },
 
   'r2-d2-hero-of-a-thousand-devices': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
-    keywords: {
-      suppressive: true,
-    },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Electro-Shock',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 3,
+        keywords: {
+          suppressive: true
+        }
+      }
+    ],
   },
 
   'rebel-agent-defender-of-democracy': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 2
+      }
+    ],
   },
 
   'sabine-wren-explosive-artist': {
@@ -295,35 +359,80 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'WESTAR-35 Blasters',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'fleet-troopers': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
-    weapons: [],
+    miniatureCount: 4,
+    weapons: [
+      {
+        name: 'DH-17 Blaster Pistol',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 2
+      }
+    ],
   },
 
   'mark-ii-medium-blaster-trooper': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      cumbersome: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'Mark II Medium Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        keywords: {
+          criticalX: 2,
+          cumbersome: true,
+        }
+      }
+    ],
   },
 
   'rebel-troopers': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
-    weapons: [],
+    miniatureCount: 4,
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'A280 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'rebel-veterans': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 4,
     keywords: {
       lowProfile: true,
     },
@@ -333,6 +442,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'mandalorian-resistance': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 3,
     keywords: {
       impervious: true,
     },
@@ -342,6 +452,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'mandalorian-resistance-clan-wren': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 1,
     keywords: {
       impervious: true,
     },
@@ -351,6 +462,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'rebel-commandos': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 4,
     keywords: {
       lowProfile: true,
       sharpshooterX: '<need human>',
@@ -361,6 +473,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'rebel-commandos-strike-team': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 1,
     keywords: {
       lowProfile: true,
       sharpshooterX: '<need human>',
@@ -371,8 +484,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'rebel-sleeper-cell-ready-to-strike': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 6,
     keywords: {
-      suppressive: true,
     },
     weapons: [],
   },
@@ -380,6 +493,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'wookiee-warriors-freedom-fighters': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    miniatureCount: 3,
     keywords: {
       duelistAttacker: true,
       duelistDefender: true,
@@ -390,6 +504,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'wookiee-warriors-kashyyyk-resistance': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    miniatureCount: 3,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -415,6 +530,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'tauntaun-riders': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 2,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -437,6 +553,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       armorX: '<need human>',
       coverX: '<need human>',
       immuneBlast: true,
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -447,6 +564,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       coverX: '<need human>',
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -499,7 +617,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       marksman: true,
-      highVelocity: true,
     },
     weapons: [],
   },
@@ -535,6 +652,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -553,7 +671,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       deflect: true,
       immunePierce: true,
       jediHunter: true,
-      blast: true,
     },
     weapons: [],
   },
@@ -589,8 +706,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
     keywords: {
-      cumbersome: true,
-      suppressive: true,
     },
     weapons: [],
   },
@@ -598,6 +713,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'shoretroopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {},
     weapons: [],
   },
@@ -605,6 +721,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'snowtroopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {},
     weapons: [],
   },
@@ -612,9 +729,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'stormtrooper-riot-squad': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       holdTheLine: true,
-      suppressive: true,
     },
     weapons: [],
   },
@@ -622,6 +739,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'stormtroopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       preciseX: '<need human>',
     },
@@ -631,6 +749,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'stormtroopers-heavy-response-unit': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
       preciseX: '<need human>',
     },
@@ -638,12 +757,29 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-death-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 4,
     keywords: {
-      preciseX: '<need human>',
+      preciseX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Close Quarters Combat',
+        weaponType: AttackType.Melee,
+        redDice: 1
+      },
+      {
+        name: 'SE-14r Light Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+      },
+      {
+        name: 'E-11D Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1
+      }
+    ],
   },
 
   'imperial-probe-droid': {
@@ -656,6 +792,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'imperial-special-forces': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       marksman: true,
     },
@@ -674,6 +811,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'scout-troopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       sharpshooterX: '<need human>',
       lowProfile: true,
@@ -694,6 +832,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   '74-z-speeder-bikes': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 2,
     keywords: {
       coverX: '<need human>',
     },
@@ -705,7 +844,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
-      suppressive: true,
     },
     weapons: [],
   },
@@ -714,7 +852,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
     keywords: {
-      cumbersome: true,
     },
     weapons: [],
   },
@@ -722,6 +859,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'range-troopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       armorX: '<need human>',
     },
@@ -733,6 +871,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -740,6 +879,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'imperial-dark-troopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
       armorX: '<need human>',
     },
@@ -753,6 +893,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       immuneBlast: true,
       coverX: '<need human>',
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -762,7 +903,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
-      blast: true,
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -772,7 +913,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
-      suppressive: true,
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -871,8 +1012,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       immunePierce: true,
       deflect: true,
-      suppressive: true,
-      blast: true,
     },
     weapons: [],
   },
@@ -882,6 +1021,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       uncannyLuckX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -909,7 +1049,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
     keywords: {
-      suppressive: true,
     },
     weapons: [],
   },
@@ -927,6 +1066,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'clone-trooper-infantry': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {},
     weapons: [],
   },
@@ -934,6 +1074,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'clone-trooper-marksmen': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       marksman: true,
     },
@@ -943,6 +1084,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'weequay-pirates': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {},
     weapons: [],
   },
@@ -950,6 +1092,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'arc-troopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -970,6 +1113,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'arf-troopers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       lowProfile: true,
     },
@@ -979,6 +1123,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'wookiee-warriors-kashyyyk-defenders': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
       sharpshooterX: '<need human>',
     },
@@ -988,6 +1133,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'wookiee-warriors-noble-fighters': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
       duelistAttacker: true,
       duelistDefender: true,
@@ -1009,6 +1155,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1016,8 +1163,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'clone-commandos': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
-      suppressive: true,
       shieldedX: '<need human>',
     },
     weapons: [],
@@ -1026,9 +1173,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'clone-commandos-ds-delta-squad': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       shieldedX: '<need human>',
-      suppressive: true,
     },
     weapons: [],
   },
@@ -1070,6 +1217,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       coverX: '<need human>',
       immuneBlast: true,
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1080,6 +1228,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       outmaneuver: true,
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1091,7 +1240,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       deflect: true,
       immunePierce: true,
       makashiMastery: true,
-      suppressive: true,
     },
     weapons: [],
   },
@@ -1192,7 +1340,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       coverX: '<need human>',
-      suppressive: true,
     },
     weapons: [],
   },
@@ -1207,6 +1354,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'b1-battle-droids': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 66,
     keywords: {},
     weapons: [],
   },
@@ -1214,6 +1362,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'b2-super-battle-droids': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {},
     weapons: [],
   },
@@ -1221,6 +1370,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'geonosian-warriors-soldiers-of-the-hive': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {},
     weapons: [],
   },
@@ -1228,6 +1378,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'bx-series-droid-commandos': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
@@ -1248,8 +1399,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'drk-1-sith-probe-droids': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
-      suppressive: true,
     },
     weapons: [],
   },
@@ -1257,6 +1408,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'ig-100-magnaguard': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
       guardianX: '<need human>',
       immuneMeleePierce: true,
@@ -1267,6 +1419,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'ig-100-magnaguard-prototype-assassin-droids': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       immuneMeleePierce: true,
     },
@@ -1276,6 +1429,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'tsmeu-6-wheel-bikes': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 2,
     keywords: {
       armorX: '<need human>',
     },
@@ -1285,9 +1439,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'droidekas': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 2,
     keywords: {
       shieldedX: '<need human>',
-      suppressive: true,
       immuneDeflect: true,
     },
     weapons: [],
@@ -1314,6 +1468,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'stap-riders': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 2,
     keywords: {
       coverX: '<need human>',
     },
@@ -1325,7 +1480,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
-      highVelocity: true,
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1333,6 +1488,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'aqua-droids': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
       armorX: '<need human>',
     },
@@ -1344,6 +1500,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1353,6 +1510,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1386,7 +1544,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       lowProfile: true,
-      suppressive: true,
     },
     weapons: [],
   },
@@ -1415,6 +1572,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1425,6 +1583,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       sharpshooterX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1433,7 +1592,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
     keywords: {
-      suppressive: true,
     },
     weapons: [],
   },
@@ -1453,6 +1611,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       impervious: true,
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1475,6 +1634,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       sharpshooterX: '<need human>',
       impervious: true,
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1502,6 +1662,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'black-sun-enforcers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       preciseX: '<need human>',
     },
@@ -1511,6 +1672,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'ewok-skirmishers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 6,
     keywords: {
       lowProfile: true,
     },
@@ -1520,6 +1682,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'pyke-syndicate-foot-soldiers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 4,
     keywords: {
       outmaneuver: true,
       dangerSenseX: '<need human>',
@@ -1530,6 +1693,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'ewok-slingers': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 6,
     keywords: {
       lowProfile: true,
     },
@@ -1539,6 +1703,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'mandalorian-super-commandos': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 3,
     keywords: {
       impervious: true,
     },
@@ -1548,6 +1713,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'swoop-bike-riders': {
     attackSurgeChart: undefined,
     defenseSurgeChart: undefined,
+    miniatureCount: 2,
     keywords: {
       coverX: '<need human>',
     },
@@ -1568,7 +1734,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
-      blast: true,
+      arsenalX: '<need human>',
     },
     weapons: [],
   },
@@ -1578,6 +1744,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: undefined,
     keywords: {
       armorX: '<need human>',
+      arsenalX: '<need human>',
     },
     weapons: [],
   }

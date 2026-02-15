@@ -83,6 +83,7 @@ describe('formAttackPool — multi-weapon', () => {
   it('combines dice from multiple weapons', () => {
     const config: AttackConfig = {
       attacker: createMinimalAttacker({
+        arsenalX: 2,
         weapons: [
           createMinimalWeapon({ redDice: 2, blackDice: 1 }),
           createMinimalWeapon({ blackDice: 2, whiteDice: 3 }),
@@ -105,6 +106,7 @@ describe('formAttackPool — multi-weapon', () => {
   it('applies Spray only to the Spray weapon\'s dice', () => {
     const config: AttackConfig = {
       attacker: createMinimalAttacker({
+        arsenalX: 2,
         weapons: [
           createMinimalWeapon({ redDice: 2, keywords: { spray: true } }), // Will be multiplied
           createMinimalWeapon({ blackDice: 2 }), // Will NOT be multiplied
@@ -125,6 +127,7 @@ describe('formAttackPool — multi-weapon', () => {
   it('applies Spray to multiple weapons independently if both have Spray', () => {
     const config: AttackConfig = {
       attacker: createMinimalAttacker({
+        arsenalX: 2,
         weapons: [
           createMinimalWeapon({ redDice: 1, keywords: { spray: true } }),
           createMinimalWeapon({ blackDice: 2, keywords: { spray: true } }),
@@ -145,6 +148,7 @@ describe('formAttackPool — multi-weapon', () => {
   it('does not multiply non-Spray weapon dice when another weapon has Spray', () => {
     const config: AttackConfig = {
       attacker: createMinimalAttacker({
+        arsenalX: 2,
         weapons: [
           createMinimalWeapon({ whiteDice: 3 }), // No spray
           createMinimalWeapon({ redDice: 1, keywords: { spray: true } }), // Has spray
@@ -165,6 +169,7 @@ describe('formAttackPool — multi-weapon', () => {
   it('only includes weapons matching selected attack type', () => {
     const config: AttackConfig = {
       attacker: createMinimalAttacker({
+        arsenalX: 2,
         weapons: [
           createMinimalWeapon({ redDice: 2, weaponType: AttackType.Ranged }),
           createMinimalWeapon({ blackDice: 3, weaponType: AttackType.Melee }),
@@ -185,6 +190,7 @@ describe('formAttackPool — multi-weapon', () => {
   it('treats missing weapon type as valid for all attack types', () => {
     const config: AttackConfig = {
       attacker: createMinimalAttacker({
+        arsenalX: 2,
         weapons: [
           createMinimalWeapon({ redDice: 1 }),
           createMinimalWeapon({ blackDice: 2, weaponType: AttackType.Melee }),
@@ -198,6 +204,74 @@ describe('formAttackPool — multi-weapon', () => {
     expect(filteredWeapons).toHaveLength(1);
     expect(filteredWeapons[0].redDice).toBe(1);
   });
+
+  it('treats hybrid weapons as valid in ranged attacks', () => {
+    const config: AttackConfig = {
+      attacker: createMinimalAttacker({
+        arsenalX: 2,
+        weapons: [
+          createMinimalWeapon({ redDice: 2, weaponType: AttackType.Hybrid }),
+          createMinimalWeapon({ blackDice: 1, weaponType: AttackType.Ranged }),
+        ],
+      }),
+      defender: createMinimalDefender(),
+      attackType: AttackType.Ranged,
+    };
+
+    const pool = formAttackPool(config);
+    const redCount = pool.filter(d => d === AttackDieColor.Red).length;
+    const blackCount = pool.filter(d => d === AttackDieColor.Black).length;
+
+    expect(redCount).toBe(2);
+    expect(blackCount).toBe(1);
+  });
+
+  it('treats hybrid weapons as valid in melee attacks', () => {
+    const config: AttackConfig = {
+      attacker: createMinimalAttacker({
+        arsenalX: 2,
+        weapons: [
+          createMinimalWeapon({ redDice: 1, weaponType: AttackType.Hybrid }),
+          createMinimalWeapon({ blackDice: 2, weaponType: AttackType.Melee }),
+        ],
+      }),
+      defender: createMinimalDefender(),
+      attackType: AttackType.Melee,
+    };
+
+    const pool = formAttackPool(config);
+    const redCount = pool.filter(d => d === AttackDieColor.Red).length;
+    const blackCount = pool.filter(d => d === AttackDieColor.Black).length;
+
+    expect(redCount).toBe(1);
+    expect(blackCount).toBe(2);
+  });
+
+  it('does not include hybrid weapons in overrun attacks', () => {
+    const config: AttackConfig = {
+      attacker: createMinimalAttacker({
+        arsenalX: 2,
+        weapons: [
+          createMinimalWeapon({ redDice: 3, weaponType: AttackType.Hybrid }),
+          createMinimalWeapon({ blackDice: 2, weaponType: AttackType.Overrun }),
+        ],
+      }),
+      defender: createMinimalDefender(),
+      attackType: AttackType.Overrun,
+    };
+
+    const pool = formAttackPool(config);
+    const redCount = pool.filter(d => d === AttackDieColor.Red).length;
+    const blackCount = pool.filter(d => d === AttackDieColor.Black).length;
+
+    expect(redCount).toBe(0);
+    expect(blackCount).toBe(2);
+  });
+
+  // Note: Arsenal X enforcement tests removed in Phase 5.6
+  // Arsenal limiting now happens upstream in preset generator and upgrade applicator,
+  // not in getWeaponsForAttackType. The weapons array passed to formAttackPool
+  // should already be correctly sized.
 });
 
 describe('attackPool — basic functionality', () => {

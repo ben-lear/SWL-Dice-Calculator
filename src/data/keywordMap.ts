@@ -109,6 +109,8 @@ export const ATTACKER_KEYWORD_FIELD_MAP: Record<string, string> = {
   // Numeric Keywords
   'Precise': 'preciseX',
   'Sharpshooter': 'sharpshooterX',
+  'Arsenal': 'arsenalX',
+  'Arsenal X': 'arsenalX',
   
   // Boolean Keywords
   'Marksman': 'marksman',

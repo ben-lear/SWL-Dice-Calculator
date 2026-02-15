@@ -258,6 +258,89 @@ Build the data pipeline that imports all unit and upgrade data from the TableTop
 
 ---
 
+## Phase 5.6: Multi-Miniature Attack Pools
+
+Extend the data model, engine integration, and UI to correctly handle multi-miniature unit attack pools — the core SWL mechanic where each miniature in a unit independently contributes one weapon (and its keywords) to a shared attack pool. See `plans/phase5.6-multi-mini-attack-pools.md` for the full implementation plan.
+
+**Key design principles:**
+- **Repeated entries model:** Each miniature's weapon contribution is a separate `WeaponProfile` entry in the `weapons[]` array (e.g., 4-mini Stormtroopers = 4× E-11 entries). Existing `formAttackPool` and `aggregateWeaponKeywords` handle this without changes.
+- **Heavy Weapon / Personnel / Squad Leader ADD miniatures:** These upgrades add additional miniature(s) to the unit (each with their own weapon entry). They do NOT replace a base miniature's weapon. A 4-mini Stormtrooper squad + DLT-19 heavy weapon = 5 minis total: 4× E-11 + 1× DLT-19. Implicit `addsMiniature` default is 1 for HeavyWeapon/Personnel/SquadLeader slots (overridable via enrichment).
+- **Per-miniature weapon ownership:** Base minis use unit-card weapons; upgrade minis use their own upgrade weapons, with fallback to unit weapons only when needed for attack-type compatibility.
+- **Sidearm is per-miniature:** Sidearm restricts only the miniature that has the sidearm upgrade when attack type matches sidearm type; it is not a global filter over the full pool.
+- **All upgrade weapons are considered:** Upgrades with multiple weapon profiles must expose all profiles to selection (not only `weapons[0]`).
+- **Dynamic upgrade slots:** Some upgrades add additional upgrade slots to the unit via `addsUpgradeSlot` (e.g., Agent Kallus adds a Heavy Weapon slot). The store tracks an `effectiveUpgradeBar` (base bar + dynamic slots) and the UI dynamically renders upgrade dropdowns.
+- **Arsenal X is single-mini only:** No unit in the game has both Arsenal X and multiple miniatures (simplification).
+- **Counterpart support deferred:** Counterpart upgrade cards (C-3PO, Grogu, etc.) are future work. Only `Counterpart` added to `UpgradeSlot` enum.
+
+### 5.6A: Engine Type & Pool Changes
+
+- [x] Add `sidearmMelee`, `sidearmRanged` boolean fields to `WeaponKeywords` (`engine/types.ts`)
+- [x] Update `getWeaponsForAttackType` to remove Arsenal slice and add sidearm filtering (`engine/attackPool.ts`)
+- [x] Add `Counterpart` to `UpgradeSlot` enum (`data/types.ts`)
+
+### 5.6B: Data Type Extensions
+
+- [x] Add `miniatureCount?: number` to `UnitEnrichment` (`data/enrichment/types.ts`)
+- [x] Add `weapons`, `addsMiniature`, `noncombatant`, `isGrenade`, `addsUpgradeSlot` to `UpgradeEnrichment` (`data/enrichment/types.ts`)
+- [x] Add `weapons`, `addsMiniature`, `noncombatant`, `isGrenade`, `addsUpgradeSlot` to `ResolvedUpgrade` (`data/types.ts`)
+- [x] Add `baseMiniatureCount` and `unitBaseWeapons` to `AttackerPresetProfile` (`data/presets.ts`)
+
+### 5.6C: Resolver Updates
+
+- [x] Unit resolver: apply `miniatureCount` enrichment override (`enrichment.miniatureCount ?? processed.figures ?? 1`)
+- [x] Upgrade resolver: resolve `weapons`, `addsMiniature`, `noncombatant`, `isGrenade`, `addsUpgradeSlot` from enrichment
+- [x] `resolveAddsMiniature()` helper: HeavyWeapon/Personnel/SquadLeader default to 1, others to 0; enrichment can override
+
+### 5.6D: Preset Generator Rewrite
+
+- [x] Multi-mini units: generate a single preset carrying all unit weapons in `unitBaseWeapons`; derive active `weapons[]` from current attack type
+- [x] Single-mini units: keep existing one-preset-per-weapon behavior
+- [x] Set `baseMiniatureCount` and `unitBaseWeapons` on multi-mini presets
+- [x] Ensure mode-aware behavior across Ranged/Melee/Overrun without reloading presets
+
+### 5.6E: Upgrade Applicator Extension
+
+- [x] Heavy weapon add: push heavy weapon entry (adds miniature, does NOT replace base weapon)
+- [x] Squad leader add: push squad leader weapon entry (adds miniature)
+- [x] Personnel add: add weapon entries per `addsMiniature`; noncombatant adds cost only
+- [x] Grenade dedup: each grenade upgrade contributes exactly 1 weapon entry (multiple different grenades each contribute independently)
+- [x] Sidearm per-mini handling: enforce only for matching attack type; otherwise allow fallback weapon selection
+- [x] Use all weapon profiles from each equipped upgrade (not only `weapons[0]`)
+- [x] Preserve per-mini ownership: upgrade weapons remain exclusive to that upgrade mini
+
+### 5.6F: Store Changes
+
+- [x] Add `baseMiniatureCount` and `unitBaseWeapons` to `attackConfigStore` (set by `loadPreset`, excluded from engine config selector)
+- [ ] Add `effectiveUpgradeBar` (base bar + dynamic slots from equipped upgrades) — **DEFERRED** to future work
+- [ ] `recomputeEffectiveUpgradeBar()` helper — recalculates when upgrades change; cascading unequip for removed dynamic slots — **DEFERRED** to future work
+
+### 5.6G: UI Components
+
+- [ ] `WeaponAssignmentPanel` — per-miniature weapon assignment rows for multi-mini units
+- [ ] `PoolSummary` — aggregated dice + stacked keywords display
+- [ ] Custom Pool mode mini count indicator
+- [ ] Dynamic upgrade slot dropdowns — reactively render upgrade dropdowns from `effectiveUpgradeBar`
+
+### 5.6H: Tests
+
+- [x] Engine tests: multi-mini pool formation, sidearm safety-net filtering, keyword stacking (Arsenal tests updated for new architecture)
+- [x] Upgrade applicator tests: heavy weapon add, squad leader add, personnel add, noncombatant, grenade dedup, per-mini sidearm behavior, all-upgrade-weapons selection (`data/__tests__/upgradeApplicator.test.ts` — 23 tests, all passing)
+- [x] Preset generator tests: multi-mini expansion, single-mini unchanged, mode-aware weapon derivation (`data/__tests__/presetGenerator.test.ts` — 15 tests, all passing)
+- [x] Data layer tests: miniatureCount override, upgrade resolver weapons/flags, implicit `addsMiniature` defaults (`data/__tests__/unitResolver.test.ts` + `upgradeResolver.test.ts` — 35 tests, all passing)
+- [ ] Store tests: `effectiveUpgradeBar` recomputation, cascading unequip on dynamic slot removal — **DEFERRED** (no effectiveUpgradeBar implementation)
+
+### Manual Task: Enrichment Data Population (Human-Owned)
+
+- [ ] Add `miniatureCount` to units with bad/missing API data (Death Troopers, Bad Batch, etc.)
+- [ ] Add base weapon profiles for key corps units (Stormtroopers, Rebel Troopers, B1s, Clones, etc.)
+- [ ] Add `addsMiniature`, `noncombatant`, `isGrenade`, and weapon data to personnel/heavy weapon/grenade upgrade enrichments
+- [ ] Add `addsUpgradeSlot` to upgrades that grant additional slots (Agent Kallus, Stormtrooper Captain, etc.)
+- [ ] Note: this population step is manual and not an implementation sub-step for Copilot automation
+
+**Output:** ✅ **MOSTLY COMPLETE** - Multi-miniature units produce correct attack pools with per-miniature weapon contributions. Heavy weapons, personnel, squad leaders, grenades, noncombatant, per-mini sidearm behavior, all-upgrade-weapons selection, and per-mini ownership rules are fully implemented and tested. Core engine and data layer complete. Dynamic upgrade slots (`effectiveUpgradeBar`/`recomputeEffectiveUpgradeBar`) and UI components (5.6G) deferred to future work. All 73 new tests passing. Fixes 5 pre-existing type errors (Death Troopers enrichment + 4 upgrade enrichments). **Remaining:** UI implementation (WeaponAssignmentPanel, PoolSummary, mini count indicator) and dynamic upgrade bar logic.
+
+---
+
 ## Phase 6: UI Panels
 
 ### 6A: Attacker Panel (`components/AttackerPanel/`)
@@ -404,8 +487,10 @@ Phase 1 (Scaffolding)
   │     │     ├─► Phase 5A (Stores — uses weapons[] types)
   │     │     │     │
   │     │     │     ├─► Phase 5.5 (Unit Data & Upgrades)
-  │     │     │     │     └──► replaces Phase 5B
-  │     │     │     │
+  │     │     │     │     ├──► replaces Phase 5B
+  │     │     │     │     │
+  │     │     │     │     └─► Phase 5.6 (Multi-Mini Attack Pools)
+  │     │     │     │           │
   │     │     │     └─► Phase 2.6 (Defender Two-Mode Design)
   │     │     │              │
   │     │     └──────────────┘
@@ -415,8 +500,8 @@ Phase 1 (Scaffolding)
   │
   │   ┌─────────────────────────────────────────────────────┐
   │   │ Phase 6 (UI Panels — Two-Mode Design)               │
-  │   │   6A: Attacker Panel requires: 4 + 5A + 5.5 + 2.5   │
-  │   │   6B: Defender Panel requires: 4 + 5A + 5.5 + 2.6   │
+  │   │   6A: Attacker Panel requires: 4 + 5A + 5.5 + 5.6    │
+  │   │   6B: Defender Panel requires: 4 + 5A + 5.5 + 2.6    │
   │   └─────────────────────────────────────────────────────┘
   │   ┌─────────────────────────────────────────────────────┐
   │   │ Phase 7 (Results Panel)                             │
@@ -433,6 +518,6 @@ Phase 1 (Scaffolding)
 **Parallelism:** After Phase 1, three independent tracks can proceed simultaneously:
 - **Track A:** Phase 2 → Phase 2.5 → Phase 3 (engine → multi-weapon restructuring → simulator)
 - **Track B:** Phase 4 (shared UI components — no state dependency)
-- **Track C:** Phase 5A → Phase 5.5 (stores + data layer, depends on Phase 2.5 for `weapons[]` types)
+- **Track C:** Phase 5A → Phase 5.5 → Phase 5.6 (stores + data layer + multi-mini pools)
 
-Phase 2.5 restructures the attacker engine to support per-weapon keywords before downstream phases consume the config types. Phase 2.6 extends the two-mode design to the Defender Panel (depends on Phase 2.5 pattern and Phase 5.5 data layer). Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 6A (Attacker Panel) requires Phases 4 + 5A + 5.5 + 2.5 and implements the two-mode design (Custom Pool / Unit Builder). Phase 6B (Defender Panel) requires Phases 4 + 5A + 5.5 + 2.6 and implements the two-mode design. Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.
+Phase 2.5 restructures the attacker engine to support per-weapon keywords before downstream phases consume the config types. Phase 2.6 extends the two-mode design to the Defender Panel (depends on Phase 2.5 pattern and Phase 5.5 data layer). Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 5.6 extends Phase 5.5 with multi-miniature attack pool mechanics (per-mini weapon entries, heavy weapon/personnel/squad leader add, grenades, sidearm, noncombatant, dynamic upgrade slots). Phase 6A (Attacker Panel) requires Phases 4 + 5A + 5.5 + 5.6 and implements the two-mode design with per-miniature weapon assignment. Phase 6B (Defender Panel) requires Phases 4 + 5A + 5.5 + 2.6. Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.

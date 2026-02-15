@@ -1570,7 +1570,7 @@ describe('AttackTypeSelector', () => {
 
 **Verify:**
 - All tests pass: `npm test -- --run src/components/AttackTypeSelector/`
-- Default value is "All"
+- Default value is "Ranged"
 - Changing selection updates the store
 
 ---
@@ -1587,7 +1587,7 @@ export { default as AttackTypeSelector } from './AttackTypeSelector';
 
 ## Step 6D.1 — Wire Panels into App Shell
 
-**File:** `src/app/App.tsx` (modify existing)
+**File:** `src/App.tsx` (modify existing)
 
 Update the App shell from Phase 1 to render the Attacker Panel, Defender Panel, Attack Type Selector, and a placeholder for the Results Panel. This step connects the Phase 6 components into the responsive 3-column layout.
 
@@ -1706,7 +1706,7 @@ After completing all steps, confirm:
 | `src/components/AttackTypeSelector/AttackTypeSelector.test.tsx` | Attack type selector unit tests |
 | `src/components/AttackTypeSelector/index.ts` | Attack type selector barrel export |
 | `src/components/index.ts` | Components barrel export (panels + shared) |
-| `src/app/App.tsx` | Modified — wires panels into 3-column layout |
+| `src/App.tsx` | Modified — wires panels into 3-column layout |
 
 ---
 
@@ -1714,7 +1714,7 @@ After completing all steps, confirm:
 
 | File | Change |
 |------|--------|
-| `src/app/App.tsx` | Replace layout placeholder with AttackerPanel, DefenderPanel, AttackTypeSelector, and Results placeholder |
+| `src/App.tsx` | Replace layout placeholder with AttackerPanel, DefenderPanel, AttackTypeSelector, and Results placeholder |
 
 ---
 

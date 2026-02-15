@@ -34,6 +34,8 @@ export function createMinimalWeaponKeywords(
     antiMaterielX: 0,
     antiPersonnelX: 0,
     cumbersome: false,
+    sidearmMelee: false,
+    sidearmRanged: false,
     ...overrides,
   };
 }
@@ -85,6 +87,7 @@ export function createMinimalAttacker(
     dodgeTokensAttacker: 0,
     preciseX: 0,
     sharpshooterX: 0,
+    arsenalX: 0,
     marksman: false,
     marksmanStrategy: MarksmanStrategy.Deterministic,
     rerollStrategy: RerollStrategy.Conservative,
