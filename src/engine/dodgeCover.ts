@@ -1,4 +1,4 @@
-import type { AttackConfig, RolledAttackDie } from './types';
+import type { AttackConfig, RolledAttackDie, AggregatedWeaponKeywords } from './types';
 import { AttackFace } from './types';
 import { determineCoverValue, rollCoverPool } from './cover';
 
@@ -8,9 +8,10 @@ import { determineCoverValue, rollCoverPool } from './cover';
  */
 export function applyDodgeAndCover(
   results: RolledAttackDie[],
-  config: AttackConfig
+  config: AttackConfig,
+  poolKeywords: AggregatedWeaponKeywords
 ): { hits: number; crits: number; blanks: number; dodgeWasSpent: boolean } {
-  const { attacker, defender } = config;
+  const { defender } = config;
 
   // ── Count results ──
   let hits = results.filter(r => r.face === AttackFace.Hit).length;
@@ -18,7 +19,7 @@ export function applyDodgeAndCover(
   const blanks = results.filter(r => r.face === AttackFace.Blank).length;
 
   // ── Step 5a-d: Cover ──
-  const coverValue = determineCoverValue(config);
+  const coverValue = determineCoverValue(config, poolKeywords.blast);
 
   if (coverValue > 0 && hits > 0) {
     const coverBlocks = rollCoverPool(hits, coverValue, defender.lowProfile, defender.dugIn);
@@ -29,7 +30,7 @@ export function applyDodgeAndCover(
   let dodgeWasSpent = false;
 
   // High Velocity prevents Dodge spending entirely
-  if (attacker.highVelocity) {
+  if (poolKeywords.highVelocity) {
     // No Dodge processing — dodgeWasSpent stays false
     // This also prevents Block activation (Block requires Dodge spent)
     return { hits, crits, blanks, dodgeWasSpent };

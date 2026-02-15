@@ -1,32 +1,97 @@
-import type { AttackConfig } from './types';
+import type { AttackConfig, WeaponProfile, AggregatedWeaponKeywords } from './types';
 import { AttackDieColor } from './types';
 
 /**
+ * Aggregate weapon keywords across all weapons in an attack pool.
+ * - Numeric keywords: summed
+ * - blast, suppressive: OR (any weapon has it → pool has it)
+ * - highVelocity: AND (all weapons must have it; false if pool is empty)
+ *
+ * Per-weapon keywords (spray, cumbersome, antiMaterielX, antiPersonnelX)
+ * are NOT included — they are handled during pool formation.
+ */
+export function aggregateWeaponKeywords(
+  weapons: WeaponProfile[]
+): AggregatedWeaponKeywords {
+  if (weapons.length === 0) {
+    return {
+      criticalX: 0,
+      lethalX: 0,
+      pierceX: 0,
+      impactX: 0,
+      ramX: 0,
+      blast: false,
+      suppressive: false,
+      highVelocity: false,
+    };
+  }
+
+  let criticalX = 0;
+  let lethalX = 0;
+  let pierceX = 0;
+  let impactX = 0;
+  let ramX = 0;
+  let blast = false;
+  let suppressive = false;
+  let highVelocity = true; // AND: start true, flip false if any weapon lacks it
+
+  for (const weapon of weapons) {
+    const kw = weapon.keywords;
+    criticalX += kw.criticalX;
+    lethalX += kw.lethalX;
+    pierceX += kw.pierceX;
+    impactX += kw.impactX;
+    ramX += kw.ramX;
+    blast = blast || kw.blast;
+    suppressive = suppressive || kw.suppressive;
+    highVelocity = highVelocity && kw.highVelocity;
+  }
+
+  return {
+    criticalX,
+    lethalX,
+    pierceX,
+    impactX,
+    ramX,
+    blast,
+    suppressive,
+    highVelocity,
+  };
+}
+
+/**
  * Step 2 — Form Attack Pool
- * - Start with the dice specified in attacker config
- * - Apply Spray (multiply by minis in LOS if spray = true)
+ *
+ * Iterates over all weapons in config.attacker.weapons[].
+ * For each weapon:
+ *   - If weapon.keywords.spray === true, multiply that weapon's dice
+ *     by defender.minisInLOS
+ *   - Append the weapon's dice to the pool
+ *
+ * This correctly handles mixed pools where only some weapons have Spray.
  */
 export function formAttackPool(config: AttackConfig): AttackDieColor[] {
   const { attacker, defender } = config;
-
-  // Base dice counts
-  let red = attacker.redDice;
-  let black = attacker.blackDice;
-  let white = attacker.whiteDice;
-
-  // Spray: multiply weapon dice by minis in LOS
-  if (attacker.spray) {
-    const multiplier = Math.max(1, defender.minisInLOS);
-    red *= multiplier;
-    black *= multiplier;
-    white *= multiplier;
-  }
-
-  // Build pool array
   const pool: AttackDieColor[] = [];
-  for (let i = 0; i < red; i++) pool.push('red' as AttackDieColor);
-  for (let i = 0; i < black; i++) pool.push('black' as AttackDieColor);
-  for (let i = 0; i < white; i++) pool.push('white' as AttackDieColor);
+
+  for (const weapon of attacker.weapons) {
+    let red = weapon.redDice;
+    let black = weapon.blackDice;
+    let white = weapon.whiteDice;
+
+    // Spray: multiply THIS weapon's dice by minis in LOS
+    if (weapon.keywords.spray) {
+      const multiplier = Math.max(1, defender.minisInLOS);
+      red *= multiplier;
+      black *= multiplier;
+      white *= multiplier;
+    }
+
+    // Append dice to pool
+    for (let i = 0; i < red; i++) pool.push(AttackDieColor.Red);
+    for (let i = 0; i < black; i++) pool.push(AttackDieColor.Black);
+    for (let i = 0; i < white; i++) pool.push(AttackDieColor.White);
+  }
 
   return pool;
 }

@@ -163,7 +163,7 @@ function compareResults(
   // (keyword Pierce X + Lethal Pierce + Duelist Pierce), reduced by 1.
   if (
     attacker.makashiMastery &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Melee)
   ) {
     totalPierce = Math.max(0, totalPierce - 1);
   }
@@ -184,7 +184,7 @@ function compareResults(
 
   const isMeleeWithMakashi =
     attacker.makashiMastery &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All);
+    (config.attackType === AttackType.Melee);
 
   const immuneToThisPierce =
     (defender.immunePierce && !isMeleeWithMakashi) ||
@@ -247,7 +247,7 @@ function compareResults(
   if (
     defender.deflect &&
     !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) &&
+    (config.attackType === AttackType.Ranged) &&
     !attacker.immuneDeflect
   ) {
     if (surgeCountBeforeConversion > 0) {
@@ -284,7 +284,7 @@ function compareResults(
 
   if (
     defender.djemSoMastery &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Melee)
   ) {
     const attackBlanks = originalAttackRollResults.filter(
       d => d.face === AttackFace.Blank

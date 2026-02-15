@@ -255,7 +255,7 @@ import {
 describe('isKeywordActive — attack type filtering', () => {
   // ── Unrestricted keywords ──
   it('unrestricted keywords active for all attack types', () => {
-    for (const at of [AttackType.All, AttackType.Ranged, AttackType.Melee, AttackType.Overrun]) {
+    for (const at of [AttackType.Ranged, AttackType.Ranged, AttackType.Melee, AttackType.Overrun]) {
       expect(isKeywordActive('pierceX', at)).toBe(true);
       expect(isKeywordActive('impactX', at)).toBe(true);
       expect(isKeywordActive('blast', at)).toBe(true);
@@ -264,14 +264,14 @@ describe('isKeywordActive — attack type filtering', () => {
   });
 
   // ── Ranged-only keywords ──
-  it('sharpshooterX active for Ranged and All, inactive for Melee and Overrun', () => {
-    expect(isKeywordActive('sharpshooterX', AttackType.All)).toBe(true);
+  it('sharpshooterX active for Ranged, inactive for Melee and Overrun', () => {
+    expect(isKeywordActive('sharpshooterX', AttackType.Ranged)).toBe(true);
     expect(isKeywordActive('sharpshooterX', AttackType.Ranged)).toBe(true);
     expect(isKeywordActive('sharpshooterX', AttackType.Melee)).toBe(false);
     expect(isKeywordActive('sharpshooterX', AttackType.Overrun)).toBe(false);
   });
 
-  it('highVelocity active for Ranged and All, inactive for Melee', () => {
+  it('highVelocity active for Ranged, inactive for Melee', () => {
     expect(isKeywordActive('highVelocity', AttackType.Ranged)).toBe(true);
     expect(isKeywordActive('highVelocity', AttackType.Melee)).toBe(false);
   });
@@ -282,20 +282,20 @@ describe('isKeywordActive — attack type filtering', () => {
   });
 
   // ── Melee-only keywords ──
-  it('duelistAttacker active for Melee and All, inactive for Ranged and Overrun', () => {
-    expect(isKeywordActive('duelistAttacker', AttackType.All)).toBe(true);
+  it('duelistAttacker active for Melee, inactive for Ranged and Overrun', () => {
+    expect(isKeywordActive('duelistAttacker', AttackType.Ranged)).toBe(true);
     expect(isKeywordActive('duelistAttacker', AttackType.Melee)).toBe(true);
     expect(isKeywordActive('duelistAttacker', AttackType.Ranged)).toBe(false);
     expect(isKeywordActive('duelistAttacker', AttackType.Overrun)).toBe(false);
   });
 
-  it('makashiMastery active for Melee and All, inactive for Ranged', () => {
+  it('makashiMastery active for Melee, inactive for Ranged', () => {
     expect(isKeywordActive('makashiMastery', AttackType.Melee)).toBe(true);
     expect(isKeywordActive('makashiMastery', AttackType.Ranged)).toBe(false);
   });
 
-  it('jarKaiMastery active for Melee and All, inactive for Ranged and Overrun', () => {
-    expect(isKeywordActive('jarKaiMastery', AttackType.All)).toBe(true);
+  it('jarKaiMastery active for Melee, inactive for Ranged and Overrun', () => {
+    expect(isKeywordActive('jarKaiMastery', AttackType.Ranged)).toBe(true);
     expect(isKeywordActive('jarKaiMastery', AttackType.Melee)).toBe(true);
     expect(isKeywordActive('jarKaiMastery', AttackType.Ranged)).toBe(false);
     expect(isKeywordActive('jarKaiMastery', AttackType.Overrun)).toBe(false);
@@ -309,7 +309,7 @@ describe('isKeywordActive — attack type filtering', () => {
   });
 
   // ── Defender keywords ──
-  it('deflect active for Ranged and All, inactive for Melee', () => {
+  it('deflect active for Ranged, inactive for Melee', () => {
     expect(isKeywordActive('deflect', AttackType.Ranged)).toBe(true);
     expect(isKeywordActive('deflect', AttackType.Melee)).toBe(false);
   });
@@ -332,7 +332,7 @@ describe('isKeywordActive — attack type filtering', () => {
 describe('isCoverActive', () => {
   it('returns true for Ranged and All', () => {
     expect(isCoverActive(AttackType.Ranged)).toBe(true);
-    expect(isCoverActive(AttackType.All)).toBe(true);
+    expect(isCoverActive(AttackType.Ranged)).toBe(true);
   });
 
   it('returns false for Melee and Overrun', () => {
@@ -344,7 +344,7 @@ describe('isCoverActive', () => {
 describe('isDodgeActive', () => {
   it('returns true for Ranged and All (cancels hits)', () => {
     expect(isDodgeActive(AttackType.Ranged)).toBe(true);
-    expect(isDodgeActive(AttackType.All)).toBe(true);
+    expect(isDodgeActive(AttackType.Ranged)).toBe(true);
   });
 
   it('returns true for Melee (Dodge can cancel hits in Melee)', () => {
@@ -359,7 +359,7 @@ describe('isDodgeActive', () => {
 describe('isDeflectActive', () => {
   it('returns true for Ranged and All', () => {
     expect(isDeflectActive(AttackType.Ranged)).toBe(true);
-    expect(isDeflectActive(AttackType.All)).toBe(true);
+    expect(isDeflectActive(AttackType.Ranged)).toBe(true);
   });
 
   it('returns false for Melee and Overrun', () => {
@@ -370,10 +370,10 @@ describe('isDeflectActive', () => {
 ```
 
 **Verify:**
-- Each keyword is tested against all 4 attack types (All, Ranged, Melee, Overrun)
+- Each keyword is tested against all 3 attack types (Ranged, Melee, Overrun)
 - Melee-only keywords (duelistAttacker, makashiMastery, jarKaiMastery) work correctly
 - Ranged-only keywords (sharpshooterX, highVelocity, immuneDeflect) work correctly
-- `AttackType.All` enables all keywords regardless of restriction
+- `AttackType.Ranged` enables ranged-applicable keywords only; melee-only keywords are disabled
 - Cover/Dodge/Deflect active checks align with attack-type rules
 
 ---
@@ -1032,7 +1032,7 @@ describe('Attack Sequence — Edge Cases', () => {
         block: true,
         coverType: CoverType.Heavy,
       },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     });
     const result = runAttackSequence(config, createSeededRng(42));
     expect(result.totalWounds).toBeGreaterThanOrEqual(0);
@@ -1781,7 +1781,7 @@ function createMatchupConfig(overrides: {
       unitCost: 0,
       ...overrides.defender,
     },
-    attackType: overrides.attackType ?? AttackType.All,
+    attackType: overrides.attackType ?? AttackType.Ranged,
   };
 }
 
@@ -2138,7 +2138,7 @@ describe('Pipeline — Store → Engine Config', () => {
   beforeEach(() => {
     useAttackConfigStore.getState().reset();
     useDefenseConfigStore.getState().reset();
-    useAttackTypeStore.getState().setAttackType(AttackType.All);
+    useAttackTypeStore.getState().setAttackType(AttackType.Ranged);
   });
 
   it('setting attacker fields updates the full config correctly', () => {
@@ -2247,7 +2247,7 @@ Test the following browsers on the listed operating systems. For each, verify al
 - [ ] App loads without JS errors (console clean)
 - [ ] Attacker panel: all inputs render, accept values, update state
 - [ ] Defender panel: all inputs render, accept values, update state
-- [ ] Attack type selector: All / Ranged / Melee / Overrun switches correctly
+- [ ] Attack type selector: Ranged / Melee / Overrun switches correctly
 - [ ] Keyword filtering: disabled inputs grayed out per attack type
   - [ ] Select Melee → Sharpshooter, High Velocity, Immune: Deflect disabled
   - [ ] Select Ranged → Duelist (atk), Makashi Mastery, Jar'Kai Mastery disabled

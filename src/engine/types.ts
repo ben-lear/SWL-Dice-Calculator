@@ -31,7 +31,6 @@ export enum DefenseFace {
 // ============================================================================
 
 export enum AttackType {
-  All = 'all',
   Ranged = 'ranged',
   Melee = 'melee',
   Overrun = 'overrun',
@@ -86,35 +85,105 @@ export interface MarksmanDecision {
 }
 
 // ============================================================================
+// Weapon Keywords (per-weapon, contributed to attack pool)
+// ============================================================================
+
+/**
+ * Keywords that belong to individual weapons and are contributed to the
+ * attack pool along with that weapon's dice. Some are aggregated across
+ * all weapons in the pool (sum/OR/AND), others apply per-weapon only
+ * during pool formation.
+ */
+export interface WeaponKeywords {
+  // Aggregated: Summed across weapons in pool
+  criticalX: number;
+  lethalX: number;
+  pierceX: number;
+  impactX: number;
+  ramX: number;
+
+  // Aggregated: Boolean OR (any weapon → pool has it)
+  blast: boolean;
+  suppressive: boolean;
+
+  // Aggregated: Boolean AND (all weapons must have it)
+  highVelocity: boolean;
+
+  // Per-weapon only (applied during pool formation, not aggregated)
+  spray: boolean;
+  antiMaterielX: number;
+  antiPersonnelX: number;
+  cumbersome: boolean;
+}
+
+// ============================================================================
+// Weapon Profile (dice + keywords for a single weapon)
+// ============================================================================
+
+/**
+ * Represents a single weapon contributing to an attack pool.
+ * Each weapon has its own dice and weapon keywords.
+ */
+export interface WeaponProfile {
+  /** Optional display name (e.g., "DLT-19", "Lightsaber") */
+  name?: string;
+
+  // Dice contributed by this weapon
+  redDice: number;
+  blackDice: number;
+  whiteDice: number;
+
+  // Weapon keywords
+  keywords: WeaponKeywords;
+}
+
+// ============================================================================
+// Aggregated Weapon Keywords (pool-level, computed from all weapons)
+// ============================================================================
+
+/**
+ * The result of aggregating weapon keywords across all weapons in an
+ * attack pool. Per-weapon-only keywords (spray, cumbersome, anti-materiel,
+ * anti-personnel) are excluded — they are handled during pool formation.
+ */
+export interface AggregatedWeaponKeywords {
+  // Summed across weapons
+  criticalX: number;
+  lethalX: number;
+  pierceX: number;
+  impactX: number;
+  ramX: number;
+
+  // OR'd across weapons
+  blast: boolean;
+  suppressive: boolean;
+
+  // AND'd across weapons (all must have it)
+  highVelocity: boolean;
+}
+
+// ============================================================================
 // Attacker Configuration
 // ============================================================================
 
 export interface AttackerConfig {
-  // Dice pool
-  redDice: number;
-  blackDice: number;
-  whiteDice: number;
+  // Weapons in the attack pool
+  weapons: WeaponProfile[];
+
+  // Unit-level surge chart (applies to all dice in pool)
   surgeChart: AttackSurgeChart;
 
-  // Tokens
+  // Tokens (unit-level)
   aimTokens: number;
   surgeTokens: number;
   observationTokens: number;
   dodgeTokensAttacker: number;
 
-  // Attack keywords
+  // Unit keywords (numeric)
   preciseX: number;
-  criticalX: number;
-  lethalX: number;
   sharpshooterX: number;
-  pierceX: number;
-  impactX: number;
-  ramX: number;
 
-  // Flags
-  blast: boolean;
-  highVelocity: boolean;
-  suppressive: boolean;
+  // Unit keywords (boolean)
   marksman: boolean;
   marksmanStrategy: MarksmanStrategy;
   rerollStrategy: RerollStrategy;
@@ -122,15 +191,9 @@ export interface AttackerConfig {
   jarKaiMastery: boolean;
   duelistAttacker: boolean;
   makashiMastery: boolean;
-  spray: boolean;
   immuneDeflect: boolean;
   deathFromAbove: boolean;
   holdTheLine: boolean;
-
-  // Dice modification keywords
-  antiMaterielX: number;
-  antiPersonnelX: number;
-  cumbersome: boolean;
 
   // Points
   unitCost: number;

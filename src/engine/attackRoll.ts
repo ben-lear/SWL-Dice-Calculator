@@ -1,4 +1,4 @@
-import type { AttackConfig, RolledAttackDie, AttackerConfig } from './types';
+import type { AttackConfig, RolledAttackDie, AttackerConfig, AggregatedWeaponKeywords } from './types';
 import { rollAttackDie } from './dice';
 import { AttackDieColor, AttackFace, AttackSurgeChart, AttackType } from './types';
 
@@ -16,7 +16,8 @@ export function rollAttackDice(pool: AttackDieColor[]): RolledAttackDie[] {
  */
 function calculateExcessSurgeIndices(
   surgeIndices: Array<{ idx: number; colorRank: number }>,
-  attacker: AttackerConfig
+  attacker: AttackerConfig,
+  poolKeywords: AggregatedWeaponKeywords
 ): Array<{ idx: number; colorRank: number }> {
   if (surgeIndices.length === 0) return [];
 
@@ -32,7 +33,7 @@ function calculateExcessSurgeIndices(
   }
 
   // Limited conversion: surgeTokens + criticalX
-  const totalConversions = attacker.surgeTokens + attacker.criticalX;
+  const totalConversions = attacker.surgeTokens + poolKeywords.criticalX;
 
   if (totalConversions === 0) {
     // No conversions at all → ALL surges are excess
@@ -64,7 +65,8 @@ function calculateExcessSurgeIndices(
  */
 function identifyRerollTargetIndices(
   results: RolledAttackDie[],
-  attacker: AttackerConfig
+  attacker: AttackerConfig,
+  poolKeywords: AggregatedWeaponKeywords
 ): number[] {
   const blankIndices: Array<{ idx: number; colorRank: number }> = [];
   const surgeIndices: Array<{ idx: number; colorRank: number }> = [];
@@ -84,7 +86,7 @@ function identifyRerollTargetIndices(
   });
 
   // Determine which surges are "excess" (won't be converted)
-  const excessSurgeIndices = calculateExcessSurgeIndices(surgeIndices, attacker);
+  const excessSurgeIndices = calculateExcessSurgeIndices(surgeIndices, attacker, poolKeywords);
 
   // Combine blanks + excess surges, sort by color rank descending (Red first)
   const allTargets = [...blankIndices, ...excessSurgeIndices];
@@ -98,7 +100,8 @@ function identifyRerollTargetIndices(
  */
 export function rerollAttackDice(
   results: RolledAttackDie[],
-  config: AttackConfig
+  config: AttackConfig,
+  poolKeywords: AggregatedWeaponKeywords
 ): { results: RolledAttackDie[]; aimsSpent: number; pierceBonus: number; aimsSavedForMarksman: number } {
   const { attacker } = config;
   let workingResults = results.map(d => ({ ...d })); // Deep clone
@@ -112,7 +115,7 @@ export function rerollAttackDice(
   // Each Observation token provides exactly 1 reroll.
   // Processed FIRST (before Aim tokens) so Marksman decisions see post-observation state.
   for (let obs = 0; obs < attacker.observationTokens; obs++) {
-    const targetIndices = identifyRerollTargetIndices(workingResults, attacker);
+    const targetIndices = identifyRerollTargetIndices(workingResults, attacker, poolKeywords);
 
     if (targetIndices.length > 0) {
       // Reroll the highest-priority target (1 reroll per observation token)
@@ -134,7 +137,7 @@ export function rerollAttackDice(
     if (attacker.marksman) {
       // Simplified decision: if we have blanks or hits that Marksman could convert,
       // and we have few reroll targets, save for Marksman.
-      const targetIndices = identifyRerollTargetIndices(workingResults, attacker);
+      const targetIndices = identifyRerollTargetIndices(workingResults, attacker, poolKeywords);
       const blankCount = workingResults.filter(d => d.face === AttackFace.Blank).length;
       const hitCount = workingResults.filter(d => d.face === AttackFace.Hit).length;
       const canConvert = blankCount > 0 || hitCount > 0;
@@ -150,7 +153,7 @@ export function rerollAttackDice(
     const selectedIndices: number[] = [];
 
     // Select blanks and excess surges
-    const targetIndices = identifyRerollTargetIndices(workingResults, attacker);
+    const targetIndices = identifyRerollTargetIndices(workingResults, attacker, poolKeywords);
     for (const idx of targetIndices) {
       if (selectedIndices.length >= rerollsPerAim) break;
       selectedIndices.push(idx);
@@ -175,7 +178,7 @@ export function rerollAttackDice(
   // ── Duelist (attacker): Pierce +1 if any Aim was spent in Melee ──
   if (
     attacker.duelistAttacker &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All) &&
+    config.attackType === AttackType.Melee &&
     aimsSpent > 0
   ) {
     pierceBonus = 1;

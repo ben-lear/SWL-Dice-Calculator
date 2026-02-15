@@ -1,4 +1,4 @@
-import type { AttackConfig } from './types';
+import type { AttackConfig, AggregatedWeaponKeywords } from './types';
 import { AttackType } from './types';
 
 /**
@@ -8,7 +8,7 @@ import { AttackType } from './types';
  * This is the last step before defense dice are rolled.
  *
  * Operation order (CRITICAL):
- * 1. Ram X — Convert ANY results (blanks first, then hits) to crits
+ * 1. Ram X — Convert ANY results (blanks first, then hits) to crits (Melee/Overrun only)
  * 2. Impact X — Convert hits → crits (to bypass Armor)
  * 3. Armor X — Cancel hits (crits bypass)
  * 4. Shielded X — Cancel crits first, then hits (Ranged only)
@@ -20,21 +20,25 @@ export function modifyAttackDice(
   attackResults: { hits: number; crits: number; blanks: number },
   config: AttackConfig,
   aimsSpent: number,
-  aimsSavedForMarksman: number
+  aimsSavedForMarksman: number,
+  poolKeywords: AggregatedWeaponKeywords
 ): { hits: number; crits: number; lethalPierce: number; guardianHits: number } {
   let { hits, crits, blanks } = attackResults;
   const { attacker, defender } = config;
   let lethalPierce = 0;
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // 1. Ram X — Convert up to X results (any face) to crits
+  // 1. Ram X — Convert up to X results (any face) to crits (Melee/Overrun only)
   // ═══════════════════════════════════════════════════════════════════════════
-  // Per rulebook: "While this unit is performing an attack, change X attack die
-  // results to crit results."
+  // Per rulebook: "While this unit is performing a melee or overrun attack, 
+  // change X attack die results to crit results."
   // Priority: blanks first (free value), then hits (upgrade)
   // Crits are already crits — skipped.
-  if (attacker.ramX > 0) {
-    let ramRemaining = attacker.ramX;
+  const isMeleeOrOverrun = config.attackType === AttackType.Melee || 
+                           config.attackType === AttackType.Overrun;
+  
+  if (poolKeywords.ramX > 0 && isMeleeOrOverrun) {
+    let ramRemaining = poolKeywords.ramX;
 
     // Convert blanks → crits
     const blanksConverted = Math.min(blanks, ramRemaining);
@@ -57,8 +61,8 @@ export function modifyAttackDice(
   // Per rulebook: "While attacking a unit that has Armor, change up to X hit
   // results to crit results."
   // Impact only activates when the defender has Armor X > 0.
-  if (attacker.impactX > 0 && defender.armorX > 0) {
-    const impactConversions = Math.min(hits, attacker.impactX);
+  if (poolKeywords.impactX > 0 && defender.armorX > 0) {
+    const impactConversions = Math.min(hits, poolKeywords.impactX);
     hits -= impactConversions;
     crits += impactConversions;
   }
@@ -81,7 +85,7 @@ export function modifyAttackDice(
   // Priority: cancel crits first (most valuable to attacker), then hits.
   if (
     defender.shieldedX > 0 &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    config.attackType === AttackType.Ranged
   ) {
     let shieldRemaining = defender.shieldedX;
 
@@ -105,7 +109,7 @@ export function modifyAttackDice(
   // attack, 2 hit results are canceled."
   if (
     defender.backup &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    config.attackType === AttackType.Ranged
   ) {
     const hitsCancelled = Math.min(hits, 2);
     hits -= hitsCancelled;
@@ -121,7 +125,7 @@ export function modifyAttackDice(
   let guardianHits = 0;
   if (
     defender.guardianX > 0 &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    config.attackType === AttackType.Ranged
   ) {
     guardianHits = Math.min(hits, defender.guardianX);
     hits -= guardianHits;
@@ -141,8 +145,8 @@ export function modifyAttackDice(
   // lethalPierce = min(lethalX, aimsLeftover)
   // where aimsLeftover = aimTokens - aimsSpent - aimsSavedForMarksman
   const aimsLeftover = Math.max(0, attacker.aimTokens - aimsSpent - aimsSavedForMarksman);
-  if (attacker.lethalX > 0 && aimsLeftover > 0) {
-    lethalPierce = Math.min(attacker.lethalX, aimsLeftover);
+  if (poolKeywords.lethalX > 0 && aimsLeftover > 0) {
+    lethalPierce = Math.min(poolKeywords.lethalX, aimsLeftover);
   }
 
   return { hits, crits, lethalPierce, guardianHits };

@@ -85,7 +85,7 @@ export function determineCoverValue(config: AttackConfig): number {
   }
 
   // Cover X: +X (only applies to Ranged attacks per rulebook)
-  if (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) {
+  if (config.attackType === AttackType.Ranged) {
     cover += defender.coverX;
   }
 
@@ -123,7 +123,7 @@ export function determineCoverValue(config: AttackConfig): number {
 | Death From Above + Heavy | 0 (override, no immunity) |
 | None + Cover 3 | 2 (0+3=3, capped at 2) |
 | Cover X + Melee attack | 0 (Cover X is Ranged only) |
-| Cover X + All attack type | X (All includes Ranged) |
+| Cover X + Ranged attack | X (Cover applies in Ranged) |
 
 ---
 

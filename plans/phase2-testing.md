@@ -287,9 +287,9 @@ describe('isKeywordActive', () => {
     expect(isKeywordActive('Ram', AttackType.Ranged, 'melee')).toBe(false);
   });
 
-  it('AttackType.All: active for both restrictions', () => {
-    expect(isKeywordActive('Test', AttackType.All, 'ranged')).toBe(true);
-    expect(isKeywordActive('Test', AttackType.All, 'melee')).toBe(true);
+  it('AttackType.Ranged: active for both restrictions', () => {
+    expect(isKeywordActive('Test', AttackType.Ranged, 'ranged')).toBe(true);
+    expect(isKeywordActive('Test', AttackType.Ranged, 'melee')).toBe(true);
   });
 });
 

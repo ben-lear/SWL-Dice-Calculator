@@ -41,7 +41,7 @@ Priority 3: Surge Chart (converts ALL remaining surges)
   - None:   no conversion (surges remain as-is, fall through to lower priorities)
 
 Priority 4: Hold the Line — Attacker (converts ALL remaining surges → hits)
-  - Active in Melee and All attack types
+  - Active when unit is engaged (Melee attacks)
   - "While a unit with the Hold the Line keyword is engaged, it gains surge:hit"
 
 Priority 5: Surge Tokens (converts up to N remaining surges → hits)
@@ -106,7 +106,7 @@ function convertAttackSurges(
   if (
     attacker.holdTheLine &&
     surgeCount > 0 &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Melee)
   ) {
     workingResults = workingResults.map(d =>
       d.face === AttackFace.Surge ? { ...d, face: AttackFace.Hit } : d
@@ -523,7 +523,7 @@ function applyJarKai(
 
   // Guard conditions
   if (!attacker.jarKaiMastery) return results;
-  if (config.attackType !== AttackType.Melee && config.attackType !== AttackType.All) return results;
+  if (config.attackType !== AttackType.Melee) return results;
   if (attacker.dodgeTokensAttacker <= 0) return results;
 
   let workingResults = results.map(d => ({ ...d })); // Clone
@@ -578,7 +578,7 @@ function applyJarKai(
 | Overrun attack + jarKaiMastery | Return unchanged (Melee only) |
 | 0 Dodge tokens | Return unchanged |
 | All crits in pool | Decision returns useRerollInstead, no conversion |
-| AttackType.All + jarKaiMastery | Activates (All includes Melee) |
+| AttackType.Ranged + jarKaiMastery | Activates (All includes Melee) |
 | 1 Dodge + [blank, blank] | Converts 1 blank→hit, second blank untouched |
 
 ### Note on Dodge Token Consumption

@@ -5,12 +5,15 @@ import { CoverType, DefenseDieColor, DefenseFace, AttackType } from './types';
 /**
  * Determine the effective cover value (0-2) after all modifiers.
  */
-export function determineCoverValue(config: AttackConfig): number {
+export function determineCoverValue(
+  config: AttackConfig,
+  poolBlast: boolean
+): number {
   const { attacker, defender } = config;
 
   // ── Override checks ──
   // Blast sets cover to 0 (unless defender has Immune: Blast)
-  if (attacker.blast && !defender.immuneBlast) {
+  if (poolBlast && !defender.immuneBlast) {
     return 0;
   }
   // Death From Above sets cover to 0 (no immunity)
@@ -39,7 +42,7 @@ export function determineCoverValue(config: AttackConfig): number {
   }
 
   // Cover X: +X (only applies to Ranged attacks per rulebook)
-  if (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) {
+  if (config.attackType === AttackType.Ranged) {
     cover += defender.coverX;
   }
 

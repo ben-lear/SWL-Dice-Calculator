@@ -66,10 +66,51 @@ The core function: takes a full config (attacker + defender + context) and retur
 ### 2D: Modifier Helpers (`engine/modifiers.ts`)
 
 - [ ] Helper functions for each keyword modifier (Armor, Impact, Pierce, Shielded, Guardian, etc.)
-- [ ] Attack-type filtering logic: given attack type (All/Ranged/Melee/Overrun), return which keywords are active vs. ignored
+- [ ] Attack-type filtering logic: given attack type (Ranged/Melee/Overrun), return which keywords are active vs. ignored
 - [ ] Unit tests for each modifier and attack-type restriction
 
 **Output:** Complete simulation engine that takes a config object and returns wound counts + side effects. Fully tested independently of UI.
+
+---
+
+## Phase 2.5: Multi-Weapon Attack Pool Restructuring
+
+Restructure `AttackerConfig` to separate unit-level keywords from weapon-level keywords. Introduce `WeaponProfile` with per-weapon dice and keywords, and a `weapons: WeaponProfile[]` array on `AttackerConfig`. The engine always operates on weapon arrays — Custom Pool mode uses a single-weapon array, Unit Builder mode uses multiple weapons. See `plans/phase2.5-multi-weapon-pool.md` for the full implementation plan.
+
+### 2.5A: Type Restructuring
+- [ ] Define `WeaponKeywords` interface (per-weapon keywords: criticalX, pierceX, impactX, blast, spray, etc.)
+- [ ] Define `WeaponProfile` interface (name, dice counts, keywords)
+- [ ] Define `AggregatedWeaponKeywords` interface (pool-level sums/OR/AND of weapon keywords)
+- [ ] Update `AttackerConfig` — remove flat dice/weapon keyword fields, add `weapons: WeaponProfile[]`
+
+### 2.5B: Pool Formation & Aggregation
+- [ ] Implement `aggregateWeaponKeywords(weapons)` — sums numeric, ORs blast/suppressive, ANDs highVelocity
+- [ ] Rewrite `formAttackPool` — iterate weapons, apply Spray per-weapon only
+- [ ] Unit tests for aggregation and per-weapon Spray behavior
+
+### 2.5C: Step Function Signatures
+- [ ] Update `convertAttackSurges` — accept `poolKeywords`, read `criticalX` from pool
+- [ ] Update `applyDodgeAndCover` — accept `poolKeywords`, read `blast`/`highVelocity` from pool
+- [ ] Update `determineCoverValue` — accept `poolBlast` parameter
+- [ ] Update `modifyAttackDice` — accept `poolKeywords`, read `impactX`/`ramX`/`lethalX` from pool
+- [ ] Update `modifyDefenseDice` — accept `poolPierceX` parameter
+- [ ] Update `rollDefenseDice` — accept `poolPierceX` for Impervious
+- [ ] Update `compareResults` — accept `poolKeywords`, read `pierceX`/`suppressive`/`blast` from pool
+
+### 2.5D: Test Helpers & Migration
+- [ ] Create `createMinimalWeapon`, `createMinimalWeaponKeywords`, `createAttackerWithWeapon`, `createMinimalPoolKeywords` helpers
+- [ ] Update `createMinimalAttacker` to use `weapons[]`
+- [ ] Migrate all test files to new config shape and function signatures
+
+### 2.5E: Sequence Orchestrator
+- [ ] Update `executeAttackSequence` — call `aggregateWeaponKeywords`, pass `poolKeywords` to downstream steps
+
+### 2.5F: Validation
+- [ ] Full test suite passes, no coverage drop
+- [ ] New multi-weapon Spray tests verify per-weapon behavior
+- [ ] End-to-end tests with multi-weapon configs produce correct results
+
+**Output:** Engine correctly handles per-weapon keywords (Spray, Cumbersome, etc.) and aggregates pool-level keywords across multiple weapons. All existing tests migrated and passing.
 
 ---
 
@@ -118,13 +159,13 @@ Reusable input primitives used by both panels.
 
 ### 5A: Zustand Stores
 
-- [ ] **Attack Config Store** — all attacker inputs: dice counts, surge chart, tokens, keywords, upgrade/downgrade settings, unit cost, Hold the Line
+- [ ] **Attack Config Store** — all attacker inputs: `weapons: WeaponProfile[]` (per-weapon dice + keywords), unit-level keywords, surge chart, tokens, upgrade/downgrade settings, unit cost, Hold the Line. Custom Pool mode operates on `weapons[0]`; Unit Builder mode populates multiple weapons from presets.
 - [ ] **Defense Config Store** — all defender inputs: die color, surge chart, cover, tokens, keywords, minis in LOS, unit cost, Hold the Line
-- [ ] **Attack Type Store** — attack type selection (All / Ranged / Melee / Overrun)
+- [ ] **Attack Type Store** — attack type selection (Ranged / Melee / Overrun), default: Ranged
 - [ ] **Results Store** — simulation output (stats, distribution, efficiency metrics), loading state
 - [ ] Define TypeScript interfaces for each store's state shape
 - [ ] Implement reset/clear actions for each store
-- [ ] Implement `getFullConfig()` selector that merges all stores into the engine's input format
+- [ ] Implement `getFullConfig()` selector that merges all stores into the engine's input format (ensures `weapons[]` array is populated)
 
 ### 5B: Preset Data & Loading
 
@@ -212,7 +253,7 @@ Build the data pipeline that imports all unit and upgrade data from the TableTop
 
 ### 6C: Attack Type Selector
 
-- [ ] Attack type selector (All / Ranged / Melee / Overrun)
+- [ ] Attack type selector (Ranged / Melee / Overrun)
 - [ ] Position: top bar or between panels
 - [ ] Wire to Attack Type Store
 
@@ -326,16 +367,18 @@ Build the data pipeline that imports all unit and upgrade data from the TableTop
 ```
 Phase 1 (Scaffolding)
   ├─► Phase 2 (Dice Engine)
-  │     ├─► Phase 3 (Simulator + Worker)
-  │     └─► Phase 5A (Stores)
-  │              │
-  │              ├─► Phase 5.5 (Unit Data & Upgrades)
-  │              │     └──► replaces Phase 5B
-  │              │
+  │     ├─► Phase 2.5 (Multi-Weapon Pool Restructuring)
+  │     │     ├─► Phase 3 (Simulator + Worker)
+  │     │     └─► Phase 5A (Stores — uses weapons[] types)
+  │     │              │
+  │     │              ├─► Phase 5.5 (Unit Data & Upgrades)
+  │     │              │     └──► replaces Phase 5B
+  │     │              │
+  │     └──────────────┘
   ├─► Phase 4 (Shared Components)
   │
   │   ┌─────────────────────────────────────────────────────┐
-  │   │ Phase 6 (UI Panels)                                 │
+  │   │ Phase 6 (UI Panels — Two-Mode Design)               │
   │   │   requires: Phase 4 + Phase 5A + Phase 5.5          │
   │   └─────────────────────────────────────────────────────┘
   │   ┌─────────────────────────────────────────────────────┐
@@ -351,8 +394,8 @@ Phase 1 (Scaffolding)
 ```
 
 **Parallelism:** After Phase 1, three independent tracks can proceed simultaneously:
-- **Track A:** Phase 2 → Phase 3 (engine + simulator)
+- **Track A:** Phase 2 → Phase 2.5 → Phase 3 (engine → multi-weapon restructuring → simulator)
 - **Track B:** Phase 4 (shared UI components — no state dependency)
-- **Track C:** Phase 5A → Phase 5.5 (stores + data layer, depends on Phase 2 for config types)
+- **Track C:** Phase 5A → Phase 5.5 (stores + data layer, depends on Phase 2.5 for `weapons[]` types)
 
-Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 6 (UI Panels) requires Phases 4 + 5A + 5.5. Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.
+Phase 2.5 restructures the engine to support per-weapon keywords before downstream phases consume the config types. Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 6 (UI Panels) requires Phases 4 + 5A + 5.5 and implements the two-mode design (Custom Pool / Unit Builder). Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.

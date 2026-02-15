@@ -1,5 +1,5 @@
 import type { AttackConfig, AttackResult } from './types';
-import { formAttackPool, upgradeDowgradeAttackDice } from './attackPool';
+import { formAttackPool, upgradeDowgradeAttackDice, aggregateWeaponKeywords } from './attackPool';
 import { rollAttackDice, rerollAttackDice } from './attackRoll';
 import { convertAttackSurges, applyMarksman, applyJarKai } from './attackSurges';
 import { applyDodgeAndCover } from './dodgeCover';
@@ -17,8 +17,11 @@ import { compareResults } from './compareResults';
  * Each step is implemented in its own module for better organization and maintainability.
  */
 export function executeAttackSequence(config: AttackConfig): AttackResult {
-  // Step 2 — Form Attack Pool
+  // Step 2 — Form Attack Pool (per-weapon Spray applied here)
   const poolAfterStep2 = formAttackPool(config);
+
+  // Aggregate weapon keywords for pool-level usage
+  const poolKeywords = aggregateWeaponKeywords(config.attacker.weapons);
 
   // Step 4a — Upgrade/Downgrade Attack Dice
   const poolAfterStep4a = upgradeDowgradeAttackDice(poolAfterStep2, config);
@@ -28,10 +31,10 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
 
   // Step 4c — Reroll Attack Dice
   const { results: afterRerolls, aimsSpent, pierceBonus, aimsSavedForMarksman } =
-    rerollAttackDice(rolledAttack, config);
+    rerollAttackDice(rolledAttack, config, poolKeywords);
 
   // Step 4d — Convert Attack Surges
-  const afterSurgeConversion = convertAttackSurges(afterRerolls, config);
+  const afterSurgeConversion = convertAttackSurges(afterRerolls, config, poolKeywords);
 
   // Step 4d.5 — Apply Marksman (post-surge conversion)
   const afterMarksman = applyMarksman(afterSurgeConversion, config, aimsSavedForMarksman);
@@ -41,18 +44,18 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
 
   // Step 5 — Apply Dodge and Cover
   const { hits: hitsAfterDodgeCover, crits: critsAfterDodgeCover, blanks: blanksAfterDodgeCover, dodgeWasSpent } =
-    applyDodgeAndCover(afterJarKai, config);
+    applyDodgeAndCover(afterJarKai, config, poolKeywords);
 
   // Step 6 — Modify Attack Dice
   const { hits, crits, lethalPierce, guardianHits } =
-    modifyAttackDice({ hits: hitsAfterDodgeCover, crits: critsAfterDodgeCover, blanks: blanksAfterDodgeCover }, config, aimsSpent, aimsSavedForMarksman);
+    modifyAttackDice({ hits: hitsAfterDodgeCover, crits: critsAfterDodgeCover, blanks: blanksAfterDodgeCover }, config, aimsSpent, aimsSavedForMarksman, poolKeywords);
 
   // Step 6b — Roll Guardian Defense (if Guardian absorbed hits)
   let guardianWoundsNoPierce = 0;
   let guardianBlocks = 0;
   let guardianDeflectWounds = 0;
   if (guardianHits > 0 && config.defender.guardianX > 0) {
-    const guardianResult = rollGuardianDefense(guardianHits, config);
+    const guardianResult = rollGuardianDefense(guardianHits, config, poolKeywords.highVelocity);
     guardianWoundsNoPierce = guardianResult.guardianWoundsNoPierce;
     guardianBlocks = guardianResult.guardianBlocks;
     guardianDeflectWounds = guardianResult.guardianDeflectWounds;
@@ -60,7 +63,7 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
 
   // Step 7 — Roll Defense Dice
   const { results: defenseResults, surgeCountBeforeConversion } =
-    rollDefenseDice({ hits, crits }, config, lethalPierce, pierceBonus, dodgeWasSpent);
+    rollDefenseDice({ hits, crits }, config, lethalPierce, pierceBonus, dodgeWasSpent, poolKeywords.pierceX, poolKeywords.highVelocity);
 
   // Step 7e — Convert Defense Surges
   const defenseAfterSurgeConversion = convertDefenseSurges(defenseResults, config, dodgeWasSpent);
@@ -73,6 +76,7 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
     { hits, crits },
     { mainTargetBlocks, guardianBlocks, guardianHits },
     config,
+    poolKeywords,
     lethalPierce,
     pierceBonus,
     surgeCountBeforeConversion,

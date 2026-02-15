@@ -127,7 +127,7 @@ function modifyAttackDice(
   // Priority: cancel crits first (most valuable to attacker), then hits.
   if (
     defender.shieldedX > 0 &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Ranged)
   ) {
     let shieldRemaining = defender.shieldedX;
 
@@ -151,7 +151,7 @@ function modifyAttackDice(
   // attack, 2 hit results are canceled."
   if (
     defender.backup &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Ranged)
   ) {
     const hitsCancelled = Math.min(hits, 2);
     hits -= hitsCancelled;
@@ -167,7 +167,7 @@ function modifyAttackDice(
   let guardianHits = 0;
   if (
     defender.guardianX > 0 &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Ranged)
   ) {
     guardianHits = Math.min(hits, defender.guardianX);
     hits -= guardianHits;

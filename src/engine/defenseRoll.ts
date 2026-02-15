@@ -1,6 +1,6 @@
 import type { AttackConfig, RolledDefenseDie } from './types';
 import { rollDefenseDie } from './dice';
-import { DefenseDieColor, DefenseFace, AttackType } from './types';
+import { DefenseDieColor, DefenseFace, AttackType, DefenseSurgeChart } from './types';
 
 /**
  * Step 6b — Roll Guardian Defense
@@ -9,7 +9,8 @@ import { DefenseDieColor, DefenseFace, AttackType } from './types';
  */
 export function rollGuardianDefense(
   guardianHits: number,
-  config: AttackConfig
+  config: AttackConfig,
+  poolHighVelocity: boolean
 ): { guardianWoundsNoPierce: number; guardianBlocks: number; guardianDeflectWounds: number } {
   const { defender, attacker } = config;
 
@@ -43,7 +44,7 @@ export function rollGuardianDefense(
   // the attacker suffers 1 wound if at least 1 die has a surge result."
   // High Velocity completely disables Deflect (both conversion and wound reflection).
   let guardianDeflectWounds = 0;
-  if (defender.guardianDeflect && !attacker.highVelocity && !attacker.immuneDeflect) {
+  if (defender.guardianDeflect && !poolHighVelocity && !attacker.immuneDeflect) {
     const hasSurge = guardianResults.some(d => d.face === DefenseFace.Surge);
     if (hasSurge) {
       guardianDeflectWounds = 1; // Exactly 1, regardless of surge count
@@ -52,7 +53,7 @@ export function rollGuardianDefense(
 
   // ── Convert surges ──
   // Guardian surge chart
-  if (guardianSurgeChart === 'toBlock') {
+  if (guardianSurgeChart === DefenseSurgeChart.ToBlock) {
     guardianResults = guardianResults.map(d =>
       d.face === DefenseFace.Surge ? { ...d, face: DefenseFace.Block } : d
     );
@@ -62,8 +63,8 @@ export function rollGuardianDefense(
   // High Velocity disables Deflect entirely, including surge conversion.
   if (
     defender.guardianDeflect &&
-    !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    !poolHighVelocity &&
+    config.attackType === AttackType.Ranged
   ) {
     guardianResults = guardianResults.map(d =>
       d.face === DefenseFace.Surge ? { ...d, face: DefenseFace.Block } : d
@@ -92,7 +93,9 @@ export function rollDefenseDice(
   config: AttackConfig,
   lethalPierce: number,
   duelistPierceBonus: number,
-  dodgeWasSpent: boolean
+  _dodgeWasSpent: boolean,
+  poolPierceX: number,
+  poolHighVelocity: boolean
 ): { results: RolledDefenseDie[]; surgeCountBeforeConversion: number } {
   const { defender, attacker } = config;
   const totalAttackResults = attackResults.hits + attackResults.crits;
@@ -112,7 +115,7 @@ export function rollDefenseDice(
   // Also does nothing if defender has Immune: Pierce (pierce would be 0).
   if (defender.impervious && !attacker.makashiMastery) {
     // Calculate total Pierce that WOULD be applied
-    let effectivePierce = attacker.pierceX + lethalPierce + duelistPierceBonus;
+    let effectivePierce = poolPierceX + lethalPierce + duelistPierceBonus;
 
     // If defender has Immune: Pierce (not overridden by Makashi), Pierce = 0 → Impervious adds 0
     if (defender.immunePierce) {
@@ -137,7 +140,7 @@ export function rollDefenseDice(
   }
 
   // ── 7d. Reroll dice ──
-  results = rerollDefenseDice(results, config);
+  results = rerollDefenseDice(results, config, poolHighVelocity);
 
   // ── Capture surge count BEFORE conversion ──
   // This is needed for Deflect/Shien wound calculation in Step 9.
@@ -154,9 +157,10 @@ export function rollDefenseDice(
  */
 export function rerollDefenseDice(
   results: RolledDefenseDie[],
-  config: AttackConfig
+  config: AttackConfig,
+  poolHighVelocity: boolean
 ): RolledDefenseDie[] {
-  const { defender, attacker } = config;
+  const { defender } = config;
   let workingResults = results.map(d => ({ ...d }));
 
   // Track which dice have been rerolled (each die can only be rerolled once)
@@ -167,7 +171,7 @@ export function rerollDefenseDice(
   // Applied first since it's a full pool reroll.
   if (
     defender.soresuMastery &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    config.attackType === AttackType.Ranged
   ) {
     for (let i = 0; i < workingResults.length; i++) {
       workingResults[i] = {
@@ -186,8 +190,8 @@ export function rerollDefenseDice(
     // Check if defender has ANY surge conversion source
     // Note: Deflect is disabled by High Velocity, so don't count it as a conversion source when HV is active.
     const hasSurgeConversion =
-      defender.surgeChart === 'toBlock' ||
-      (defender.deflect && !attacker.highVelocity) ||
+      defender.surgeChart === DefenseSurgeChart.ToBlock ||
+      (defender.deflect && !poolHighVelocity) ||
       (defender.block && defender.dodgeTokens > 0) ||
       defender.holdTheLine ||
       defender.surgeTokens > 0;

@@ -685,7 +685,7 @@ function createTestConfig(overrides?: {
       unitCost: 0,
       ...overrides?.defender,
     },
-    attackType: overrides?.attackType ?? AttackType.All,
+    attackType: overrides?.attackType ?? AttackType.Ranged,
   };
 }
 

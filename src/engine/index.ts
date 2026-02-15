@@ -1,6 +1,9 @@
 // Core attack sequence
 export { executeAttackSequence } from './attackSequence';
 
+// Attack pool functions
+export { aggregateWeaponKeywords } from './attackPool';
+
 // Dice functions
 export {
   rollAttackDie,
@@ -20,6 +23,9 @@ export type {
   AttackResult,
   AttackerConfig,
   DefenderConfig,
+  WeaponProfile,
+  WeaponKeywords,
+  AggregatedWeaponKeywords,
   RolledAttackDie,
   MarksmanDecision,
 } from './types';

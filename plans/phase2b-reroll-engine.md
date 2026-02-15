@@ -236,7 +236,7 @@ For each aim token:
   // Only requires at least 1 aim to have been spent on rerolls
   if (
     attacker.duelistAttacker &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All) &&
+    (config.attackType === AttackType.Melee) &&
     aimsSpent > 0
   ) {
     pierceBonus = 1;
@@ -492,7 +492,7 @@ function estimateWoundContribution(
     }
   }
   // 4. Hold the Line (Melee/All only)
-  if (surges > 0 && attacker.holdTheLine && (config.attackType === AttackType.Melee || config.attackType === AttackType.All)) {
+  if (surges > 0 && attacker.holdTheLine && (config.attackType === AttackType.Melee)) {
     hits += surges; surges = 0;
   }
   // 5. Surge Tokens (up to N → hit)
@@ -555,7 +555,7 @@ function estimateWoundContribution(
   }
 
   // Guardian X: absorb hits (Ranged only)
-  if (defender.guardianX > 0 && (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)) {
+  if (defender.guardianX > 0 && (config.attackType === AttackType.Ranged)) {
     const absorbed = Math.min(hits, defender.guardianX);
     hits -= absorbed;
     // Guardian hits still cause wounds (just to a different unit), so we DON'T subtract them from total
@@ -564,12 +564,12 @@ function estimateWoundContribution(
   }
 
   // Backup: cancel up to 2 hits (Ranged only)
-  if (defender.backup && (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)) {
+  if (defender.backup && (config.attackType === AttackType.Ranged)) {
     hits = Math.max(0, hits - 2);
   }
 
   // Shielded X: cancel crits first, then hits (Ranged only)
-  if (defender.shieldedX > 0 && (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)) {
+  if (defender.shieldedX > 0 && (config.attackType === AttackType.Ranged)) {
     let shield = defender.shieldedX;
     const critCancel = Math.min(crits, shield);
     crits -= critCancel; shield -= critCancel;

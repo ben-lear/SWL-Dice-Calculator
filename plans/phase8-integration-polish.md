@@ -34,7 +34,7 @@ Phase 8 does **not** produce new modules — it validates, connects, and refines
 
 The following design decisions are documented for clarity:
 
-1. **Attack-Type Keyword Filtering (UI)** — The engine already handles attack-type filtering internally (via `isKeywordActive` in `engine/modifiers.ts`). Phase 8 adds a *visual* layer: when a specific attack type is selected (Ranged, Melee, Overrun), keyword inputs that don't apply to that type are visually disabled (grayed out, non-interactive). This provides immediate feedback that the keyword won't affect results, without removing or hiding the input. The input values are preserved — switching back to "All" re-enables them. This is implemented via a custom hook `useKeywordDisabled` that maps each keyword field to its attack-type restriction.
+1. **Attack-Type Keyword Filtering (UI)** — The engine already handles attack-type filtering internally (via `isKeywordActive` in `engine/modifiers.ts`). Phase 8 adds a *visual* layer: when a specific attack type is selected (Ranged, Melee, Overrun), keyword inputs that don't apply to that type are visually disabled (grayed out, non-interactive). This provides immediate feedback that the keyword won't affect results, without removing or hiding the input. The input values are preserved — switching to a different attack type re-enables them if applicable. This is implemented via a custom hook `useKeywordDisabled` that maps each keyword field to its attack-type restriction.
 
 2. **Disabled vs Hidden** — Disabled is preferred over hidden for attack-type filtering. Hiding inputs changes layout flow and confuses users who set up a profile and then switch attack types. Disabling keeps the layout stable, shows what's configured but inactive, and matches the `disabled` prop already implemented on all shared components in Phase 4.
 
@@ -203,7 +203,6 @@ export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
  * Determine if a keyword field is active (should be enabled in the UI)
  * for the current attack type.
  *
- * When attackType is 'all', all keywords are active.
  * When attackType is 'overrun', only unrestricted keywords are active.
  */
 export function isFieldActiveForAttackType(
@@ -211,7 +210,6 @@ export function isFieldActiveForAttackType(
   attackType: AttackType,
 ): boolean {
   if (restriction === 'all') return true;
-  if (attackType === AttackType.All) return true;
 
   switch (restriction) {
     case 'ranged':
@@ -230,7 +228,6 @@ export function isFieldActiveForAttackType(
 - TypeScript compiles without errors
 - `isFieldActiveForAttackType('ranged', AttackType.Melee)` returns `false`
 - `isFieldActiveForAttackType('ranged', AttackType.Ranged)` returns `true`
-- `isFieldActiveForAttackType('ranged', AttackType.All)` returns `true`
 - `isFieldActiveForAttackType('melee', AttackType.Overrun)` returns `false`
 - `isFieldActiveForAttackType('ranged-melee', AttackType.Overrun)` returns `false`
 - `isFieldActiveForAttackType('all', AttackType.Overrun)` returns `true`
@@ -542,12 +539,11 @@ import {
 } from './keywordRestrictions';
 
 describe('isFieldActiveForAttackType', () => {
-  // ── All attack type ──
-  it('returns true for all restrictions when attack type is All', () => {
-    expect(isFieldActiveForAttackType('all', AttackType.All)).toBe(true);
-    expect(isFieldActiveForAttackType('ranged', AttackType.All)).toBe(true);
-    expect(isFieldActiveForAttackType('melee', AttackType.All)).toBe(true);
-    expect(isFieldActiveForAttackType('ranged-melee', AttackType.All)).toBe(true);
+  // ── 'all' restriction (no type restriction) ──
+  it('returns true for unrestricted keywords regardless of attack type', () => {
+    expect(isFieldActiveForAttackType('all', AttackType.Ranged)).toBe(true);
+    expect(isFieldActiveForAttackType('all', AttackType.Melee)).toBe(true);
+    expect(isFieldActiveForAttackType('all', AttackType.Overrun)).toBe(true);
   });
 
   // ── Ranged attack type ──
@@ -1453,7 +1449,7 @@ describe('Performance', () => {
         guardianSurgeChart: DefenseSurgeChart.ToBlock,
         unitCost: 100,
       },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
 
     const start = performance.now();

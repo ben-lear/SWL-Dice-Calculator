@@ -17,7 +17,7 @@ Phase 5.5 consists of five sub-phases:
 - **5.5E:** Tests — processing, resolution, upgrade application, store upgrade actions
 
 Phase 5.5 depends on:
-- **Phase 2A** (types only) — `AttackSurgeChart`, `DefenseSurgeChart`, `DefenseDieColor`, and all enums from `engine/types.ts`
+- **Phase 2.5** (types) — `AttackerConfig` (with `weapons: EngineWeaponProfile[]`), `WeaponKeywords`, `WeaponProfile` (engine), and all enums from `engine/types.ts`
 - **Phase 5A** — Zustand stores exist with `setField()`, `loadPreset()`, `reset()` actions and `selectAttackerConfig` / `selectDefenderConfig` selectors
 
 Phase 5.5 **replaces**:
@@ -64,7 +64,9 @@ The following design decisions were established during API analysis and planning
    
    > **Note:** Some slots marked combat-relevant contain only a small number of upgrades that affect dice (e.g., Training has Tenacity, Duck and Cover; Protocol has limited keyword effects; Generator upgrades can add dice to the attack pool). These are included in the combat-relevant set because individual upgrades within them *can* grant dice-affecting keywords. The **Dug In** slot is especially notable: equipping a Dug In upgrade causes the defender to roll red defense dice during the Roll Cover step instead of white defense dice — this is a unique mechanical effect that must be handled as a special case in the upgrade applicator.
 
-8. **Presets Represent Weapon Loadouts** — Each attacker preset represents a specific unit + weapon combination with baked-in dice (e.g., "Stormtroopers (DLT-19)" has the combined dice pool). This matches the Phase 5B approach. The upgrade system handles cost tracking and keyword additions but does NOT dynamically change the dice pool. If a user wants different weapon dice, they select a different preset.
+8. **Presets Represent Weapon Loadouts** — Each attacker preset represents a specific unit configuration. In **Custom Pool mode**, the preset bakes all dice into a single weapon entry in the `weapons[]` array. In **Unit Builder mode**, the preset provides one entry per weapon, each carrying its own dice pool and weapon-level keywords (Spray, Blast, Pierce X, etc.). The upgrade system handles cost tracking and keyword additions. The preset generator maps the data layer's `WeaponProfile` (per-weapon dice + keywords) into the engine's `WeaponProfile` interface (per-weapon dice + typed `WeaponKeywords`). See Phase 2.5 for the engine's `WeaponProfile` type definition.
+
+   > **Phase 2.5 Impact:** The data layer's `WeaponProfile` (generic `keywords: Record<string, number | boolean>`) is a superset of the engine's `WeaponProfile` (typed `keywords: WeaponKeywords`). The preset generator maps between these types when producing `AttackerPresetProfile.weapons`. Flat dice fields (`redDice`, `blackDice`, `whiteDice`) on `AttackerPresetProfile` are replaced by `weapons: EngineWeaponProfile[]`.
 
 9. **Preset Helper API Preserved** — The functions `getAttackerPresets()`, `getDefenderPresets()`, `getAttackerPresetById()`, `getDefenderPresetById()`, and `getFactionOptions()` keep their signatures and return types. The internal implementation changes from filtering a hardcoded array to calling the preset generator. Phase 6 code calling these functions needs no changes.
 
@@ -313,6 +315,13 @@ export interface ProcessedUpgrade {
 // ============================================================================
 
 /** A weapon profile with full dice data (from enrichment) */
+/**
+ * NOTE: This is the DATA LAYER WeaponProfile, distinct from the ENGINE's
+ * WeaponProfile (defined in engine/types.ts after Phase 2.5). The data layer
+ * uses a generic `keywords: Record<string, number | boolean>` for flexibility
+ * with API/enrichment data. The preset generator maps this into the engine's
+ * typed `WeaponProfile` with `keywords: WeaponKeywords` when producing presets.
+ */
 export interface WeaponProfile {
   name: string;
   redDice: number;
@@ -1705,16 +1714,23 @@ function generateAttackerPreset(
 ): AttackerPreset {
   const weapon = unit.weapons[weaponIndex];
 
-  // Build profile from unit-level + weapon-level keywords
-  const profile: Record<string, any> = {
+  // Build profile — weapons[] replaces flat dice fields (Phase 2.5)
+  // Map data-layer WeaponProfile → engine WeaponProfile
+  const engineWeapon: import('../engine/types').WeaponProfile = {
+    name: weapon.name,
     redDice: weapon.redDice,
     blackDice: weapon.blackDice,
     whiteDice: weapon.whiteDice,
+    keywords: mapKeywordsToWeaponKeywords(weapon.keywords),
+  };
+
+  const profile: Record<string, any> = {
+    weapons: [engineWeapon],
     surgeChart: weapon.surgeChart,
     unitCost: unit.cost,
   };
 
-  // Map unit-level keywords to profile fields
+  // Map unit-level keywords to profile fields (these stay flat on AttackerPresetProfile)
   mapKeywordsToProfile(unit.keywords, ATTACKER_KEYWORD_FIELD_MAP, profile);
 
   // Map weapon-level keywords to profile fields (weapon overrides unit)

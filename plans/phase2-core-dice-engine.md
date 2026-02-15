@@ -54,7 +54,7 @@ The following design decisions are documented for clarity:
    - **Applied at Step 4d.6:** After `applyMarksman` (Step 4d.5), before Dodge and Cover (Step 5)
    - **Conversion logic:** Reuses `calculateMarksmanDecision()` for optimal token spending (same blank→hit, hit→crit, 2→blank→crit priorities)
 
-7. **AttackType.All** — The `All` attack type is used to indicate the user hasn't specified a specific attack type. When `All` is selected, both Ranged-only keywords (Deflect, Shielded, Cover, Guardian, Backup) and Melee-only keywords (Djem So, Hold the Line surge:hit) may simultaneously activate. This is acceptable because the calculator is a "what-if" tool — users are expected to select the correct attack type for accurate results. `All` exists as a convenient default that shows maximum keyword interaction, with a UI tooltip explaining that selecting Ranged or Melee produces more accurate results.
+7. **AttackType default is Ranged** — The default attack type is `Ranged`. There is no `All` mode — the user must select a specific attack type (Ranged, Melee, or Overrun). This avoids ambiguous edge cases where both Ranged-only and Melee-only keywords would simultaneously activate.
 
 ---
 
@@ -98,7 +98,6 @@ export enum DefenseFace {
 // ============================================================================
 
 export enum AttackType {
-  All = 'all',
   Ranged = 'ranged',
   Melee = 'melee',
   Overrun = 'overrun',
@@ -871,7 +870,7 @@ describe('formAttackPool', () => {
     const config: AttackConfig = {
       attacker: { redDice: 2, blackDice: 1, whiteDice: 3, /* other fields */ },
       defender: { minisInLOS: 1, /* other fields */ },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     const pool = formAttackPool(config);
     expect(pool.filter(d => d === AttackDieColor.Red)).toHaveLength(2);
@@ -883,7 +882,7 @@ describe('formAttackPool', () => {
     const config: AttackConfig = {
       attacker: { redDice: 1, blackDice: 0, whiteDice: 0, spray: true, /* other fields */ },
       defender: { minisInLOS: 3, /* other fields */ },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     const pool = formAttackPool(config);
     expect(pool).toHaveLength(3); // 1 × 3
@@ -946,7 +945,7 @@ describe('upgradeDowgradeAttackDice', () => {
     const config: AttackConfig = {
       attacker: { cumbersome: true, /* other fields */ },
       defender: { /* fields */ },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     const result = upgradeDowgradeAttackDice(pool, config);
     expect(result).toEqual([AttackDieColor.Red, AttackDieColor.Black]);
@@ -1924,7 +1923,7 @@ describe('rerollAttackDice', () => {
         // other fields
       },
       defender: { /* fields */ },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     
     // Test the decision function
@@ -1958,7 +1957,7 @@ describe('rerollAttackDice', () => {
         dodgeTokens: 0,
         // other fields
       },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     const decision = calculateMarksmanDecision(results, config);
     // Should prefer converting hit→crit (valuable vs Armor)
@@ -1986,7 +1985,7 @@ describe('rerollAttackDice', () => {
         // No special defensive keywords
         // other fields
       },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     const decision = calculateMarksmanDecision(results, config);
     // With many red dice and excellent reroll potential, rerolls might be better
@@ -2014,7 +2013,7 @@ describe('rerollAttackDice', () => {
         armorX: 2, // Armor present so Impact will trigger
         // other fields
       },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     const decision = calculateMarksmanDecision(results, config);
     // Impact will convert 2 hits, so if Marksman converts any,
@@ -2046,7 +2045,7 @@ describe('rerollAttackDice', () => {
         dodgeTokens: 0,
         // other fields
       },
-      attackType: AttackType.All,
+      attackType: AttackType.Ranged,
     };
     const decision = calculateMarksmanDecision(results, config);
     // When converting, should prioritize white dice (lower reroll value)
@@ -2139,7 +2138,7 @@ function convertAttackSurges(
   }
 
   // 5. Hold the Line (attacker): c→a (Melee only — keyword is "while engaged")
-  if (attacker.holdTheLine && (config.attackType === AttackType.Melee || config.attackType === AttackType.All) && surgeCount > 0) {
+  if (attacker.holdTheLine && (config.attackType === AttackType.Melee) && surgeCount > 0) {
     workingResults = workingResults.map(d =>
       d.face === AttackFace.Surge ? { ...d, face: AttackFace.Hit } : d
     );
@@ -2375,7 +2374,7 @@ function modifyAttackDice(
 
   // Shielded X: cancel up to X hits or crits (Ranged attacks only)
   // Defender flips active Shield tokens to cancel results
-  if (defender.shieldedX > 0 && (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)) {
+  if (defender.shieldedX > 0 && (config.attackType === AttackType.Ranged)) {
     const critsCancelled = Math.min(crits, defender.shieldedX);
     crits -= critsCancelled;
     let shieldRemaining = defender.shieldedX - critsCancelled;
@@ -2385,7 +2384,7 @@ function modifyAttackDice(
   }
 
   // Backup: cancel up to 2 hits (Ranged attacks only)
-  if (defender.backup && (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)) {
+  if (defender.backup && (config.attackType === AttackType.Ranged)) {
     const hitsCancelled = Math.min(hits, 2);
     hits -= hitsCancelled;
   }
@@ -2393,7 +2392,7 @@ function modifyAttackDice(
   // Guardian X: cancel up to X hits and roll Guardian defense dice (Ranged attacks only)
   // The Guardian unit defends separately and wounds are tracked independently
   let guardianHits = 0;
-  if (defender.guardianX > 0 && (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)) {
+  if (defender.guardianX > 0 && (config.attackType === AttackType.Ranged)) {
     guardianHits = Math.min(hits, defender.guardianX);
     hits -= guardianHits;
   }
@@ -2577,7 +2576,7 @@ function convertDefenseSurges(
   if (
     defender.deflect &&
     !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) &&
+    (config.attackType === AttackType.Ranged) &&
     surgeCount > 0
   ) {
     workingResults = workingResults.map(d =>
@@ -2661,7 +2660,7 @@ function rollGuardianDefense(
     );
   }
   // Deflect on Guardian also grants surge conversion (e→d) for Ranged attacks
-  if (defender.guardianDeflect && (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)) {
+  if (defender.guardianDeflect && (config.attackType === AttackType.Ranged)) {
     guardianResults = guardianResults.map(d =>
       d.face === DefenseFace.Surge ? { ...d, face: DefenseFace.Block } : d
     );
@@ -2758,14 +2757,14 @@ function compareResults(
   let totalPierce = attacker.pierceX + lethalPierce + duelistPierceBonus;
 
   // Makashi Mastery: reduce Pierce by 1 (Melee only)
-  if (attacker.makashiMastery && (config.attackType === AttackType.Melee || config.attackType === AttackType.All)) {
+  if (attacker.makashiMastery && (config.attackType === AttackType.Melee)) {
     totalPierce = Math.max(0, totalPierce - 1);
   }
 
   // Immune: Pierce / Immune: Melee Pierce (applies to main target only)
   const immuneToThisPierce =
-    (defender.immunePierce && !(attacker.makashiMastery && (config.attackType === AttackType.Melee || config.attackType === AttackType.All))) ||
-    (defender.immuneMeleePierce && config.attackType === AttackType.Melee && !(attacker.makashiMastery && (config.attackType === AttackType.Melee || config.attackType === AttackType.All)));
+    (defender.immunePierce && !(attacker.makashiMastery && (config.attackType === AttackType.Melee))) ||
+    (defender.immuneMeleePierce && config.attackType === AttackType.Melee && !(attacker.makashiMastery && (config.attackType === AttackType.Melee)));
 
   if (immuneToThisPierce) {
     totalPierce = 0;
@@ -2788,7 +2787,7 @@ function compareResults(
   if (
     defender.deflect &&
     !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) &&
+    (config.attackType === AttackType.Ranged) &&
     !attacker.immuneDeflect
   ) {
     if (surgeCountBeforeConversion > 0) {
@@ -2815,7 +2814,7 @@ function compareResults(
   let djemSoWounds = 0;
   if (
     defender.djemSoMastery &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Melee)
   ) {
     const attackBlanks = originalAttackRollResults.filter(d => d.face === AttackFace.Blank).length;
     if (attackBlanks > 0) {
@@ -2996,7 +2995,7 @@ export function determineCoverValue(config: AttackConfig): number {
   // Improvements (apply before reductions)
   if (defender.suppressed) cover += 1;
   // Cover X only applies to Ranged attacks (per rulebook)
-  if (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) {
+  if (config.attackType === AttackType.Ranged) {
     cover += defender.coverX;
   }
   cover += defender.smokeTokens;
@@ -3125,11 +3124,11 @@ export function isKeywordActive(
   if (!restriction || restriction === 'all') return true;
 
   if (restriction === 'ranged') {
-    return attackType === AttackType.Ranged || attackType === AttackType.All;
+    return attackType === AttackType.Ranged || attackType === AttackType.Ranged;
   }
 
   if (restriction === 'melee') {
-    return attackType === AttackType.Melee || attackType === AttackType.All;
+    return attackType === AttackType.Melee || attackType === AttackType.Ranged;
   }
 
   return false;
@@ -3161,7 +3160,7 @@ export function isDodgeActive(config: AttackConfig): boolean {
  */
 export function isDeflectActive(config: AttackConfig): boolean {
   const { attacker } = config;
-  return (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) && !attacker.highVelocity;
+  return (config.attackType === AttackType.Ranged) && !attacker.highVelocity;
 }
 
 // Add more helper functions as needed for specific keywords

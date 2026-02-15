@@ -1,4 +1,4 @@
-import type { AttackConfig, RolledAttackDie } from './types';
+import type { AttackConfig, RolledAttackDie, AggregatedWeaponKeywords } from './types';
 import { AttackFace, AttackSurgeChart, AttackType } from './types';
 
 /**
@@ -13,7 +13,8 @@ import { AttackFace, AttackSurgeChart, AttackType } from './types';
  */
 export function convertAttackSurges(
   results: RolledAttackDie[],
-  config: AttackConfig
+  config: AttackConfig,
+  poolKeywords: AggregatedWeaponKeywords
 ): RolledAttackDie[] {
   const { attacker } = config;
   let workingResults = results.map(d => ({ ...d })); // Clone
@@ -25,10 +26,10 @@ export function convertAttackSurges(
   // ── Priority 1: Critical X (surge → crit) ──
   // Crits bypass Armor, Dodge (without Outmaneuver), and Cover.
   // Applied first to maximize crit conversions before other sources convert to hits.
-  if (attacker.criticalX > 0 && surgeCount > 0) {
+  if (poolKeywords.criticalX > 0 && surgeCount > 0) {
     let converted = 0;
     workingResults = workingResults.map(d => {
-      if (d.face === AttackFace.Surge && converted < attacker.criticalX) {
+      if (d.face === AttackFace.Surge && converted < poolKeywords.criticalX) {
         converted++;
         return { ...d, face: AttackFace.Critical };
       }
@@ -65,7 +66,7 @@ export function convertAttackSurges(
   if (
     attacker.holdTheLine &&
     surgeCount > 0 &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All)
+    config.attackType === AttackType.Melee
   ) {
     workingResults = workingResults.map(d =>
       d.face === AttackFace.Surge ? { ...d, face: AttackFace.Hit } : d
@@ -182,7 +183,7 @@ export function applyJarKai(
 
   // Guard conditions
   if (!attacker.jarKaiMastery) return results;
-  if (config.attackType !== AttackType.Melee && config.attackType !== AttackType.All) return results;
+  if (config.attackType !== AttackType.Melee) return results;
   if (attacker.dodgeTokensAttacker <= 0) return results;
 
   let workingResults = results.map(d => ({ ...d })); // Clone

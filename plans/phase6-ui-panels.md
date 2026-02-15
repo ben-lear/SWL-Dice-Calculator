@@ -10,14 +10,14 @@ Build the Attacker Panel, Defender Panel, and Attack Type Selector — the three
 
 Phase 6 consists of three sub-phases:
 
-- **6A:** Attacker Panel — faction/unit preset selection, dice pool, tokens, all attacker keywords, upgrade/downgrade section, and unit cost
+- **6A:** Attacker Panel — **two-mode design** (Custom Pool / Unit Builder), dice pool, tokens, unit + weapon keywords, upgrade/downgrade section, and unit cost
 - **6B:** Defender Panel — faction/unit preset selection, defense die, cover, tokens, all defender keywords (including Guardian sub-config), and unit cost
-- **6C:** Attack Type Selector — global attack type toggle (All / Ranged / Melee / Overrun)
+- **6C:** Attack Type Selector — global attack type toggle (Ranged / Melee / Overrun)
 
 Phase 6 depends on:
 - **Phase 1** (Project scaffolding) — React, TypeScript, Tailwind CSS, Vite
 - **Phase 4** (Shared UI components) — `NumberSpinner`, `Toggle`, `Select`, `SearchableCombobox`, `SectionHeader`
-- **Phase 5A** (Zustand stores) — `useAttackConfigStore`, `useDefenseConfigStore`, `useAttackTypeStore`
+- **Phase 5A** (Zustand stores) — `useAttackConfigStore` (with `weapons[]` per Phase 2.5), `useDefenseConfigStore`, `useAttackTypeStore`
 - **Phase 5.5** (Unit data & presets) — `getAttackerPresets`, `getDefenderPresets`, `getFactionOptions`, preset helpers, upgrade system
 
 Phase 6 does **not** depend on:
@@ -31,7 +31,22 @@ Phase 6 does **not** depend on:
 
 The following design decisions are documented for clarity:
 
-1. **Store Wiring Pattern** — Each input is wired to its store via a consistent pattern: read the current value from the store using a selector, and write back via `setField('fieldName', value)`. This keeps components thin — they don't contain business logic, only define which store field maps to which UI component.
+> **⚠️ Phase 2.5 Impact — Two-Mode Attacker Panel:**
+> The Attacker Panel implements a two-mode design:
+> - **Custom Pool Mode** (default): Single-weapon interface. Users set dice pool and weapon keywords directly on `store.weapons[0]`. Unit keywords (Precise X, Marksman, etc.) remain flat fields on the store. This is the original UI flow, but fields now operate on `weapons[0]` instead of flat store properties.
+> - **Unit Builder Mode**: Preset-driven. Loads a unit with its weapon breakdown into `store.weapons[]`. Each weapon appears as a row showing its dice and weapon keywords. Weapon checkboxes enable/disable individual weapons. Unit keywords are auto-populated.
+>
+> A toggle or tab control at the top of the Attacker Panel switches between modes. The store's `activeMode` field tracks the selection. Both modes write to the same `weapons[]` array — the engine doesn't distinguish between them.
+>
+> **Store Field Reference Changes:**
+> - Dice pool: `store.redDice` → `store.weapons[0].redDice` (Custom Pool mode)
+> - Weapon keywords: `store.pierceX` → `store.weapons[0].keywords.pierceX` (Custom Pool mode)
+> - Unit keywords: `store.preciseX` stays as-is (flat on store)
+> - Mode: `store.activeMode` (new field, 'custom' | 'unit-builder')
+>
+> See `plans/wireframe-two-modes.md` for detailed ASCII wireframes of both modes.
+
+1. **Store Wiring Pattern** — Each input is wired to its store via a consistent pattern: read the current value from the store using a selector, and write back via `setField('fieldName', value)` for unit-level fields or `setWeaponKeyword(0, 'keyword', value)` for weapon-level fields in Custom Pool mode. This keeps components thin — they don't contain business logic, only define which store field maps to which UI component.
 
 2. **Preset Loading Flow** — Both panels follow the same preset interaction pattern:
    - **Faction Select** → filters the Unit/Weapon combobox options; stored as `selectedFaction` (UI-only state)
@@ -49,7 +64,8 @@ The following design decisions are documented for clarity:
    - All other inputs are always visible, even if currently irrelevant — the user may want to pre-configure them before setting other options.
 
 4. **Section Organization** — Inputs are grouped into collapsible sections using `SectionHeader`:
-   - **Attacker:** Preset, Dice Pool, Tokens, Keywords, Upgrade/Downgrade, Points
+   - **Attacker (Custom Pool):** Mode Toggle, Preset, Dice Pool, Tokens, Weapon Keywords (on `weapons[0]`), Unit Keywords (flat), Upgrade/Downgrade, Points
+   - **Attacker (Unit Builder):** Mode Toggle, Preset, Weapon Rows (per-weapon dice + keywords, with enable/disable checkboxes), Tokens, Unit Keywords (auto-populated but editable), Upgrade Slots, Points
    - **Defender:** Preset, Defense, Cover, Tokens, Keywords, Guardian, Points
    - Sections default to expanded on first load. SectionHeader manages its own collapse state internally (per Phase 4E spec).
 
@@ -82,6 +98,13 @@ The following design decisions are documented for clarity:
 **File:** `src/components/AttackerPanel/AttackerPanel.tsx`
 
 The main container component for all attacker inputs. Composes shared components and wires them to `useAttackConfigStore`.
+
+> **⚠️ Phase 2.5 Impact:** The component code below shows the _original_ flat-field design. After Phase 2.5, this component must be restructured:
+> - Add a mode toggle at the top (Custom Pool / Unit Builder)
+> - **Custom Pool mode:** Dice pool spinners read/write `store.weapons[0].redDice` etc. via `store.setWeaponDice(0, 'red', v)`. Weapon keyword spinners/toggles read/write `store.weapons[0].keywords.pierceX` etc. via `store.setWeaponKeyword(0, 'pierceX', v)`. Unit keywords remain flat: `store.preciseX`, `store.marksman`, etc.
+> - **Unit Builder mode:** Replace the Dice Pool section with a weapon rows component showing each weapon's dice and keywords from `store.weapons[]`. Each row has an enable/disable checkbox.
+> - The "Keywords" `SectionHeader` splits into "Weapon Keywords" (per-weapon, on `weapons[0]` in Custom mode) and "Unit Keywords" (flat). See wireframe doc for layout.
+> - `handlePresetChange` now calls `store.loadPreset(preset.id, preset.profile)` where `preset.profile.weapons` populates the store's `weapons[]`.
 
 ```tsx
 import { useCallback, useMemo } from 'react';
@@ -1376,7 +1399,6 @@ import type { SelectOption } from '../shared/Select';
 // ============================================================================
 
 const ATTACK_TYPE_OPTIONS: SelectOption<string>[] = [
-  { value: AttackType.All, label: 'All' },
   { value: AttackType.Ranged, label: 'Ranged' },
   { value: AttackType.Melee, label: 'Melee' },
   { value: AttackType.Overrun, label: 'Overrun' },
@@ -1396,7 +1418,7 @@ export default function AttackTypeSelector() {
         value={attackType}
         onChange={(v) => setAttackType(v as AttackType)}
         options={ATTACK_TYPE_OPTIONS}
-        tooltip="All: no restrictions. Ranged/Melee/Overrun: type-specific keywords apply."
+        tooltip="Ranged/Melee/Overrun: type-specific keywords apply."
       />
     </div>
   );
@@ -1405,17 +1427,17 @@ export default function AttackTypeSelector() {
 
 ### Behavior
 
-- Renders a single Select dropdown with four options
-- Default value is `AttackType.All` (from store default)
+- Renders a single Select dropdown with three options
+- Default value is `AttackType.Ranged` (from store default)
 - Changing the selection calls `setAttackType()` which updates the store
 - The stored attack type is read by the simulation engine (via `getFullConfig` → `config.attackType`) to determine which keywords are active
 - In Phase 6, this selector does **not** disable keywords in the panels. That wiring is deferred to Phase 8 (Integration).
 
 ### Verify
 
-- Renders with "All" selected by default
+- Renders with "Ranged" selected by default
 - Changing selection updates `useAttackTypeStore`
-- All four options are available: All, Ranged, Melee, Overrun
+- All three options are available: Ranged, Melee, Overrun
 
 ---
 
@@ -1436,19 +1458,19 @@ describe('AttackTypeSelector', () => {
     useAttackTypeStore.getState().reset();
   });
 
-  it('renders with default value of All', () => {
+  it('renders with default value of Ranged', () => {
     render(<AttackTypeSelector />);
     expect(screen.getByText('Attack Type')).toBeInTheDocument();
-    // The select should show "All" as the current selection
+    // The select should show "Ranged" as the current selection
     const select = screen.getByRole('combobox', { name: /attack type/i });
-    expect(select).toHaveValue(AttackType.All);
+    expect(select).toHaveValue(AttackType.Ranged);
   });
 
-  it('renders all four options', () => {
+  it('renders all three options', () => {
     render(<AttackTypeSelector />);
     const select = screen.getByRole('combobox', { name: /attack type/i });
     const options = select.querySelectorAll('option');
-    expect(options.length).toBe(4);
+    expect(options.length).toBe(3);
   });
 
   it('updates store when selection changes', async () => {

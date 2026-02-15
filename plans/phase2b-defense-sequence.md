@@ -203,7 +203,7 @@ function rerollDefenseDice(
   // Applied first since it's a full pool reroll.
   if (
     defender.soresuMastery &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Ranged)
   ) {
     for (let i = 0; i < workingResults.length; i++) {
       workingResults[i] = {
@@ -321,7 +321,7 @@ function convertDefenseSurges(
   if (
     defender.deflect &&
     !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) &&
+    (config.attackType === AttackType.Ranged) &&
     surgeCount > 0
   ) {
     workingResults = workingResults.map(d =>
@@ -474,7 +474,7 @@ function rollGuardianDefense(
   if (
     defender.guardianDeflect &&
     !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All)
+    (config.attackType === AttackType.Ranged)
   ) {
     guardianResults = guardianResults.map(d =>
       d.face === DefenseFace.Surge ? { ...d, face: DefenseFace.Block } : d

@@ -1,4 +1,4 @@
-import type { AttackConfig, AttackResult, RolledAttackDie } from './types';
+import type { AttackConfig, AttackResult, RolledAttackDie, AggregatedWeaponKeywords } from './types';
 import { AttackFace, AttackType } from './types';
 
 /**
@@ -14,12 +14,15 @@ import { AttackFace, AttackType } from './types';
  *   - djemSoWounds: Djem So Mastery
  *
  * Suppression:
- *   - suppressionApplied: 1 (or 2 with Suppressive), 0 if Shien suppresses
+ *   - Ranged: 1 base (2 with Suppressive)
+ *   - Melee/Overrun: 0 base (1 with Suppressive)
+ *   - 0 if Shien Mastery + 0 wounds
  */
 export function compareResults(
   attackResults: { hits: number; crits: number },
   defenseInfo: { mainTargetBlocks: number; guardianBlocks: number; guardianHits: number },
   config: AttackConfig,
+  poolKeywords: AggregatedWeaponKeywords,
   lethalPierce: number,
   duelistPierceBonus: number,
   surgeCountBeforeConversion: number,
@@ -43,7 +46,7 @@ export function compareResults(
   // 2. Calculate total Pierce from all sources
   // ════════════════════════════════════════════════════════════════
 
-  let totalPierce = attacker.pierceX + lethalPierce + duelistPierceBonus;
+  let totalPierce = poolKeywords.pierceX + lethalPierce + duelistPierceBonus;
 
   // ════════════════════════════════════════════════════════════════
   // 3. Makashi Mastery (attacker) — Reduce Pierce by 1 in Melee
@@ -60,7 +63,7 @@ export function compareResults(
   // (keyword Pierce X + Lethal Pierce + Duelist Pierce), reduced by 1.
   if (
     attacker.makashiMastery &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All)
+    config.attackType === AttackType.Melee
   ) {
     totalPierce = Math.max(0, totalPierce - 1);
   }
@@ -81,7 +84,7 @@ export function compareResults(
 
   const isMeleeWithMakashi =
     attacker.makashiMastery &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All);
+    config.attackType === AttackType.Melee;
 
   const immuneToThisPierce =
     (defender.immunePierce && !isMeleeWithMakashi) ||
@@ -143,8 +146,8 @@ export function compareResults(
 
   if (
     defender.deflect &&
-    !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) &&
+    !poolKeywords.highVelocity &&
+    config.attackType === AttackType.Ranged &&
     !attacker.immuneDeflect
   ) {
     if (surgeCountBeforeConversion > 0) {
@@ -181,7 +184,7 @@ export function compareResults(
 
   if (
     defender.djemSoMastery &&
-    (config.attackType === AttackType.Melee || config.attackType === AttackType.All)
+    config.attackType === AttackType.Melee
   ) {
     const attackBlanks = originalAttackRollResults.filter(
       d => d.face === AttackFace.Blank
@@ -195,11 +198,10 @@ export function compareResults(
   // 9. Suppression
   // ════════════════════════════════════════════════════════════════
   //
-  // Base: 1 suppression per ranged attack
-  // Suppressive keyword: 2 suppression instead of 1
+  // Ranged attacks: 1 suppression (or 2 with Suppressive keyword)
+  // Melee and Overrun attacks: 0 suppression by default
+  //   BUT: Suppressive weapons still apply 1 suppression in Melee/Overrun
   // Shien Mastery override: 0 suppression if defender took 0 wounds
-  //
-  // Melee and Overrun attacks do NOT cause suppression.
   //
   // Note: Shien uses totalWounds (the Pierce-adjusted combined value).
   // If totalWounds = 0, no suppression is applied.
@@ -207,10 +209,12 @@ export function compareResults(
   let suppressionApplied: number;
 
   if (config.attackType === AttackType.Melee || config.attackType === AttackType.Overrun) {
-    // Melee and Overrun attacks do not cause suppression
-    suppressionApplied = 0;
+    // Melee and Overrun attacks do not cause suppression by default
+    // BUT Suppressive weapons still apply 1 suppression
+    suppressionApplied = poolKeywords.suppressive ? 1 : 0;
   } else {
-    suppressionApplied = attacker.suppressive ? 2 : 1;
+    // Ranged attacks: 1 base, or 2 with Suppressive
+    suppressionApplied = poolKeywords.suppressive ? 2 : 1;
   }
 
   // Shien Mastery: no suppression if 0 wounds dealt

@@ -1,5 +1,5 @@
 import type { AttackConfig, RolledDefenseDie } from './types';
-import { DefenseFace, AttackType } from './types';
+import { DefenseFace, AttackType, DefenseSurgeChart } from './types';
 
 /**
  * Step 7e — Convert Defense Surges
@@ -22,7 +22,7 @@ export function convertDefenseSurges(
   if (surgeCount === 0) return workingResults;
 
   // ── 1. Surge Chart ──
-  if (defender.surgeChart === 'toBlock') {
+  if (defender.surgeChart === DefenseSurgeChart.ToBlock) {
     workingResults = workingResults.map(d =>
       d.face === DefenseFace.Surge ? { ...d, face: DefenseFace.Block } : d
     );
@@ -37,7 +37,7 @@ export function convertDefenseSurges(
   if (
     defender.deflect &&
     !attacker.highVelocity &&
-    (config.attackType === AttackType.Ranged || config.attackType === AttackType.All) &&
+    config.attackType === AttackType.Ranged &&
     surgeCount > 0
   ) {
     workingResults = workingResults.map(d =>

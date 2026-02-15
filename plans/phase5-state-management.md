@@ -13,6 +13,17 @@ Phase 5 consists of two sub-phases:
 - **5A:** Zustand Stores — four stores managing attacker config, defender config, attack type, and simulation results
 - **5B:** Preset Data & Loading — **replaced by Phase 5.5.** The hardcoded preset arrays and preset helper functions are superseded by the API-backed data pipeline and preset generator in Phase 5.5. See `plans/phase5.5-unit-data-upgrades.md` for the full implementation plan.
 
+> **Phase 2.5 Amendments:** Phase 2.5 restructures `AttackerConfig` to use a `weapons: WeaponProfile[]` array instead of flat dice/keyword fields. This impacts the Attack Config Store:
+> - `AttackConfigState` replaces flat `redDice/blackDice/whiteDice` and weapon keyword fields with a `weapons: WeaponProfile[]` array and flat unit-level keyword fields (preciseX, marksman, sharpshooterX, etc.)
+> - In Custom Pool mode, the store operates on `weapons[0]` (a single weapon). In Unit Builder mode, `loadPreset` populates multiple weapons from the preset data.
+> - `DEFAULT_ATTACK_CONFIG` provides a single empty weapon in the `weapons` array
+> - `setField` continues to work for unit-level keyword fields. Weapon-level mutations use new actions: `setWeaponDice(index, color, count)`, `setWeaponKeyword(index, keyword, value)`, `addWeapon()`, `removeWeapon(index)`
+> - `selectAttackerConfig` returns an `AttackerConfig` with `weapons[]` — the engine receives the new shape
+> - `AttackerPresetProfile` gains a `weapons: WeaponProfile[]` field; flat dice fields are removed
+> - `loadPreset` spreads preset `weapons[]` into the store
+>
+> These changes are detailed in Phase 2.5 plan (`plans/phase2.5-multi-weapon-pool.md`). The `setField` generic setter still works for all unit-level fields.
+
 > **Phase 5.5 Amendments:** Phase 5.5 introduces modifications to the stores defined in 5A:
 > - `AttackConfigState` and `DefenseConfigState` gain `upgradeBar`, `equippedUpgradeIds`, and `equipUpgrade` fields/actions
 > - `loadPreset` signature gains an optional `upgradeBar` parameter
@@ -23,7 +34,7 @@ Phase 5 consists of two sub-phases:
 > These changes are detailed in Phase 5.5 Steps 5.5D.1–5.5D.2. They are backward-compatible: stores work without upgrades when `upgradeBar` is empty.
 
 Phase 5 depends on:
-- **Phase 2A** (types only) — `AttackerConfig`, `DefenderConfig`, `AttackConfig`, `AttackType`, and all enums from `engine/types.ts`
+- **Phase 2.5** (types) — `AttackerConfig` (with `weapons: WeaponProfile[]`), `WeaponProfile`, `WeaponKeywords`, `DefenderConfig`, `AttackConfig`, `AttackType`, and all enums from `engine/types.ts`
 - **Phase 3A** (types only) — `SimulationResult` type from `engine/types.ts`
 
 Phase 5 does **not** depend on:
@@ -64,6 +75,12 @@ The following design decisions are documented for clarity:
 **File:** `src/data/presets.ts`
 
 Define the `Faction` enum and preset data types. These are data-layer types, not engine types.
+
+> **⚠️ Phase 2.5 Impact:** `AttackerPresetProfile` below shows the _original_ flat design. After Phase 2.5, it must be restructured:
+> - Remove flat dice fields (`redDice`, `blackDice`, `whiteDice`) and weapon-keyword fields
+> - Add `weapons?: WeaponProfile[]` — preset provides one or more weapon profiles with per-weapon dice and keywords
+> - Keep unit-level keyword fields unchanged (preciseX, marksman, etc.)
+> - In Custom Pool mode, presets include a single weapon. In Unit Builder mode, presets include the full weapon breakdown.
 
 ```ts
 import type {
@@ -215,6 +232,14 @@ export interface DefenderPreset {
 **File:** `src/stores/attackConfigStore.ts`
 
 Zustand store managing all attacker inputs. The state shape matches `AttackerConfig` from `engine/types.ts` plus UI-specific preset selection fields.
+
+> **⚠️ Phase 2.5 Impact:** The code below shows the _original_ flat field design. After Phase 2.5, the store must be restructured:
+> - Replace flat `redDice/blackDice/whiteDice` and weapon-keyword fields with `weapons: WeaponProfile[]`
+> - Keep unit-level keyword fields flat (preciseX, marksman, sharpshooterX, etc.)
+> - Add weapon mutation actions: `setWeaponDice`, `setWeaponKeyword`, `addWeapon`, `removeWeapon`
+> - Add `activeMode: 'custom' | 'unit-builder'` UI state field
+> - `DEFAULT_ATTACK_CONFIG.weapons` starts with one empty `WeaponProfile`
+> - See `plans/phase2.5-multi-weapon-pool.md` Step 2.5A for the final type definitions.
 
 ```ts
 import { create } from 'zustand';
@@ -657,18 +682,18 @@ export interface AttackTypeState {
 // ============================================================================
 
 export const useAttackTypeStore = create<AttackTypeState>((set) => ({
-  attackType: AttackType.All,
+  attackType: AttackType.Ranged,
 
   setAttackType: (type) => set({ attackType: type }),
 
-  reset: () => set({ attackType: AttackType.All }),
+  reset: () => set({ attackType: AttackType.Ranged }),
 }));
 ```
 
 **Verify:**
-- `useAttackTypeStore.getState().attackType` returns `AttackType.All`
+- `useAttackTypeStore.getState().attackType` returns `AttackType.Ranged`
 - `setAttackType(AttackType.Melee)` → attackType is `AttackType.Melee`
-- `reset()` → attackType is back to `AttackType.All`
+- `reset()` → attackType is back to `AttackType.Ranged`
 
 **Notes:**
 - This is intentionally a separate store from attacker/defender because attack type is a global setting that affects both panels' keyword applicability. It lives in the header/top bar, not inside either panel.
@@ -759,6 +784,8 @@ export const useResultsStore = create<ResultsState>((set) => ({
 **File:** `src/stores/configSelectors.ts`
 
 A selector function that reads from all three input stores and assembles the engine's `AttackConfig` object. Used by the `useSimulation` hook to get the current configuration for the simulation.
+
+> **⚠️ Phase 2.5 Impact:** The `attacker` object returned by `selectAttackerConfig` now includes `weapons: WeaponProfile[]` instead of flat dice/keyword fields. The engine's `AttackConfig.attacker` type matches this new shape. No additional mapping is needed — the selector simply passes through the restructured fields.
 
 ```ts
 import type { AttackConfig } from '../engine/types';
@@ -1123,8 +1150,8 @@ describe('attackTypeStore', () => {
     useAttackTypeStore.getState().reset();
   });
 
-  it('initializes with AttackType.All', () => {
-    expect(useAttackTypeStore.getState().attackType).toBe(AttackType.All);
+  it('initializes with AttackType.Ranged', () => {
+    expect(useAttackTypeStore.getState().attackType).toBe(AttackType.Ranged);
   });
 
   it('sets attack type', () => {
@@ -1135,7 +1162,7 @@ describe('attackTypeStore', () => {
   it('resets to All', () => {
     useAttackTypeStore.getState().setAttackType(AttackType.Ranged);
     useAttackTypeStore.getState().reset();
-    expect(useAttackTypeStore.getState().attackType).toBe(AttackType.All);
+    expect(useAttackTypeStore.getState().attackType).toBe(AttackType.Ranged);
   });
 });
 ```
@@ -1242,7 +1269,7 @@ describe('getFullConfig', () => {
     expect(config).toHaveProperty('attacker');
     expect(config).toHaveProperty('defender');
     expect(config).toHaveProperty('attackType');
-    expect(config.attackType).toBe(AttackType.All);
+    expect(config.attackType).toBe(AttackType.Ranged);
     expect(config.attacker.redDice).toBe(0);
     expect(config.defender.dieColor).toBe(DefenseDieColor.White);
   });
@@ -2189,7 +2216,7 @@ After completing all steps, confirm:
 | All data tests pass | `npm test -- --run src/data/` |
 | Attack store defaults | All numeric fields = 0, booleans = false, enums = None/default |
 | Defense store defaults | `dieColor` = White, `minisInLOS` = 1, all keywords = 0/false |
-| Attack type default | `AttackType.All` |
+| Attack type default | `AttackType.Ranged` |
 | Results store default | `result: null`, `loading: false`, `error: null` |
 | Preset loading | Loading a preset applies values + resets non-preset fields |
 | Reset clears everything | After `reset()`, all fields match defaults, preset selection = null |

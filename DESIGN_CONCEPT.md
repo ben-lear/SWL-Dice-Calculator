@@ -52,7 +52,14 @@ The app follows the official attack timing:
 *(Implicit — the user sets up the pools.)*
 
 ### Step 2 — Form Attack Pool
-User selects the dice that make up the pool (e.g., 4 white + 1 black + 1 red), plus weapon keywords. Spray multiplies the weapon's dice by the number of defending miniatures in LOS.
+The attack pool is formed from one or more **weapons**, each contributing its own dice and weapon keywords. In **Custom Pool mode**, the user defines a single weapon with all dice and keywords. In **Unit Builder mode**, the user selects specific weapons from a unit's weapon loadout.
+
+Per-weapon keywords (Spray, Cumbersome, Anti-Materiel X, Anti-Personnel X) are applied to each weapon's dice individually during pool formation. Pool-level weapon keywords (Impact X, Pierce X, Lethal X, Critical X, Ram X, Blast, High Velocity, Suppressive) are aggregated across all weapons for use in later steps.
+
+- **Spray** multiplies only the Spray weapon's dice by the number of defending miniatures in LOS — it does NOT multiply the entire pool.
+- **High Velocity** requires ALL weapons in the pool to have it; if any weapon lacks it, the defender can spend Dodge tokens.
+- **Blast** and **Suppressive** apply if ANY weapon in the pool has them.
+- Numeric weapon keywords (**Impact X**, **Pierce X**, **Lethal X**, **Critical X**, **Ram X**) are **summed** across all weapons.
 
 - **2b. Choose Weapons and Gather Dice** — Makashi Mastery (attacker) may reduce Pierce X by 1 here to disable Immune: Pierce and Impervious for the attack.
 
@@ -93,15 +100,109 @@ Apply effects (Pierce X cancels d results, Immune: Pierce, Impervious, etc.)
 
 The UI is divided into two main columns — **Attacker** and **Defender** — with a central results area.
 
-### 4.1 Attacker Panel
+### 4.0 Two-Mode Design
+
+The Attacker panel supports two modes, selectable via a toggle/tab at the top of the panel:
+
+- **Custom Pool** (default) — The user manually builds a single attack pool by setting dice counts and all keywords directly. All weapon keywords are assumed to apply to the entire pool. This is the simple, fast-configuration mode for quick calculations. Equivalent to a single-weapon `weapons[]` array in the engine.
+
+- **Unit Builder** — The user selects a unit from preset data, equips upgrades, and chooses which weapon(s) contribute to the attack pool. Weapon keywords are tracked per-weapon. Spray auto-calculates per-weapon. This mode produces a multi-weapon `weapons[]` array. See `plans/wireframe-two-modes.md` for detailed UI spec.
+
+Both modes produce the same engine input: `AttackerConfig` with `weapons: WeaponProfile[]`.
+
+### 4.1 Attacker Panel — Custom Pool Mode
+
+In Custom Pool mode, the user configures a single flat dice pool and all keywords. This maps to `weapons: [singleWeapon]` in the engine. Weapon keywords and unit keywords are shown together for simplicity — the engine handles the separation internally.
+
+#### Manual Configuration
+
+##### Dice Pool (maps to `weapons[0]`)
+
+| Input | Type | Notes |
+|-------|------|-------|
+| **Red attack dice** | Number spinner (0–12) | |
+| **Black attack dice** | Number spinner (0–12) | |
+| **White attack dice** | Number spinner (0–12) | |
+
+##### Unit Settings
+
+| Input | Type | Notes |
+|-------|------|-------|
+| **Attack surge conversion** | Select: None / c→a / c→b | Unit card surge chart |
+| **Aim tokens** | Number spinner (0–5) | Each rerolls up to 2 dice |
+| **Surge tokens (attack)** | Number spinner (0–5) | Each converts 1 c→a |
+| **Observation tokens** | Number spinner (0–5) | Each rerolls 1 die |
+| **Dodge tokens (attacker)** | Number spinner (0–5) | For Jar'Kai Mastery; each converts blank→hit or hit→crit (shown only when Jar'Kai Mastery is enabled) |
+
+##### Unit Keywords
+
+| Input | Type | Notes |
+|-------|------|-------|
+| **Precise X** | Number spinner (0–3) | Extra rerolls per Aim |
+| **Sharpshooter X** | Number spinner (0–3) | Reduces defender's Cover value |
+| **Marksman** | Toggle | Aim tokens convert blanks→a or a→b |
+| **Marksman strategy** | Select: Deterministic / Averages | Choose when to use Marksman (shown only when Marksman is enabled) |
+| **Reroll strategy** | Select: Conservative / Crit Fishing | Conservative (default): reroll blanks and excess surges only. Crit Fishing: also reroll hits to fish for crits |
+| **Jar'Kai Mastery** | Toggle | Melee: spend attacker Dodge tokens for blank→hit, hit→crit conversions after surge step |
+| **Jedi Hunter** | Toggle | Gains c→b |
+| **Duelist** (attacker) | Toggle | Melee: spend Aim → attack pool gains Pierce 1 |
+| **Makashi Mastery** | Toggle | Melee: reduce Pierce X by 1 at Step 2b → disables Immune: Pierce and Impervious for the attack |
+| **Immune: Deflect** | Toggle | Attacker cannot suffer wounds from Deflect/Shien Mastery reflection |
+| **Death From Above** | Toggle | Defender can't use Cover (height advantage condition) |
+| **Hold the Line** | Toggle | While Engaged: gains c→a for attack and e→d for defense |
+
+##### Weapon Keywords (maps to `weapons[0].keywords`)
+
+| Input | Type | Notes |
+|-------|------|-------|
+| **Critical X** | Number spinner (0–5) | Converts up to X c→b |
+| **Lethal X** | Number spinner (0–3) | Spend Aim for Pierce instead of reroll |
+| **Pierce X** | Number spinner (0–5) | Cancels d results |
+| **Impact X** | Number spinner (0–5) | Converts a→b vs Armor |
+| **Ram X** | Number spinner (0–3) | Changes results to b |
+| **Blast** | Toggle | Defender ignores Cover |
+| **High Velocity** | Toggle | Defender can't spend Dodge tokens; Deflect has no effect |
+| **Suppressive** | Toggle | +1 extra Suppression (informational) |
+| **Spray** | Toggle | Weapon dice are multiplied by number of defending minis in LOS |
+
+##### Dice Upgrade/Downgrade (maps to `weapons[0].keywords`)
+
+| Input | Type | Notes |
+|-------|------|-------|
+| **Anti-Materiel X** | Number spinner (0–3) | Upgrade X of weapon's dice (vs Vehicles only) |
+| **Anti-Personnel X** | Number spinner (0–3) | Upgrade X of weapon's dice (vs Troopers only) |
+| **Cumbersome** | Toggle | Downgrade each of that weapon's dice (if unit moved this activation) |
+
+##### Points
+
+| Input | Type | Notes |
+|-------|------|-------|
+| **Attacker unit cost** | Number spinner (0–999) | Points value; user-editable |
+
+### 4.1b Attacker Panel — Unit Builder Mode
+
+In Unit Builder mode, the user selects a unit preset and configures its weapon loadout. This produces a multi-weapon `weapons[]` array.
 
 #### Unit Preset Dropdowns
-Two **searchable dropdowns** at the top of the Attacker panel let the user quickly load a pre-configured attack profile:
+Two **searchable dropdowns** at the top:
 
-1. **Faction** — Select: All (default) / Rebel Alliance / Galactic Empire / Republic / Separatist Alliance / Mercenaries. Filters the unit list.
-2. **Unit / Weapon** — Searchable combobox listing units (and their weapon loadouts) within the selected faction. Typing filters the list in real time. Selecting a unit auto-populates all attacker fields (dice, surge chart, keywords). Selecting "Custom" (default) leaves all fields blank.
+1. **Faction** — Select: All (default) / Rebel Alliance / Galactic Empire / Republic / Separatist Alliance / Mercenaries.
+2. **Unit** — Searchable combobox listing units within the selected faction. Selecting a unit auto-populates unit keywords, surge chart, and available weapons.
 
-The user can freely modify any setting after selecting a preset.
+#### Weapon Selection
+After selecting a unit, the panel displays the unit's available weapons. Each weapon shows:
+- Weapon name and dice profile
+- A toggle or checkbox to include/exclude the weapon from the attack pool
+- Weapon keywords displayed as read-only tags (Pierce X, Impact X, Spray, etc.)
+- If Spray is on the weapon, dice are auto-multiplied by Minis in LOS from defender panel
+
+Multiple weapons can be included (per Arsenal X rules). The combined pool and aggregated weapon keywords are computed automatically.
+
+#### Upgrade Slots
+When a unit is selected, upgrade slots appear as searchable dropdowns. Equipping an upgrade adds its cost and keywords.
+
+#### Unit Keywords (auto-populated, manually adjustable)
+Unit-level keywords (Precise X, Marksman, Sharpshooter X, etc.) are auto-populated from the preset but remain editable.
 
 Example presets:
 | Faction | Unit / Weapon | Dice | Keywords |
@@ -112,63 +213,6 @@ Example presets:
 | Rebels | Luke Skywalker (Lightsaber) | 6 Red | Impact 2, Pierce 2, c→b |
 | Separatists | B1 Battle Droids (E-5s) | 5 White | c→blank |
 | *(more added over time)* | | | |
-
-#### Manual Configuration
-
-| Input | Type | Notes |
-|-------|------|-------|
-| **Red attack dice** | Number spinner (0–12) | |
-| **Black attack dice** | Number spinner (0–12) | |
-| **White attack dice** | Number spinner (0–12) | |
-| **Attack surge conversion** | Select: None / c→a / c→b | Unit card surge chart |
-| **Aim tokens** | Number spinner (0–5) | Each rerolls up to 2 dice |
-| **Surge tokens (attack)** | Number spinner (0–5) | Each converts 1 c→a |
-| **Observation tokens** | Number spinner (0–5) | Each rerolls 1 die |
-| **Dodge tokens (attacker)** | Number spinner (0–5) | For Jar'Kai Mastery; each converts blank→hit or hit→crit (shown only when Jar'Kai Mastery is enabled) |
-| **Precise X** | Number spinner (0–3) | Extra rerolls per Aim |
-| **Critical X** | Number spinner (0–5) | Converts up to X c→b |
-| **Lethal X** | Number spinner (0–3) | Spend Aim for Pierce instead of reroll |
-| **Sharpshooter X** | Number spinner (0–3) | Reduces defender's Cover value |
-| **Pierce X** | Number spinner (0–5) | Cancels d results |
-| **Impact X** | Number spinner (0–5) | Converts a→b vs Armor |
-| **Ram X** | Number spinner (0–3) | Changes results to b |
-| **Blast** | Toggle | Defender ignores Cover |
-| **High Velocity** | Toggle | Defender can't spend Dodge tokens; Deflect has no effect |
-| **Suppressive** | Toggle | +1 extra Suppression (informational) |
-| **Marksman** | Toggle | Aim tokens convert blanks→a or a→b |
-| **Marksman strategy** | Select: Deterministic / Averages | Choose when to use Marksman (shown only when Marksman is enabled) |
-| **Jar'Kai Mastery** | Toggle | Melee: spend attacker Dodge tokens for blank→hit, hit→crit conversions after surge step |
-| **Reroll strategy** | Select: Conservative / Crit Fishing | Conservative (default): reroll blanks and excess surges only. Crit Fishing: also reroll hits to fish for crits |
-| **Jedi Hunter** | Toggle | Gains c→b |
-| **Duelist** (attacker) | Toggle | Melee: spend Aim → attack pool gains Pierce 1 |
-| **Makashi Mastery** | Toggle | Melee: reduce Pierce X by 1 at Step 2b → disables Immune: Pierce and Impervious for the attack |
-| **Spray** | Toggle | Weapon dice are multiplied by number of defending minis in LOS |
-| **Immune: Deflect** | Toggle | Attacker cannot suffer wounds from Deflect/Shien Mastery reflection |
-| **Death From Above** | Toggle | Defender can't use Cover (height advantage condition) |
-| **Hold the Line** | Toggle | While Engaged: gains c→a for attack and e→d for defense |
-| **Attacker unit cost** | Number spinner (0–999) | Points value; auto-filled from preset, user-editable |
-
-#### Upgrade Slots (shown when a unit preset is selected)
-When a unit is selected from the preset dropdown, the upgrade slots available for that unit are displayed as searchable dropdowns. Each slot shows upgrades of the matching type, filtered to those valid for the selected unit.
-
-| Input | Type | Notes |
-|-------|------|-------|
-| **[Slot Name] upgrade** | Searchable combobox per slot | One per slot in the unit's upgrade bar. Selecting an upgrade adds its point cost to the total and applies its combat keywords (if enriched). Selecting "None" unequips. |
-
-Upgrade slots fall into two categories:
-- **Combat-relevant** (Heavy Weapon, Personnel, Armament, Ordnance, Gear, Force, Hardpoint, Crew, Grenades, Pilot, Training, Programming, Protocol, Squad Leader, Door Gunner, Dug In, Generator) — enriched upgrades add keywords to the attack/defense calculation AND cost to the total. **Dug In** is a special case: equipping it causes the defender to roll red defense dice during the Roll Cover step. **Generator** upgrades can add dice to the attack pool.
-- **Non-combat** (Comms, Command, Scanner, Strike and Fade, Imperial March, Doctrine) — upgrades add cost only (for points efficiency tracking).
-
-The total unit cost displayed = base unit cost + Σ equipped upgrade costs.
-
-> **Note:** Equipping a weapon-slot upgrade (Heavy Weapon, etc.) does NOT dynamically change the dice pool — the dice pool is determined by the selected preset (unit + weapon loadout). To model a different weapon, select a different preset. Upgrade slots are primarily for cost tracking and keyword additions.
-
-#### Attack Dice Upgrade/Downgrade Keywords
-| Input | Type | Notes |
-|-------|------|-------|
-| **Anti-Materiel X** | Number spinner (0–3) | Upgrade X of weapon’s dice (vs Vehicles only) |
-| **Anti-Personnel X** | Number spinner (0–3) | Upgrade X of weapon’s dice (vs Troopers only) |
-| **Cumbersome** | Toggle | Downgrade each of that weapon’s dice (if unit moved this activation) |
 
 ### 4.2 Defender Panel
 
@@ -235,7 +279,7 @@ Example presets:
 | **Defender unit cost** | Number spinner (0–999) | Points value; auto-filled from preset, user-editable |
 
 #### Upgrade Slots (shown when a unit preset is selected)
-Same pattern as the Attacker panel: one searchable dropdown per upgrade slot in the unit's upgrade bar. Equipping an upgrade adds its cost and any defender-relevant combat keywords (e.g., a Gear upgrade granting a defensive keyword). **Dug In** upgrades are a special case — equipping one causes the defender to roll red defense dice during the Roll Cover step instead of white.
+Same pattern as the Attacker panel's Unit Builder mode: one searchable dropdown per upgrade slot in the unit's upgrade bar. Equipping an upgrade adds its cost and any defender-relevant combat keywords (e.g., a Gear upgrade granting a defensive keyword). **Dug In** upgrades are a special case — equipping one causes the defender to roll red defense dice during the Roll Cover step instead of white.
 
 #### Defense Dice Upgrade/Downgrade Keywords
 *No common keywords upgrade or downgrade defense die color. Danger Sense and Impervious (above) add extra dice rather than changing die color. The **Dug In** upgrade is a special case — it changes cover dice (not main defense dice) to red during the Roll Cover step. Rare command card effects that upgrade/downgrade defense dice are not modeled in MVP.*
@@ -244,11 +288,10 @@ Same pattern as the Attacker panel: one searchable dropdown per upgrade slot in 
 
 | Input | Type | Notes |
 |-------|------|-------|
-| **Attack type** | Select: All (default) / Ranged / Melee / Overrun | See behavior below |
+| **Attack type** | Select: Ranged (default) / Melee / Overrun | See behavior below |
 
 **Attack type behavior:**
-- **All** (default) — No keywords are restricted. All enabled keywords take effect regardless of attack type (Cover, Dodge, Deflect, Soresu Mastery, Djem So Mastery, Duelist, etc. all apply simultaneously). Use this for a quick general-purpose calculation.
-- **Ranged** — Melee-only keywords are ignored: Djem So Mastery, Duelist (Immune: Pierce), Immune: Melee Pierce. Defender may use Cover, Dodge, Deflect, Soresu Mastery.
+- **Ranged** (default) — Melee-only keywords are ignored: Djem So Mastery, Duelist (Immune: Pierce), Immune: Melee Pierce. Defender may use Cover, Dodge, Deflect, Soresu Mastery.
 - **Melee** — Ranged-only keywords are ignored: Cover, Deflect, Soresu Mastery, Backup, Shielded (cancel), High Velocity has no effect. Defender CAN spend Dodge tokens to cancel hits normally. Djem So Mastery and Duelist apply.
 - **Overrun** — Neither Ranged nor Melee. Cover and Deflect do not apply and Engaged rules do not apply. Defender CAN still spend Dodge tokens (unless High Velocity). Only 1 attack pool allowed; weapon dice added once regardless of unit size.
 
@@ -381,7 +424,9 @@ This allows users on Android and iOS to install the app to their home screen and
 The following is a distilled list of every keyword from the rulebook that modifies dice during the attack sequence, organized by when they take effect:
 
 ### Form Attack Pool (Step 2)
-*(User manually configures the single attack pool — no split fire. Step 3—Declare Additional Defender—is skipped; Arsenal X, Gunslinger, and Beam X are not modeled in MVP.)*
+*(In Custom Pool mode, the user manually configures a single-weapon attack pool. In Unit Builder mode, multiple weapons can contribute dice and per-weapon keywords. Step 3—Declare Additional Defender—is skipped; Arsenal X, Gunslinger, and Beam X are not modeled in MVP.)*
+
+**Per-weapon keyword handling:** Spray multiplies only that weapon's dice. Cumbersome, Anti-Materiel X, and Anti-Personnel X apply per-weapon during pool formation. Pool-level keywords (Impact X, Pierce X, etc.) are summed across all weapons. High Velocity requires ALL weapons to have it. Blast and Suppressive apply if ANY weapon has them.
 
 | Keyword | Effect |
 |---------|--------|
@@ -481,8 +526,10 @@ The following is a distilled list of every keyword from the rulebook that modifi
 ## 9. MVP Scope vs. Future Features
 
 ### MVP (v1.0)
-- Manual dice pool configuration (red/black/white counts)
-- All core keywords that affect dice rolls
+- **Two-mode attacker panel:** Custom Pool (manual single-weapon config) and Unit Builder (preset-based multi-weapon config)
+- **Per-weapon keyword engine:** weapons array with per-weapon Spray, aggregated pool-level keywords (Impact, Pierce, Blast, etc.)
+- Manual dice pool configuration (red/black/white counts) in Custom Pool mode
+- All core keywords that affect dice rolls (classified as unit vs weapon keywords)
 - Cover (none/light/heavy) + Suppressed cover bonus
 - Aim, Dodge, Surge tokens
 - Surge conversion charts
@@ -490,12 +537,12 @@ The following is a distilled list of every keyword from the rulebook that modifi
 - Precise, Lethal, Sharpshooter, Blast, High Velocity
 - Danger Sense, Uncanny Luck, Impervious, Deflect, Block, Shien Mastery
 - Guardian (basic), Backup, Weak Point
-- Spray (weapon keyword) with defender minis-in-LOS input
+- Spray (weapon keyword) with correct per-weapon dice multiplication
 - Cover X (unit keyword), Smoke tokens
 - Immune: Deflect, Death From Above
 - Duelist (attacker + defender), Makashi Mastery (attacker)
 - Ranged vs Melee toggle
-- **Unit preset dropdowns** for quick attacker/defender configuration
+- **Unit preset dropdowns** for quick attacker/defender configuration (Unit Builder mode)
 - **API-backed unit database** — all ~150+ units imported from TableTopAdmiral API
 - **Enriched unit data** — curated subset with full weapon profiles, keyword X values, surge charts
 - **Upgrade slot system** — equip upgrades per slot for cost tracking and keyword additions
@@ -512,16 +559,20 @@ The following is a distilled list of every keyword from the rulebook that modifi
 - **Theme**: Star Wars visual theme with faction colors
 - **Clone Trooper token sharing**: model spending ally's green tokens
 - **Guardian sub-sequence**: detailed Guardian wound resolution with Pierce carry-over
-- **Multi-target keywords**: Spray (auto-pool expansion), Beam X, Arsenal X, Fire Support
+- **Multi-target keywords**: Beam X, Arsenal X (split fire), Fire Support
 - **Capacitor wrapper**: package as native Android/iOS app for App Store / Play Store distribution
 
 ---
 
 ## 10. UX Wireframe (Conceptual)
 
+Detailed wireframes for both Custom Pool mode and Unit Builder mode are in `plans/wireframe-two-modes.md`.
+
+High-level layout (Custom Pool mode shown):
+
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  ⚔️  Just Roll Crits                              [All ▼]      │
+│  ⚔️  Just Roll Crits                           [Ranged ▼]      │
 ├──────────────────────┬────────────────────┬──────────────────────┤
 │   ATTACKER           │     RESULTS        │     DEFENDER         │
 │ Faction: [Empire ▼]  │                    │ Faction: [Rebels ▼]  │
@@ -578,4 +629,6 @@ The following is a distilled list of every keyword from the rulebook that modifi
 
 ## 11. Summary
 
-This application faithfully models the Star Wars: Legion attack sequence from Form Attack Pool through Compare Results. Every keyword that modifies dice — whether upgrading, downgrading, rerolling, converting, or canceling — is accounted for in the design. The engine is a pure TypeScript module fully decoupled from UI, enabling both exact probability math and Monte Carlo simulation. The React UI presents attacker and defender as two input panels with a central results display, making it intuitive for players to quickly test "what if" scenarios.
+This application faithfully models the Star Wars: Legion attack sequence from Form Attack Pool through Compare Results. Every keyword that modifies dice — whether upgrading, downgrading, rerolling, converting, or canceling — is accounted for in the design. The engine separates unit keywords from weapon keywords and supports multi-weapon attack pools where per-weapon effects (like Spray) apply correctly to individual weapons' dice.
+
+The React UI presents two modes: **Custom Pool** for quick manual calculations, and **Unit Builder** for preset-based unit configuration with accurate per-weapon modeling. Both modes feed the same pure TypeScript engine, which supports both exact probability math and Monte Carlo simulation.
