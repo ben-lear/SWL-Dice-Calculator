@@ -1,0 +1,4019 @@
+[
+  {
+    "apiId": "1",
+    "id": "at-rt",
+    "name": "AT-RT",
+    "faction": "rebel-alliance",
+    "cost": 55,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Climbing Vehicle",
+      "Expert Climber",
+      "Armor",
+      "Scout X",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "hardpoint",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "2",
+    "id": "74-z-speeder-bikes",
+    "name": "74-Z Speeder Bikes",
+    "faction": "galactic-empire",
+    "cost": 70,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Cover",
+      "Speeder",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "comms",
+      "strike-and-fade"
+    ]
+  },
+  {
+    "apiId": "3",
+    "id": "darth-vader-dark-lord-of-the-sith",
+    "name": "Darth Vader",
+    "faction": "galactic-empire",
+    "cost": 190,
+    "health": 8,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Deflect",
+      "Relentless",
+      "Master of the Force",
+      "Immune: Pierce",
+      "Compel",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "force",
+      "command"
+    ]
+  },
+  {
+    "apiId": "4",
+    "id": "luke-skywalker-hero-of-the-rebellion",
+    "name": "Luke Skywalker",
+    "faction": "rebel-alliance",
+    "cost": 150,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Jump",
+      "Immune: Pierce",
+      "Inspire",
+      "Sharpshooter",
+      "Block",
+      "Impact X",
+      "Pierce X",
+      "Long Shot"
+    ],
+    "upgradeBar": [
+      "force",
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "5",
+    "id": "stormtroopers",
+    "name": "Stormtroopers",
+    "faction": "galactic-empire",
+    "cost": 42,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Precise"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades",
+      "imperial-march"
+    ]
+  },
+  {
+    "apiId": "6",
+    "id": "rebel-troopers",
+    "name": "Rebel Troopers",
+    "faction": "rebel-alliance",
+    "cost": 40,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Nimble",
+      "Agile"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "7",
+    "id": "snowtroopers",
+    "name": "Snowtroopers",
+    "faction": "galactic-empire",
+    "cost": 44,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Steady"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades",
+      "imperial-march"
+    ]
+  },
+  {
+    "apiId": "8",
+    "id": "general-veers-master-tactician",
+    "name": "General Veers",
+    "faction": "galactic-empire",
+    "cost": 70,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Inspire",
+      "Sharpshooter",
+      "➦Spotter",
+      "Exemplar",
+      "Guidance"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "9",
+    "id": "at-st",
+    "name": "AT-ST",
+    "faction": "galactic-empire",
+    "cost": 155,
+    "health": 11,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Weak Point [X]: Rear",
+      "Armor [X]",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "hardpoint",
+      "hardpoint",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "10",
+    "id": "t-47-airspeeder",
+    "name": "T-47 Airspeeder",
+    "faction": "rebel-alliance",
+    "cost": 130,
+    "health": 7,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Armor",
+      "Cover",
+      "Immune: Blast",
+      "Immune: Melee",
+      "Immune: Range 1 Weapons",
+      "Speeder",
+      "Arsenal",
+      "Impact X",
+      "Fixed: Front/Rear"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "comms",
+      "strike-and-fade"
+    ]
+  },
+  {
+    "apiId": "11",
+    "id": "leia-organa-fearless-and-inventive",
+    "name": "Leia Organa",
+    "faction": "rebel-alliance",
+    "cost": 75,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "➦Take Cover",
+      "Inspire",
+      "Nimble",
+      "Sharpshooter",
+      "Exemplar"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "12",
+    "id": "fleet-troopers",
+    "name": "Fleet Troopers",
+    "faction": "rebel-alliance",
+    "cost": 40,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "13",
+    "id": "rebel-commandos",
+    "name": "Rebel Commandos",
+    "faction": "rebel-alliance",
+    "cost": 48,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Low Profile",
+      "Scout X",
+      "Sharpshooter"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "15",
+    "id": "han-solo-unorthodox-general",
+    "name": "Han Solo",
+    "faction": "rebel-alliance",
+    "cost": 100,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Gunslinger",
+      "Uncanny Luck",
+      "Sharpshooter",
+      "Steady",
+      "Low Profile",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "16",
+    "id": "boba-fett-infamous-bounty-hunter",
+    "name": "Boba Fett",
+    "faction": "galactic-empire",
+    "cost": 120,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Arsenal",
+      "Bounty",
+      "Impervious",
+      "Sharpshooter",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "gear",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "17",
+    "id": "scout-troopers",
+    "name": "Scout Troopers",
+    "faction": "galactic-empire",
+    "cost": 48,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Scout X",
+      "Sharpshooter",
+      "Low Profile"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "18",
+    "id": "1-4-fd-laser-cannon-team",
+    "name": "1.4 FD Laser Cannon Team",
+    "faction": "rebel-alliance",
+    "cost": 65,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Full Pivot",
+      "Stationary",
+      "Sentinel",
+      "Prepared Position",
+      "Impact X",
+      "Fixed: Front/Rear"
+    ],
+    "upgradeBar": [
+      "comms",
+      "generator",
+      "dug-in"
+    ]
+  },
+  {
+    "apiId": "19",
+    "id": "e-web-heavy-blaster-team",
+    "name": "E-Web Heavy Blaster Team",
+    "faction": "galactic-empire",
+    "cost": 50,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Sentinel",
+      "Reposition",
+      "Prepared Position",
+      "Cumbersome",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "comms",
+      "generator",
+      "dug-in"
+    ]
+  },
+  {
+    "apiId": "24",
+    "id": "wookiee-warriors-freedom-fighters",
+    "name": "Wookiee Warriors",
+    "faction": "rebel-alliance",
+    "cost": 69,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Indomitable",
+      "Scale",
+      "Duelist"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "training",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "25",
+    "id": "chewbacca-walking-carpet",
+    "name": "Chewbacca",
+    "faction": "rebel-alliance",
+    "cost": 90,
+    "health": 9,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Enrage",
+      "Expert Climber",
+      "Guardian",
+      "Teamwork: Han Solo",
+      "Lethal X",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "29",
+    "id": "director-orson-krennic-architect-of-terror",
+    "name": "Director Orson Krennic",
+    "faction": "galactic-empire",
+    "cost": 75,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Compel",
+      "Entourage: Imperial Death Troopers",
+      "Cunning",
+      "Exemplar",
+      "➦Spotter"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "30",
+    "id": "imperial-death-troopers",
+    "name": "Imperial Death Troopers",
+    "faction": "galactic-empire",
+    "cost": 66,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Disciplined",
+      "Precise",
+      "Ready"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "31",
+    "id": "tx-225-gavw-occupier-tank",
+    "name": "TX-225 GAVw Occupier Tank",
+    "faction": "galactic-empire",
+    "cost": 140,
+    "health": 8,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Reposition",
+      "Transport",
+      "Weak Point [X]: Sides",
+      "Armor [X]",
+      "Suppressive",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "comms",
+      "door-gunner"
+    ]
+  },
+  {
+    "apiId": "32",
+    "id": "x-34-landspeeder",
+    "name": "X-34 Landspeeder",
+    "faction": "rebel-alliance",
+    "cost": 60,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Speeder",
+      "Cover",
+      "Armor [X]"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "comms",
+      "strike-and-fade",
+      "crew",
+      "crew"
+    ]
+  },
+  {
+    "apiId": "33",
+    "id": "sabine-wren-explosive-artist",
+    "name": "Sabine Wren",
+    "faction": "rebel-alliance",
+    "cost": 105,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Gunslinger",
+      "Impervious",
+      "Nimble",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "gear",
+      "gear",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "34",
+    "id": "bossk-trandoshan-terror",
+    "name": "Bossk",
+    "faction": "galactic-empire",
+    "cost": 115,
+    "health": 7,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Bounty",
+      "Enrage",
+      "Expert Climber",
+      "Regenerate",
+      "Unhindered"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "35",
+    "id": "tauntaun-riders",
+    "name": "Tauntaun Riders",
+    "faction": "rebel-alliance",
+    "cost": 90,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Agile",
+      "Relentless",
+      "Sharpshooter",
+      "Unhindered",
+      "Reposition",
+      "Ram X"
+    ],
+    "upgradeBar": [
+      "training",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "36",
+    "id": "rebel-veterans",
+    "name": "Rebel Veterans",
+    "faction": "rebel-alliance",
+    "cost": 48,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Coordinate: Emplacement Trooper",
+      "Prepared Position",
+      "Low Profile"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "38",
+    "id": "b1-battle-droids",
+    "name": "B1 Battle Droids",
+    "faction": "separatist-alliance",
+    "cost": 38,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "AI: Attack",
+      "Coordinate: Droid Trooper"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "comms",
+      "electrobinoculars",
+      "portable-scanner"
+    ]
+  },
+  {
+    "apiId": "39",
+    "id": "shoretroopers",
+    "name": "Shoretroopers",
+    "faction": "galactic-empire",
+    "cost": 46,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Coordinate: Emplacement Trooper",
+      "Prepared Position",
+      "Long Shot"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "40",
+    "id": "dewback-rider",
+    "name": "Dewback Rider",
+    "faction": "galactic-empire",
+    "cost": 70,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Relentless",
+      "Spur",
+      "Unhindered",
+      "Reposition",
+      "Critical X",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "training",
+      "comms",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "41",
+    "id": "obi-wan-kenobi-civilized-warrior",
+    "name": "Obi-Wan Kenobi",
+    "faction": "republic",
+    "cost": 170,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Jump",
+      "Guardian",
+      "Immune: Pierce",
+      "Soresu Mastery",
+      "Master of the Force",
+      "Deflect",
+      "Critical X",
+      "Pierce X",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "command",
+      "training"
+    ]
+  },
+  {
+    "apiId": "42",
+    "id": "mark-ii-medium-blaster-trooper",
+    "name": "Mark II Medium Blaster Trooper",
+    "faction": "rebel-alliance",
+    "cost": 38,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Full Pivot",
+      "Reposition",
+      "Sentinel",
+      "Fire Support",
+      "Detachment",
+      "Critical X",
+      "Cumbersome",
+      "Fixed: Front/Rear"
+    ],
+    "upgradeBar": [
+      "comms",
+      "dug-in"
+    ]
+  },
+  {
+    "apiId": "43",
+    "id": "droidekas",
+    "name": "Droidekas",
+    "faction": "separatist-alliance",
+    "cost": 70,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "AI: Attack, Move",
+      "Shielded",
+      "Wheel Mode",
+      "Generator",
+      "Suppressive",
+      "Fixed: Front/Rear",
+      "Immune: Deflect"
+    ],
+    "upgradeBar": [
+      "comms"
+    ]
+  },
+  {
+    "apiId": "44",
+    "id": "barc-speeder",
+    "name": "BARC Speeder",
+    "faction": "republic",
+    "cost": 55,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Cover",
+      "Speeder",
+      "Fixed: Front/Rear"
+    ],
+    "upgradeBar": [
+      "comms",
+      "strike-and-fade",
+      "crew"
+    ]
+  },
+  {
+    "apiId": "45",
+    "id": "general-grievous-sinister-cyborg",
+    "name": "General Grievous",
+    "faction": "separatist-alliance",
+    "cost": 150,
+    "health": 8,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jedi Hunter",
+      "Relentless",
+      "Scale",
+      "Block",
+      "Immune: Pierce",
+      "Entourage",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "46",
+    "id": "luke-skywalker-jedi-knight",
+    "name": "Luke Skywalker",
+    "faction": "rebel-alliance",
+    "cost": 195,
+    "health": 7,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Deflect",
+      "Disengage",
+      "Immune: Pierce",
+      "Jump",
+      "Master of the Force",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "force",
+      "training"
+    ]
+  },
+  {
+    "apiId": "47",
+    "id": "darth-vader-the-emperor-s-apprentice",
+    "name": "Darth Vader",
+    "faction": "galactic-empire",
+    "cost": 175,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Deflect",
+      "Immune: Pierce",
+      "Jedi Hunter",
+      "Master of the Force",
+      "Relentless",
+      "Impact X",
+      "Pierce X",
+      "Blast",
+      "Scatter"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "48",
+    "id": "df-90-mortar-trooper",
+    "name": "DF-90 Mortar Trooper",
+    "faction": "galactic-empire",
+    "cost": 40,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Fire Support",
+      "Full Pivot",
+      "Reposition",
+      "Sentinel",
+      "Detachment",
+      "Critical X",
+      "Cumbersome",
+      "Suppressive",
+      "Fixed: Front/Rear"
+    ],
+    "upgradeBar": [
+      "comms",
+      "imperial-march",
+      "dug-in"
+    ]
+  },
+  {
+    "apiId": "49",
+    "id": "count-dooku-darth-tyranus",
+    "name": "Count Dooku",
+    "faction": "separatist-alliance",
+    "cost": 185,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Cunning",
+      "Deflect",
+      "Immune: Pierce",
+      "Makashi Mastery",
+      "Master of the Force",
+      "Direct",
+      "Impact X",
+      "Pierce X",
+      "Scatter",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "force",
+      "command"
+    ]
+  },
+  {
+    "apiId": "50",
+    "id": "clone-captain-rex-honorable-soldier",
+    "name": "Clone Captain Rex",
+    "faction": "republic",
+    "cost": 95,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Gunslinger",
+      "Scout X",
+      "Scouting Party",
+      "Sharpshooter",
+      "Tactical X"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "52",
+    "id": "b2-super-battle-droids",
+    "name": "B2 Super Battle Droids",
+    "faction": "separatist-alliance",
+    "cost": 45,
+    "health": 2,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "AI: Attack"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "53",
+    "id": "saber-class-tank",
+    "name": "Saber-Class Tank",
+    "faction": "republic",
+    "cost": 160,
+    "health": 9,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Hover: Ground",
+      "Outmaneuver",
+      "Weak Point [X]: Rear",
+      "Weak Point [X]: Sides",
+      "Armor [X]",
+      "Critical X",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "comms",
+      "ordnance",
+      "ordnance"
+    ]
+  },
+  {
+    "apiId": "54",
+    "id": "aat-battle-tank",
+    "name": "AAT Battle Tank",
+    "faction": "separatist-alliance",
+    "cost": 175,
+    "health": 9,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "AI: Attack",
+      "Arsenal",
+      "Barrage",
+      "Hover: Ground",
+      "Weak Point [X]: Rear",
+      "Armor [X]",
+      "Fixed: Front/Rear",
+      "Critical X",
+      "High Velocity"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "comms",
+      "ordnance",
+      "ordnance"
+    ]
+  },
+  {
+    "apiId": "55",
+    "id": "r2-d2-hero-of-a-thousand-devices",
+    "name": "R2-D2",
+    "faction": "rebel-alliance",
+    "cost": 55,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Repair 2: Capacity 2",
+      "Secret Mission",
+      "Inconspicuous",
+      "Infiltrate",
+      "Suppressive",
+      "Restore"
+    ],
+    "upgradeBar": [
+      "comms",
+      "counterpart"
+    ]
+  },
+  {
+    "apiId": "56",
+    "id": "r2-d2-independent-astromech",
+    "name": "R2-D2",
+    "faction": "republic",
+    "cost": 55,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Repair 2: Capacity 2",
+      "Secret Mission",
+      "Inconspicuous",
+      "Infiltrate",
+      "Suppressive",
+      "Restore"
+    ],
+    "upgradeBar": [
+      "comms",
+      "counterpart"
+    ]
+  },
+  {
+    "apiId": "58",
+    "id": "iden-versio-inferno-squad-leader",
+    "name": "Iden Versio",
+    "faction": "galactic-empire",
+    "cost": 100,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "➦Quick Thinking",
+      "Marksman",
+      "Nimble",
+      "Pierce X",
+      "Infiltrate",
+      "High Velocity",
+      "Critical X",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "counterpart"
+    ]
+  },
+  {
+    "apiId": "59",
+    "id": "cad-bane-needs-no-introduction",
+    "name": "Cad Bane",
+    "faction": "separatist-alliance",
+    "cost": 120,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Bounty",
+      "Danger Sense",
+      "Sharpshooter",
+      "Steady",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "60",
+    "id": "padme-amidala-spirited-senator",
+    "name": "Padme Amidala",
+    "faction": "republic",
+    "cost": 85,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Agile",
+      "➦Bolster",
+      "Inspire",
+      "Nimble",
+      "Sharpshooter"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "62",
+    "id": "arc-troopers",
+    "name": "Arc Troopers",
+    "faction": "republic",
+    "cost": 66,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Impervious",
+      "Scout X",
+      "Sharpshooter",
+      "Tactical X",
+      "Charge",
+      "Scale"
+    ],
+    "upgradeBar": [
+      "squad-leader",
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "64",
+    "id": "bx-series-droid-commandos",
+    "name": "BX-Series Droid Commandos",
+    "faction": "separatist-alliance",
+    "cost": 64,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "AI: Dodge, Move",
+      "Impervious",
+      "Scale",
+      "Scout X",
+      "Sharpshooter",
+      "Jump"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "comms",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "69",
+    "id": "stap-riders",
+    "name": "STAP Riders",
+    "faction": "separatist-alliance",
+    "cost": 75,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Agile",
+      "AI: Move",
+      "Coordinate: Droid Trooper",
+      "Cover",
+      "Speeder",
+      "Coordinate: Vehicle",
+      "Critical X",
+      "Fixed: Front/Rear"
+    ],
+    "upgradeBar": [
+      "comms",
+      "strike-and-fade"
+    ]
+  },
+  {
+    "apiId": "70",
+    "id": "at-rt-republic",
+    "name": "AT-RT",
+    "faction": "republic",
+    "cost": 60,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Climbing Vehicle",
+      "Expert Climber",
+      "Scout X",
+      "Armor [X]",
+      "Impact X",
+      "Critical X"
+    ],
+    "upgradeBar": [
+      "hardpoint",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "71",
+    "id": "mandalorian-resistance",
+    "name": "Mandalorian Resistance",
+    "faction": "rebel-alliance",
+    "cost": 62,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Impervious",
+      "Nimble",
+      "Jump"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "72",
+    "id": "mandalorian-resistance-clan-wren",
+    "name": "Mandalorian Resistance",
+    "faction": "rebel-alliance",
+    "cost": 30,
+    "health": 2,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Equip: Tristan Wren, Ursa Wren",
+      "Impervious",
+      "Retinue: Sabine Wren",
+      "Nimble"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "73",
+    "id": "anakin-skywalker-the-chosen-one",
+    "name": "Anakin Skywalker",
+    "faction": "republic",
+    "cost": 155,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Djem So Mastery",
+      "Immune: Pierce",
+      "Tempted",
+      "Charge",
+      "Deflect",
+      "Master of the Force",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "74",
+    "id": "maul-impatient-apprentice",
+    "name": "Maul",
+    "faction": "separatist-alliance",
+    "cost": 160,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Deflect",
+      "Immune: Pierce",
+      "Juyo Mastery",
+      "Jump",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "75",
+    "id": "clone-commander-trained-for-leadership",
+    "name": "Clone Commander",
+    "faction": "republic",
+    "cost": 60,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Direct: ;r2 Clone Trooper Unit",
+      "Sharpshooter",
+      "➦Bolster"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "76",
+    "id": "t-series-tactical-droid-programmed-for-strategy",
+    "name": "T-series Tactical Droid",
+    "faction": "separatist-alliance",
+    "cost": 55,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "➦Bolster",
+      "Exemplar",
+      "Direct"
+    ],
+    "upgradeBar": [
+      "command",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "77",
+    "id": "drk-1-sith-probe-droids",
+    "name": "DRK-1 Sith Probe Droids",
+    "faction": "separatist-alliance",
+    "cost": 35,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Observe",
+      "Incognito",
+      "Hover: Air [X]",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "comms"
+    ]
+  },
+  {
+    "apiId": "78",
+    "id": "imperial-special-forces",
+    "name": "Imperial Special Forces",
+    "faction": "galactic-empire",
+    "cost": 68,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Infiltrate",
+      "Marksman",
+      "Reliable"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "79",
+    "id": "imperial-special-forces-inferno-squad",
+    "name": "Imperial Special Forces",
+    "faction": "galactic-empire",
+    "cost": 34,
+    "health": 2,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Equip: Del Meeko, Gideon Hask",
+      "Infiltrate",
+      "Marksman",
+      "Retinue: Iden Versio",
+      "Reliable"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "80",
+    "id": "lando-calrissian-canny-general",
+    "name": "Lando Calrissian",
+    "faction": "rebel-alliance",
+    "cost": 95,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Guidance",
+      "One Step Ahead",
+      "Allies of Convenience",
+      "Steady",
+      "Uncanny Luck",
+      "Long Shot"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "764",
+    "id": "yoda-grand-master-of-the-jedi-order",
+    "name": "Yoda",
+    "faction": "republic",
+    "cost": 200,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Ataru Mastery",
+      "Master of the Force",
+      "Immune: Pierce",
+      "Guidance",
+      "Deflect",
+      "Pierce X",
+      "Suppressive",
+      "Impact X",
+      "Blast"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "force",
+      "command"
+    ]
+  },
+  {
+    "apiId": "771",
+    "id": "laat-le-patrol-transport",
+    "name": "LAAT/LE Patrol Transport",
+    "faction": "republic",
+    "cost": 100,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Cover",
+      "Hover: Air [X]",
+      "Immune: Blast",
+      "Immune: Melee",
+      "Immune: Range 1 Weapons",
+      "Armor [X]",
+      "Transport",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "comms",
+      "ordnance",
+      "ordnance",
+      "door-gunner"
+    ]
+  },
+  {
+    "apiId": "772",
+    "id": "a-a5-speeder-truck",
+    "name": "A-A5 Speeder Truck",
+    "faction": "rebel-alliance",
+    "cost": 75,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Hover: Ground",
+      "Reposition",
+      "Weak Point [X]: Rear",
+      "Armor [X]",
+      "Transport"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "comms",
+      "crew",
+      "crew"
+    ]
+  },
+  {
+    "apiId": "773",
+    "id": "laat-le-patrol-transport-galactic-empire",
+    "name": "LAAT/LE Patrol Transport",
+    "faction": "galactic-empire",
+    "cost": 105,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Immune: Range 1 Weapons",
+      "Transport",
+      "Immune: Blast",
+      "Immune: Melee",
+      "Arsenal",
+      "Cover",
+      "Hover: Air [X]",
+      "Armor [X]",
+      "Impact X",
+      "Fixed: Front/Rear"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "comms",
+      "ordnance",
+      "ordnance",
+      "door-gunner"
+    ]
+  },
+  {
+    "apiId": "1527",
+    "id": "wookiee-warriors-kashyyyk-defenders",
+    "name": "Wookiee Warriors",
+    "faction": "republic",
+    "cost": 72,
+    "health": 3,
+    "figures": 3,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Indomitable",
+      "Scale",
+      "Sharpshooter"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "1528",
+    "id": "wookiee-chieftain-clan-leader",
+    "name": "Wookiee Chieftain",
+    "faction": "republic",
+    "cost": 100,
+    "health": 7,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Agile",
+      "Charge",
+      "Duelist",
+      "Indomitable",
+      "Scale",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "1529",
+    "id": "wookiee-warriors-kashyyyk-resistance",
+    "name": "Wookiee Warriors",
+    "faction": "rebel-alliance",
+    "cost": 72,
+    "health": 3,
+    "figures": 3,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Indomitable",
+      "Scale",
+      "Sharpshooter"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "1563",
+    "id": "wookiee-warriors-noble-fighters",
+    "name": "Wookiee Warriors",
+    "faction": "republic",
+    "cost": 69,
+    "health": 3,
+    "figures": 3,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Duelist",
+      "Indomitable",
+      "Scale"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "training",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "1565",
+    "id": "chewbacca-hero-of-kashyyyk",
+    "name": "Chewbacca",
+    "faction": "republic",
+    "cost": 90,
+    "health": 9,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Enrage",
+      "Guardian",
+      "Reliable",
+      "Scale",
+      "Lethal X",
+      "Critical X",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "1809",
+    "id": "ig-100-magnaguard",
+    "name": "IG-100 MagnaGuard",
+    "faction": "separatist-alliance",
+    "cost": 72,
+    "health": 2,
+    "figures": 3,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "AI: Dodge, Move",
+      "Charge",
+      "Guardian",
+      "Immune: Melee Pierce",
+      "Retinue",
+      "Unhindered"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "training",
+      "comms",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "1852",
+    "id": "kraken-super-tactical-droid",
+    "name": "Kraken",
+    "faction": "separatist-alliance",
+    "cost": 100,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Exemplar",
+      "Sharpshooter",
+      "Override",
+      "Strategize",
+      "Charge",
+      "Lethal X"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "training",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "1854",
+    "id": "kalani-super-tactical-droid",
+    "name": "Kalani",
+    "faction": "separatist-alliance",
+    "cost": 100,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Exemplar",
+      "Sharpshooter",
+      "Reinforcements",
+      "Strategize",
+      "Direct",
+      "Lethal X"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "command",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "1984",
+    "id": "raddaugh-gnasp-fluttercraft",
+    "name": "Raddaugh Gnasp Fluttercraft",
+    "faction": "republic",
+    "cost": 55,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Cover",
+      "Immune: Blast",
+      "Immune: Melee",
+      "Immune: Range 1 Weapons",
+      "Speeder"
+    ],
+    "upgradeBar": [
+      "comms",
+      "strike-and-fade",
+      "crew"
+    ]
+  },
+  {
+    "apiId": "2019",
+    "id": "dsd1-dwarf-spider-droid",
+    "name": "DSD1 Dwarf Spider Droid",
+    "faction": "separatist-alliance",
+    "cost": 55,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Self-Destruct X",
+      "Armor [X]",
+      "Climbing Vehicle",
+      "Expert Climber",
+      "Programmed",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "protocol",
+      "hardpoint",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "2108",
+    "id": "infantry-support-platform",
+    "name": "Infantry Support Platform",
+    "faction": "republic",
+    "cost": 65,
+    "health": 7,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Cover",
+      "Hover: Ground",
+      "Weak Point [X]: Rear",
+      "Weak Point [X]: Sides"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "2109",
+    "id": "persuader-class-tank-droid",
+    "name": "Persuader-class Tank Droid",
+    "faction": "separatist-alliance",
+    "cost": 145,
+    "health": 11,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Arsenal",
+      "Programmed",
+      "Reposition",
+      "Transport",
+      "Weak Point [X]: Sides",
+      "Critical X",
+      "Fixed: Front/Rear",
+      "Impact X",
+      "Ion X"
+    ],
+    "upgradeBar": [
+      "protocol",
+      "comms",
+      "ordnance",
+      "ordnance",
+      "door-gunner"
+    ]
+  },
+  {
+    "apiId": "4215",
+    "id": "pyke-syndicate-foot-soldiers",
+    "name": "Pyke Syndicate Foot Soldiers",
+    "faction": "mercenaries",
+    "cost": 42,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Outmaneuver",
+      "Self-Preservation",
+      "Independent: Token X/Action",
+      "Danger Sense"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "personnel",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "4216",
+    "id": "pyke-syndicate-capo",
+    "name": "Pyke Syndicate Capo",
+    "faction": "mercenaries",
+    "cost": 48,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Aid: Pyke Syndicate",
+      "Danger Sense",
+      "Independent: Token X/Action"
+    ],
+    "upgradeBar": [
+      "command",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "4417",
+    "id": "black-sun-enforcers",
+    "name": "Black Sun Enforcers",
+    "faction": "mercenaries",
+    "cost": 50,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Dauntless",
+      "Self-Preservation",
+      "Independent: Token X/Action",
+      "Precise"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "personnel",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "4551",
+    "id": "maul-a-rival",
+    "name": "Maul",
+    "faction": "mercenaries",
+    "cost": 170,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Deflect",
+      "Juyo Mastery",
+      "Allies of Convenience",
+      "Immune: Pierce",
+      "Wound",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "command",
+      "training",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "4717",
+    "id": "black-sun-vigo",
+    "name": "Black Sun Vigo",
+    "faction": "mercenaries",
+    "cost": 50,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Aid",
+      "Dauntless",
+      "Independent: Token X/Action"
+    ],
+    "upgradeBar": [
+      "command",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "4767",
+    "id": "mandalorian-super-commandos",
+    "name": "Mandalorian Super Commandos",
+    "faction": "mercenaries",
+    "cost": 66,
+    "health": 1,
+    "figures": 3,
+    "defenseDieColor": "red",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Defend",
+      "Jump",
+      "Impervious",
+      "Independent: Token X/Action"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "4891",
+    "id": "gar-saxon-militant-commando",
+    "name": "Gar Saxon",
+    "faction": "mercenaries",
+    "cost": 100,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Allies of Convenience",
+      "Impervious",
+      "Jump",
+      "Compel",
+      "Sharpshooter",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "armament",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "4919",
+    "id": "a-a5-speeder-truck-mercenaries",
+    "name": "A-A5 Speeder Truck",
+    "faction": "mercenaries",
+    "cost": 75,
+    "health": 8,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Hover: Ground",
+      "Reposition",
+      "Transport",
+      "Weak Point [X]: Rear"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "hardpoint",
+      "comms",
+      "crew",
+      "crew"
+    ]
+  },
+  {
+    "apiId": "4999",
+    "id": "bossk-trandoshan-terror-mercenaries",
+    "name": "Bossk",
+    "faction": "mercenaries",
+    "cost": 105,
+    "health": 7,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Independent: Token X/Action",
+      "Bounty",
+      "Enrage",
+      "Regenerate",
+      "Scale",
+      "Pierce X",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "5000",
+    "id": "boba-fett-infamous-bounty-hunter-mercenaries",
+    "name": "Boba Fett",
+    "faction": "mercenaries",
+    "cost": 130,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Arsenal",
+      "Bounty",
+      "Impervious",
+      "Sharpshooter",
+      "Independent: Token X/Action",
+      "Impact X",
+      "Versatile",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "5001",
+    "id": "cad-bane-needs-no-introduction-mercenaries",
+    "name": "Cad Bane",
+    "faction": "mercenaries",
+    "cost": 105,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Independent: Token X/Action",
+      "Jump",
+      "Bounty",
+      "Danger Sense",
+      "Sharpshooter",
+      "Steady",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "5406",
+    "id": "swoop-bike-riders",
+    "name": "Swoop Bike Riders",
+    "faction": "mercenaries",
+    "cost": 65,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Cover",
+      "Independent: Token X/Action",
+      "Reinforcements",
+      "Speeder",
+      "Overrun X"
+    ],
+    "upgradeBar": [
+      "comms",
+      "strike-and-fade"
+    ]
+  },
+  {
+    "apiId": "5880",
+    "id": "stormtroopers-heavy-response-unit",
+    "name": "Stormtroopers",
+    "faction": "galactic-empire",
+    "cost": 40,
+    "health": 1,
+    "figures": 3,
+    "defenseDieColor": "red",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Flexible Response [X]",
+      "Precise",
+      "Special Issue: Battle Force",
+      "Unhindered"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "imperial-march"
+    ]
+  },
+  {
+    "apiId": "6176",
+    "id": "boba-fett-daimyo-of-mos-espa",
+    "name": "Boba Fett",
+    "faction": "mercenaries",
+    "cost": 120,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Arsenal",
+      "Impervious",
+      "Independent: Token X/Action",
+      "Sentinel",
+      "Sharpshooter",
+      "Tactical X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "gear",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "6177",
+    "id": "ig-88-notorious-assassin-droid",
+    "name": "IG-88",
+    "faction": "mercenaries",
+    "cost": 110,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Bounty",
+      "Sharpshooter",
+      "Impervious",
+      "Armor [X]",
+      "Arsenal",
+      "Pierce X",
+      "Versatile"
+    ],
+    "upgradeBar": [
+      "training",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "6178",
+    "id": "ig-11-nurse-and-protect",
+    "name": "IG-11",
+    "faction": "mercenaries",
+    "cost": 105,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Gunslinger",
+      "Sharpshooter",
+      "Impervious",
+      "Armor [X]",
+      "Programmed",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "protocol",
+      "training",
+      "comms",
+      "gear",
+      "counterpart"
+    ]
+  },
+  {
+    "apiId": "6179",
+    "id": "din-djarin-the-mandalorian",
+    "name": "Din Djarin",
+    "faction": "mercenaries",
+    "cost": 105,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Bounty",
+      "Tactical X",
+      "Impervious",
+      "Arsenal",
+      "Independent: Token X/Action",
+      "Lethal X",
+      "Long Shot",
+      "Versatile"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "armament",
+      "counterpart"
+    ]
+  },
+  {
+    "apiId": "6180",
+    "id": "imperial-dark-troopers",
+    "name": "Imperial Dark Troopers",
+    "faction": "galactic-empire",
+    "cost": 95,
+    "health": 2,
+    "figures": 3,
+    "defenseDieColor": "red",
+    "rank": "heavy",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Plodding",
+      "Unconcerned",
+      "Armor [X]",
+      "Unstoppable"
+    ],
+    "upgradeBar": [
+      "protocol",
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "6376",
+    "id": "clone-commander-cody-leader-of-the-212th",
+    "name": "Clone Commander Cody",
+    "faction": "republic",
+    "cost": 95,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Direct",
+      "Jump",
+      "➦Take Cover",
+      "Target",
+      "Observe",
+      "Lethal X",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "11258",
+    "id": "moff-gideon-long-live-the-empire",
+    "name": "Moff Gideon",
+    "faction": "galactic-empire",
+    "cost": 80,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Observe",
+      "Sharpshooter",
+      "Entourage",
+      "Tactical X",
+      "Ruthless",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "training",
+      "gear",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "13582",
+    "id": "asajj-ventress-separatist-assassin",
+    "name": "Asajj Ventress",
+    "faction": "separatist-alliance",
+    "cost": 150,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Deflect",
+      "Immune: Pierce",
+      "Relentless",
+      "Independent: Token X/Action",
+      "Jar'Kai Mastery",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "15014",
+    "id": "ahsoka-tano-fulcrum",
+    "name": "Ahsoka Tano",
+    "faction": "rebel-alliance",
+    "cost": 165,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Charge",
+      "Deflect",
+      "Defend",
+      "Jar'Kai Mastery",
+      "Immune: Pierce",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "15015",
+    "id": "wicket-hero-of-bright-tree",
+    "name": "Wicket",
+    "faction": "mercenaries",
+    "cost": 70,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Low Profile",
+      "Nimble",
+      "Unhindered",
+      "Independent: Token X/Action",
+      "Relentless",
+      "Scout X",
+      "Scouting Party",
+      "Pierce X",
+      "Primitive"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "15016",
+    "id": "c-3p0-golden-god",
+    "name": "C-3P0",
+    "faction": "mercenaries",
+    "cost": 40,
+    "health": 3,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Compel",
+      "Infiltrate",
+      "Divine Influence",
+      "Master Storyteller"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "15784",
+    "id": "ewok-skirmishers",
+    "name": "Ewok Skirmishers",
+    "faction": "mercenaries",
+    "cost": 40,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Low Profile",
+      "Unhindered"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "personnel",
+      "personnel",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "15969",
+    "id": "chewbacca-let-the-wookiee-win",
+    "name": "Chewbacca",
+    "faction": "mercenaries",
+    "cost": 190,
+    "health": 11,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Inspire",
+      "Armor [X]",
+      "Incognito",
+      "Weak Point [X]: Rear",
+      "Fixed: Front/Rear",
+      "Blast",
+      "Impact X"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "16377",
+    "id": "ewok-slingers",
+    "name": "Ewok Slingers",
+    "faction": "mercenaries",
+    "cost": 35,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Low Profile",
+      "Target",
+      "Unhindered",
+      "Independent: Token X/Action",
+      "Primitive"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "personnel",
+      "personnel",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "16687",
+    "id": "logray-superstitious-shaman",
+    "name": "Logray",
+    "faction": "mercenaries",
+    "cost": 45,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Inspire",
+      "Low Profile",
+      "Nimble",
+      "Aid",
+      "Independent: Token X/Action",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "17348",
+    "id": "major-marquand-tempest-scout-2",
+    "name": "Major Marquand",
+    "faction": "galactic-empire",
+    "cost": 190,
+    "health": 11,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Armor",
+      "Arsenal",
+      "Weak Point [X]: Rear",
+      "Fixed: Front/Rear",
+      "Blast",
+      "Impact X"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "19076",
+    "id": "persuader-class-tank-droid-prototype-tank-droid",
+    "name": "Persuader-class Tank Droid",
+    "faction": "separatist-alliance",
+    "cost": 145,
+    "health": 11,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Arsenal",
+      "Direct",
+      "Programmed",
+      "Reposition",
+      "Special Issue: Battle Force",
+      "Weak Point [X]: Sides",
+      "Fixed: Front/Rear",
+      "Impact X",
+      "Ion X",
+      "Critical X"
+    ],
+    "upgradeBar": [
+      "protocol",
+      "comms",
+      "ordnance",
+      "ordnance"
+    ]
+  },
+  {
+    "apiId": "19077",
+    "id": "ig-100-magnaguard-prototype-assassin-droids",
+    "name": "IG-100 MagnaGuard",
+    "faction": "separatist-alliance",
+    "cost": 60,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "red",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "AI: Dodge, Move",
+      "Charge",
+      "Immune: Melee Pierce",
+      "Special Issue: Battle Force",
+      "Unhindered"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "19078",
+    "id": "raddaugh-gnasp-fluttercraft-attack-craft",
+    "name": "Raddaugh Gnasp Fluttercraft",
+    "faction": "republic",
+    "cost": 57,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "support",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Attack Run",
+      "Cover",
+      "Immune: Blast",
+      "Immune: Melee",
+      "Immune: Range 1 Weapons",
+      "Reposition",
+      "Speeder",
+      "Special Issue: Battle Force"
+    ],
+    "upgradeBar": [
+      "comms",
+      "strike-and-fade",
+      "crew"
+    ]
+  },
+  {
+    "apiId": "19103",
+    "id": "geonosian-warriors-soldiers-of-the-hive",
+    "name": "Geonosian Warriors",
+    "faction": "separatist-alliance",
+    "cost": 45,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Scale",
+      "Death From Above",
+      "Weighed Down"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "personnel"
+    ]
+  },
+  {
+    "apiId": "19105",
+    "id": "sun-fac-ruthless-lieutenant",
+    "name": "Sun Fac",
+    "faction": "separatist-alliance",
+    "cost": 90,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Cover",
+      "Scale",
+      "Death From Above",
+      "Direct",
+      "Retinue",
+      "Weighed Down",
+      "Pierce X",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "training",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "19106",
+    "id": "poggle-the-lesser-public-leader-of-the-geonosians",
+    "name": "Poggle the Lesser",
+    "faction": "separatist-alliance",
+    "cost": 85,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Jump",
+      "Compel",
+      "Entourage",
+      "Override",
+      "Weighed Down"
+    ],
+    "upgradeBar": [
+      "command",
+      "command",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "19108",
+    "id": "fifth-brother-the-kill-is-mine",
+    "name": "Fifth Brother",
+    "faction": "galactic-empire",
+    "cost": 105,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Immune: Pierce",
+      "Enrage",
+      "Block",
+      "Dauntless",
+      "Ram X",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "19109",
+    "id": "seventh-sister-compelled-to-inflict-pain",
+    "name": "Seventh Sister",
+    "faction": "galactic-empire",
+    "cost": 110,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Associate: Unit Name",
+      "Block",
+      "Charge",
+      "Disciplined",
+      "Immune: Pierce",
+      "Jump",
+      "Interrogate",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "force",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "23655",
+    "id": "the-bad-batch-clone-force-99",
+    "name": "The Bad Batch",
+    "faction": "republic",
+    "cost": 160,
+    "health": 2,
+    "figures": 0,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Equip",
+      "We're Not Regs",
+      "Impervious",
+      "Scale",
+      "Sharpshooter",
+      "Steady"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "heavy-weapon",
+      "heavy-weapon",
+      "heavy-weapon"
+    ]
+  },
+  {
+    "apiId": "23656",
+    "id": "clone-commandos",
+    "name": "Clone Commandos",
+    "faction": "republic",
+    "cost": 90,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "red",
+    "rank": "support",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Complete the Mission",
+      "Equip",
+      "Suppressive",
+      "Infiltrate",
+      "Recharge",
+      "Target",
+      "Shielded"
+    ],
+    "upgradeBar": [
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "23657",
+    "id": "range-troopers",
+    "name": "Range Troopers",
+    "faction": "galactic-empire",
+    "cost": 60,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "red",
+    "rank": "support",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Advanced Targeting: X",
+      "Armor [X]",
+      "Indomitable",
+      "Scale",
+      "Spur"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "personnel",
+      "comms",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "24084",
+    "id": "clone-commandos-ds-delta-squad",
+    "name": "Clone Commandos (DS)",
+    "faction": "republic",
+    "cost": 105,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "red",
+    "rank": "support",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Complete the Mission",
+      "Equip",
+      "Infiltrate",
+      "Independent: Token X/Action",
+      "Recharge",
+      "Target",
+      "Shielded",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "training",
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "25086",
+    "id": "the-bad-batch-clone-force-99-mercenaries",
+    "name": "The Bad Batch",
+    "faction": "mercenaries",
+    "cost": 140,
+    "health": 2,
+    "figures": 0,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Impervious",
+      "Scale",
+      "Sharpshooter",
+      "Steady",
+      "We're Not Regs",
+      "Equip"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "heavy-weapon",
+      "heavy-weapon",
+      "counterpart"
+    ]
+  },
+  {
+    "apiId": "25964",
+    "id": "clone-trooper-infantry",
+    "name": "Clone Trooper Infantry",
+    "faction": "republic",
+    "cost": 56,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "red",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Reliable"
+    ],
+    "upgradeBar": [
+      "squad-leader",
+      "heavy-weapon",
+      "personnel",
+      "command",
+      "training",
+      "training",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "25966",
+    "id": "lm-432-crab-droid",
+    "name": "LM-432 Crab Droid",
+    "faction": "separatist-alliance",
+    "cost": 70,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "support",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Climbing Vehicle",
+      "Programmed",
+      "Reposition",
+      "Scale",
+      "Scout X",
+      "Scouting Party",
+      "Impact X",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "protocol",
+      "hardpoint",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "25967",
+    "id": "stormtrooper-riot-squad",
+    "name": "Stormtrooper Riot Squad",
+    "faction": "galactic-empire",
+    "cost": 44,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "red",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Hold the Line",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "heavy-weapon",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "25968",
+    "id": "rebel-sleeper-cell-ready-to-strike",
+    "name": "Rebel Sleeper Cell",
+    "faction": "rebel-alliance",
+    "cost": 77,
+    "health": 1,
+    "figures": 6,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Tactical X",
+      "Scout X",
+      "Nimble",
+      "Impact X",
+      "Suppressive"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "comms",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "25979",
+    "id": "rebel-commandos-strike-team",
+    "name": "Rebel Commandos",
+    "faction": "rebel-alliance",
+    "cost": 20,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Detachment",
+      "Heavy Weapon Team",
+      "Low Profile",
+      "Scout X",
+      "Sharpshooter"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "25980",
+    "id": "arc-troopers-strike-team",
+    "name": "Arc Troopers",
+    "faction": "republic",
+    "cost": 24,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Detachment",
+      "Heavy Weapon Team",
+      "Impervious",
+      "Scale",
+      "Scout X",
+      "Sharpshooter",
+      "Tactical X"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "25981",
+    "id": "scout-troopers-strike-team",
+    "name": "Scout Troopers",
+    "faction": "galactic-empire",
+    "cost": 20,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Detachment",
+      "Heavy Weapon Team",
+      "Low Profile",
+      "Scout X",
+      "Sharpshooter"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "heavy-weapon",
+      "training",
+      "comms",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "25982",
+    "id": "bx-series-droid-commandos-strike-team",
+    "name": "BX-Series Droid Commandos",
+    "faction": "separatist-alliance",
+    "cost": 20,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "AI: Dodge, Move",
+      "Detachment",
+      "Heavy Weapon Team",
+      "Impervious",
+      "Jump",
+      "Scale",
+      "Scout X",
+      "Sharpshooter"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "training",
+      "comms",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "28382",
+    "id": "aqua-droids",
+    "name": "Aqua Droids",
+    "faction": "separatist-alliance",
+    "cost": 65,
+    "health": 3,
+    "figures": 3,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "AI: Attack, Move",
+      "Armor [X]",
+      "Infiltrate"
+    ],
+    "upgradeBar": [
+      "heavy-weapon",
+      "comms"
+    ]
+  },
+  {
+    "apiId": "28861",
+    "id": "arf-troopers",
+    "name": "ARF Troopers",
+    "faction": "republic",
+    "cost": 66,
+    "health": 1,
+    "figures": 4,
+    "defenseDieColor": "red",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Observe",
+      "Scout X",
+      "Low Profile",
+      "Unhindered"
+    ],
+    "upgradeBar": [
+      "squad-leader",
+      "heavy-weapon",
+      "personnel",
+      "training",
+      "comms",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "29671",
+    "id": "ahsoka-tano-padawan-commander",
+    "name": "Ahsoka Tano",
+    "faction": "republic",
+    "cost": 110,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Associate: Unit Name",
+      "Shien Mastery",
+      "Jump",
+      "Deflect",
+      "Immune: Pierce",
+      "Independent: Token X/Action",
+      "Scout X"
+    ],
+    "upgradeBar": [
+      "force",
+      "command",
+      "training"
+    ]
+  },
+  {
+    "apiId": "29681",
+    "id": "hondo-ohnaka-trustworthy-compatriot",
+    "name": "Hondo Ohnaka",
+    "faction": "republic",
+    "cost": 85,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Arsenal",
+      "Independent: Token X/Action",
+      "Nimble",
+      "Reliable",
+      "Uncanny Luck",
+      "My Mood is Based On Profit",
+      "Disengage"
+    ],
+    "upgradeBar": [
+      "comms",
+      "gear",
+      "grenades",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "29928",
+    "id": "jyn-erso-stardust",
+    "name": "Jyn Erso",
+    "faction": "rebel-alliance",
+    "cost": 75,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Agile",
+      "Disengage",
+      "Independent: Token X/Action",
+      "Infiltrate",
+      "Nimble",
+      "Sharpshooter",
+      "Suppressive",
+      "Long Shot",
+      "Pierce X"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "29930",
+    "id": "cassian-andor-capable-intelligence-agent",
+    "name": "Cassian Andor",
+    "faction": "rebel-alliance",
+    "cost": 90,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Danger Sense",
+      "Equip",
+      "Field Commander",
+      "Infiltrate",
+      "Marksman",
+      "Sharpshooter",
+      "Tactical X"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "training",
+      "gear",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "29931",
+    "id": "agent-kallus-hunter-of-spectres",
+    "name": "Agent Kallus",
+    "faction": "galactic-empire",
+    "cost": 70,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Observe",
+      "Bounty",
+      "Charge",
+      "Direct",
+      "Immune: Melee Pierce",
+      "Interrogate",
+      "Critical X",
+      "Lethal X",
+      "Long Shot"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "29932",
+    "id": "k-2so-sardonic-security-droid",
+    "name": "K-2SO",
+    "faction": "rebel-alliance",
+    "cost": 70,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Armor [X]",
+      "Incognito",
+      "Teamwork: Cassian Andor",
+      "➦Calculate Odds"
+    ],
+    "upgradeBar": [
+      "comms",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "31667",
+    "id": "imperial-agent-bringing-order-to-the-galaxy",
+    "name": "Imperial Agent",
+    "faction": "galactic-empire",
+    "cost": 50,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Relentless",
+      "Equip"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "command",
+      "training",
+      "gear",
+      "gear",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "31668",
+    "id": "imperial-officer-ruthless-efficiency",
+    "name": "Imperial Officer",
+    "faction": "galactic-empire",
+    "cost": 55,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Inspire",
+      "Equip"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "command",
+      "training",
+      "training",
+      "gear",
+      "gear",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "31669",
+    "id": "rebel-officer-fighting-for-freedom",
+    "name": "Rebel Officer",
+    "faction": "rebel-alliance",
+    "cost": 55,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Inspire",
+      "Equip"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "command",
+      "training",
+      "training",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "31670",
+    "id": "rebel-agent-defender-of-democracy",
+    "name": "Rebel Agent",
+    "faction": "rebel-alliance",
+    "cost": 50,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Independent: Token X/Action",
+      "Nimble",
+      "Equip"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "command",
+      "training",
+      "gear",
+      "armament",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "31842",
+    "id": "jedi-knight-general-strong-in-the-force",
+    "name": "Jedi Knight General",
+    "faction": "republic",
+    "cost": 105,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Deflect",
+      "Equip",
+      "Immune: Pierce",
+      "Master of the Force"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "force",
+      "force",
+      "force",
+      "force",
+      "command",
+      "training",
+      "training",
+      "training",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "31843",
+    "id": "jedi-knight-keeper-of-the-peace",
+    "name": "Jedi Knight",
+    "faction": "republic",
+    "cost": 85,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Deflect",
+      "Equip",
+      "Immune: Pierce"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "force",
+      "force",
+      "force",
+      "training",
+      "training",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "31844",
+    "id": "super-tactical-command-droid-command-and-control-droid",
+    "name": "Super Tactical Command Droid",
+    "faction": "separatist-alliance",
+    "cost": 70,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Equip",
+      "Override"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "protocol",
+      "protocol",
+      "protocol",
+      "protocol",
+      "protocol",
+      "command",
+      "training",
+      "comms",
+      "gear",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "31845",
+    "id": "super-tactical-command-droid-auxiliary-command-droid",
+    "name": "Super Tactical Command Droid",
+    "faction": "separatist-alliance",
+    "cost": 60,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Aid",
+      "Equip",
+      "Override"
+    ],
+    "upgradeBar": [
+      "doctrine",
+      "protocol",
+      "protocol",
+      "protocol",
+      "protocol",
+      "training",
+      "comms",
+      "gear",
+      "armament",
+      "armament"
+    ]
+  },
+  {
+    "apiId": "32232",
+    "id": "general-grievous-wheel-bike-warlord",
+    "name": "General Grievous",
+    "faction": "separatist-alliance",
+    "cost": 150,
+    "health": 8,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "commander",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Climbing Vehicle",
+      "Command Vehicle X",
+      "Entourage",
+      "Immune: Melee Pierce",
+      "Mobile"
+    ],
+    "upgradeBar": [
+      "command",
+      "training",
+      "gear",
+      "grenades"
+    ]
+  },
+  {
+    "apiId": "32248",
+    "id": "clone-trooper-marksmen",
+    "name": "Clone Trooper Marksmen",
+    "faction": "republic",
+    "cost": 50,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "red",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Marksman",
+      "Prepared Position",
+      "Long Shot"
+    ],
+    "upgradeBar": [
+      "squad-leader",
+      "heavy-weapon",
+      "personnel",
+      "command",
+      "training",
+      "training",
+      "gear",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "32588",
+    "id": "grand-admiral-thrawn-imperial-high-command",
+    "name": "Grand Admiral Thrawn",
+    "faction": "galactic-empire",
+    "cost": 0,
+    "health": 5,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Strategize",
+      "Cunning",
+      "Direct",
+      "Duelist",
+      "Exemplar",
+      "One Step Ahead",
+      "Tactical X"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "32589",
+    "id": "grand-moff-tarkin-imperial-high-command",
+    "name": "Grand Moff Tarkin",
+    "faction": "galactic-empire",
+    "cost": 0,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "keywordNames": [
+      "➦Pulling the Strings",
+      "Entourage"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "32590",
+    "id": "imperial-probe-droid",
+    "name": "Imperial Probe Droid",
+    "faction": "galactic-empire",
+    "cost": 35,
+    "health": 4,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Observe",
+      "Self-Destruct X",
+      "Detachment",
+      "Disengage",
+      "Infiltrate",
+      "Hover: Air [X]"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "32591",
+    "id": "weequay-pirates",
+    "name": "Weequay Pirates",
+    "faction": "republic",
+    "cost": 0,
+    "health": 1,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "corps",
+    "unitType": "trooper",
+    "keywordNames": [
+      "Charge",
+      "Independent: Token X/Action",
+      "Self-Preservation",
+      "Versatile"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "32592",
+    "id": "wlo-5-speeder-tank",
+    "name": "WLO-5 Speeder Tank",
+    "faction": "mercenaries",
+    "cost": 100,
+    "health": 10,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "heavy",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Armor [X]",
+      "Arsenal",
+      "Hover: Ground",
+      "Transport",
+      "Weak Point X: Front/Rear/Sides",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ],
+    "upgradeBar": [
+      "pilot",
+      "comms",
+      "crew"
+    ]
+  },
+  {
+    "apiId": "32593",
+    "id": "luke-skywalker-commander-skywalker",
+    "name": "Luke Skywalker",
+    "faction": "rebel-alliance",
+    "cost": 0,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "➦Spotter",
+      "➦Take Cover",
+      "Immune: Pierce",
+      "Inspire",
+      "Relentless",
+      "Reposition",
+      "Spur",
+      "Unhindered",
+      "Impact X",
+      "Lethal X",
+      "Pierce X",
+      "Ram X",
+      "Long Shot"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "32594",
+    "id": "han-solo-reluctant-hero",
+    "name": "Han Solo",
+    "faction": "rebel-alliance",
+    "cost": 0,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "operative",
+    "unitType": "repulsor-vehicle",
+    "keywordNames": [
+      "Arsenal",
+      "Charge",
+      "Independent: Token X/Action",
+      "Reposition",
+      "Spur",
+      "Uncanny Luck",
+      "Unhindered",
+      "Ram X",
+      "Pierce X",
+      "Versatile"
+    ],
+    "upgradeBar": []
+  },
+  {
+    "apiId": "32595",
+    "id": "tsmeu-6-wheel-bikes",
+    "name": "TSMEU-6 Wheel Bikes",
+    "faction": "separatist-alliance",
+    "cost": 0,
+    "health": 3,
+    "figures": 0,
+    "defenseDieColor": "white",
+    "rank": "special-forces",
+    "unitType": "ground-vehicle",
+    "keywordNames": [
+      "AI: Action",
+      "Armor [X]",
+      "Climbing Vehicle",
+      "Mobile"
+    ],
+    "upgradeBar": []
+  }
+]

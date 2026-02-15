@@ -1,0 +1,4175 @@
+[
+  {
+    "apiId": "64",
+    "id": "personnel-2-1b-medical-droid",
+    "name": "2-1B Medical Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Treat X: Capacity Y",
+      "Noncombatant",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "960",
+    "id": "pilot-327th-star-corps-elite-armor-pilots",
+    "name": "327th Star Corps Elite Armor Pilots",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 2108,
+    "keywordNames": []
+  },
+  {
+    "apiId": "22",
+    "id": "hardpoint-88i-twin-light-blaster",
+    "name": "88i Twin Light Blaster",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 9,
+    "keywordNames": [
+      "Impact X",
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "69",
+    "id": "armament-a-180",
+    "name": "A-180",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 29928,
+    "keywordNames": [
+      "Pierce X",
+      "Reconfigure"
+    ]
+  },
+  {
+    "apiId": "59",
+    "id": "armament-a-180",
+    "name": "A-180",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 29928,
+    "keywordNames": [
+      "Pierce X",
+      "Reconfigure"
+    ]
+  },
+  {
+    "apiId": "142",
+    "id": "armament-a280-rifle-config",
+    "name": "A280, Rifle Config",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 57,
+    "keywordNames": [
+      "Long Shot",
+      "Reconfigure",
+      "Pierce X",
+      "Cumbersome",
+      "High Velocity"
+    ]
+  },
+  {
+    "apiId": "165",
+    "id": "armament-a280-rifle-config",
+    "name": "A280, Rifle Config",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 57,
+    "keywordNames": [
+      "Long Shot",
+      "Reconfigure",
+      "Pierce X",
+      "Cumbersome",
+      "High Velocity"
+    ]
+  },
+  {
+    "apiId": "73",
+    "id": "armament-a-300",
+    "name": "A-300",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 28,
+    "keywordNames": [
+      "Reconfigure"
+    ]
+  },
+  {
+    "apiId": "60",
+    "id": "armament-a-300",
+    "name": "A-300",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 28,
+    "keywordNames": [
+      "Reconfigure"
+    ]
+  },
+  {
+    "apiId": "80",
+    "id": "crew-a-300-rifle-gunner",
+    "name": "A-300 Rifle Gunner",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 32,
+    "keywordNames": []
+  },
+  {
+    "apiId": "119",
+    "id": "pilot-aayla-secura",
+    "name": "Aayla Secura",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 53,
+    "keywordNames": [
+      "Inspire",
+      "Field Commander"
+    ]
+  },
+  {
+    "apiId": "20268",
+    "id": "doctrine-academy-trained",
+    "name": "Academy Trained",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31668,
+    "keywordNames": [
+      "Exemplar",
+      "Inspire",
+      "Strategize"
+    ]
+  },
+  {
+    "apiId": "206",
+    "id": "hardpoint-ag-2g-quad-laser",
+    "name": "AG-2G Quad Laser",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 772,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "20801",
+    "id": "heavy-weapon-agent-kallus",
+    "name": "Agent Kallus",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "18909",
+    "id": "squad-leader-ahsoka-tano-jedi-padawan",
+    "name": "Ahsoka Tano, Jedi Padawan",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Leader",
+      "Sidearm: Melee/Ranged",
+      "Block",
+      "Charge",
+      "Independent: Token X/Action",
+      "Critical X",
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "45",
+    "id": "force-anger",
+    "name": "Anger",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "18476",
+    "id": "personnel-arf-trooper-duo",
+    "name": "ARF Trooper Duo",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 28861,
+    "keywordNames": [
+      "Cache"
+    ]
+  },
+  {
+    "apiId": "147",
+    "id": "ordnance-armor-piercing-shells",
+    "name": "Armor-Piercing Shells",
+    "cost": 0,
+    "upgradeSlot": "ordnance",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Cycle",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "173",
+    "id": "gear-ascension-cables",
+    "name": "Ascension Cables",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Scale"
+    ]
+  },
+  {
+    "apiId": "16581",
+    "id": "personnel-astromech",
+    "name": "Astromech",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 25968,
+    "keywordNames": [
+      "Noncombatant"
+    ]
+  },
+  {
+    "apiId": "63",
+    "id": "personnel-astromech-droid",
+    "name": "Astromech Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Repair X: Capacity Y",
+      "Noncombatant",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "20",
+    "id": "hardpoint-at-rt-flamethrower",
+    "name": "AT-RT Flamethrower",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 1,
+    "keywordNames": [
+      "Blast",
+      "Fixed: Front/Rear",
+      "Spray"
+    ]
+  },
+  {
+    "apiId": "3",
+    "id": "hardpoint-at-rt-laser-cannon",
+    "name": "AT-RT Laser Cannon",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 1,
+    "keywordNames": [
+      "Impact X",
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "4",
+    "id": "hardpoint-at-rt-rotary-blaster",
+    "name": "AT-RT Rotary Blaster",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 1,
+    "keywordNames": [
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "23",
+    "id": "hardpoint-at-st-mortar-launcher",
+    "name": "AT-ST Mortar Launcher",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 9,
+    "keywordNames": [
+      "Fixed: Front/Rear",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "947",
+    "id": "protocol-attack-protocols",
+    "name": "Attack Protocols",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "AI: Action",
+      "Precise"
+    ]
+  },
+  {
+    "apiId": "27",
+    "id": "hardpoint-ax-108-ground-buzzer",
+    "name": "Ax-108 Ground Buzzer",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 10,
+    "keywordNames": [
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "9398",
+    "id": "heavy-weapon-axe-ewok",
+    "name": "Axe Ewok",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 16377,
+    "keywordNames": [
+      "Pierce X",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "94",
+    "id": "personnel-b1-battle-droid",
+    "name": "B1 Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16573",
+    "id": "personnel-b1-battle-droid-squad",
+    "name": "B1 Battle Droid Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "125",
+    "id": "personnel-b1-security-droid",
+    "name": "B1 Security Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": []
+  },
+  {
+    "apiId": "141",
+    "id": "heavy-weapon-b2-acm-battle-droid",
+    "name": "B2-ACM Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 52,
+    "keywordNames": []
+  },
+  {
+    "apiId": "148",
+    "id": "heavy-weapon-b2-ha-battle-droid",
+    "name": "B2-HA Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 52,
+    "keywordNames": [
+      "Blast",
+      "Cycle",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "118",
+    "id": "personnel-b2-super-battle-droid",
+    "name": "B2 Super Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 52,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16563",
+    "id": "personnel-b2-super-battle-droid-squad",
+    "name": "B2 Super Battle Droid Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 52,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "212",
+    "id": "crew-backworld-medic",
+    "name": "Backworld Medic",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 772,
+    "keywordNames": []
+  },
+  {
+    "apiId": "112",
+    "id": "crew-barc-ion-gunner",
+    "name": "BARC Ion Gunner",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 44,
+    "keywordNames": [
+      "Fixed: Front/Rear",
+      "Impact X",
+      "Ion X"
+    ]
+  },
+  {
+    "apiId": "113",
+    "id": "crew-barc-rps-6-gunner",
+    "name": "BARC RPS-6 Gunner",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 44,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "100",
+    "id": "crew-barc-twin-laser-gunner",
+    "name": "BARC Twin Laser Gunner",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 44,
+    "keywordNames": [
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "205",
+    "id": "pilot-baron-rudor",
+    "name": "Baron Rudor",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Marksman"
+    ]
+  },
+  {
+    "apiId": "40",
+    "id": "generator-barrage-generator",
+    "name": "Barrage Generator",
+    "cost": 0,
+    "upgradeSlot": "generator",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "413",
+    "id": "heavy-weapon-battle-shield-wookiee",
+    "name": "Battle Shield Wookiee",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 24,
+    "keywordNames": [
+      "Armor [X]"
+    ]
+  },
+  {
+    "apiId": "145",
+    "id": "hardpoint-beam-turret",
+    "name": "Beam Turret",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 53,
+    "keywordNames": [
+      "Beam X"
+    ]
+  },
+  {
+    "apiId": "175",
+    "id": "heavy-weapon-beskad-duelist",
+    "name": "Beskad Duelist",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 71,
+    "keywordNames": [
+      "Duelist"
+    ]
+  },
+  {
+    "apiId": "4413",
+    "id": "armament-beskar-spear",
+    "name": "Beskar Spear",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 6179,
+    "keywordNames": [
+      "Duelist"
+    ]
+  },
+  {
+    "apiId": "74",
+    "id": "heavy-weapon-bistan",
+    "name": "Bistan",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 28,
+    "keywordNames": [
+      "Critical X",
+      "Impact X",
+      "Ion X"
+    ]
+  },
+  {
+    "apiId": "21341",
+    "id": "crew-black-sun-crew",
+    "name": "Black Sun Crew",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 32592,
+    "keywordNames": []
+  },
+  {
+    "apiId": "2566",
+    "id": "personnel-black-sun-enforcer",
+    "name": "Black Sun Enforcer",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 4417,
+    "keywordNames": [
+      "Cache"
+    ]
+  },
+  {
+    "apiId": "2567",
+    "id": "personnel-black-sun-vigo",
+    "name": "Black Sun Vigo",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 4417,
+    "keywordNames": [
+      "Independent: Token X/Action",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "5569",
+    "id": "gear-boba-s-flame-projector",
+    "name": "Boba's Flame Projector",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 6176,
+    "keywordNames": [
+      "Blast",
+      "Spray",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "16554",
+    "id": "squad-leader-boil",
+    "name": "Boil",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Leader",
+      "Guardian",
+      "Scout X"
+    ]
+  },
+  {
+    "apiId": "4441",
+    "id": "protocol-bounty-programming",
+    "name": "\"Bounty\" Programming",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 6178,
+    "keywordNames": [
+      "Bounty",
+      "AI: Action",
+      "Pierce X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "51",
+    "id": "heavy-weapon-bowcaster-wookiee",
+    "name": "Bowcaster Wookiee",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 24,
+    "keywordNames": [
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "152",
+    "id": "ordnance-bunker-buster-shells",
+    "name": "Bunker Buster Shells",
+    "cost": 0,
+    "upgradeSlot": "ordnance",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Blast",
+      "Cycle",
+      "Fixed: Front/Rear",
+      "Scatter"
+    ]
+  },
+  {
+    "apiId": "626",
+    "id": "force-burst-of-speed",
+    "name": "Burst of Speed",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "160",
+    "id": "armament-bx-deflector-shields",
+    "name": "BX Deflector Shields",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 63,
+    "keywordNames": [
+      "Shielded",
+      "Recharge"
+    ]
+  },
+  {
+    "apiId": "159",
+    "id": "heavy-weapon-bx-series-droid-sniper",
+    "name": "BX-Series Droid Sniper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 63,
+    "keywordNames": [
+      "Immune: Deflect",
+      "Lethal X"
+    ]
+  },
+  {
+    "apiId": "161",
+    "id": "armament-bx-vibroswords",
+    "name": "BX Vibroswords",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 63,
+    "keywordNames": [
+      "Charge"
+    ]
+  },
+  {
+    "apiId": "131",
+    "id": "programming-c-3po",
+    "name": "C-3PO",
+    "cost": 0,
+    "upgradeSlot": "programming",
+    "restrictedToUnitApiId": 55,
+    "keywordNames": [
+      "Distract",
+      "➦Calculate Odds"
+    ]
+  },
+  {
+    "apiId": "9399",
+    "id": "training-call-to-arms",
+    "name": "Call to Arms",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Charge"
+    ]
+  },
+  {
+    "apiId": "20800",
+    "id": "heavy-weapon-cassian-andor",
+    "name": "Cassian Andor",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19833",
+    "id": "force-clairvoyance",
+    "name": "Clairvoyance",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16556",
+    "id": "squad-leader-clone-captain",
+    "name": "Clone Captain",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Leader",
+      "Outmaneuver",
+      "Defend"
+    ]
+  },
+  {
+    "apiId": "20802",
+    "id": "squad-leader-clone-captain-rex",
+    "name": "Clone Captain Rex",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16555",
+    "id": "squad-leader-clone-commander",
+    "name": "Clone Commander",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Leader",
+      "Inspire",
+      "Reliable"
+    ]
+  },
+  {
+    "apiId": "200",
+    "id": "pilot-clone-commander-fox",
+    "name": "Clone Commander Fox",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 771,
+    "keywordNames": [
+      "Field Commander"
+    ]
+  },
+  {
+    "apiId": "194",
+    "id": "personnel-clone-comms-technician",
+    "name": "Clone Comms Technician",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "195",
+    "id": "personnel-clone-engineer",
+    "name": "Clone Engineer",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Repair X: Capacity Y",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "20770",
+    "id": "personnel-clone-marksman",
+    "name": "Clone Marksman",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 32248,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19065",
+    "id": "squad-leader-clone-medic",
+    "name": "Clone Medic",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Treat X: Capacity Y",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "202",
+    "id": "pilot-clone-shock-trooper-pilot",
+    "name": "Clone Shock Trooper Pilot",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16567",
+    "id": "personnel-clone-specialist",
+    "name": "Clone Specialist",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 25964,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16559",
+    "id": "personnel-clone-trooper-infantry",
+    "name": "Clone Trooper Infantry",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 25964,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16571",
+    "id": "personnel-clone-trooper-infantry-squad",
+    "name": "Clone Trooper Infantry Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 25964,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "20718",
+    "id": "personnel-clone-trooper-marksmen-squad",
+    "name": "Clone Trooper Marksmen Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 32248,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "98",
+    "id": "heavy-weapon-cm-0-93-trooper",
+    "name": "CM-0/93 Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 36,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "20282",
+    "id": "gear-combat-armor",
+    "name": "Combat Armor",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 31669,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20272",
+    "id": "gear-combat-armor",
+    "name": "Combat Armor",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20274",
+    "id": "gear-command-and-control-uplink",
+    "name": "Command and Control Uplink",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": []
+  },
+  {
+    "apiId": "169",
+    "id": "comms-command-control-array",
+    "name": "Command Control Array",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Coordinate: Unit Name/Unit Type"
+    ]
+  },
+  {
+    "apiId": "1",
+    "id": "comms-comms-jammer",
+    "name": "Comms Jammer",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "6",
+    "id": "grenades-concussion-grenades",
+    "name": "Concussion Grenades",
+    "cost": 0,
+    "upgradeSlot": "grenades",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Blast"
+    ]
+  },
+  {
+    "apiId": "115",
+    "id": "armament-cr-24-flame-rifle",
+    "name": "CR-24 Flame Rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 40,
+    "keywordNames": [
+      "Blast",
+      "Spray"
+    ]
+  },
+  {
+    "apiId": "15989",
+    "id": "heavy-weapon-crosshair",
+    "name": "Crosshair",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 23655,
+    "keywordNames": [
+      "Critical X",
+      "High Velocity",
+      "Pierce X",
+      "Precise"
+    ]
+  },
+  {
+    "apiId": "15009",
+    "id": "heavy-weapon-crosshair",
+    "name": "Crosshair",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 23655,
+    "keywordNames": [
+      "Critical X",
+      "High Velocity",
+      "Pierce X",
+      "Precise"
+    ]
+  },
+  {
+    "apiId": "158",
+    "id": "heavy-weapon-dc-15x-arc-trooper",
+    "name": "DC-15x ARC Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 61,
+    "keywordNames": [
+      "Immune: Deflect",
+      "Lethal X"
+    ]
+  },
+  {
+    "apiId": "15114",
+    "id": "armament-dc-17m-icws-config",
+    "name": "DC-17m ICWS Config",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 23656,
+    "keywordNames": [
+      "Lethal X",
+      "High Velocity",
+      "Reconfigure",
+      "Impact X",
+      "Scatter"
+    ]
+  },
+  {
+    "apiId": "20270",
+    "id": "doctrine-defend-in-depth",
+    "name": "Defend in Depth",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": [
+      "Aid",
+      "Prepared Position",
+      "➦Spotter"
+    ]
+  },
+  {
+    "apiId": "961",
+    "id": "protocol-defense-protocols",
+    "name": "Defense Protocols",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "AI: Action"
+    ]
+  },
+  {
+    "apiId": "170",
+    "id": "heavy-weapon-del-meeko",
+    "name": "Del Meeko",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 78,
+    "keywordNames": [
+      "Repair X: Capacity Y",
+      "High Velocity",
+      "Lethal X",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "47",
+    "id": "heavy-weapon-dh-447-sniper",
+    "name": "DH-447 Sniper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 13,
+    "keywordNames": [
+      "High Velocity",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "3650",
+    "id": "armament-din-s-amban-rifle",
+    "name": "Din's Amban Rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 6179,
+    "keywordNames": [
+      "Immobilize X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "3667",
+    "id": "gear-din-s-flame-projector",
+    "name": "Din's Flame Projector",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 6179,
+    "keywordNames": [
+      "Blast",
+      "Spray",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "19062",
+    "id": "gear-din-s-jetpack",
+    "name": "Din's Jetpack",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 6179,
+    "keywordNames": [
+      "Jump"
+    ]
+  },
+  {
+    "apiId": "174",
+    "id": "heavy-weapon-dioxis-mine-saboteur",
+    "name": "Dioxis Mine Saboteur",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 63,
+    "keywordNames": [
+      "Detonate X: (Charge Type)",
+      "Blast",
+      "Poison X"
+    ]
+  },
+  {
+    "apiId": "84",
+    "id": "heavy-weapon-dlt-19d-trooper",
+    "name": "DLT-19D Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 30,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "7",
+    "id": "heavy-weapon-dlt-19-stormtrooper",
+    "name": "DLT-19 Stormtrooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "52",
+    "id": "heavy-weapon-dlt-19x-sniper",
+    "name": "DLT-19x Sniper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 17,
+    "keywordNames": [
+      "High Velocity",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "15010",
+    "id": "heavy-weapon-dlt-20a-range-trooper",
+    "name": "DLT-20A Range Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 23657,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "123",
+    "id": "heavy-weapon-dlt-20a-trooper",
+    "name": "DLT-20A Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "19835",
+    "id": "crew-door-gunners",
+    "name": "Door Gunners",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20434",
+    "id": "armament-double-bladed-lightsaber",
+    "name": "Double-Bladed Lightsaber",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Charge",
+      "Tactical X",
+      "Ram X"
+    ]
+  },
+  {
+    "apiId": "16572",
+    "id": "heavy-weapon-dp-23-clone-trooper",
+    "name": "DP-23 Clone Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25964,
+    "keywordNames": [
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "77",
+    "id": "heavy-weapon-dt-f16",
+    "name": "DT-F16",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 30,
+    "keywordNames": [
+      "Compel",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "33",
+    "id": "training-duck-and-cover",
+    "name": "Duck and Cover",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20319",
+    "id": "training-dug-in",
+    "name": "Dug In",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 31669,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19897",
+    "id": "training-dug-in",
+    "name": "Dug In",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 36,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20697",
+    "id": "training-dug-in",
+    "name": "Dug In",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19830",
+    "id": "training-dug-in",
+    "name": "Dug In",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "24",
+    "id": "hardpoint-dw-3-concussion-grenade-launcher",
+    "name": "DW-3 Concussion Grenade Launcher",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 9,
+    "keywordNames": [
+      "Fixed: Front/Rear",
+      "Blast"
+    ]
+  },
+  {
+    "apiId": "86",
+    "id": "armament-e-11d",
+    "name": "E-11D",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 30,
+    "keywordNames": [
+      "Reconfigure",
+      "Suppressive",
+      "Blast"
+    ]
+  },
+  {
+    "apiId": "85",
+    "id": "armament-e-11d",
+    "name": "E-11D",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 30,
+    "keywordNames": [
+      "Reconfigure",
+      "Suppressive",
+      "Blast"
+    ]
+  },
+  {
+    "apiId": "105",
+    "id": "heavy-weapon-e-5c-b1-battle-droid",
+    "name": "E-5C B1 Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": []
+  },
+  {
+    "apiId": "126",
+    "id": "heavy-weapon-e-5s-b1-battle-droid",
+    "name": "E-5s B1 Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "106",
+    "id": "heavy-weapon-e-60r-b1-battle-droid",
+    "name": "E-60R B1 Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": [
+      "Cumbersome",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "16569",
+    "id": "heavy-weapon-echo-arc-marksman",
+    "name": "Echo, ARC Marksman",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Leader",
+      "Reliable",
+      "Critical X",
+      "Lethal X",
+      "Immune: Deflect"
+    ]
+  },
+  {
+    "apiId": "19063",
+    "id": "heavy-weapon-echo-clone-force-99",
+    "name": "Echo, Clone Force 99",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25086,
+    "keywordNames": [
+      "Reliable"
+    ]
+  },
+  {
+    "apiId": "101",
+    "id": "gear-electrobinoculars",
+    "name": "Electrobinoculars",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "➦Spotter"
+    ]
+  },
+  {
+    "apiId": "155",
+    "id": "armament-electro-gauntlets",
+    "name": "Electro Gauntlets",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 59,
+    "keywordNames": [
+      "Immobilize X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "97",
+    "id": "gear-electro-grappling-line",
+    "name": "Electro Grappling Line",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 33,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20461",
+    "id": "armament-electrostaff",
+    "name": "Electrostaff",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": [
+      "Charge",
+      "Immune: Melee Pierce",
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "46",
+    "id": "heavy-weapon-electrostaff-guard",
+    "name": "Electrostaff Guard",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 21,
+    "keywordNames": [
+      "Immune: Pierce",
+      "Sidearm: Melee/Ranged"
+    ]
+  },
+  {
+    "apiId": "885",
+    "id": "heavy-weapon-electro-whip-magnaguard",
+    "name": "Electro-whip MagnaGuard",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 1809,
+    "keywordNames": [
+      "Immobilize X",
+      "Versatile"
+    ]
+  },
+  {
+    "apiId": "2426",
+    "id": "heavy-weapon-electro-whip-soldier",
+    "name": "Electro-Whip Soldier",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4215,
+    "keywordNames": [
+      "Immobilize X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "43",
+    "id": "gear-emergency-stims",
+    "name": "Emergency Stims",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "2713",
+    "id": "comms-emergency-transponder",
+    "name": "Emergency Transponder",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "162",
+    "id": "grenades-emp-droid-poppers",
+    "name": "EMP \"Droid Poppers\"",
+    "cost": 0,
+    "upgradeSlot": "grenades",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Ion X"
+    ]
+  },
+  {
+    "apiId": "70",
+    "id": "training-endurance",
+    "name": "Endurance",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "962",
+    "id": "protocol-engagement-protocols",
+    "name": "Engagement Protocols",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "AI: Action"
+    ]
+  },
+  {
+    "apiId": "20457",
+    "id": "protocol-enhanced-combat-subroutines",
+    "name": "Enhanced Combat Subroutines",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": [
+      "Sharpshooter",
+      "Lethal X"
+    ]
+  },
+  {
+    "apiId": "37",
+    "id": "gear-environmental-gear",
+    "name": "Environmental Gear",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Unhindered"
+    ]
+  },
+  {
+    "apiId": "189",
+    "id": "personnel-ev-series-medical-droid",
+    "name": "EV-series Medical Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Treat X: Capacity Y",
+      "Noncombatant",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "16564",
+    "id": "personnel-ewok-skirmisher-squad",
+    "name": "Ewok Skirmisher Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 15784,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "16575",
+    "id": "personnel-ewok-slinger-squad",
+    "name": "Ewok Slinger Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 16377,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "9402",
+    "id": "personnel-ewok-trapper",
+    "name": "Ewok Trapper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 16377,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20458",
+    "id": "gear-expanded-databanks",
+    "name": "Expanded Databanks",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19832",
+    "id": "gear-extra-supplies",
+    "name": "Extra Supplies",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "111",
+    "id": "force-fear",
+    "name": "Fear",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Demoralize"
+    ]
+  },
+  {
+    "apiId": "87",
+    "id": "pilot-first-sergeant-arbmab",
+    "name": "First Sergeant Arbmab",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Tactical X"
+    ]
+  },
+  {
+    "apiId": "16552",
+    "id": "squad-leader-fives",
+    "name": "Fives",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Leader",
+      "Charge",
+      "Coordinate: Unit Name/Unit Type"
+    ]
+  },
+  {
+    "apiId": "36",
+    "id": "heavy-weapon-flametrooper",
+    "name": "Flametrooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 7,
+    "keywordNames": [
+      "Blast",
+      "Spray"
+    ]
+  },
+  {
+    "apiId": "35",
+    "id": "personnel-fleet-trooper",
+    "name": "Fleet Trooper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 12,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16558",
+    "id": "personnel-fleet-trooper-squad",
+    "name": "Fleet Trooper Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 12,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "184",
+    "id": "force-force-barrier",
+    "name": "Force Barrier",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "8",
+    "id": "force-force-choke",
+    "name": "Force Choke",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "102",
+    "id": "force-force-guidance",
+    "name": "Force Guidance",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "11865",
+    "id": "heavy-weapon-force-pike-warrior",
+    "name": "Force Pike Warrior",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 19103,
+    "keywordNames": [
+      "Overrun X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "9",
+    "id": "force-force-push",
+    "name": "Force Push",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "10",
+    "id": "force-force-reflexes",
+    "name": "Force Reflexes",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "9317",
+    "id": "training-forest-dwellers",
+    "name": "Forest Dwellers",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Scout X"
+    ]
+  },
+  {
+    "apiId": "57",
+    "id": "grenades-fragmentation-grenades",
+    "name": "Fragmentation Grenades",
+    "cost": 0,
+    "upgradeSlot": "grenades",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "2799",
+    "id": "pilot-frenzied-gunner",
+    "name": "Frenzied Gunner",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20278",
+    "id": "doctrine-frontline-commander",
+    "name": "Frontline Commander",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31669,
+    "keywordNames": [
+      "Dauntless",
+      "Aid",
+      "Indomitable",
+      "Spur",
+      "Tactical X"
+    ]
+  },
+  {
+    "apiId": "66",
+    "id": "personnel-fx-9-medical-droid",
+    "name": "FX-9 Medical Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Treat X: Capacity Y",
+      "Noncombatant",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "21339",
+    "id": "pilot-gang-boss",
+    "name": "Gang Boss",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20428",
+    "id": "doctrine-general-of-the-republic",
+    "name": "General of the Republic",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "➦Bolster",
+      "Direct",
+      "Inspire"
+    ]
+  },
+  {
+    "apiId": "25",
+    "id": "pilot-general-weiss",
+    "name": "General Weiss",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Arsenal",
+      "Field Commander"
+    ]
+  },
+  {
+    "apiId": "11864",
+    "id": "personnel-geonosian-warrior",
+    "name": "Geonosian Warrior",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 19103,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16561",
+    "id": "personnel-geonosian-warrior-squad",
+    "name": "Geonosian Warrior Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 19103,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "171",
+    "id": "heavy-weapon-gideon-hask",
+    "name": "Gideon Hask",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 78,
+    "keywordNames": [
+      "Coordinate: Unit Name/Unit Type"
+    ]
+  },
+  {
+    "apiId": "932",
+    "id": "crew-gnasp-bombardier",
+    "name": "Gnasp Bombardier",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 1984,
+    "keywordNames": [
+      "Immune: Deflect",
+      "Overrun X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "919",
+    "id": "crew-gnasp-gunner",
+    "name": "Gnasp Gunner",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 1984,
+    "keywordNames": [
+      "Fixed: Front/Rear",
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "199",
+    "id": "pilot-governor-pryce",
+    "name": "Governor Pryce",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Field Commander"
+    ]
+  },
+  {
+    "apiId": "18",
+    "id": "gear-grappling-hooks",
+    "name": "Grappling Hooks",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Expert Climber"
+    ]
+  },
+  {
+    "apiId": "3649",
+    "id": "programming-grogu",
+    "name": "Grogu",
+    "cost": 0,
+    "upgradeSlot": "programming",
+    "restrictedToUnitApiId": 6178,
+    "keywordNames": [
+      "Hunted",
+      "Latent Power",
+      "Small"
+    ]
+  },
+  {
+    "apiId": "918",
+    "id": "comms-hacked-comms-unit",
+    "name": "Hacked Comms Unit",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "18179",
+    "id": "heavy-weapon-heavy-aqua-droid",
+    "name": "Heavy Aqua Droid",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 28382,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "20460",
+    "id": "armament-heavy-arm-cannon",
+    "name": "Heavy Arm Cannon",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": [
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "20275",
+    "id": "armament-heavy-blaster-pistol",
+    "name": "Heavy Blaster Pistol",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": [
+      "Sharpshooter",
+      "Target"
+    ]
+  },
+  {
+    "apiId": "20284",
+    "id": "armament-heavy-blaster-pistol",
+    "name": "Heavy Blaster Pistol",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31669,
+    "keywordNames": [
+      "Arsenal"
+    ]
+  },
+  {
+    "apiId": "16580",
+    "id": "hardpoint-heavy-laser-cannon",
+    "name": "Heavy Laser Cannon",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 25966,
+    "keywordNames": [
+      "Impact X",
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "197",
+    "id": "hardpoint-heavy-laser-retrofit",
+    "name": "Heavy Laser Retrofit",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 772,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "9625",
+    "id": "training-herbal-medicine",
+    "name": "Herbal Medicine",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 16687,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19",
+    "id": "heavy-weapon-hh-12-stormtrooper",
+    "name": "HH-12 Stormtrooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": [
+      "Cumbersome",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "153",
+    "id": "ordnance-high-energy-shells",
+    "name": "High-Energy Shells",
+    "cost": 0,
+    "upgradeSlot": "ordnance",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Critical X",
+      "Cycle",
+      "High Velocity",
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "107",
+    "id": "force-hope",
+    "name": "Hope",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Inspire"
+    ]
+  },
+  {
+    "apiId": "207",
+    "id": "pilot-hotshot-pilot",
+    "name": "Hotshot Pilot",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Sharpshooter"
+    ]
+  },
+  {
+    "apiId": "203",
+    "id": "pilot-hound-grizzer",
+    "name": "Hound & Grizzer",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 771,
+    "keywordNames": [
+      "Observe"
+    ]
+  },
+  {
+    "apiId": "41",
+    "id": "comms-hq-uplink",
+    "name": "HQ Uplink",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "143",
+    "id": "armament-iden-s-dlt-20a-rifle",
+    "name": "Iden's DLT-20A Rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 58,
+    "keywordNames": [
+      "High Velocity",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "167",
+    "id": "programming-iden-s-id10-seeker-droid",
+    "name": "Iden's ID10 Seeker Droid",
+    "cost": 0,
+    "upgradeSlot": "programming",
+    "restrictedToUnitApiId": 58,
+    "keywordNames": [
+      "Recharge",
+      "Shielded",
+      "Small"
+    ]
+  },
+  {
+    "apiId": "168",
+    "id": "armament-iden-s-tl-50-repeater",
+    "name": "Iden's TL-50 Repeater",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 58,
+    "keywordNames": [
+      "Critical X",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "883",
+    "id": "heavy-weapon-ig-100-magnaguard",
+    "name": "IG-100 MagnaGuard",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 1809,
+    "keywordNames": []
+  },
+  {
+    "apiId": "30",
+    "id": "grenades-impact-grenades",
+    "name": "Impact Grenades",
+    "cost": 0,
+    "upgradeSlot": "grenades",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "67",
+    "id": "personnel-imperial-comms-technician",
+    "name": "Imperial Comms Technician",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "6321",
+    "id": "personnel-imperial-dark-trooper",
+    "name": "Imperial Dark Trooper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 6180,
+    "keywordNames": []
+  },
+  {
+    "apiId": "83",
+    "id": "pilot-imperial-hammers-elite-armor-pilot",
+    "name": "Imperial Hammers Elite Armor Pilot",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19896",
+    "id": "training-imperial-march",
+    "name": "Imperial March",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 30,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19828",
+    "id": "training-imperial-march",
+    "name": "Imperial March",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "50",
+    "id": "personnel-imperial-officer",
+    "name": "Imperial Officer",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Inspire",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "204",
+    "id": "pilot-imperial-tie-pilot",
+    "name": "Imperial Tie Pilot",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "44",
+    "id": "command-improvised-orders",
+    "name": "Improvised Orders",
+    "cost": 0,
+    "upgradeSlot": "command",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "11867",
+    "id": "training-inquisitorius-training",
+    "name": "Inquisitorius Training",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 19108,
+    "keywordNames": [
+      "Demoralize"
+    ]
+  },
+  {
+    "apiId": "9400",
+    "id": "training-insatiable-curiosity",
+    "name": "Insatiable Curiosity",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 16377,
+    "keywordNames": []
+  },
+  {
+    "apiId": "188",
+    "id": "command-inspiring-presence",
+    "name": "Inspiring Presence",
+    "cost": 0,
+    "upgradeSlot": "command",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "628",
+    "id": "training-into-the-fray",
+    "name": "Into the Fray",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "186",
+    "id": "armament-j-19-bo-rifle",
+    "name": "J-19 Bo-rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 81,
+    "keywordNames": [
+      "Lethal X",
+      "Reconfigure",
+      "Charge",
+      "Immune: Pierce"
+    ]
+  },
+  {
+    "apiId": "187",
+    "id": "armament-j-19-bo-rifle",
+    "name": "J-19 Bo-rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 81,
+    "keywordNames": [
+      "Lethal X",
+      "Reconfigure",
+      "Charge",
+      "Immune: Pierce"
+    ]
+  },
+  {
+    "apiId": "20429",
+    "id": "doctrine-jedi-consular",
+    "name": "Jedi Consular",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Steady"
+    ]
+  },
+  {
+    "apiId": "20431",
+    "id": "doctrine-jedi-guardian",
+    "name": "Jedi Guardian",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Charge",
+      "Lethal X"
+    ]
+  },
+  {
+    "apiId": "18478",
+    "id": "squad-leader-jedi-guardian",
+    "name": "Jedi Guardian",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Charge",
+      "Leader",
+      "Sidearm: Melee/Ranged"
+    ]
+  },
+  {
+    "apiId": "32",
+    "id": "force-jedi-mind-trick",
+    "name": "Jedi Mind Trick",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20430",
+    "id": "doctrine-jedi-negotiator",
+    "name": "Jedi Negotiator",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Blast",
+      "Spray",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "20438",
+    "id": "training-jedi-training-force-adept",
+    "name": "Jedi Training, Force Adept",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Jump"
+    ]
+  },
+  {
+    "apiId": "20435",
+    "id": "training-jedi-training-master-duelist",
+    "name": "Jedi Training, Master Duelist",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Outmaneuver",
+      "Block",
+      "Critical X",
+      "Jump"
+    ]
+  },
+  {
+    "apiId": "20436",
+    "id": "training-jedi-training-peacekeeping-mission",
+    "name": "Jedi Training, Peacekeeping Mission",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Prepared Position",
+      "Reliable",
+      "Sentinel"
+    ]
+  },
+  {
+    "apiId": "20437",
+    "id": "training-jedi-training-tactical-acumen",
+    "name": "Jedi Training, Tactical Acumen",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Guidance"
+    ]
+  },
+  {
+    "apiId": "176",
+    "id": "armament-jetpack-rockets",
+    "name": "Jetpack Rockets",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 71,
+    "keywordNames": [
+      "Blast",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "166",
+    "id": "armament-jyn-s-se-14-blaster",
+    "name": "Jyn's SE-14 Blaster",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 29928,
+    "keywordNames": [
+      "Precise",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "15012",
+    "id": "gear-katarn-pattern-armor",
+    "name": "Katarn Pattern Armor",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 23656,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20841",
+    "id": "heavy-weapon-kraken",
+    "name": "Kraken",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 19077,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20803",
+    "id": "heavy-weapon-kraken",
+    "name": "Kraken",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16579",
+    "id": "heavy-weapon-kx-series-security-droids",
+    "name": "KX-Series Security Droids",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25967,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "2697",
+    "id": "command-lead-by-example",
+    "name": "Lead by Example",
+    "cost": 0,
+    "upgradeSlot": "command",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Inspire"
+    ]
+  },
+  {
+    "apiId": "20432",
+    "id": "armament-lightsaber",
+    "name": "Lightsaber",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "Block",
+      "Critical X",
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "20454",
+    "id": "protocol-limiter-override",
+    "name": "Limiter Override",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": []
+  },
+  {
+    "apiId": "99",
+    "id": "comms-linked-targeting-array",
+    "name": "Linked Targeting Array",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Target"
+    ]
+  },
+  {
+    "apiId": "149",
+    "id": "pilot-lok-durd",
+    "name": "Lok Durd",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 54,
+    "keywordNames": [
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "618",
+    "id": "heavy-weapon-long-gun-wookiee",
+    "name": "Long Gun Wookiee",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 24,
+    "keywordNames": [
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "156",
+    "id": "armament-looted-e-5-blaster",
+    "name": "Looted E-5 Blaster",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 60,
+    "keywordNames": [
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "92",
+    "id": "hardpoint-m-45-ion-blaster",
+    "name": "M-45 Ion Blaster",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 32,
+    "keywordNames": [
+      "Critical X",
+      "Fixed: Front/Rear",
+      "Impact X",
+      "Ion X"
+    ]
+  },
+  {
+    "apiId": "2568",
+    "id": "heavy-weapon-mag-det-enforcer",
+    "name": "Mag-Det Enforcer",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4417,
+    "keywordNames": [
+      "Blast",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "19064",
+    "id": "gear-mandalorian-combat-shields",
+    "name": "Mandalorian Combat Shields",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 72,
+    "keywordNames": [
+      "Shielded"
+    ]
+  },
+  {
+    "apiId": "2716",
+    "id": "heavy-weapon-mandalorian-super-commando",
+    "name": "Mandalorian Super Commando",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4767,
+    "keywordNames": [
+      "Cache"
+    ]
+  },
+  {
+    "apiId": "91",
+    "id": "hardpoint-mark-ii-medium-blaster",
+    "name": "Mark II Medium Blaster",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 32,
+    "keywordNames": [
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "6320",
+    "id": "heavy-weapon-mertalizer-dark-trooper",
+    "name": "Mertalizer Dark Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 6180,
+    "keywordNames": [
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "19826",
+    "id": "training-mission-objective",
+    "name": "Mission Objective",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20459",
+    "id": "gear-mobility-upgrade",
+    "name": "Mobility Upgrade",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": [
+      "Scale",
+      "Steady"
+    ]
+  },
+  {
+    "apiId": "28",
+    "id": "hardpoint-mo-dk-power-harpoon",
+    "name": "Mo/Dk Power Harpoon",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 10,
+    "keywordNames": [
+      "Impact X",
+      "Fixed: Front/Rear",
+      "Tow Cable"
+    ]
+  },
+  {
+    "apiId": "16568",
+    "id": "heavy-weapon-mortar-clone-trooper",
+    "name": "Mortar Clone Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25964,
+    "keywordNames": [
+      "Critical X",
+      "Suppressive",
+      "Cumbersome"
+    ]
+  },
+  {
+    "apiId": "39",
+    "id": "heavy-weapon-mpl-57-barrage-trooper",
+    "name": "MPL-57 Barrage Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 12,
+    "keywordNames": [
+      "Blast",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "11",
+    "id": "heavy-weapon-mpl-57-ion-trooper",
+    "name": "MPL-57 Ion Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": [
+      "Critical X",
+      "Impact X",
+      "Ion X"
+    ]
+  },
+  {
+    "apiId": "3648",
+    "id": "protocol-nanny-programming",
+    "name": "\"Nanny\" Programming",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 6178,
+    "keywordNames": [
+      "AI: Dodge, Move"
+    ]
+  },
+  {
+    "apiId": "948",
+    "id": "hardpoint-nose-mounted-flamethrower",
+    "name": "Nose-Mounted Flamethrower",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 2019,
+    "keywordNames": [
+      "Blast",
+      "Fixed: Front/Rear",
+      "Spray"
+    ]
+  },
+  {
+    "apiId": "949",
+    "id": "hardpoint-nose-mounted-ion-blaster",
+    "name": "Nose-Mounted Ion Blaster",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 2019,
+    "keywordNames": [
+      "Cycle",
+      "Fixed: Front/Rear",
+      "Ion X",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "950",
+    "id": "hardpoint-nose-mounted-laser-cannon",
+    "name": "Nose-Mounted Laser Cannon",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 2019,
+    "keywordNames": [
+      "Critical X",
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "183",
+    "id": "training-offensive-defensive-stance",
+    "name": "Offensive/Defensive Stance",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "179",
+    "id": "training-offensive-defensive-stance",
+    "name": "Offensive/Defensive Stance",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "129",
+    "id": "training-offensive-push",
+    "name": "Offensive Push",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Tactical X"
+    ]
+  },
+  {
+    "apiId": "15628",
+    "id": "programming-omega",
+    "name": "Omega",
+    "cost": 0,
+    "upgradeSlot": "programming",
+    "restrictedToUnitApiId": 25086,
+    "keywordNames": [
+      "I'm Part of the Squad Too"
+    ]
+  },
+  {
+    "apiId": "201",
+    "id": "comms-onboard-comms-channel",
+    "name": "Onboard Comms Channel",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19061",
+    "id": "training-on-the-hunt",
+    "name": "On the Hunt",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "9626",
+    "id": "training-onward-to-victory",
+    "name": "Onward to Victory",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 16687,
+    "keywordNames": []
+  },
+  {
+    "apiId": "136",
+    "id": "personnel-oom-series-battle-droid",
+    "name": "OOM-Series Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": [
+      "Coordinate: Unit Name/Unit Type",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "154",
+    "id": "pilot-oom-series-droid-pilot",
+    "name": "OOM-Series Droid Pilot",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 54,
+    "keywordNames": [
+      "Coordinate: Droid Trooper"
+    ]
+  },
+  {
+    "apiId": "20455",
+    "id": "protocol-optimized-task-flow",
+    "name": "Optimized Task Flow",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": [
+      "Direct"
+    ]
+  },
+  {
+    "apiId": "82",
+    "id": "pilot-outer-rim-speeder-jockey",
+    "name": "Outer Rim Speeder Jockey",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Cover"
+    ]
+  },
+  {
+    "apiId": "42",
+    "id": "generator-overcharged-generator",
+    "name": "Overcharged Generator",
+    "cost": 0,
+    "upgradeSlot": "generator",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "20452",
+    "id": "protocol-overclock",
+    "name": "Overclock",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": []
+  },
+  {
+    "apiId": "72",
+    "id": "training-overwatch",
+    "name": "Overwatch",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Sentinel"
+    ]
+  },
+  {
+    "apiId": "2425",
+    "id": "heavy-weapon-p13-m-disruptor-soldier",
+    "name": "P13-M Disruptor Soldier",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4215,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "75",
+    "id": "heavy-weapon-pao",
+    "name": "Pao",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 28,
+    "keywordNames": [
+      "Inspire",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "88",
+    "id": "hardpoint-pintle-mounted-dlt-19",
+    "name": "Pintle-Mounted DLT-19",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 31,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "89",
+    "id": "hardpoint-pintle-mounted-rt-97c",
+    "name": "Pintle-Mounted RT-97C",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 31,
+    "keywordNames": []
+  },
+  {
+    "apiId": "21342",
+    "id": "pilot-pirate-captain",
+    "name": "Pirate Captain",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 32592,
+    "keywordNames": []
+  },
+  {
+    "apiId": "190",
+    "id": "personnel-pk-series-worker-droid",
+    "name": "PK-series Worker Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Repair X: Capacity Y",
+      "Noncombatant",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "20271",
+    "id": "doctrine-platoon-commander",
+    "name": "Platoon Commander",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": [
+      "Sharpshooter",
+      "Retinue"
+    ]
+  },
+  {
+    "apiId": "150",
+    "id": "pilot-plo-koon",
+    "name": "Plo Koon",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 53,
+    "keywordNames": [
+      "Agile"
+    ]
+  },
+  {
+    "apiId": "180",
+    "id": "gear-portable-scanner",
+    "name": "Portable Scanner",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "➦Take Cover"
+    ]
+  },
+  {
+    "apiId": "2609",
+    "id": "gear-prepared-supplies",
+    "name": "Prepared Supplies",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Cache"
+    ]
+  },
+  {
+    "apiId": "6322",
+    "id": "protocol-programmed-loyalty",
+    "name": "Programmed Loyalty",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 6180,
+    "keywordNames": [
+      "Retinue"
+    ]
+  },
+  {
+    "apiId": "627",
+    "id": "training-protector",
+    "name": "Protector",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "48",
+    "id": "heavy-weapon-proton-charge-saboteur",
+    "name": "Proton Charge Saboteur",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 13,
+    "keywordNames": [
+      "Detonate X: (Charge Type)",
+      "Blast",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "20280",
+    "id": "doctrine-proven-tactician",
+    "name": "Proven Tactician",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31669,
+    "keywordNames": [
+      "Reinforcements",
+      "➦Quick Thinking",
+      "Exemplar"
+    ]
+  },
+  {
+    "apiId": "2428",
+    "id": "personnel-pyke-syndicate-capo",
+    "name": "Pyke Syndicate Capo",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 4215,
+    "keywordNames": [
+      "Independent: Token X/Action",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "21338",
+    "id": "crew-pyke-syndicate-crew",
+    "name": "Pyke Syndicate Crew",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 32592,
+    "keywordNames": []
+  },
+  {
+    "apiId": "2427",
+    "id": "personnel-pyke-syndicate-foot-soldier",
+    "name": "Pyke Syndicate Foot Soldier",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 4215,
+    "keywordNames": [
+      "Cache"
+    ]
+  },
+  {
+    "apiId": "68",
+    "id": "personnel-r4-astromech",
+    "name": "R4 Astromech",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Repair 1: Capacity 2",
+      "Noncombatant",
+      "Restore"
+    ]
+  },
+  {
+    "apiId": "137",
+    "id": "heavy-weapon-radiation-cannon-b1-battle-droid",
+    "name": "Radiation Cannon B1 Battle Droid",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 38,
+    "keywordNames": [
+      "Poison X"
+    ]
+  },
+  {
+    "apiId": "2800",
+    "id": "pilot-raiding-party-leader",
+    "name": "Raiding Party Leader",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Allies of Convenience",
+      "Field Commander",
+      "Demoralize"
+    ]
+  },
+  {
+    "apiId": "15014",
+    "id": "personnel-range-trooper",
+    "name": "Range Trooper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 23657,
+    "keywordNames": []
+  },
+  {
+    "apiId": "55",
+    "id": "personnel-rebel-comms-technician",
+    "name": "Rebel Comms Technician",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16576",
+    "id": "heavy-weapon-rebel-marksman",
+    "name": "Rebel Marksman",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25968,
+    "keywordNames": []
+  },
+  {
+    "apiId": "49",
+    "id": "personnel-rebel-officer",
+    "name": "Rebel Officer",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Inspire",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "12",
+    "id": "personnel-rebel-trooper",
+    "name": "Rebel Trooper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": []
+  },
+  {
+    "apiId": "132",
+    "id": "personnel-rebel-trooper-captain",
+    "name": "Rebel Trooper Captain",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": [
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "133",
+    "id": "personnel-rebel-trooper-specialist",
+    "name": "Rebel Trooper Specialist",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16562",
+    "id": "personnel-rebel-trooper-squad",
+    "name": "Rebel Trooper Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "76",
+    "id": "personnel-rebel-veteran",
+    "name": "Rebel Veteran",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 36,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16574",
+    "id": "personnel-rebel-veteran-squad",
+    "name": "Rebel Veteran Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 36,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "58",
+    "id": "gear-recon-intel",
+    "name": "Recon Intel",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Scout X"
+    ]
+  },
+  {
+    "apiId": "20281",
+    "id": "doctrine-reluctant-hero",
+    "name": "Reluctant Hero",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31670,
+    "keywordNames": [
+      "Critical X",
+      "Infiltrate",
+      "Relentless"
+    ]
+  },
+  {
+    "apiId": "20283",
+    "id": "armament-repeating-blaster",
+    "name": "Repeating Blaster",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31669,
+    "keywordNames": [
+      "Precise"
+    ]
+  },
+  {
+    "apiId": "2718",
+    "id": "heavy-weapon-rook-kast",
+    "name": "Rook Kast",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4767,
+    "keywordNames": [
+      "Retinue",
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "18477",
+    "id": "heavy-weapon-rps-6-arf-trooper",
+    "name": "RPS-6 ARF Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 28861,
+    "keywordNames": [
+      "Cumbersome",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "16560",
+    "id": "heavy-weapon-rps-6-clone-trooper",
+    "name": "RPS-6 Clone Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25964,
+    "keywordNames": [
+      "Cumbersome",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "884",
+    "id": "heavy-weapon-rps-6-magnaguard",
+    "name": "RPS-6 MagnaGuard",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 1809,
+    "keywordNames": [
+      "Critical X",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "81",
+    "id": "crew-rps-6-rocket-gunner",
+    "name": "RPS-6 Rocket Gunner",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 32,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "116",
+    "id": "armament-rt-97c-blaster-rifle",
+    "name": "RT-97C Blaster Rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 40,
+    "keywordNames": []
+  },
+  {
+    "apiId": "121",
+    "id": "heavy-weapon-rt-97c-stormtrooper",
+    "name": "RT-97C Stormtrooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": []
+  },
+  {
+    "apiId": "90",
+    "id": "pilot-ryder-azadi",
+    "name": "Ryder Azadi",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "13",
+    "id": "force-saber-throw",
+    "name": "Saber Throw",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "79",
+    "id": "gear-sabine-s-combat-shield",
+    "name": "Sabine's Combat Shield",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 33,
+    "keywordNames": [
+      "Shielded",
+      "Recharge"
+    ]
+  },
+  {
+    "apiId": "3006",
+    "id": "gear-saxon-s-combat-shield",
+    "name": "Saxon's Combat Shield",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 4891,
+    "keywordNames": [
+      "Shielded",
+      "Recharge"
+    ]
+  },
+  {
+    "apiId": "2773",
+    "id": "armament-saxon-s-galar-90-rifle",
+    "name": "Saxon's Galar-90 Rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 4891,
+    "keywordNames": [
+      "High Velocity",
+      "Lethal X",
+      "Long Shot"
+    ]
+  },
+  {
+    "apiId": "2774",
+    "id": "armament-saxon-s-jetpack-rockets",
+    "name": "Saxon's Jetpack Rockets",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 4891,
+    "keywordNames": [
+      "Blast",
+      "Cycle",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "2775",
+    "id": "armament-saxon-s-zx-flame-projector",
+    "name": "Saxon's ZX Flame Projector",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 4891,
+    "keywordNames": [
+      "Blast",
+      "Spray",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "2565",
+    "id": "heavy-weapon-scatter-gun-enforcer",
+    "name": "Scatter Gun Enforcer",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4417,
+    "keywordNames": [
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "31",
+    "id": "heavy-weapon-scatter-gun-trooper",
+    "name": "Scatter Gun Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 12,
+    "keywordNames": [
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "9624",
+    "id": "training-secret-ingredients",
+    "name": "Secret Ingredients",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": 16687,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20450",
+    "id": "doctrine-seek-and-destroy",
+    "name": "Seek and Destroy",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": [
+      "Demoralize",
+      "Marksman",
+      "Target"
+    ]
+  },
+  {
+    "apiId": "20273",
+    "id": "gear-seeker-droid",
+    "name": "Seeker Droid",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": [
+      "Recharge",
+      "Shielded",
+      "Observe"
+    ]
+  },
+  {
+    "apiId": "185",
+    "id": "training-seize-the-initiative",
+    "name": "Seize the Initiative",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "95",
+    "id": "personnel-shoretrooper",
+    "name": "Shoretrooper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 39,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16570",
+    "id": "personnel-shoretrooper-squad",
+    "name": "Shoretrooper Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 39,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "198",
+    "id": "pilot-shriv-suurgav",
+    "name": "Shriv Suurgav",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Field Commander"
+    ]
+  },
+  {
+    "apiId": "172",
+    "id": "training-situational-awareness",
+    "name": "Situational Awareness",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Outmaneuver"
+    ]
+  },
+  {
+    "apiId": "20451",
+    "id": "protocol-sliced-comms",
+    "name": "Sliced Comms",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": []
+  },
+  {
+    "apiId": "6319",
+    "id": "heavy-weapon-sm-9-frag-launcher",
+    "name": "SM-9 Frag Launcher",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 6180,
+    "keywordNames": [
+      "Blast",
+      "Cycle",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "103",
+    "id": "grenades-smoke-grenades",
+    "name": "Smoke Grenades",
+    "cost": 0,
+    "upgradeSlot": "grenades",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "34",
+    "id": "personnel-snowtrooper",
+    "name": "Snowtrooper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 7,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16565",
+    "id": "personnel-snowtrooper-squad",
+    "name": "Snowtrooper Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 7,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "11866",
+    "id": "heavy-weapon-sonic-cannon-warrior",
+    "name": "Sonic Cannon Warrior",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 19103,
+    "keywordNames": [
+      "Scatter",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "53",
+    "id": "heavy-weapon-sonic-charge-saboteur",
+    "name": "Sonic Charge Saboteur",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 17,
+    "keywordNames": [
+      "Blast",
+      "Impact X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "2610",
+    "id": "grenades-sonic-imploders",
+    "name": "Sonic Imploders",
+    "cost": 0,
+    "upgradeSlot": "grenades",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "19834",
+    "id": "comms-spotter-uplink",
+    "name": "Spotter Uplink",
+    "cost": 0,
+    "upgradeSlot": "comms",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "14",
+    "id": "personnel-stormtrooper",
+    "name": "Stormtrooper",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": []
+  },
+  {
+    "apiId": "134",
+    "id": "personnel-stormtrooper-captain",
+    "name": "Stormtrooper Captain",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": [
+      "Leader"
+    ]
+  },
+  {
+    "apiId": "16577",
+    "id": "heavy-weapon-stormtrooper-marksman",
+    "name": "Stormtrooper Marksman",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25967,
+    "keywordNames": []
+  },
+  {
+    "apiId": "135",
+    "id": "personnel-stormtrooper-specialist",
+    "name": "Stormtrooper Specialist",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": []
+  },
+  {
+    "apiId": "16566",
+    "id": "personnel-stormtrooper-squad",
+    "name": "Stormtrooper Squad",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": [
+      "Indomitable"
+    ]
+  },
+  {
+    "apiId": "20456",
+    "id": "protocol-strategic-programming",
+    "name": "Strategic Programming",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": [
+      "Strategize"
+    ]
+  },
+  {
+    "apiId": "62",
+    "id": "command-strict-orders",
+    "name": "Strict Orders",
+    "cost": 0,
+    "upgradeSlot": "command",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19824",
+    "id": "training-strike-and-fade",
+    "name": "Strike and Fade",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19825",
+    "id": "training-strike-team-leader",
+    "name": "Strike Team Leader",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20276",
+    "id": "armament-stun-baton",
+    "name": "Stun Baton",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": [
+      "Demoralize"
+    ]
+  },
+  {
+    "apiId": "2714",
+    "id": "gear-super-commando-combat-shields",
+    "name": "Super Commando Combat Shields",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 4767,
+    "keywordNames": [
+      "Shielded"
+    ]
+  },
+  {
+    "apiId": "2719",
+    "id": "heavy-weapon-super-commando-gunslinger",
+    "name": "Super Commando Gunslinger",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4767,
+    "keywordNames": [
+      "Lethal X"
+    ]
+  },
+  {
+    "apiId": "2715",
+    "id": "armament-super-commando-jetpack-rockets",
+    "name": "Super Commando Jetpack Rockets",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 4767,
+    "keywordNames": [
+      "Blast",
+      "Critical X",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "2717",
+    "id": "heavy-weapon-super-commando-marksman",
+    "name": "Super Commando Marksman",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 4767,
+    "keywordNames": [
+      "Precise"
+    ]
+  },
+  {
+    "apiId": "124",
+    "id": "heavy-weapon-sx-21-trooper",
+    "name": "SX-21 Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": [
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "15015",
+    "id": "heavy-weapon-t-21a-range-trooper",
+    "name": "T-21A Range Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 23657,
+    "keywordNames": [
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "96",
+    "id": "armament-t-21-blaster-rifle",
+    "name": "T-21 Blaster Rifle",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 40,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "114",
+    "id": "heavy-weapon-t-21b-shoretrooper",
+    "name": "T-21B Shoretrooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 39,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "182",
+    "id": "heavy-weapon-t-21-special-forces-trooper",
+    "name": "T-21 Special Forces Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 78,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "122",
+    "id": "heavy-weapon-t-21-stormtrooper",
+    "name": "T-21 Stormtrooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 5,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "21",
+    "id": "heavy-weapon-t-7-ion-snowtrooper",
+    "name": "T-7 Ion Snowtrooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 7,
+    "keywordNames": [
+      "Critical X",
+      "Impact X",
+      "Ion X"
+    ]
+  },
+  {
+    "apiId": "20453",
+    "id": "protocol-targeting-relay",
+    "name": "Targeting Relay",
+    "cost": 0,
+    "upgradeSlot": "protocol",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": []
+  },
+  {
+    "apiId": "15",
+    "id": "gear-targeting-scopes",
+    "name": "Targeting Scopes",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Precise"
+    ]
+  },
+  {
+    "apiId": "15988",
+    "id": "heavy-weapon-tech",
+    "name": "Tech",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 23655,
+    "keywordNames": [
+      "Cache",
+      "Tactical X"
+    ]
+  },
+  {
+    "apiId": "54",
+    "id": "training-tenacity",
+    "name": "Tenacity",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "19829",
+    "id": "force-terror",
+    "name": "Terror",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "71",
+    "id": "armament-the-darksaber",
+    "name": "The Darksaber",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 33,
+    "keywordNames": [
+      "Dauntless",
+      "Immune: Pierce",
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "6132",
+    "id": "armament-the-darksaber",
+    "name": "The Darksaber",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 11258,
+    "keywordNames": [
+      "Demoralize",
+      "Immune: Pierce",
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "2632",
+    "id": "armament-the-darksaber-maul",
+    "name": "The Darksaber (Maul)",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 4551,
+    "keywordNames": [
+      "Cunning",
+      "Sidearm: Melee/Ranged",
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "20314",
+    "id": "grenades-thermal-detonator",
+    "name": "Thermal Detonator",
+    "cost": 0,
+    "upgradeSlot": "grenades",
+    "restrictedToUnitApiId": 31670,
+    "keywordNames": [
+      "Blast",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "20269",
+    "id": "doctrine-tip-of-the-spear",
+    "name": "Tip of the Spear",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": [
+      "Aid",
+      "Direct",
+      "Tactical X"
+    ]
+  },
+  {
+    "apiId": "19831",
+    "id": "force-tranquility",
+    "name": "Tranquility",
+    "cost": 0,
+    "upgradeSlot": "force",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "177",
+    "id": "heavy-weapon-tristan-wren",
+    "name": "Tristan Wren",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 71,
+    "keywordNames": [
+      "Lethal X",
+      "Suppressive"
+    ]
+  },
+  {
+    "apiId": "19827",
+    "id": "command-trusted-agent",
+    "name": "Trusted Agent",
+    "cost": 0,
+    "upgradeSlot": "command",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "181",
+    "id": "personnel-t-series-tactical-droid",
+    "name": "T-series Tactical Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "AI: Attack",
+      "Reliable",
+      "Leader",
+      "Sidearm: Melee/Ranged"
+    ]
+  },
+  {
+    "apiId": "120",
+    "id": "pilot-t-series-tactical-droid-pilot",
+    "name": "T-Series Tactical Droid Pilot",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": 54,
+    "keywordNames": [
+      "Field Commander"
+    ]
+  },
+  {
+    "apiId": "20709",
+    "id": "gear-turbo-charge",
+    "name": "Turbo-Charge",
+    "cost": 0,
+    "upgradeSlot": "gear",
+    "restrictedToUnitApiId": 32232,
+    "keywordNames": []
+  },
+  {
+    "apiId": "963",
+    "id": "hardpoint-twin-beam-cannons",
+    "name": "Twin Beam Cannons",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 2108,
+    "keywordNames": [
+      "Beam X",
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "964",
+    "id": "hardpoint-twin-blaster-cannons",
+    "name": "Twin Blaster Cannons",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 2108,
+    "keywordNames": [
+      "Gunslinger",
+      "Critical X",
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "16578",
+    "id": "hardpoint-twin-blaster-cannons",
+    "name": "Twin Blaster Cannons",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 25966,
+    "keywordNames": [
+      "Fixed: Front/Rear"
+    ]
+  },
+  {
+    "apiId": "151",
+    "id": "hardpoint-twin-laser-turret",
+    "name": "Twin Laser Turret",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 53,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "20433",
+    "id": "armament-twin-lightsabers",
+    "name": "Twin Lightsabers",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31842,
+    "keywordNames": [
+      "High Velocity",
+      "Impact X",
+      "Pierce X"
+    ]
+  },
+  {
+    "apiId": "965",
+    "id": "hardpoint-twin-missile-pods",
+    "name": "Twin Missile Pods",
+    "cost": 0,
+    "upgradeSlot": "hardpoint",
+    "restrictedToUnitApiId": 2108,
+    "keywordNames": [
+      "Gunslinger",
+      "Fixed: Front/Rear",
+      "Impact X"
+    ]
+  },
+  {
+    "apiId": "20449",
+    "id": "doctrine-tyrannical-taskmaster",
+    "name": "Tyrannical Taskmaster",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31844,
+    "keywordNames": []
+  },
+  {
+    "apiId": "2429",
+    "id": "command-underworld-connections",
+    "name": "Underworld Connections",
+    "cost": 0,
+    "upgradeSlot": "command",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Allies of Convenience"
+    ]
+  },
+  {
+    "apiId": "210",
+    "id": "crew-unorthodox-tactician",
+    "name": "Unorthodox Tactician",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 772,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20279",
+    "id": "doctrine-unseen-saboteur",
+    "name": "Unseen Saboteur",
+    "cost": 0,
+    "upgradeSlot": "doctrine",
+    "restrictedToUnitApiId": 31670,
+    "keywordNames": [
+      "Prepared Position",
+      "Low Profile"
+    ]
+  },
+  {
+    "apiId": "209",
+    "id": "crew-unstable-astromech",
+    "name": "Unstable Astromech",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 772,
+    "keywordNames": []
+  },
+  {
+    "apiId": "2631",
+    "id": "training-up-close-and-personal",
+    "name": "Up Close and Personal",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "178",
+    "id": "heavy-weapon-ursa-wren",
+    "name": "Ursa Wren",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 71,
+    "keywordNames": [
+      "Dauntless",
+      "Leader",
+      "Long Shot"
+    ]
+  },
+  {
+    "apiId": "146",
+    "id": "pilot-veteran-clone-pilot",
+    "name": "Veteran Clone Pilot",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20285",
+    "id": "armament-vibro-axe",
+    "name": "Vibro Axe",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31669,
+    "keywordNames": [
+      "Charge"
+    ]
+  },
+  {
+    "apiId": "191",
+    "id": "command-vigilance",
+    "name": "Vigilance",
+    "cost": 0,
+    "upgradeSlot": "command",
+    "restrictedToUnitApiId": null,
+    "keywordNames": []
+  },
+  {
+    "apiId": "192",
+    "id": "personnel-viper-recon-droid",
+    "name": "Viper Recon Droid",
+    "cost": 0,
+    "upgradeSlot": "personnel",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Observe",
+      "Sidearm: Melee/Ranged"
+    ]
+  },
+  {
+    "apiId": "16553",
+    "id": "squad-leader-waxer",
+    "name": "Waxer",
+    "cost": 0,
+    "upgradeSlot": "squad-leader",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Leader",
+      "Disciplined",
+      "Scout X"
+    ]
+  },
+  {
+    "apiId": "29",
+    "id": "pilot-wedge-antilles",
+    "name": "Wedge Antilles",
+    "cost": 0,
+    "upgradeSlot": "pilot",
+    "restrictedToUnitApiId": null,
+    "keywordNames": [
+      "Field Commander"
+    ]
+  },
+  {
+    "apiId": "21340",
+    "id": "crew-weequay-crew",
+    "name": "Weequay Crew",
+    "cost": 0,
+    "upgradeSlot": "crew",
+    "restrictedToUnitApiId": 32592,
+    "keywordNames": []
+  },
+  {
+    "apiId": "15986",
+    "id": "heavy-weapon-wrecker",
+    "name": "Wrecker",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 23655,
+    "keywordNames": []
+  },
+  {
+    "apiId": "6318",
+    "id": "heavy-weapon-xs-iv-assault-cannon",
+    "name": "XS-IV Assault Cannon",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 6180,
+    "keywordNames": [
+      "Critical X"
+    ]
+  },
+  {
+    "apiId": "16557",
+    "id": "heavy-weapon-z-6-clone-trooper",
+    "name": "Z-6 Clone Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 25964,
+    "keywordNames": []
+  },
+  {
+    "apiId": "20277",
+    "id": "armament-z-6-riot-baton",
+    "name": "Z-6 Riot Baton",
+    "cost": 0,
+    "upgradeSlot": "armament",
+    "restrictedToUnitApiId": 31667,
+    "keywordNames": [
+      "Immune: Melee Pierce"
+    ]
+  },
+  {
+    "apiId": "16",
+    "id": "heavy-weapon-z-6-trooper",
+    "name": "Z-6 Trooper",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "restrictedToUnitApiId": 6,
+    "keywordNames": []
+  }
+]

@@ -1,0 +1,1256 @@
+[
+  {
+    "id": "215",
+    "name": "Advanced Targeting: X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "50",
+    "name": "Agile",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "211",
+    "name": "AI: Action",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "80",
+    "name": "AI: Attack",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "83",
+    "name": "AI: Attack, Move",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "161",
+    "name": "Aid",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "96",
+    "name": "AI: Dodge, Move",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "117",
+    "name": "Aid: Pyke Syndicate",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "100",
+    "name": "AI: Move",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "118",
+    "name": "Allies of Convenience",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "174",
+    "name": "Area Weapon",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "44",
+    "name": "Armor",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "79",
+    "name": "Armor [X]",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "175",
+    "name": "Arm X: Charge Token Type",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "53",
+    "name": "Arsenal",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "119",
+    "name": "Associate: Unit Name",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "114",
+    "name": "Ataru Mastery",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "120",
+    "name": "Attack Run",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "94",
+    "name": "Authoritative",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "93",
+    "name": "Barrage",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "176",
+    "name": "Beam X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "177",
+    "name": "Blast",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "87",
+    "name": "Block",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "107",
+    "name": "➦Bolster",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "68",
+    "name": "Bounty",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "121",
+    "name": "Cache",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "97",
+    "name": "➦Calculate Odds",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "2",
+    "name": "Charge",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "45",
+    "name": "Climbing Vehicle",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "217",
+    "name": "Command Vehicle X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "65",
+    "name": "Compel",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "122",
+    "name": "Complete the Mission",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "19",
+    "name": "Contingencies",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "81",
+    "name": "Coordinate: Droid Trooper",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "35",
+    "name": "Coordinate: Emplacement Trooper",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "210",
+    "name": "Coordinate: Unit Name/Unit Type",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "101",
+    "name": "Coordinate: Vehicle",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "54",
+    "name": "Cover",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "15",
+    "name": "Covert Ops",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "178",
+    "name": "Critical X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "179",
+    "name": "Cumbersome",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "66",
+    "name": "Cunning",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "190",
+    "name": "Cycle",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "13",
+    "name": "Danger Sense",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "42",
+    "name": "Dauntless",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "123",
+    "name": "Death From Above",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "36",
+    "name": "Defend",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "3",
+    "name": "Deflect",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "115",
+    "name": "Demoralize",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "124",
+    "name": "Detachment",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "180",
+    "name": "Detonate X: (Charge Type)",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "164",
+    "name": "Direct",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "108",
+    "name": "Direct: ;r2 Clone Trooper Unit",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "109",
+    "name": "Direct: ;r2 Droid Trooper Unit",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "74",
+    "name": "Disciplined",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "27",
+    "name": "Disengage",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "219",
+    "name": "Disgraced",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "125",
+    "name": "Distract",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "126",
+    "name": "Divine Influence",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "191",
+    "name": "Divulge",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "103",
+    "name": "Djem So Mastery",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "39",
+    "name": "Duelist",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "21",
+    "name": "Enrage",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "162",
+    "name": "Entourage",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "67",
+    "name": "Entourage: Imperial Death Troopers",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "64",
+    "name": "Entourage: Imperial Royal Guards",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "159",
+    "name": "Equip",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "112",
+    "name": "Equip: Del Meeko, Gideon Hask",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "102",
+    "name": "Equip: Tristan Wren, Ursa Wren",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "95",
+    "name": "Exemplar",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "22",
+    "name": "Expert Climber",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "220",
+    "name": "Faulty Equipment",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "127",
+    "name": "Field Commander",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "60",
+    "name": "Fire Support",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "181",
+    "name": "Fixed: Front/Rear",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "20",
+    "name": "Flawed",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "128",
+    "name": "Flexible Response [X]",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "47",
+    "name": "Full Pivot",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "84",
+    "name": "Generator",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "32",
+    "name": "Grounded",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "23",
+    "name": "Guardian",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "129",
+    "name": "Guidance",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "10",
+    "name": "Gunslinger",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "38",
+    "name": "Heavy Weapon Team",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "182",
+    "name": "High Velocity",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "163",
+    "name": "Hold the Line",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "111",
+    "name": "Hover: Air [X]",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "91",
+    "name": "Hover: Ground",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "130",
+    "name": "Hunted",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "200",
+    "name": "Immobilize X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "55",
+    "name": "Immune: Blast",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "201",
+    "name": "Immune: Deflect",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "132",
+    "name": "Immune: Enemy Effects",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "56",
+    "name": "Immune: Melee",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "133",
+    "name": "Immune: Melee Pierce",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "4",
+    "name": "Immune: Pierce",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "57",
+    "name": "Immune: Range 1 Weapons",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "202",
+    "name": "Impact X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "131",
+    "name": "I'm Part of the Squad Too",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "26",
+    "name": "Impervious",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "98",
+    "name": "Incognito",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "33",
+    "name": "Inconspicuous",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "134",
+    "name": "Independent: Token X/Action",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "40",
+    "name": "Indomitable",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "14",
+    "name": "Infiltrate",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "221",
+    "name": "Insecure",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "6",
+    "name": "Inspire",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "135",
+    "name": "Interrogate",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "203",
+    "name": "Ion X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "136",
+    "name": "Jar'Kai Mastery",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "70",
+    "name": "Jedi Hunter",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "1",
+    "name": "Jump",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "106",
+    "name": "Juyo Mastery",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "137",
+    "name": "Latent Power",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "192",
+    "name": "Leader",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "204",
+    "name": "Lethal X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "59",
+    "name": "Light Transport [X]: Open",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "16",
+    "name": "Loadout",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "205",
+    "name": "Long Shot",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "9",
+    "name": "Low Profile",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "89",
+    "name": "Makashi Mastery",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "17",
+    "name": "Marksman",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "28",
+    "name": "Master of the Force",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "138",
+    "name": "Master Storyteller",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "139",
+    "name": "Mercenary: Faction",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "218",
+    "name": "Mobile",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "216",
+    "name": "My Mood is Based On Profit",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "7",
+    "name": "Nimble",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "193",
+    "name": "Noncombatant",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "110",
+    "name": "Observe",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "213",
+    "name": "One Step Ahead",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "92",
+    "name": "Outmaneuver",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "140",
+    "name": "Override",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "206",
+    "name": "Overrun X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "194",
+    "name": "Permanent",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "207",
+    "name": "Pierce X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "116",
+    "name": "Plodding",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "208",
+    "name": "Poison X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "62",
+    "name": "Precise",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "141",
+    "name": "Prepared Position",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "209",
+    "name": "Primitive",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "142",
+    "name": "Programmed",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "63",
+    "name": "➦Pulling the Strings",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "12",
+    "name": "➦Quick Thinking",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "183",
+    "name": "Ram X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "34",
+    "name": "Ready",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "143",
+    "name": "Recharge",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "195",
+    "name": "Reconfigure",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "69",
+    "name": "Regenerate",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "144",
+    "name": "Reinforcements",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "51",
+    "name": "Relentless",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "75",
+    "name": "Reliable",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "30",
+    "name": "Repair 1: Capacity 2",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "29",
+    "name": "Repair 2: Capacity 2",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "196",
+    "name": "Repair X: Capacity Y",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "52",
+    "name": "Reposition",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "212",
+    "name": "Restore",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "145",
+    "name": "Retinue",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "113",
+    "name": "Retinue: Iden Versio",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "43",
+    "name": "Retinue: Sabine Wren",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "146",
+    "name": "Ruthless",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "41",
+    "name": "Scale",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "184",
+    "name": "Scatter",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "90",
+    "name": "Scouting Party",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "37",
+    "name": "Scout X",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "31",
+    "name": "Secret Mission",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "185",
+    "name": "Self-Destruct X",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "147",
+    "name": "Self-Preservation",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "48",
+    "name": "Sentinel",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "8",
+    "name": "Sharpshooter",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "85",
+    "name": "Shielded",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "214",
+    "name": "Shien Mastery",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "197",
+    "name": "Sidearm: Melee/Ranged",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "198",
+    "name": "Small",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "148",
+    "name": "Smoke",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "149",
+    "name": "Smoke Tokens",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "82",
+    "name": "Soresu Mastery",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "150",
+    "name": "Special Issue: Battle Force",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "58",
+    "name": "Speeder",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "61",
+    "name": "➦Spotter",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "186",
+    "name": "Spray",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "71",
+    "name": "Spur",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "49",
+    "name": "Stationary",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "72",
+    "name": "Steady",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "151",
+    "name": "Strategize",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "187",
+    "name": "Suppressive",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "18",
+    "name": "Tactical X",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "5",
+    "name": "➦Take Cover",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "73",
+    "name": "Target",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "99",
+    "name": "Teamwork: Cassian Andor",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "24",
+    "name": "Teamwork: Han Solo",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "152",
+    "name": "Teamwork: Unit Name",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "105",
+    "name": "Tempted",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "188",
+    "name": "Tow Cable",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "158",
+    "name": "Transport",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "78",
+    "name": "Transport [X]: Open",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "199",
+    "name": "Treat X: Capacity Y",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "11",
+    "name": "Uncanny Luck",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "153",
+    "name": "Unconcerned",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "25",
+    "name": "Unhindered",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "154",
+    "name": "Unstoppable",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "189",
+    "name": "Versatile",
+    "hasMagnitude": false,
+    "isWeaponKeyword": true
+  },
+  {
+    "id": "155",
+    "name": "Weak Point X: Front/Rear/Sides",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "76",
+    "name": "Weak Point [X]: Rear",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "77",
+    "name": "Weak Point [X]: Sides",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "156",
+    "name": "Weighed Down",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "160",
+    "name": "We're Not Regs",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "86",
+    "name": "Wheel Mode",
+    "hasMagnitude": false,
+    "isWeaponKeyword": false
+  },
+  {
+    "id": "157",
+    "name": "Wound",
+    "hasMagnitude": true,
+    "isWeaponKeyword": false
+  }
+]

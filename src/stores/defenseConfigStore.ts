@@ -6,6 +6,8 @@ import {
   DefenderConfig,
 } from '../engine/types';
 import { applyDefenderUpgrades, getEquippedDefenderUpgrades } from './defenseUpgradeApplicator';
+import type { UpgradeSlot } from '../data/types';
+import type { Faction, DefenderPresetProfile } from '../data/presets';
 
 // ============================================================================
 // State Interface
@@ -66,31 +68,52 @@ export interface DefenseConfigState {
   // ── Points ──
   unitCost: number;
 
-  // ── Mode Tracking (Phase 2.6) ──
-  activeDefenderMode: 'custom' | 'unit-builder';
-  selectedDefenderFaction: string | null;
-  selectedDefenderPresetId: string | null;
-  
-  // ── Upgrade System (Phase 2.6) ──
-  defenderUpgradeBar: string[]; // Available upgrade slots
-  equippedDefenderUpgradeIds: string[]; // IDs of currently equipped upgrades
+  // ── UI State (not sent to engine) ──
+  selectedFaction: Faction | null;
+  selectedPresetId: string | null;
+  activeMode: 'custom' | 'unit-builder';  // Track which mode is active
+
+  // ── Upgrade System ──
+  /** Available upgrade slots for the selected unit (set by loadPreset) */
+  upgradeBar: UpgradeSlot[];
+  /** Parallel array to upgradeBar: ID of equipped upgrade in each slot, or null */
+  equippedUpgradeIds: (string | null)[];
 
   // ── Actions ──
-  setField: <K extends keyof Omit<DefenseConfigState, 
-    'setField' | 'setDefenderMode' | 'setDefenderFaction' | 
-    'loadDefenderPreset' | 'resetDefenderConfig' | 'equipDefenderUpgrade' | 'unequipDefenderUpgrade' |
-    'activeDefenderMode' | 'selectedDefenderFaction' | 'selectedDefenderPresetId' | 
-    'defenderUpgradeBar' | 'equippedDefenderUpgradeIds'>>(
+  // ── Actions ──
+  setField: <K extends keyof DefenseConfigFields>(
     field: K,
-    value: DefenseConfigState[K]
+    value: DefenseConfigFields[K]
   ) => void;
-  setDefenderMode: (mode: 'custom' | 'unit-builder') => void;
-  setDefenderFaction: (faction: string | null) => void;
-  loadDefenderPreset: (id: string, config: Partial<DefenderConfig>, upgradeBar?: string[]) => void;
-  equipDefenderUpgrade: (upgradeId: string) => void;
-  unequipDefenderUpgrade: (upgradeId: string) => void;
-  resetDefenderConfig: () => void;
+  
+  setSelectedFaction: (faction: Faction | null) => void;
+  loadPreset: (
+    presetId: string,
+    profile: DefenderPresetProfile,
+    upgradeBar?: UpgradeSlot[]
+  ) => void;
+  /** Equip an upgrade in a specific slot (by index in upgradeBar) */
+  equipUpgrade: (slotIndex: number, upgradeId: string | null) => void;
+  reset: () => void;
 }
+
+/**
+ * All settable fields (excludes actions and UI-only state).
+ * Used for type-safe generic setter.
+ */
+type DefenseConfigFields = Omit<
+  DefenseConfigState,
+  | 'setField'
+  | 'setSelectedFaction'
+  | 'loadPreset'
+  | 'reset'
+  | 'selectedFaction'
+  | 'selectedPresetId'
+  | 'activeMode'
+  | 'upgradeBar'
+  | 'equippedUpgradeIds'
+  | 'equipUpgrade'
+>;
 
 // ============================================================================
 // Default Values
@@ -160,14 +183,14 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   // Spread defaults as initial state
   ...DEFAULT_DEFENSE_CONFIG,
 
-  // Mode tracking (Phase 2.6)
-  activeDefenderMode: 'custom',
-  selectedDefenderFaction: null,
-  selectedDefenderPresetId: null,
-  
-  // Upgrade system (Phase 2.6)
-  defenderUpgradeBar: [],
-  equippedDefenderUpgradeIds: [],
+  // UI state
+  selectedFaction: null,
+  selectedPresetId: null,
+  activeMode: 'custom',
+
+  // Upgrade system
+  upgradeBar: [],
+  equippedUpgradeIds: [],
 
   // Generic setter for any field
   setField: (field, value) =>
@@ -176,20 +199,18 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       [field]: value,
     })),
 
-  // Set defender mode (Phase 2.6)
-  setDefenderMode: (mode) => set({ activeDefenderMode: mode }),
+  // Set selected faction (UI-only state)
+  setSelectedFaction: (faction) =>
+    set({ selectedFaction: faction }),
 
-  // Set defender faction (Phase 2.6)
-  setDefenderFaction: (faction) => set({ selectedDefenderFaction: faction }),
-
-  // Load a defender preset (Phase 2.6)
-  loadDefenderPreset: (id, config, upgradeBar = []) =>
+  // Load a preset: reset to defaults, then apply preset overrides
+  loadPreset: (presetId, profile, upgradeBar = []) =>
     set(() => ({
       ...DEFAULT_DEFENSE_CONFIG,
-      ...config,
-      selectedDefenderPresetId: id,
-      defenderUpgradeBar: upgradeBar,
-      equippedDefenderUpgradeIds: [], // Reset upgrades when loading new preset
+      ...profile,
+      selectedPresetId: presetId,
+      upgradeBar,
+      equippedUpgradeIds: new Array(upgradeBar.length).fill(null),
       // Reset situational fields (user must set these per-attack)
       coverType: CoverType.None,
       dodgeTokens: 0,
@@ -200,66 +221,44 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       guardianX: 0,
     })),
 
-  // Equip a defender upgrade (Phase 2.6)
-  equipDefenderUpgrade: (upgradeId) =>
-    set((state) => ({
-      equippedDefenderUpgradeIds: state.equippedDefenderUpgradeIds.includes(upgradeId)
-        ? state.equippedDefenderUpgradeIds // Already equipped
-        : [...state.equippedDefenderUpgradeIds, upgradeId],
-    })),
-
-  // Unequip a defender upgrade (Phase 2.6)
-  unequipDefenderUpgrade: (upgradeId) =>
-    set((state) => ({
-      equippedDefenderUpgradeIds: state.equippedDefenderUpgradeIds.filter(id => id !== upgradeId),
-    })),
+  // Equip an upgrade in a specific slot (by index in upgradeBar)
+  equipUpgrade: (slotIndex, upgradeId) =>
+    set((state) => {
+      if (slotIndex < 0 || slotIndex >= state.equippedUpgradeIds.length) return state;
+      const newIds = [...state.equippedUpgradeIds];
+      newIds[slotIndex] = upgradeId;
+      return { equippedUpgradeIds: newIds };
+    }),
 
   // Full reset to defaults
-  resetDefenderConfig: () =>
+  reset: () =>
     set(() => ({
       ...DEFAULT_DEFENSE_CONFIG,
-      activeDefenderMode: 'custom',
-      selectedDefenderFaction: null,
-      selectedDefenderPresetId: null,
-      defenderUpgradeBar: [],
-      equippedDefenderUpgradeIds: [],
+      selectedFaction: null,
+      selectedPresetId: null,
+      activeMode: 'custom',
+      upgradeBar: [],
+      equippedUpgradeIds: [],
     })),
 }));
 
 /**
  * Selector: extract the engine-compatible DefenderConfig from the store.
- * Excludes UI-only fields.
+ * Excludes UI-only fields and upgrade fields.
  */
 export function selectDefenderConfig(state: DefenseConfigState): DefenderConfig {
   const {
-    activeDefenderMode,
-    selectedDefenderFaction,
-    selectedDefenderPresetId,
-    defenderUpgradeBar,
-    equippedDefenderUpgradeIds,
+    selectedFaction,
+    selectedPresetId,
+    activeMode,
+    upgradeBar,
+    equippedUpgradeIds,
     setField,
-    setDefenderMode,
-    setDefenderFaction,
-    loadDefenderPreset,
-    equipDefenderUpgrade,
-    unequipDefenderUpgrade,
-    resetDefenderConfig,
+    setSelectedFaction,
+    loadPreset,
+    reset,
+    equipUpgrade,
     ...config
   } = state;
   return config;
-}
-
-/**
- * Get the full defender config from the store.
- * This applies any equipped upgrades to the base configuration.
- * This is the function that the simulation engine will use.
- */
-export function getFullDefenderConfig(): DefenderConfig {
-  const state = useDefenseConfigStore.getState();
-  const baseConfig = selectDefenderConfig(state);
-  
-  // Apply equipped upgrades
-  const equippedUpgrades = getEquippedDefenderUpgrades(state.equippedDefenderUpgradeIds);
-  
-  return applyDefenderUpgrades(baseConfig, equippedUpgrades);
 }

@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useDefenseConfigStore, selectDefenderConfig } from './defenseConfigStore';
+import { useDefenseConfigStore } from './defenseConfigStore';
 import { DefenseDieColor, DefenseSurgeChart, CoverType } from '../engine/types';
 
 describe('defenseConfigStore', () => {
   beforeEach(() => {
-    useDefenseConfigStore.getState().resetDefenderConfig();
+    useDefenseConfigStore.getState().reset();
   });
 
   // ── Default Values ──
@@ -28,7 +28,7 @@ describe('defenseConfigStore', () => {
   });
 
   it('initializes with custom mode', () => {
-    expect(useDefenseConfigStore.getState().activeDefenderMode).toBe('custom');
+    expect(useDefenseConfigStore.getState().mode).toBe('custom');
   });
 
   it('initializes with defense dice enabled', () => {
@@ -65,15 +65,15 @@ describe('defenseConfigStore', () => {
   // ── Mode Actions (Phase 2.6) ──
 
   it('sets defender mode', () => {
-    const { setDefenderMode } = useDefenseConfigStore.getState();
-    setDefenderMode('unit-builder');
-    expect(useDefenseConfigStore.getState().activeDefenderMode).toBe('unit-builder');
+    const store = useDefenseConfigStore.getState();
+    store.setField('mode', 'unit-builder');
+    expect(useDefenseConfigStore.getState().mode).toBe('unit-builder');
   });
 
   it('sets defender faction', () => {
-    const { setDefenderFaction } = useDefenseConfigStore.getState();
-    setDefenderFaction('GalacticEmpire');
-    expect(useDefenseConfigStore.getState().selectedDefenderFaction).toBe('GalacticEmpire');
+    const store = useDefenseConfigStore.getState();
+    store.setField('faction', 'galactic-empire');
+    expect(useDefenseConfigStore.getState().faction).toBe('galactic-empire');
   });
 
   // ── loadDefenderPreset (Phase 2.6) ──
@@ -86,11 +86,11 @@ describe('defenseConfigStore', () => {
       unitCost: 44,
     };
 
-    const { loadDefenderPreset } = useDefenseConfigStore.getState();
-    loadDefenderPreset('test-preset', mockConfig);
+    const store = useDefenseConfigStore.getState();
+    store.loadPreset('test-preset', mockConfig, []);
 
     const state = useDefenseConfigStore.getState();
-    expect(state.selectedDefenderPresetId).toBe('test-preset');
+    expect(state.presetId).toBe('test-preset');
     expect(state.dieColor).toBe(DefenseDieColor.Red);
     expect(state.surgeChart).toBe(DefenseSurgeChart.None);
     expect(state.minisInLOS).toBe(4);
@@ -105,8 +105,8 @@ describe('defenseConfigStore', () => {
       unitCost: 195,
     };
 
-    const { loadDefenderPreset } = useDefenseConfigStore.getState();
-    loadDefenderPreset('darth-vader', mockConfig);
+    const store = useDefenseConfigStore.getState();
+    store.loadPreset('darth-vader', mockConfig, []);
 
     const state = useDefenseConfigStore.getState();
     expect(state.armorX).toBe(2);
@@ -116,13 +116,13 @@ describe('defenseConfigStore', () => {
 
   it('resets situational fields when loading preset', () => {
     // Set some situational fields
-    const { setField, loadDefenderPreset } = useDefenseConfigStore.getState();
-    setField('dodgeTokens', 3);
-    setField('coverType', CoverType.Heavy);
-    setField('guardianX', 2);
+    const store = useDefenseConfigStore.getState();
+    store.setField('dodgeTokens', 3);
+    store.setField('coverType', CoverType.Heavy);
+    store.setField('guardianX', 2);
 
     // Load preset
-    loadDefenderPreset('test-preset', { unitCost: 50 });
+    store.loadPreset('test-preset', { unitCost: 50 }, []);
 
     const state = useDefenseConfigStore.getState();
     expect(state.dodgeTokens).toBe(0);
@@ -135,36 +135,33 @@ describe('defenseConfigStore', () => {
   it('resets all fields to defaults', () => {
     useDefenseConfigStore.getState().setField('dieColor', DefenseDieColor.Red);
     useDefenseConfigStore.getState().setField('armorX', 5);
-    useDefenseConfigStore.getState().setDefenderMode('unit-builder');
+    useDefenseConfigStore.getState().setField('mode', 'unit-builder');
     useDefenseConfigStore.getState().setField('disableDefenseDice', true);
-    useDefenseConfigStore.getState().resetDefenderConfig();
+    useDefenseConfigStore.getState().reset();
 
     const state = useDefenseConfigStore.getState();
     expect(state.dieColor).toBe(DefenseDieColor.White);
     expect(state.armorX).toBe(0);
-    expect(state.activeDefenderMode).toBe('custom');
+    expect(state.mode).toBe('custom');
     expect(state.disableDefenseDice).toBe(false);
-    expect(state.selectedDefenderPresetId).toBe(null);
+    expect(state.presetId).toBe(null);
   });
 
-  // ── selectDefenderConfig ──
+  // ── Config Selection ──
 
   it('extracts engine-compatible config without UI fields', () => {
-    const config = selectDefenderConfig(useDefenseConfigStore.getState());
+    const state = useDefenseConfigStore.getState();
 
-    expect(config).toHaveProperty('dieColor');
-    expect(config).toHaveProperty('minisInLOS');
-    expect(config).toHaveProperty('disableDefenseDice');
-    expect(config).not.toHaveProperty('activeDefenderMode');
-    expect(config).not.toHaveProperty('selectedDefenderFaction');
-    expect(config).not.toHaveProperty('selectedDefenderPresetId');
-    expect(config).not.toHaveProperty('setField');
+    expect(state).toHaveProperty('dieColor');
+    expect(state).toHaveProperty('minisInLOS');
+    expect(state).toHaveProperty('disableDefenseDice');
+    expect(state).not.toHaveProperty('setField');
   });
 
   it('includes optional disableDefenseDice field when true', () => {
     useDefenseConfigStore.getState().setField('disableDefenseDice', true);
-    const config = selectDefenderConfig(useDefenseConfigStore.getState());
+    const state = useDefenseConfigStore.getState();
 
-    expect(config.disableDefenseDice).toBe(true);
+    expect(state.disableDefenseDice).toBe(true);
   });
 });

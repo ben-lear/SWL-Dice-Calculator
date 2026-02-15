@@ -5,7 +5,7 @@ import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
 
 describe('DefenderPanel', () => {
   beforeEach(() => {
-    useDefenseConfigStore.getState().resetDefenderConfig();
+    useDefenseConfigStore.getState().reset();
   });
 
   it('renders the panel header', () => {

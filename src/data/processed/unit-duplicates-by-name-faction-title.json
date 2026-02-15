@@ -1,0 +1,222 @@
+{
+  "generatedAt": "2026-02-15T14:58:01.096Z",
+  "duplicateGroupCount": 8,
+  "groups": [
+    {
+      "name": "Agent Kallus",
+      "faction": "galactic-empire",
+      "title": "Hunter of Spectres",
+      "entries": [
+        {
+          "apiId": "81",
+          "rank": "commander",
+          "currentCost": 85,
+          "originalCost": 90,
+          "revamp": false,
+          "classic": true,
+          "isUnique": true,
+          "unitTypeFkey": 1
+        },
+        {
+          "apiId": "29931",
+          "rank": "operative",
+          "currentCost": 70,
+          "originalCost": 70,
+          "revamp": true,
+          "classic": false,
+          "isUnique": true,
+          "unitTypeFkey": 1
+        }
+      ]
+    },
+    {
+      "name": "Scout Troopers",
+      "faction": "galactic-empire",
+      "title": "Strike Team",
+      "entries": [
+        {
+          "apiId": "26",
+          "rank": "special-forces",
+          "currentCost": 20,
+          "originalCost": 16,
+          "revamp": false,
+          "classic": true,
+          "isUnique": false,
+          "unitTypeFkey": 1
+        },
+        {
+          "apiId": "25981",
+          "rank": "special-forces",
+          "currentCost": 20,
+          "originalCost": 16,
+          "revamp": true,
+          "classic": false,
+          "isUnique": false,
+          "unitTypeFkey": 1
+        }
+      ]
+    },
+    {
+      "name": "Cassian Andor",
+      "faction": "rebel-alliance",
+      "title": "Capable Intelligence Agent",
+      "entries": [
+        {
+          "apiId": "57",
+          "rank": "commander",
+          "currentCost": null,
+          "originalCost": 90,
+          "revamp": false,
+          "classic": true,
+          "isUnique": true,
+          "unitTypeFkey": 1
+        },
+        {
+          "apiId": "29930",
+          "rank": "operative",
+          "currentCost": null,
+          "originalCost": 90,
+          "revamp": true,
+          "classic": true,
+          "isUnique": true,
+          "unitTypeFkey": 1
+        }
+      ]
+    },
+    {
+      "name": "Jyn Erso",
+      "faction": "rebel-alliance",
+      "title": "Stardust",
+      "entries": [
+        {
+          "apiId": "27",
+          "rank": "commander",
+          "currentCost": 90,
+          "originalCost": 130,
+          "revamp": false,
+          "classic": true,
+          "isUnique": true,
+          "unitTypeFkey": 1
+        },
+        {
+          "apiId": "29928",
+          "rank": "operative",
+          "currentCost": 75,
+          "originalCost": 75,
+          "revamp": true,
+          "classic": false,
+          "isUnique": true,
+          "unitTypeFkey": 1
+        }
+      ]
+    },
+    {
+      "name": "K-2SO",
+      "faction": "rebel-alliance",
+      "title": "Sardonic Security Droid",
+      "entries": [
+        {
+          "apiId": "68",
+          "rank": "operative",
+          "currentCost": null,
+          "originalCost": 70,
+          "revamp": false,
+          "classic": true,
+          "isUnique": true,
+          "unitTypeFkey": 6
+        },
+        {
+          "apiId": "29932",
+          "rank": "operative",
+          "currentCost": null,
+          "originalCost": 70,
+          "revamp": true,
+          "classic": false,
+          "isUnique": true,
+          "unitTypeFkey": 6
+        }
+      ]
+    },
+    {
+      "name": "Rebel Commandos",
+      "faction": "rebel-alliance",
+      "title": "Strike Team",
+      "entries": [
+        {
+          "apiId": "14",
+          "rank": "special-forces",
+          "currentCost": 20,
+          "originalCost": 16,
+          "revamp": false,
+          "classic": true,
+          "isUnique": false,
+          "unitTypeFkey": 1
+        },
+        {
+          "apiId": "25979",
+          "rank": "special-forces",
+          "currentCost": 20,
+          "originalCost": 16,
+          "revamp": true,
+          "classic": false,
+          "isUnique": false,
+          "unitTypeFkey": 1
+        }
+      ]
+    },
+    {
+      "name": "Arc Troopers",
+      "faction": "republic",
+      "title": "Strike Team",
+      "entries": [
+        {
+          "apiId": "61",
+          "rank": "special-forces",
+          "currentCost": 24,
+          "originalCost": 21,
+          "revamp": false,
+          "classic": true,
+          "isUnique": false,
+          "unitTypeFkey": 5
+        },
+        {
+          "apiId": "25980",
+          "rank": "special-forces",
+          "currentCost": 24,
+          "originalCost": 21,
+          "revamp": true,
+          "classic": false,
+          "isUnique": false,
+          "unitTypeFkey": 5
+        }
+      ]
+    },
+    {
+      "name": "BX-Series Droid Commandos",
+      "faction": "separatist-alliance",
+      "title": "Strike Team",
+      "entries": [
+        {
+          "apiId": "63",
+          "rank": "special-forces",
+          "currentCost": 20,
+          "originalCost": 20,
+          "revamp": false,
+          "classic": true,
+          "isUnique": false,
+          "unitTypeFkey": 6
+        },
+        {
+          "apiId": "25982",
+          "rank": "special-forces",
+          "currentCost": 20,
+          "originalCost": 20,
+          "revamp": true,
+          "classic": false,
+          "isUnique": false,
+          "unitTypeFkey": 6
+        }
+      ]
+    }
+  ]
+}
