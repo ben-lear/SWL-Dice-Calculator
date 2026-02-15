@@ -98,17 +98,17 @@ Apply effects (Pierce X cancels d results, Immune: Pierce, Impervious, etc.)
 
 ## 4. User Input Panels
 
-The UI is divided into two main columns — **Attacker** and **Defender** — with a central results area.
+The UI is divided into two main columns — **Attacker** and **Defender** — with a central results area. Both panels support two operating modes.
 
 ### 4.0 Two-Mode Design
 
-The Attacker panel supports two modes, selectable via a toggle/tab at the top of the panel:
+Both the Attacker and Defender panels support two modes, selectable via a toggle/tab at the top of each panel:
 
-- **Custom Pool** (default) — The user manually builds a single attack pool by setting dice counts and all keywords directly. All weapon keywords are assumed to apply to the entire pool. This is the simple, fast-configuration mode for quick calculations. Equivalent to a single-weapon `weapons[]` array in the engine.
+- **Custom Pool** (default) — The user manually builds a single attack pool (attacker) or defense configuration (defender) by setting dice counts and all keywords directly. This is the simple, fast-configuration mode for quick calculations.
 
-- **Unit Builder** — The user selects a unit from preset data, equips upgrades, and chooses which weapon(s) contribute to the attack pool. Weapon keywords are tracked per-weapon. Spray auto-calculates per-weapon. This mode produces a multi-weapon `weapons[]` array. See `plans/wireframe-two-modes.md` for detailed UI spec.
+- **Unit Builder** — The user selects a unit from preset data, equips upgrades, and the app auto-populates dice, surge chart, and keywords. On the attacker side, the user can choose which weapon(s) contribute to the attack pool. On the defender side, situational settings (Cover, tokens, Guardian) remain user-editable.
 
-Both modes produce the same engine input: `AttackerConfig` with `weapons: WeaponProfile[]`.
+Both modes produce the same engine input structures: `AttackerConfig` with `weapons: WeaponProfile[]` for the attacker, and `DefenderConfig` (flat fields) for the defender.
 
 ### 4.1 Attacker Panel — Custom Pool Mode
 
@@ -214,17 +214,21 @@ Example presets:
 | Separatists | B1 Battle Droids (E-5s) | 5 White | c→blank |
 | *(more added over time)* | | | |
 
-### 4.2 Defender Panel
+### 4.2 Defender Panel — Two-Mode Design
 
-#### Unit Preset Dropdowns
-Two **searchable dropdowns** at the top of the Defender panel let the user quickly load a pre-configured defense profile:
+The Defender panel supports two modes, selectable via a toggle/tab at the top of the panel (mirroring the Attacker panel design):
 
-1. **Faction** — Select: All (default) / Rebel Alliance / Galactic Empire / Republic / Separatist Alliance / Mercenaries. Filters the unit list.
-2. **Unit** — Searchable combobox listing units within the selected faction. Typing filters the list in real time. Selecting a unit auto-populates defense die color, surge chart, and relevant keywords. Selecting "Custom" (default) leaves all fields blank.
+- **Custom Pool** (default) — The user manually configures all defense settings: die color, surge chart, cover, tokens, and keywords directly. This is the simple, fast-configuration mode for quick calculations. All fields are editable.
 
-The user can then adjust Cover, tokens, and other situational settings.
+- **Unit Builder** — The user selects a unit from preset data, which auto-populates defense die color, surge chart, and unit keywords (Armor, Danger Sense, Deflect, etc.). Upgrades can be equipped from the unit's upgrade bar. Situational settings (Cover type, Dodge tokens, Suppressed, Guardian configuration) remain user-editable since they depend on battlefield conditions.
 
-Example presets:
+Both modes write to the same underlying `DefenderConfig` structure (flat fields, no nested arrays).
+
+#### 4.2a Defender Panel — Custom Pool Mode
+
+In Custom Pool mode, the user manually sets all fields. This is the existing interface with a mode toggle added.
+
+Example presets (available in Unit Builder mode):
 | Faction | Unit | Die | Surge | Keywords |
 |---------|------|-----|-------|----------|
 | Empire | Stormtroopers | Red | — | |
@@ -236,10 +240,11 @@ Example presets:
 | Separatists | AAT Tank | Red | — | Armor 2, Shielded 2 |
 | *(more added over time)* | | | | |
 
-#### Manual Configuration
+##### Manual Configuration
 
 | Input | Type | Notes |
 |-------|------|-------|
+| **Disable defense dice** | Toggle | When enabled, defender rolls 0 defense dice (shows attack results before any defense is applied) |
 | **Defense die color** | Select: White / Red | Unit card |
 | **Defense surge conversion** | Select: None / e→d | Unit card surge chart |
 | **Cover** | Select: None / Light / Heavy | Terrain-based |
@@ -276,13 +281,30 @@ Example presets:
 | **Guardian Dodge tokens** | Number spinner (0–5) | Guardian unit's Dodge tokens for Soresu reroll (shown only when Guardian X > 0) |
 | **Hold the Line** | Toggle | While Engaged: gains c→a for attack and e→d for defense |
 
-| **Defender unit cost** | Number spinner (0–999) | Points value; auto-filled from preset, user-editable |
+| **Defender unit cost** | Number spinner (0–999) | Points value; user-editable |
 
-#### Upgrade Slots (shown when a unit preset is selected)
-Same pattern as the Attacker panel's Unit Builder mode: one searchable dropdown per upgrade slot in the unit's upgrade bar. Equipping an upgrade adds its cost and any defender-relevant combat keywords (e.g., a Gear upgrade granting a defensive keyword). **Dug In** upgrades are a special case — equipping one causes the defender to roll red defense dice during the Roll Cover step instead of white.
+#### 4.2b Defender Panel — Unit Builder Mode
 
-#### Defense Dice Upgrade/Downgrade Keywords
-*No common keywords upgrade or downgrade defense die color. Danger Sense and Impervious (above) add extra dice rather than changing die color. The **Dug In** upgrade is a special case — it changes cover dice (not main defense dice) to red during the Roll Cover step. Rare command card effects that upgrade/downgrade defense dice are not modeled in MVP.*
+In Unit Builder mode, the user selects a unit preset and configures its defense profile. This produces a fully populated `DefenderConfig` with unit keywords and upgrade effects applied.
+
+##### Unit Preset Dropdowns
+Two **searchable dropdowns** at the top:
+
+1. **Faction** — Select: All (default) / Rebel Alliance / Galactic Empire / Republic / Separatist Alliance / Mercenaries.
+2. **Unit** — Searchable combobox listing units within the selected faction. Selecting a unit auto-populates defense die color, surge chart, and unit keywords.
+
+##### Upgrade Slots
+When a unit is selected, upgrade slots appear as searchable dropdowns (one per slot in the unit's upgrade bar). Equipping an upgrade adds its cost and any defender-relevant combat keywords (e.g., a Gear upgrade granting Armor or a defensive keyword). **Dug In** upgrades are a special case — equipping one causes the defender to roll red defense dice during the Roll Cover step instead of white.
+
+##### Unit Keywords (auto-populated, manually adjustable)
+Unit-level keywords (Armor X, Danger Sense X, Deflect, Impervious, etc.) are auto-populated from the preset but remain editable. This allows users to model units that have lost keywords due to wounds or other effects.
+
+##### Situational Inputs (always editable)
+Even in Unit Builder mode, the user must set situational battlefield conditions:
+- **Cover** — Cover type (None/Light/Heavy), Cover X, Smoke tokens, Suppressed
+- **Tokens** — Dodge tokens, Surge tokens, Suppression tokens (for Danger Sense)
+- **Guardian** — Guardian X and Guardian unit configuration (die color, surge chart, keywords)
+- **Shielded active count** — If the unit has Shielded X, how many shields are currently active
 
 ### 4.3 Attack Type
 

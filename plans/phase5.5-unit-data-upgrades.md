@@ -1753,14 +1753,35 @@ function generateAttackerPreset(
 function generateSkeletonAttackerPreset(
   unit: ResolvedUnit,
 ): AttackerPreset {
-  const profile: Record<string, any> = {
+  // Create empty weapon profile for un-enriched units
+  const emptyWeapon: import('../engine/types').WeaponProfile = {
+    name: 'Unknown',
     redDice: 0,
     blackDice: 0,
     whiteDice: 0,
+    keywords: {
+      pierceX: 0,
+      impactX: 0,
+      criticalX: 0,
+      lethalX: 0,
+      ramX: 0,
+      blast: false,
+      suppressive: false,
+      highVelocity: false,
+      spray: false,
+      antiMaterielX: 0,
+      antiPersonnelX: 0,
+      cumbersome: false,
+    },
+  };
+
+  const profile: Record<string, any> = {
+    weapons: [emptyWeapon],
+    surgeChart: AttackSurgeChart.None,
     unitCost: unit.cost,
   };
 
-  // Still map boolean attacker keywords from API
+  // Still map boolean attacker keywords from API (unit-level)
   mapKeywordsToProfile(unit.keywords, ATTACKER_KEYWORD_FIELD_MAP, profile);
 
   return {
@@ -1808,6 +1829,55 @@ function generateDefenderPreset(unit: ResolvedUnit): DefenderPreset {
 // ============================================================================
 // Helpers
 // ============================================================================
+
+/**
+ * Map data-layer weapon keywords (generic Record<string, number | boolean>)
+ * to the engine's strongly-typed WeaponKeywords interface.
+ * Silently ignores unknown keywords not in WeaponKeywords.
+ */
+function mapKeywordsToWeaponKeywords(
+  keywords: Record<string, number | boolean>,
+): import('../engine/types').WeaponKeywords {
+  const weaponKeywords: import('../engine/types').WeaponKeywords = {
+    pierceX: 0,
+    impactX: 0,
+    criticalX: 0,
+    lethalX: 0,
+    ramX: 0,
+    blast: false,
+    suppressive: false,
+    highVelocity: false,
+    spray: false,
+    antiMaterielX: 0,
+    antiPersonnelX: 0,
+    cumbersome: false,
+  };
+
+  // Map known weapon keywords from enrichment data to typed interface
+  const keyMap: Record<string, keyof import('../engine/types').WeaponKeywords> = {
+    Pierce: 'pierceX',
+    Impact: 'impactX',
+    Critical: 'criticalX',
+    Lethal: 'lethalX',
+    Ram: 'ramX',
+    Blast: 'blast',
+    Suppressive: 'suppressive',
+    'High Velocity': 'highVelocity',
+    Spray: 'spray',
+    'Anti-Materiel': 'antiMaterielX',
+    'Anti-Personnel': 'antiPersonnelX',
+    Cumbersome: 'cumbersome',
+  };
+
+  for (const [kwName, kwValue] of Object.entries(keywords)) {
+    const engineField = keyMap[kwName];
+    if (engineField) {
+      weaponKeywords[engineField] = kwValue as any;
+    }
+  }
+
+  return weaponKeywords;
+}
 
 /**
  * Map keyword key-value pairs to store profile fields using a field map.

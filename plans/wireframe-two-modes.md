@@ -31,7 +31,7 @@ Keywords are split into two sections:
 
 ```
 ┌──────────────────────────────────────┐
-│  ⚔️  Just Roll Crits      [All ▼]   │
+│  ⚔️  Just Roll Crits   [Ranged ▼]   │
 ├──────────────────────────────────────┤
 │  ATTACKER                            │
 │  [Custom Pool] [Unit Builder]        │
@@ -111,7 +111,7 @@ Weapons are displayed as individual rows, each showing their dice contribution a
 
 ```
 ┌──────────────────────────────────────┐
-│  ⚔️  Just Roll Crits      [All ▼]   │
+│  ⚔️  Just Roll Crits   [Ranged ▼]   │
 ├──────────────────────────────────────┤
 │  ATTACKER                            │
 │  [Custom Pool] [Unit Builder]        │
@@ -197,39 +197,50 @@ Each weapon row in Unit Builder mode displays:
 
 ---
 
-## Defender Panel (Both Modes)
+## Defender Panel — Two Modes
 
-The Defender Panel is unchanged by the two-mode design — it always uses the same flat-field interface. Included here for completeness of the three-column layout wireframe.
+The Defender Panel mirrors the Attacker Panel's two-mode design. A segmented control at the top switches between Custom Pool and Unit Builder modes.
+
+### Mode Toggle
+
+```
+┌──────────────────────────────┐
+│  [Custom Pool] [Unit Builder]│
+└──────────────────────────────┘
+```
+
+- **Custom Pool** is the default (active on first load)
+- The toggle sets `store.activeDefenderMode` to `'custom'` or `'unit-builder'`
+- Switching modes does NOT reset the current configuration
+- Both modes write to the same underlying flat `DefenderConfig` fields
+
+---
+
+## Defender Custom Pool Mode
+
+The user manually configures all defense settings. All fields are editable.
 
 ```
 ┌──────────────────────────────────────┐
 │  DEFENDER                            │
-│                                      │
-│  ─── Unit Preset ────────────────    │
-│  Faction:    [Rebel Alliance ▼]      │
-│  Unit:       [Rebel Troopers  ▼]     │
-│                                      │
-│  ─── Upgrades ───────────────────    │
-│  Heavy Wpn: [Z-6 Trooper      ▼]    │
-│  Personnel: [None              ▼]    │
-│  Gear:      [None              ▼]    │
-│  Grenades:  [Impact Grenades   ▼]    │
-│  Training:  [None              ▼]    │
-│  Total: 57 pts                       │
+│  [Custom Pool] [Unit Builder]        │
 │                                      │
 │  ─── Defense ────────────────────    │
+│  Disable defense dice:     □         │
+│  (Shows attack results before        │
+│   any defense is applied)            │
 │  Defense die: [White ▼]             │
-│  Surge chart: [e→d ▼]              │
-│  Minis in LOS:      [5]  ◀ ─ ▶      │
+│  Surge chart: [None ▼]              │
+│  Minis in LOS:      [1]  ◀ ─ ▶      │
 │                                      │
 │  ─── Cover ──────────────────────    │
-│  Cover type:  [Heavy ▼]             │
+│  Cover type:  [None ▼]              │
 │  Cover X:           [0]  ◀ ─ ▶      │
 │  Smoke tokens:      [0]  ◀ ─ ▶      │
 │  Suppressed:           □             │
 │                                      │
 │  ─── Tokens ─────────────────────    │
-│  Dodge tokens:      [1]  ◀ ─ ▶      │
+│  Dodge tokens:      [0]  ◀ ─ ▶      │
 │  Surge tokens:      [0]  ◀ ─ ▶      │
 │                                      │
 │  ─── Keywords ───────────────────    │
@@ -253,7 +264,6 @@ The Defender Panel is unchanged by the two-mode design — it always uses the sa
 │  Duelist (defense):    □             │
 │  Backup:               □             │
 │  Hold the Line:        □             │
-│  Dug In:               □             │
 │                                      │
 │  ─── Guardian ───────────────────    │
 │  Guardian:          [0]  ◀ ─ ▶      │
@@ -269,23 +279,114 @@ The Defender Panel is unchanged by the two-mode design — it always uses the sa
 └──────────────────────────────────────┘
 ```
 
+### Defender Custom Pool Store Mapping
+
+| UI Element          | Store Field                            |
+|---------------------|----------------------------------------|
+| Disable defense toggle | `store.disableDefenseDice` via `setField('disableDefenseDice', v)` |
+| Defense die select  | `store.defenseColor` via `setField('defenseColor', v)` |
+| Surge chart select  | `store.defenseSurgeChart` via `setField('defenseSurgeChart', v)` |
+| Minis in LOS spinner| `store.minisInLOS` via `setField('minisInLOS', v)` |
+| Cover type select   | `store.cover` via `setField('cover', v)` |
+| Armor spinner       | `store.armorX` via `setField('armorX', v)` |
+| Deflect toggle      | `store.deflect` via `setField('deflect', v)` |
+| Dodge tokens spinner| `store.dodgeTokens` via `setField('dodgeTokens', v)` |
+
+---
+
+## Defender Unit Builder Mode
+
+The preset-driven mode. The user selects a unit and the app auto-populates defense die, surge chart, and unit keywords from the data layer. Situational settings (Cover, tokens, Guardian) remain user-editable.
+
+```
+┌──────────────────────────────────────┐
+│  DEFENDER                            │
+│  [Custom Pool] [Unit Builder]        │
+│                                      │
+│  ─── Unit Selection ─────────────    │
+│  Faction:    [Rebel Alliance ▼]      │
+│  Unit:       [Rebel Troopers  ▼]     │
+│                                      │
+│  ─── Upgrades ───────────────────    │
+│  Heavy Wpn: [Z-6 Trooper      ▼]    │
+│  Personnel: [None              ▼]    │
+│  Gear:      [None              ▼]    │
+│  Grenades:  [Impact Grenades   ▼]    │
+│  Training:  [None              ▼]    │
+│  Base: 40 pts  Upgrades: +17 pts     │
+│  Total: 57 pts                       │
+│                                      │
+│  ─── Defense ────────────────────    │
+│  (auto-populated from preset)        │
+│  Defense die:  White                 │
+│  Surge chart:  e→d                  │
+│  Minis in LOS:      [5]  ◀ ─ ▶      │
+│                                      │
+│  ─── Unit Keywords ──────────────    │
+│  (auto-populated, adjustable)        │
+│  Armor:             [0]  ◀ ─ ▶      │
+│  Danger Sense:      [0]  ◀ ─ ▶      │
+│  Deflect:              □             │
+│  Uncanny Luck:      [0]  ◀ ─ ▶      │
+│  (other keywords as applicable)      │
+│                                      │
+│  ─── Cover ──────────────────────    │
+│  (situational — user must set)       │
+│  Cover type:  [Heavy ▼]             │
+│  Cover X:           [0]  ◀ ─ ▶      │
+│  Smoke tokens:      [0]  ◀ ─ ▶      │
+│  Suppressed:           □             │
+│                                      │
+│  ─── Tokens ─────────────────────    │
+│  (situational — user must set)       │
+│  Dodge tokens:      [1]  ◀ ─ ▶      │
+│  Surge tokens:      [0]  ◀ ─ ▶      │
+│  Suppression:       [0]  ◀ ─ ▶      │
+│                                      │
+│  ─── Guardian ───────────────────    │
+│  (situational — user must configure) │
+│  Guardian:          [0]  ◀ ─ ▶      │
+│  ├ Die color:  [White ▼]            │
+│  ├ Surge:      [None ▼]             │
+│  ├ Deflect:        □                │
+│  ├ Soresu:         □                │
+│  ├ Dodge tokens: [0]  ◀ ─ ▶        │
+│                                      │
+│  ─── Points ─────────────────────    │
+│  Total: 57 pts                       │
+│                                      │
+└──────────────────────────────────────┘
+```
+
+### Defender Unit Builder Store Mapping
+
+| UI Element          | Store Field                             |
+|---------------------|------------------------------------------|
+| Faction select      | `store.selectedDefenderFaction` via `setDefenderFaction(v)` |
+| Unit combobox       | `store.selectedDefenderPresetId` via `loadDefenderPreset(id, profile)` |
+| Upgrade combobox    | `store.equippedDefenderUpgradeIds[i]` via `equipDefenderUpgrade(i, id)` |
+| Armor spinner       | `store.armorX` via `setField('armorX', v)` (editable) |
+| Deflect toggle      | `store.deflect` via `setField('deflect', v)` (editable) |
+| Cover type select   | `store.cover` via `setField('cover', v)` (situational) |
+| Dodge tokens spinner| `store.dodgeTokens` via `setField('dodgeTokens', v)` (situational) |
+
 ---
 
 ## Full Three-Column Layout (Desktop)
 
-On desktop (≥1024px), the three panels sit side by side. The center Results panel is narrower than the input panels.
+On desktop (≥1024px), the three panels sit side by side. The center Results panel is narrower than the input panels. Both Attacker and Defender panels have mode toggles.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  ⚔️  Just Roll Crits                                          [All ▼]      │
+│  ⚔️  Just Roll Crits                                       [Ranged ▼]      │
 ├─────────────────────────┬──────────────────────┬─────────────────────────────┤
 │     ATTACKER            │      RESULTS         │       DEFENDER              │
-│  [Custom] [Unit Builder]│                      │                             │
-│                         │   Mean: 3.21         │  Faction: [Rebels ▼]        │
-│  (mode-specific         │   Median: 3          │  Unit:    [Reb.Troop. ▼]    │
-│   content — see         │   Mode: 3            │                             │
-│   wireframes above)     │                      │  (defender content —         │
-│                         │   ┌──────────────┐   │   see wireframe above)      │
+│  [Custom] [Unit Builder]│                      │  [Custom] [Unit Builder]    │
+│                         │   Mean: 3.21         │                             │
+│  (mode-specific         │   Median: 3          │  (mode-specific             │
+│   content — see         │   Mode: 3            │   content — see             │
+│   wireframes above)     │                      │   wireframes above)         │
+│                         │   ┌──────────────┐   │                             │
 │                         │   │  ▌           │   │                             │
 │                         │   │  █▌          │   │                             │
 │                         │   │  ██          │   │                             │
@@ -315,13 +416,14 @@ On mobile, panels stack vertically in a single column. The mode toggle and all s
 
 ```
 ┌──────────────────────────────────────┐
-│  ⚔️  Just Roll Crits      [All ▼]   │
+│  ⚔️  Just Roll Crits   [Ranged ▼]   │
 ├──────────────────────────────────────┤
 │  ATTACKER                            │
 │  [Custom Pool] [Unit Builder]        │
 │  (full attacker content)             │
 ├──────────────────────────────────────┤
 │  DEFENDER                            │
+│  [Custom Pool] [Unit Builder]        │
 │  (full defender content)             │
 ├──────────────────────────────────────┤
 │  RESULTS                             │
@@ -335,7 +437,7 @@ On mobile, panels stack vertically in a single column. The mode toggle and all s
 
 For implementors — which keywords appear in which section:
 
-### Weapon Keywords (on `weapons[i].keywords`)
+### Attacker — Weapon Keywords (on `weapons[i].keywords`)
 | Keyword | Type | Custom Pool UI | Unit Builder UI |
 |---------|------|----------------|-----------------|
 | Critical X | numeric | Spinner | Read-only badge |
@@ -351,7 +453,7 @@ For implementors — which keywords appear in which section:
 | Anti-Materiel X | numeric | Spinner | Read-only badge |
 | Anti-Personnel X | numeric | Spinner | Read-only badge |
 
-### Unit Keywords (flat on store)
+### Attacker — Unit Keywords (flat on store)
 | Keyword | Type | Both Modes UI |
 |---------|------|---------------|
 | Precise X | numeric | Spinner (editable) |
@@ -364,3 +466,47 @@ For implementors — which keywords appear in which section:
 | Death From Above | boolean | Toggle (editable) |
 | Immune: Deflect | boolean | Toggle (editable) |
 | Hold the Line | boolean | Toggle (editable) |
+
+### Defender — All Keywords (flat on `DefenderConfig`)
+
+The defender side has no weapon array — all keywords are flat fields on the config. In both modes, keywords are editable (though Unit Builder mode auto-populates them from presets).
+
+| Keyword | Type | Custom Pool UI | Unit Builder UI |
+|---------|------|----------------|-----------------|
+| Disable defense dice | boolean | Toggle | Not shown (always false) |
+| Defense die color | enum | Select | Read-only (from preset) |
+| Defense surge chart | enum | Select | Read-only (from preset) |
+| Minis in LOS | numeric | Spinner | Spinner (editable) |
+| Cover type | enum | Select | Select (situational) |
+| Cover X | numeric | Spinner | Spinner (editable) |
+| Smoke tokens | numeric | Spinner | Spinner (situational) |
+| Suppressed | boolean | Toggle | Toggle (situational) |
+| Dodge tokens | numeric | Spinner | Spinner (situational) |
+| Surge tokens | numeric | Spinner | Spinner (situational) |
+| Armor X | numeric | Spinner | Spinner (editable) |
+| Weak Point X | numeric | Spinner | Spinner (editable) |
+| Immune: Pierce | boolean | Toggle | Toggle (editable) |
+| Immune: Melee Pierce | boolean | Toggle | Toggle (editable) |
+| Immune: Blast | boolean | Toggle | Toggle (editable) |
+| Impervious | boolean | Toggle | Toggle (editable) |
+| Danger Sense X | numeric | Spinner | Spinner (editable) |
+| Suppression tokens | numeric | Spinner | Spinner (situational) |
+| Uncanny Luck X | numeric | Spinner | Spinner (editable) |
+| Block | boolean | Toggle | Toggle (editable) |
+| Deflect | boolean | Toggle | Toggle (editable) |
+| Shien Mastery | boolean | Toggle | Toggle (editable) |
+| Outmaneuver | boolean | Toggle | Toggle (editable) |
+| Low Profile | boolean | Toggle | Toggle (editable) |
+| Shielded X | numeric | Spinner | Spinner (editable, active count) |
+| Soresu Mastery | boolean | Toggle | Toggle (editable) |
+| Djem So Mastery | boolean | Toggle | Toggle (editable) |
+| Duelist (defense) | boolean | Toggle | Toggle (editable) |
+| Backup | boolean | Toggle | Toggle (editable) |
+| Hold the Line | boolean | Toggle | Toggle (editable) |
+| Guardian X | numeric | Spinner | Spinner (situational) |
+| Guardian die color | enum | Select | Select (situational) |
+| Guardian surge | enum | Select | Select (situational) |
+| Guardian Deflect | boolean | Toggle | Toggle (situational) |
+| Guardian Soresu | boolean | Toggle | Toggle (situational) |
+| Guardian Dodge tokens | numeric | Spinner | Spinner (situational) |
+| Unit cost | numeric | Spinner | Read-only (computed) |

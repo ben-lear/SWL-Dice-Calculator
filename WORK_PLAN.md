@@ -114,6 +114,38 @@ Restructure `AttackerConfig` to separate unit-level keywords from weapon-level k
 
 ---
 
+## Phase 2.6: Defender Custom Pool & Unit Builder Modes
+
+Extend the two-mode design pattern (Custom Pool / Unit Builder) to the Defender Panel, mirroring the attacker-side implementation from Phase 2.5. Both modes operate on the same underlying `DefenderConfig` structure (already flat, no restructuring needed). See `plans/phase2.6-defender-modes.md` for the full implementation plan.
+
+### 2.6A: DefenderConfig Structure Review
+- [ ] Verify existing `DefenderConfig` supports both modes (already flat, no changes needed)
+
+### 2.6B: Defender Preset Generation
+- [ ] Expand `UnitEnrichment` type to include defender fields (defense die, surge chart, defender keywords)
+- [ ] Enrich defender data for curated units in `src/data/enrichment/units.ts`
+- [ ] Extend `presetGenerator.ts` to produce `DefenderPreset` objects
+- [ ] Add defender preset helpers (`getDefenderPresets`, `getDefenderPresetById`) to `presetHelpers.ts`
+- [ ] Unit tests for defender preset generation and filtering
+
+### 2.6C: Defender Store Enhancements
+- [ ] Add `activeDefenderMode`, `selectedDefenderFaction`, `selectedDefenderPresetId`, `defenderUpgradeBar`, `equippedDefenderUpgradeIds` to defender store
+- [ ] Implement `setDefenderMode`, `setDefenderFaction`, `loadDefenderPreset`, `equipDefenderUpgrade` actions
+- [ ] Update `getFullDefenderConfig()` selector to apply equipped defender upgrades
+- [ ] Implement `applyDefenderUpgrades` function in `upgradeApplicator.ts`
+- [ ] Unit tests for store actions and upgrade application
+
+### 2.6D: Defender Panel UI
+- [ ] Add mode toggle to DefenderPanel (Custom Pool / Unit Builder)
+- [ ] Extract Custom Pool view (existing UI) into `DefenderCustomPoolView` component
+- [ ] Create `DefenderUnitBuilderView` component with faction/unit/upgrade dropdowns
+- [ ] Ensure situational inputs (Cover, tokens, Guardian) remain editable in both modes
+- [ ] Component tests for mode toggle and view switching
+
+**Output:** Defender Panel supports two-mode operation (Custom Pool / Unit Builder), mirroring the Attacker Panel design. Defender presets auto-populate die color, surge chart, and unit keywords. Upgrade system integrated with cost tracking and keyword effects.
+
+---
+
 ## Phase 3: Monte Carlo Simulator & Web Worker
 
 ### 3A: Simulator (`engine/simulator.ts`)
@@ -367,19 +399,24 @@ Build the data pipeline that imports all unit and upgrade data from the TableTop
 ```
 Phase 1 (Scaffolding)
   ├─► Phase 2 (Dice Engine)
-  │     ├─► Phase 2.5 (Multi-Weapon Pool Restructuring)
+  │     ├─► Phase 2.5 (Multi-Weapon Pool Restructuring — Attacker)
   │     │     ├─► Phase 3 (Simulator + Worker)
-  │     │     └─► Phase 5A (Stores — uses weapons[] types)
-  │     │              │
-  │     │              ├─► Phase 5.5 (Unit Data & Upgrades)
-  │     │              │     └──► replaces Phase 5B
-  │     │              │
-  │     └──────────────┘
+  │     │     ├─► Phase 5A (Stores — uses weapons[] types)
+  │     │     │     │
+  │     │     │     ├─► Phase 5.5 (Unit Data & Upgrades)
+  │     │     │     │     └──► replaces Phase 5B
+  │     │     │     │
+  │     │     │     └─► Phase 2.6 (Defender Two-Mode Design)
+  │     │     │              │
+  │     │     └──────────────┘
+  │     │
+  │     └─────────────────────┘
   ├─► Phase 4 (Shared Components)
   │
   │   ┌─────────────────────────────────────────────────────┐
   │   │ Phase 6 (UI Panels — Two-Mode Design)               │
-  │   │   requires: Phase 4 + Phase 5A + Phase 5.5          │
+  │   │   6A: Attacker Panel requires: 4 + 5A + 5.5 + 2.5   │
+  │   │   6B: Defender Panel requires: 4 + 5A + 5.5 + 2.6   │
   │   └─────────────────────────────────────────────────────┘
   │   ┌─────────────────────────────────────────────────────┐
   │   │ Phase 7 (Results Panel)                             │
@@ -398,4 +435,4 @@ Phase 1 (Scaffolding)
 - **Track B:** Phase 4 (shared UI components — no state dependency)
 - **Track C:** Phase 5A → Phase 5.5 (stores + data layer, depends on Phase 2.5 for `weapons[]` types)
 
-Phase 2.5 restructures the engine to support per-weapon keywords before downstream phases consume the config types. Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 6 (UI Panels) requires Phases 4 + 5A + 5.5 and implements the two-mode design (Custom Pool / Unit Builder). Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.
+Phase 2.5 restructures the attacker engine to support per-weapon keywords before downstream phases consume the config types. Phase 2.6 extends the two-mode design to the Defender Panel (depends on Phase 2.5 pattern and Phase 5.5 data layer). Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 6A (Attacker Panel) requires Phases 4 + 5A + 5.5 + 2.5 and implements the two-mode design (Custom Pool / Unit Builder). Phase 6B (Defender Panel) requires Phases 4 + 5A + 5.5 + 2.6 and implements the two-mode design. Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.

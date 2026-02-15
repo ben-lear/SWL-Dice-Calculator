@@ -99,20 +99,21 @@ The following design decisions are documented for clarity:
 
 The main container component for all attacker inputs. Composes shared components and wires them to `useAttackConfigStore`.
 
-> **⚠️ Phase 2.5 Impact:** The component code below shows the _original_ flat-field design. After Phase 2.5, this component must be restructured:
-> - Add a mode toggle at the top (Custom Pool / Unit Builder)
-> - **Custom Pool mode:** Dice pool spinners read/write `store.weapons[0].redDice` etc. via `store.setWeaponDice(0, 'red', v)`. Weapon keyword spinners/toggles read/write `store.weapons[0].keywords.pierceX` etc. via `store.setWeaponKeyword(0, 'pierceX', v)`. Unit keywords remain flat: `store.preciseX`, `store.marksman`, etc.
-> - **Unit Builder mode:** Replace the Dice Pool section with a weapon rows component showing each weapon's dice and keywords from `store.weapons[]`. Each row has an enable/disable checkbox.
-> - The "Keywords" `SectionHeader` splits into "Weapon Keywords" (per-weapon, on `weapons[0]` in Custom mode) and "Unit Keywords" (flat). See wireframe doc for layout.
-> - `handlePresetChange` now calls `store.loadPreset(preset.id, preset.profile)` where `preset.profile.weapons` populates the store's `weapons[]`.
+> **⚠️ Phase 2.5 Impact:** The component code below is fully updated for Phase 2.5:
+> - Mode toggle at top (Custom Pool / Unit Builder)
+> - **Custom Pool mode:** Dice pool spinners operate on `store.weapons[0]` via `setWeaponDice(0, color, v)`. Weapon keyword spinners/toggles operate on `store.weapons[0].keywords` via `setWeaponKeyword(0, keyword, v)`. Unit keywords remain flat.
+> - **Unit Builder mode:** Weapon rows component replaces dice pool section. Each row shows a weapon's dice and keywords with enable/disable checkbox.
+> - Keywords section split into "Weapon Keywords" (per-weapon, weapons[0] in Custom mode) and "Unit Keywords" (flat).
+> - `handlePresetChange` calls `store.loadPreset(preset.id, preset.profile)` where `preset.profile.weapons` populates `store.weapons[]`.
 
 ```tsx
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
 import {
   AttackSurgeChart,
   MarksmanStrategy,
   RerollStrategy,
+  WeaponKeywords,
 } from '../../engine/types';
 import { Faction } from '../../data/presets';
 import {
@@ -122,7 +123,6 @@ import {
 } from '../../data/presetHelpers';
 import { getUpgradesForSlot } from '../../data/upgradeResolver';
 import { UPGRADE_SLOT_LABELS } from '../../data/types';
-import { getResolvedUnitById } from '../../data/unitResolver';
 import NumberSpinner from '../shared/NumberSpinner';
 import Toggle from '../shared/Toggle';
 import Select from '../shared/Select';
@@ -156,12 +156,18 @@ const FACTION_OPTIONS: SelectOption<string>[] = [
   ...getFactionOptions().map((f) => ({ value: f.value, label: f.label })),
 ];
 
+const MODE_OPTIONS: SelectOption<string>[] = [
+  { value: 'custom', label: 'Custom Pool' },
+  { value: 'unit-builder', label: 'Unit Builder' },
+];
+
 // ============================================================================
 // Component
 // ============================================================================
 
 export default function AttackerPanel() {
   const store = useAttackConfigStore();
+  const mode = store.activeMode;
 
   // ── Derived state ──
 
@@ -176,6 +182,14 @@ export default function AttackerPanel() {
   }, [store.selectedFaction]);
 
   const presetValue = store.selectedPresetId ?? '';
+
+  // Weapon 0 references (for Custom Pool mode)
+  const weapon0 = store.weapons[0] ?? {
+    redDice: 0,
+    blackDice: 0,
+    whiteDice: 0,
+    keywords: {} as WeaponKeywords,
+  };
 
   // ── Handlers ──
 
@@ -201,6 +215,13 @@ export default function AttackerPanel() {
     [store],
   );
 
+  const handleModeChange = useCallback(
+    (value: string) => {
+      store.setActiveMode(value as 'custom' | 'unit-builder');
+    },
+    [store],
+  );
+
   // ── Render ──
 
   return (
@@ -213,6 +234,15 @@ export default function AttackerPanel() {
       </div>
 
       <div className="flex-1 space-y-4 px-4 py-4">
+        {/* ── Mode Toggle ── */}
+        <Select
+          label="Mode"
+          value={mode}
+          onChange={handleModeChange}
+          options={MODE_OPTIONS}
+          tooltip="Custom Pool: single weapon configuration. Unit Builder: multi-weapon preset."
+        />
+
         {/* ── Preset Section ── */}
         <SectionHeader title="Unit Preset">
           <div className="space-y-3">
@@ -238,8 +268,6 @@ export default function AttackerPanel() {
             <div className="space-y-3">
               {store.upgradeBar.map((slot, index) => {
                 const slotLabel = UPGRADE_SLOT_LABELS[slot] ?? slot;
-                // Get available upgrades for this slot type
-                // unitApiId can be derived from the selected preset's resolved unit
                 const upgradeOptions: ComboboxOption[] = useMemo(() => {
                   const upgrades = getUpgradesForSlot(slot);
                   return [
@@ -264,7 +292,6 @@ export default function AttackerPanel() {
                   />
                 );
               })}
-              {/* Total cost display */}
               <div className="flex items-center justify-between text-xs text-gray-400">
                 <span>Base cost: {store.unitCost} pts</span>
               </div>
@@ -272,44 +299,178 @@ export default function AttackerPanel() {
           </SectionHeader>
         )}
 
-        {/* ── Dice Pool Section ── */}
-        <SectionHeader title="Dice Pool">
-          <div className="space-y-3">
-            <NumberSpinner
-              label="Red dice"
-              value={store.redDice}
-              onChange={(v) => store.setField('redDice', v)}
-              min={0}
-              max={12}
-              tooltip="Red attack dice (5/8 hit, 1/8 crit, 1/8 surge)"
-            />
-            <NumberSpinner
-              label="Black dice"
-              value={store.blackDice}
-              onChange={(v) => store.setField('blackDice', v)}
-              min={0}
-              max={12}
-              tooltip="Black attack dice (3/8 hit, 1/8 crit, 1/8 surge)"
-            />
-            <NumberSpinner
-              label="White dice"
-              value={store.whiteDice}
-              onChange={(v) => store.setField('whiteDice', v)}
-              min={0}
-              max={12}
-              tooltip="White attack dice (1/8 hit, 1/8 crit, 1/8 surge)"
-            />
-            <Select
-              label="Surge chart"
-              value={store.surgeChart}
-              onChange={(v) => store.setField('surgeChart', v as AttackSurgeChart)}
-              options={ATTACK_SURGE_OPTIONS}
-              tooltip="How attack surge results are converted"
-            />
-          </div>
-        </SectionHeader>
+        {/* ── Custom Pool Mode ── */}
+        {mode === 'custom' && (
+          <>
+            {/* Dice Pool Section */}
+            <SectionHeader title="Dice Pool">
+              <div className="space-y-3">
+                <NumberSpinner
+                  label="Red dice"
+                  value={weapon0.redDice}
+                  onChange={(v) => store.setWeaponDice(0, 'red', v)}
+                  min={0}
+                  max={12}
+                  tooltip="Red attack dice (5/8 hit, 1/8 crit, 1/8 surge)"
+                />
+                <NumberSpinner
+                  label="Black dice"
+                  value={weapon0.blackDice}
+                  onChange={(v) => store.setWeaponDice(0, 'black', v)}
+                  min={0}
+                  max={12}
+                  tooltip="Black attack dice (3/8 hit, 1/8 crit, 1/8 surge)"
+                />
+                <NumberSpinner
+                  label="White dice"
+                  value={weapon0.whiteDice}
+                  onChange={(v) => store.setWeaponDice(0, 'white', v)}
+                  min={0}
+                  max={12}
+                  tooltip="White attack dice (1/8 hit, 1/8 crit, 1/8 surge)"
+                />
+                <Select
+                  label="Surge chart"
+                  value={store.surgeChart}
+                  onChange={(v) => store.setField('surgeChart', v as AttackSurgeChart)}
+                  options={ATTACK_SURGE_OPTIONS}
+                  tooltip="How attack surge results are converted"
+                />
+              </div>
+            </SectionHeader>
 
-        {/* ── Tokens Section ── */}
+            {/* Weapon Keywords Section (operates on weapons[0]) */}
+            <SectionHeader title="Weapon Keywords">
+              <div className="space-y-3">
+                <NumberSpinner
+                  label="Pierce X"
+                  value={weapon0.keywords.pierceX ?? 0}
+                  onChange={(v) => store.setWeaponKeyword(0, 'pierceX', v)}
+                  min={0}
+                  max={5}
+                  tooltip="Cancel up to X block results"
+                />
+                <NumberSpinner
+                  label="Impact X"
+                  value={weapon0.keywords.impactX ?? 0}
+                  onChange={(v) => store.setWeaponKeyword(0, 'impactX', v)}
+                  min={0}
+                  max={5}
+                  tooltip="Convert hit → crit vs Armor"
+                />
+                <NumberSpinner
+                  label="Critical X"
+                  value={weapon0.keywords.criticalX ?? 0}
+                  onChange={(v) => store.setWeaponKeyword(0, 'criticalX', v)}
+                  min={0}
+                  max={5}
+                  tooltip="Convert up to X surge → crit"
+                />
+                <NumberSpinner
+                  label="Lethal X"
+                  value={weapon0.keywords.lethalX ?? 0}
+                  onChange={(v) => store.setWeaponKeyword(0, 'lethalX', v)}
+                  min={0}
+                  max={3}
+                  tooltip="Spend Aim for Pierce instead of reroll"
+                />
+                <NumberSpinner
+                  label="Ram X"
+                  value={weapon0.keywords.ramX ?? 0}
+                  onChange={(v) => store.setWeaponKeyword(0, 'ramX', v)}
+                  min={0}
+                  max={3}
+                  tooltip="Change X results to crit"
+                />
+                <Toggle
+                  label="Blast"
+                  value={weapon0.keywords.blast ?? false}
+                  onChange={(v) => store.setWeaponKeyword(0, 'blast', v)}
+                  tooltip="Defender ignores Cover"
+                />
+                <Toggle
+                  label="High Velocity"
+                  value={weapon0.keywords.highVelocity ?? false}
+                  onChange={(v) => store.setWeaponKeyword(0, 'highVelocity', v)}
+                  tooltip="Defender can't spend Dodge; Deflect disabled"
+                />
+                <Toggle
+                  label="Suppressive"
+                  value={weapon0.keywords.suppressive ?? false}
+                  onChange={(v) => store.setWeaponKeyword(0, 'suppressive', v)}
+                  tooltip="+1 extra Suppression (informational)"
+                />
+                <Toggle
+                  label="Spray"
+                  value={weapon0.keywords.spray ?? false}
+                  onChange={(v) => store.setWeaponKeyword(0, 'spray', v)}
+                  tooltip="Weapon dice multiplied by minis in LOS"
+                />
+                <NumberSpinner
+                  label="Anti-Materiel X"
+                  value={weapon0.keywords.antiMaterielX ?? 0}
+                  onChange={(v) => store.setWeaponKeyword(0, 'antiMaterielX', v)}
+                  min={0}
+                  max={3}
+                  tooltip="Upgrade X dice (vs Vehicles)"
+                />
+                <NumberSpinner
+                  label="Anti-Personnel X"
+                  value={weapon0.keywords.antiPersonnelX ?? 0}
+                  onChange={(v) => store.setWeaponKeyword(0, 'antiPersonnelX', v)}
+                  min={0}
+                  max={3}
+                  tooltip="Upgrade X dice (vs Troopers)"
+                />
+                <Toggle
+                  label="Cumbersome"
+                  value={weapon0.keywords.cumbersome ?? false}
+                  onChange={(v) => store.setWeaponKeyword(0, 'cumbersome', v)}
+                  tooltip="Downgrade each weapon die (if unit moved)"
+                />
+              </div>
+            </SectionHeader>
+          </>
+        )}
+
+        {/* ── Unit Builder Mode ── */}
+        {mode === 'unit-builder' && (
+          <SectionHeader title="Weapons">
+            <div className="space-y-3">
+              {store.weapons.map((weapon, index) => (
+                <div
+                  key={index}
+                  className="rounded border border-gray-700 bg-gray-800 p-3"
+                >
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-200">
+                      {weapon.name || `Weapon ${index + 1}`}
+                    </span>
+                    <Toggle
+                      label="Enabled"
+                      value={weapon.enabled ?? true}
+                      onChange={(v) => store.setWeaponEnabled(index, v)}
+                      tooltip="Enable or disable this weapon"
+                    />
+                  </div>
+                  <div className="space-y-2 text-xs text-gray-400">
+                    <div>
+                      Dice: {weapon.redDice}R / {weapon.blackDice}B / {weapon.whiteDice}W
+                    </div>
+                    <div>
+                      Keywords: Pierce {weapon.keywords.pierceX}, Impact{' '}
+                      {weapon.keywords.impactX}
+                      {weapon.keywords.blast && ', Blast'}
+                      {weapon.keywords.highVelocity && ', High Velocity'}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </SectionHeader>
+        )}
+
+        {/* ── Tokens Section (shared between modes) ── */}
         <SectionHeader title="Tokens">
           <div className="space-y-3">
             <NumberSpinner
@@ -339,10 +500,9 @@ export default function AttackerPanel() {
           </div>
         </SectionHeader>
 
-        {/* ── Keywords Section ── */}
-        <SectionHeader title="Keywords">
+        {/* ── Unit Keywords Section (shared between modes) ── */}
+        <SectionHeader title="Unit Keywords">
           <div className="space-y-3">
-            {/* Numeric keywords */}
             <NumberSpinner
               label="Precise X"
               value={store.preciseX}
@@ -352,22 +512,6 @@ export default function AttackerPanel() {
               tooltip="Extra rerolls per Aim token"
             />
             <NumberSpinner
-              label="Critical X"
-              value={store.criticalX}
-              onChange={(v) => store.setField('criticalX', v)}
-              min={0}
-              max={5}
-              tooltip="Convert up to X surge → crit"
-            />
-            <NumberSpinner
-              label="Lethal X"
-              value={store.lethalX}
-              onChange={(v) => store.setField('lethalX', v)}
-              min={0}
-              max={3}
-              tooltip="Spend Aim for Pierce instead of reroll"
-            />
-            <NumberSpinner
               label="Sharpshooter X"
               value={store.sharpshooterX}
               onChange={(v) => store.setField('sharpshooterX', v)}
@@ -375,57 +519,12 @@ export default function AttackerPanel() {
               max={3}
               tooltip="Reduce defender's Cover value by X"
             />
-            <NumberSpinner
-              label="Pierce X"
-              value={store.pierceX}
-              onChange={(v) => store.setField('pierceX', v)}
-              min={0}
-              max={5}
-              tooltip="Cancel up to X block results"
-            />
-            <NumberSpinner
-              label="Impact X"
-              value={store.impactX}
-              onChange={(v) => store.setField('impactX', v)}
-              min={0}
-              max={5}
-              tooltip="Convert hit → crit vs Armor"
-            />
-            <NumberSpinner
-              label="Ram X"
-              value={store.ramX}
-              onChange={(v) => store.setField('ramX', v)}
-              min={0}
-              max={3}
-              tooltip="Change X results to crit"
-            />
-
-            {/* Boolean keywords */}
-            <Toggle
-              label="Blast"
-              value={store.blast}
-              onChange={(v) => store.setField('blast', v)}
-              tooltip="Defender ignores Cover"
-            />
-            <Toggle
-              label="High Velocity"
-              value={store.highVelocity}
-              onChange={(v) => store.setField('highVelocity', v)}
-              tooltip="Defender can't spend Dodge; Deflect disabled"
-            />
-            <Toggle
-              label="Suppressive"
-              value={store.suppressive}
-              onChange={(v) => store.setField('suppressive', v)}
-              tooltip="+1 extra Suppression (informational)"
-            />
             <Toggle
               label="Marksman"
               value={store.marksman}
               onChange={(v) => store.setField('marksman', v)}
               tooltip="Spend Aim to convert: blank → hit, hit → crit"
             />
-            {/* Marksman Strategy — only shown when Marksman is enabled */}
             {store.marksman && (
               <Select
                 label="Marksman strategy"
@@ -443,7 +542,6 @@ export default function AttackerPanel() {
               onChange={(v) => store.setField('jarKaiMastery', v)}
               tooltip="Melee: spend attacker Dodge tokens for blank→hit, hit→crit"
             />
-            {/* Dodge tokens (attacker) — only shown when Jar'Kai Mastery is enabled */}
             {store.jarKaiMastery && (
               <NumberSpinner
                 label="Dodge tokens (attacker)"
@@ -482,12 +580,6 @@ export default function AttackerPanel() {
               tooltip="Melee: reduce Pierce X by 1 → disables Immune: Pierce and Impervious"
             />
             <Toggle
-              label="Spray"
-              value={store.spray}
-              onChange={(v) => store.setField('spray', v)}
-              tooltip="Weapon dice multiplied by minis in LOS"
-            />
-            <Toggle
               label="Immune: Deflect"
               value={store.immuneDeflect}
               onChange={(v) => store.setField('immuneDeflect', v)}
@@ -504,34 +596,6 @@ export default function AttackerPanel() {
               value={store.holdTheLine}
               onChange={(v) => store.setField('holdTheLine', v)}
               tooltip="While Engaged: gains surge → hit (attack) and surge → block (defense)"
-            />
-          </div>
-        </SectionHeader>
-
-        {/* ── Upgrade / Downgrade Section ── */}
-        <SectionHeader title="Upgrade / Downgrade">
-          <div className="space-y-3">
-            <NumberSpinner
-              label="Anti-Materiel X"
-              value={store.antiMaterielX}
-              onChange={(v) => store.setField('antiMaterielX', v)}
-              min={0}
-              max={3}
-              tooltip="Upgrade X dice (vs Vehicles)"
-            />
-            <NumberSpinner
-              label="Anti-Personnel X"
-              value={store.antiPersonnelX}
-              onChange={(v) => store.setField('antiPersonnelX', v)}
-              min={0}
-              max={3}
-              tooltip="Upgrade X dice (vs Troopers)"
-            />
-            <Toggle
-              label="Cumbersome"
-              value={store.cumbersome}
-              onChange={(v) => store.setField('cumbersome', v)}
-              tooltip="Downgrade each weapon die (if unit moved)"
             />
           </div>
         </SectionHeader>
@@ -557,22 +621,33 @@ export default function AttackerPanel() {
 
 ### Behavior
 
+- **Mode Toggle** → switches between Custom Pool and Unit Builder modes via `store.setActiveMode()`
+- **Custom Pool Mode:**
+  - Dice pool spinners operate on `weapons[0]` via `store.setWeaponDice(0, color, count)`
+  - Weapon keyword inputs operate on `weapons[0].keywords` via `store.setWeaponKeyword(0, keyword, value)`
+  - Unit keyword inputs operate on flat store fields via `store.setField()`
+- **Unit Builder Mode:**
+  - Weapon rows display each weapon in `store.weapons[]` with dice counts and keyword summary
+  - Each weapon row has an enable/disable toggle via `store.setWeaponEnabled(index, enabled)`
+  - Weapon configurations are read-only (populated by presets)
 - **Faction Select** → filters Unit/Weapon combobox; stores `selectedFaction` in UI-only state
-- **Unit/Weapon Combobox** → selecting a preset calls `loadPreset()` which resets to defaults then overlays the preset's profile values. Selecting "Custom" clears the preset ID without resetting fields.
-- All spinner/toggle/select inputs call `store.setField(fieldName, value)` on change
-- Marksman Strategy select is conditionally rendered only when Marksman toggle is on
+- **Unit/Weapon Combobox** → selecting a preset calls `loadPreset()` which resets to defaults then overlays the preset's profile values (including `weapons[]`). Selecting "Custom" clears the preset ID without resetting fields.
+- Tokens and Unit Keywords sections are shared between both modes
 - Sections collapse/expand via SectionHeader's internal state
 - The panel scrolls independently when content overflows its column height
 
 ### Verify
 
-- Renders all sections: Preset, Dice Pool, Tokens, Keywords, Upgrade/Downgrade, Points
+- Mode toggle switches between Custom Pool and Unit Builder
+- Custom Pool mode: dice spinners update `weapons[0]`; weapon keyword inputs update `weapons[0].keywords`
+- Unit Builder mode: weapon rows display all weapons with enable/disable toggles
 - Faction dropdown shows 6 options (All + 5 factions)
 - Changing faction filters the unit combobox
-- Selecting a preset populates dice, surge chart, keywords, and unit cost
-- All inputs update the attack config store
+- Selecting a preset populates `weapons[]`, surge chart, unit keywords, and unit cost
+- All unit keyword inputs update the flat attack config store fields
 - Marksman Strategy appears/disappears when Marksman is toggled
 - SectionHeaders collapse and expand
+
 
 ---
 

@@ -89,6 +89,7 @@ import type {
   DefenseDieColor,
   MarksmanStrategy,
   RerollStrategy,
+  WeaponProfile,
 } from '../engine/types';
 
 // ============================================================================
@@ -120,24 +121,31 @@ export const FACTION_LABELS: Record<Faction, string> = {
  * Partial attacker profile for a preset.
  * Only includes fields that the preset overrides from defaults.
  * Omitted fields keep their default value in the store.
+ * 
+ * After Phase 2.5: dice pool and weapon keywords are stored in `weapons[]`.
+ * Unit-level keywords (Precise, Marksman, Sharpshooter, etc.) remain flat fields.
+ * 
+ * In Custom Pool mode, presets include a single weapon in `weapons`.
+ * In Unit Builder mode, presets include the full weapon breakdown (multiple weapons).
  */
 export interface AttackerPresetProfile {
-  redDice?: number;
-  blackDice?: number;
-  whiteDice?: number;
+  // Dice pool and weapon keywords — packaged as weapons array
+  weapons?: WeaponProfile[];  // One or more weapon profiles with dice + weapon keywords
+  
+  // Surge chart (unit-level)
   surgeChart?: AttackSurgeChart;
+  
+  // Tokens
+  aimTokens?: number;
+  surgeTokens?: number;
+  observationTokens?: number;
+  dodgeTokensAttacker?: number;
 
-  // Keywords (only include non-default values)
+  // Unit-level keywords (numeric)
   preciseX?: number;
-  criticalX?: number;
-  lethalX?: number;
   sharpshooterX?: number;
-  pierceX?: number;
-  impactX?: number;
-  ramX?: number;
-  blast?: boolean;
-  highVelocity?: boolean;
-  suppressive?: boolean;
+  
+  // Unit-level keywords (boolean)
   marksman?: boolean;
   marksmanStrategy?: MarksmanStrategy;
   rerollStrategy?: RerollStrategy;
@@ -145,13 +153,9 @@ export interface AttackerPresetProfile {
   jarKaiMastery?: boolean;
   duelistAttacker?: boolean;
   makashiMastery?: boolean;
-  spray?: boolean;
   immuneDeflect?: boolean;
   deathFromAbove?: boolean;
   holdTheLine?: boolean;
-  antiMaterielX?: number;
-  antiPersonnelX?: number;
-  cumbersome?: boolean;
 
   // Points
   unitCost?: number;
@@ -233,13 +237,12 @@ export interface DefenderPreset {
 
 Zustand store managing all attacker inputs. The state shape matches `AttackerConfig` from `engine/types.ts` plus UI-specific preset selection fields.
 
-> **⚠️ Phase 2.5 Impact:** The code below shows the _original_ flat field design. After Phase 2.5, the store must be restructured:
-> - Replace flat `redDice/blackDice/whiteDice` and weapon-keyword fields with `weapons: WeaponProfile[]`
-> - Keep unit-level keyword fields flat (preciseX, marksman, sharpshooterX, etc.)
-> - Add weapon mutation actions: `setWeaponDice`, `setWeaponKeyword`, `addWeapon`, `removeWeapon`
-> - Add `activeMode: 'custom' | 'unit-builder'` UI state field
+> **⚠️ Phase 2.5 Impact:** The code below is fully updated for Phase 2.5:
+> - Uses `weapons: WeaponProfile[]` instead of flat dice/weapon-keyword fields
+> - Weapon mutations use dedicated actions: `setWeaponDice`, `setWeaponKeyword`, `addWeapon`, `removeWeapon`
+> - Unit-level keywords remain flat fields accessible via `set Field`
 > - `DEFAULT_ATTACK_CONFIG.weapons` starts with one empty `WeaponProfile`
-> - See `plans/phase2.5-multi-weapon-pool.md` Step 2.5A for the final type definitions.
+> - `activeMode` tracks Custom Pool vs Unit Builder mode
 
 ```ts
 import { create } from 'zustand';
@@ -247,6 +250,8 @@ import {
   AttackSurgeChart,
   MarksmanStrategy,
   RerollStrategy,
+  WeaponProfile,
+  WeaponKeywords,
 } from '../engine/types';
 import type { Faction, AttackerPresetProfile } from '../data/presets';
 
@@ -255,10 +260,11 @@ import type { Faction, AttackerPresetProfile } from '../data/presets';
 // ============================================================================
 
 export interface AttackConfigState {
-  // ── Dice Pool ──
-  redDice: number;
-  blackDice: number;
-  whiteDice: number;
+  // ── Weapons Array (dice pool + weapon keywords) ──
+  weapons: WeaponProfile[];  // In Custom Pool mode: single weapon at index 0
+                              // In Unit Builder mode: multiple weapons from preset
+  
+  // ── Surge Chart (unit-level) ──
   surgeChart: AttackSurgeChart;
 
   // ── Tokens ──
@@ -267,19 +273,11 @@ export interface AttackConfigState {
   observationTokens: number;
   dodgeTokensAttacker: number;
 
-  // ── Keywords (numeric) ──
+  // ── Unit-Level Keywords (numeric) ──
   preciseX: number;
-  criticalX: number;
-  lethalX: number;
   sharpshooterX: number;
-  pierceX: number;
-  impactX: number;
-  ramX: number;
 
-  // ── Keywords (boolean) ──
-  blast: boolean;
-  highVelocity: boolean;
-  suppressive: boolean;
+  // ── Unit-Level Keywords (boolean) ──
   marksman: boolean;
   marksmanStrategy: MarksmanStrategy;
   rerollStrategy: RerollStrategy;
@@ -287,15 +285,9 @@ export interface AttackConfigState {
   jarKaiMastery: boolean;
   duelistAttacker: boolean;
   makashiMastery: boolean;
-  spray: boolean;
   immuneDeflect: boolean;
   deathFromAbove: boolean;
   holdTheLine: boolean;
-
-  // ── Dice Modification Keywords ──
-  antiMaterielX: number;
-  antiPersonnelX: number;
-  cumbersome: boolean;
 
   // ── Points ──
   unitCost: number;
@@ -303,13 +295,23 @@ export interface AttackConfigState {
   // ── UI State (not sent to engine) ──
   selectedFaction: Faction | null;
   selectedPresetId: string | null;
+  activeMode: 'custom' | 'unit-builder';  // Track which mode is active
 
   // ── Actions ──
   setField: <K extends keyof AttackConfigFields>(
     field: K,
     value: AttackConfigFields[K]
   ) => void;
+  
+  // Weapon mutation actions
+  setWeaponDice: (weaponIndex: number, color: 'red' | 'black' | 'white', count: number) => void;
+  setWeaponKeyword: (weaponIndex: number, keyword: keyof WeaponKeywords, value: number | boolean) => void;
+  addWeapon: (weapon?: Partial<WeaponProfile>) => void;
+  removeWeapon: (weaponIndex: number) => void;
+  setWeaponEnabled: (weaponIndex: number, enabled: boolean) => void;
+  
   setSelectedFaction: (faction: Faction | null) => void;
+  setActiveMode: (mode: 'custom' | 'unit-builder') => void;
   loadPreset: (presetId: string, profile: AttackerPresetProfile) => void;
   reset: () => void;
 }
@@ -320,18 +322,53 @@ export interface AttackConfigState {
  */
 type AttackConfigFields = Omit<
   AttackConfigState,
-  'setField' | 'setSelectedFaction' | 'loadPreset' | 'reset' | 'selectedFaction' | 'selectedPresetId'
+  | 'setField'
+  | 'setWeaponDice'
+  | 'setWeaponKeyword'
+  | 'addWeapon'
+  | 'removeWeapon'
+  | 'setWeaponEnabled'
+  | 'setSelectedFaction'
+  | 'setActiveMode'
+  | 'loadPreset'
+  | 'reset'
+  | 'selectedFaction'
+  | 'selectedPresetId'
+  | 'activeMode'
 >;
 
 // ============================================================================
 // Default Values
 // ============================================================================
 
+/** Helper: create an empty weapon profile */
+function createEmptyWeapon(): WeaponProfile {
+  return {
+    redDice: 0,
+    blackDice: 0,
+    whiteDice: 0,
+    keywords: {
+      pierceX: 0,
+      impactX: 0,
+      criticalX: 0,
+      lethalX: 0,
+      ramX: 0,
+      blast: false,
+      suppressive: false,
+      highVelocity: false,
+      spray: false,
+      antiMaterielX: 0,
+      antiPersonnelX: 0,
+      cumbersome: false,
+    },
+  };
+}
+
 const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
-  // Dice pool
-  redDice: 0,
-  blackDice: 0,
-  whiteDice: 0,
+  // Weapons array: starts with one empty weapon for Custom Pool mode
+  weapons: [createEmptyWeapon()],
+  
+  // Surge chart
   surgeChart: AttackSurgeChart.None,
 
   // Tokens
@@ -340,19 +377,11 @@ const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
   observationTokens: 0,
   dodgeTokensAttacker: 0,
 
-  // Keywords (numeric)
+  // Unit-level keywords (numeric)
   preciseX: 0,
-  criticalX: 0,
-  lethalX: 0,
   sharpshooterX: 0,
-  pierceX: 0,
-  impactX: 0,
-  ramX: 0,
 
-  // Keywords (boolean)
-  blast: false,
-  highVelocity: false,
-  suppressive: false,
+  // Unit-level keywords (boolean)
   marksman: false,
   marksmanStrategy: MarksmanStrategy.Deterministic,
   rerollStrategy: RerollStrategy.Conservative,
@@ -360,15 +389,9 @@ const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
   jarKaiMastery: false,
   duelistAttacker: false,
   makashiMastery: false,
-  spray: false,
   immuneDeflect: false,
   deathFromAbove: false,
   holdTheLine: false,
-
-  // Dice modification keywords
-  antiMaterielX: 0,
-  antiPersonnelX: 0,
-  cumbersome: false,
 
   // Points
   unitCost: 0,
@@ -385,17 +408,65 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   // UI state
   selectedFaction: null,
   selectedPresetId: null,
+  activeMode: 'custom',  // Default to Custom Pool mode
 
-  // Generic setter for any field
+  // Generic setter for any unit-level field
   setField: (field, value) =>
     set((state) => ({
       ...state,
       [field]: value,
     })),
 
+  // Weapon mutation actions
+  setWeaponDice: (weaponIndex, color, count) =>
+    set((state) => {
+      const weapons = [...state.weapons];
+      if (weaponIndex < 0 || weaponIndex >= weapons.length) return state;
+      const weapon = { ...weapons[weaponIndex] };
+      weapon[`${color}Dice`] = count;
+      weapons[weaponIndex] = weapon;
+      return { weapons };
+    }),
+
+  setWeaponKeyword: (weaponIndex, keyword, value) =>
+    set((state) => {
+      const weapons = [...state.weapons];
+      if (weaponIndex < 0 || weaponIndex >= weapons. length) return state;
+      const weapon = { ...weapons[weaponIndex] };
+      weapon.keywords = { ...weapon.keywords, [keyword]: value };
+      weapons[weaponIndex] = weapon;
+      return { weapons };
+    }),
+
+  addWeapon: (weapon) =>
+    set((state) => ({
+      weapons: [...state.weapons, { ...createEmptyWeapon(), ...weapon }],
+    })),
+
+  removeWeapon: (weaponIndex) =>
+    set((state) => {
+      if (state.weapons.length === 1) return state; // Must have at least one weapon
+      const weapons = state.weapons.filter((_, i) => i !== weaponIndex);
+      return { weapons };
+    }),
+
+  setWeaponEnabled: (weaponIndex, enabled) =>
+    set((state) => {
+      const weapons = [...state.weapons];
+      if (weaponIndex < 0 || weaponIndex >= weapons.length) return state;
+      const weapon = { ...weapons[weaponIndex] };
+      weapon.enabled = enabled;
+      weapons[weaponIndex] = weapon;
+      return { weapons };
+    }),
+
   // Setter for faction dropdown (UI-only state)
   setSelectedFaction: (faction) =>
     set({ selectedFaction: faction }),
+
+  // Setter for mode toggle
+  setActiveMode: (mode) =>
+    set({ activeMode: mode }),
 
   // Load a preset: reset to defaults, then apply preset overrides
   loadPreset: (presetId, profile) =>
@@ -412,30 +483,53 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       ...DEFAULT_ATTACK_CONFIG,
       selectedFaction: null,
       selectedPresetId: null,
+      activeMode: 'custom',
     })),
 }));
 
 /**
  * Selector: extract the engine-compatible AttackerConfig from the store.
- * Excludes UI-only fields (selectedFaction, selectedPresetId).
+ * Excludes UI-only fields (selectedFaction, selectedPresetId, activeMode).
+ * Excludes action functions.
  */
 export function selectAttackerConfig(state: AttackConfigState) {
-  const { selectedFaction, selectedPresetId, setField, setSelectedFaction, loadPreset, reset, ...config } = state;
+  const {
+    selectedFaction,
+    selectedPresetId,
+    activeMode,
+    setField,
+    setWeaponDice,
+    setWeaponKeyword,
+    addWeapon,
+    removeWeapon,
+    setWeaponEnabled,
+    setSelectedFaction,
+    setActiveMode,
+    loadPreset,
+    reset,
+    ...config
+  } = state;
   return config;
 }
 ```
 
 **Verify:**
-- `useAttackConfigStore.getState().redDice` returns `0`
-- `useAttackConfigStore.getState().setField('redDice', 6)` → `redDice` is now `6`
-- `useAttackConfigStore.getState().reset()` → all fields back to defaults
-- `selectAttackerConfig(useAttackConfigStore.getState())` returns an object matching `AttackerConfig` shape
-- TypeScript enforces correct field names and value types via the generic setter
+- `useAttackConfigStore.getState().weapons[0].redDice` returns `0`
+- `useAttackConfigStore.getState().setWeaponDice(0, 'red', 6)` → `weapons[0].redDice` is now `6`
+- `useAttackConfigStore.getState().setWeaponKeyword(0, 'pierceX', 3)` → `weapons[0].keywords.pierceX` is now `3`
+- `useAttackConfigStore.getState().setField('preciseX', 2)` → `preciseX` is now `2` (unit-level keyword)
+- `useAttackConfigStore.getState().addWeapon()` → `weapons.length` is now `2`
+- `useAttackConfigStore.getState().reset()` → all fields back to defaults, `weapons` has one empty weapon
+- `selectAttackerConfig(useAttackConfigStore.getState())` returns an object matching `AttackerConfig` shape (with `weapons[]`)
+- TypeScript enforces correct field names and value types via the generic setters
 
 **Notes:**
-- The `setField` generic setter uses TypeScript's mapped types to enforce that the value type matches the field. Calling `setField('blast', 3)` would produce a type error (expects `boolean`).
-- `loadPreset` uses object spread: defaults first, then preset overrides. Any field not in the preset profile keeps its default value.
-- `selectedFaction` is set by the UI (faction dropdown `onChange`) independently of preset loading, because the user may change factions without selecting a specific unit yet.
+- The `setField` generic setter works for unit-level fields only (preciseX, marksman, etc.). Use `setWeaponDice` and `setWeaponKeyword` for weapon-level mutations.
+- Weapon mutations create new array/object references (immutable updates) for proper Zustand change detection.
+- `setWeaponEnabled` is for Unit Builder mode — each weapon row has an enable/disable checkbox. By default, weapons have `enabled: true`.
+- `loadPreset` uses object spread: defaults first, then preset overrides. If the preset includes `weapons[]`, it replaces the default single-weapon array.
+- `selectedFaction` is set by the UI (faction dropdown `onChange`) independently of preset loading.
+- `activeMode` tracks Custom Pool vs Unit Builder mode. The UI uses this to conditionally render different sections.
 
 ---
 
