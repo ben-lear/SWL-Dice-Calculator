@@ -268,6 +268,27 @@ describe('formAttackPool — multi-weapon', () => {
     expect(blackCount).toBe(2);
   });
 
+  it('does not include disabled weapons in the pool', () => {
+    const config: AttackConfig = {
+      attacker: createMinimalAttacker({
+        arsenalX: 2,
+        weapons: [
+          createMinimalWeapon({ redDice: 2, enabled: false }),
+          createMinimalWeapon({ blackDice: 3, enabled: true }),
+        ],
+      }),
+      defender: createMinimalDefender(),
+      attackType: AttackType.Ranged,
+    };
+
+    const pool = formAttackPool(config);
+    const redCount = pool.filter(d => d === AttackDieColor.Red).length;
+    const blackCount = pool.filter(d => d === AttackDieColor.Black).length;
+
+    expect(redCount).toBe(0);
+    expect(blackCount).toBe(3);
+  });
+
   // Note: Arsenal X enforcement tests removed in Phase 5.6
   // Arsenal limiting now happens upstream in preset generator and upgrade applicator,
   // not in getWeaponsForAttackType. The weapons array passed to formAttackPool

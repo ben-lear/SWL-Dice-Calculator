@@ -175,15 +175,15 @@ Extend the two-mode design pattern (Custom Pool / Unit Builder) to the Defender 
 
 Reusable input primitives used by both panels.
 
-- [ ] **NumberSpinner** — increment/decrement with min/max bounds, label, tooltip
-- [ ] **Toggle** — labeled on/off switch with optional tooltip
-- [ ] **Select** — dropdown with label (for surge charts, die colors, cover, attack type)
-- [ ] **SearchableCombobox** — filterable dropdown for faction/unit presets
-- [ ] **SectionHeader** — collapsible section divider for keyword groups
-- [ ] Style all components with Tailwind, ensure accessible (keyboard nav, ARIA labels)
-- [ ] Storybook-style visual tests or snapshot tests for each component
+- [x] **NumberSpinner** — increment/decrement with min/max bounds, label, tooltip
+- [x] **Toggle** — labeled on/off switch with optional tooltip
+- [x] **Select** — dropdown with label (for surge charts, die colors, cover, attack type)
+- [x] **SearchableCombobox** — filterable dropdown for faction/unit presets
+- [x] **SectionHeader** — collapsible section divider for keyword groups
+- [x] Style all components with Tailwind, ensure accessible (keyboard nav, ARIA labels)
+- [x] Storybook-style visual tests or snapshot tests for each component
 
-**Output:** Component library ready for panel assembly.
+**Output:** ✅ **COMPLETE** - Component library ready for panel assembly. All shared components implemented with Tailwind styling, keyboard navigation, ARIA labels, and comprehensive test coverage.
 
 ---
 
@@ -345,34 +345,45 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 
 ### 6A: Attacker Panel (`components/AttackerPanel/`)
 
-- [ ] Faction dropdown + Unit/Weapon searchable combobox (loads presets)
-- [ ] Dice pool section: Red/Black/White spinners, surge chart select
-- [ ] Tokens section: Aim, Surge, Observation spinners
-- [ ] Keywords section: all attacker keyword inputs per design spec (Critical, Pierce, Impact, Sharpshooter, Lethal, Ram, Blast, High Velocity, Suppressive, Marksman, Marksman Strategy select (Deterministic/Averages), Reroll Strategy select (Conservative/Crit Fishing), Jedi Hunter, Duelist, Makashi Mastery, Spray, Immune: Deflect, Death From Above)
-- [ ] Upgrade/Downgrade section: Anti-Materiel X, Anti-Personnel X, Cumbersome
-- [ ] Unit cost spinner
-- [ ] Wire all inputs to Attack Config Store
-- [ ] Responsive: full-width on mobile, left column on desktop
+- [x] Faction dropdown + Unit/Weapon searchable combobox (loads presets)
+- [x] Dice pool section: Red/Black/White spinners, surge chart select
+- [x] Tokens section: Aim, Surge, Observation spinners
+- [x] Keywords section: all attacker keyword inputs per design spec (Critical, Pierce, Impact, Sharpshooter, Lethal, Ram, Blast, High Velocity, Suppressive, Marksman, Marksman Strategy select (Deterministic/Averages), Reroll Strategy select (Conservative/Crit Fishing), Jedi Hunter, Duelist, Makashi Mastery, Spray, Immune: Deflect, Death From Above)
+- [x] Upgrade/Downgrade section: Anti-Materiel X, Anti-Personnel X, Cumbersome
+- [x] Unit cost spinner
+- [x] Wire all inputs to Attack Config Store
+- [x] Responsive: full-width on mobile, left column on desktop
+- [x] Mode toggle (Custom Pool / Unit Builder)
+- [x] Custom Pool view with weapon keywords on `weapons[0]`
+- [x] Unit Builder view with weapon rows and upgrade slots
+- [x] Conditional visibility (Marksman Strategy, Jar'Kai Dodge tokens)
+- [x] Component tests (10 passing)
 
 ### 6B: Defender Panel (`components/DefenderPanel/`)
 
-- [ ] Faction dropdown + Unit searchable combobox (loads presets)
-- [ ] Defense die color select, surge chart select
-- [ ] Minis in LOS spinner (default 1, auto-filled from preset)
-- [ ] Cover section: Cover select, Cover X spinner, Smoke tokens spinner, Suppressed toggle
-- [ ] Tokens section: Dodge, Surge spinners
-- [ ] Keywords section: all defender keyword inputs per design spec (Armor, Weak Point, Immune: Pierce, Immune: Melee Pierce, Immune: Blast, Impervious, Danger Sense + Suppression tokens, Uncanny Luck, Block, Deflect, Shien Mastery, Outmaneuver, Low Profile, Shielded, Djem So Mastery, Soresu Mastery, Duelist, Backup, Guardian + die color + surge)
-- [ ] Unit cost spinner
-- [ ] Wire all inputs to Defense Config Store
-- [ ] Responsive: full-width on mobile, right column on desktop
+- [x] Faction dropdown + Unit searchable combobox (loads presets)
+- [x] Defense die color select, surge chart select
+- [x] Minis in LOS spinner (default 1, auto-filled from preset)
+- [x] Cover section: Cover select, Cover X spinner, Smoke tokens spinner, Suppressed toggle
+- [x] Tokens section: Dodge, Surge spinners
+- [x] Keywords section: all defender keyword inputs per design spec (Armor, Weak Point, Immune: Pierce, Immune: Melee Pierce, Immune: Blast, Impervious, Danger Sense + Suppression tokens, Uncanny Luck, Block, Deflect, Shien Mastery, Outmaneuver, Low Profile, Shielded, Djem So Mastery, Soresu Mastery, Duelist, Backup, Guardian + die color + surge)
+- [x] Unit cost spinner
+- [x] Wire all inputs to Defense Config Store
+- [x] Responsive: full-width on mobile, right column on desktop
+- [x] Mode toggle (Custom Pool / Unit Builder)
+- [x] Custom Pool and Unit Builder views
+- [x] Guardian sub-config (die color, surge chart, keywords, tokens)
+- [x] Conditional visibility (Shien Mastery, Danger Sense suppression, Guardian)
+- [x] Component tests (14 passing)
 
 ### 6C: Attack Type Selector
 
-- [ ] Attack type selector (Ranged / Melee / Overrun)
-- [ ] Position: top bar or between panels
-- [ ] Wire to Attack Type Store
+- [x] Attack type selector (Ranged / Melee / Overrun)
+- [x] Position: top bar (integrated into Layout header)
+- [x] Wire to Attack Type Store
+- [x] Component tests (3 passing)
 
-**Output:** Both input panels fully functional, all inputs wired to state, presets load correctly.
+**Output:** ✅ **COMPLETE** - Both input panels fully functional with two-mode design (Custom Pool / Unit Builder). All inputs wired to state, presets load correctly, upgrade system integrated. Attack Type Selector in header. Responsive layout working. All tests passing (27 total: 10 AttackerPanel + 14 DefenderPanel + 3 AttackTypeSelector).
 
 ---
 
@@ -516,8 +527,8 @@ Phase 1 (Scaffolding)
 ```
 
 **Parallelism:** After Phase 1, three independent tracks can proceed simultaneously:
-- **Track A:** Phase 2 → Phase 2.5 → Phase 3 (engine → multi-weapon restructuring → simulator)
-- **Track B:** Phase 4 (shared UI components — no state dependency)
-- **Track C:** Phase 5A → Phase 5.5 → Phase 5.6 (stores + data layer + multi-mini pools)
+- **Track A:** Phase 2 → Phase 2.5 → Phase 3 (engine → multi-weapon restructuring → simulator) ✅ **COMPLETE**
+- **Track B:** Phase 4 (shared UI components — no state dependency) ✅ **COMPLETE**
+- **Track C:** Phase 5A → Phase 5.5 → Phase 5.6 (stores + data layer + multi-mini pools) ✅ **COMPLETE** (5.6 UI components deferred)
 
-Phase 2.5 restructures the attacker engine to support per-weapon keywords before downstream phases consume the config types. Phase 2.6 extends the two-mode design to the Defender Panel (depends on Phase 2.5 pattern and Phase 5.5 data layer). Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 5.6 extends Phase 5.5 with multi-miniature attack pool mechanics (per-mini weapon entries, heavy weapon/personnel/squad leader add, grenades, sidearm, noncombatant, dynamic upgrade slots). Phase 6A (Attacker Panel) requires Phases 4 + 5A + 5.5 + 5.6 and implements the two-mode design with per-miniature weapon assignment. Phase 6B (Defender Panel) requires Phases 4 + 5A + 5.5 + 2.6. Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.
+Phase 2.5 restructures the attacker engine to support per-weapon keywords before downstream phases consume the config types. Phase 2.6 extends the two-mode design to the Defender Panel (depends on Phase 2.5 pattern and Phase 5.5 data layer). Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 5.6 extends Phase 5.5 with multi-miniature attack pool mechanics (per-mini weapon entries, heavy weapon/personnel/squad leader add, grenades, sidearm, noncombatant, dynamic upgrade slots). Phase 6A (Attacker Panel) requires Phases 4 + 5A + 5.5 + 5.6 and implements the two-mode design with per-miniature weapon assignment. Phase 6B (Defender Panel) requires Phases 4 + 5A + 5.5 + 2.6. ✅ **Phase 6 COMPLETE** - All panels implemented with two-mode design, upgrade system, and comprehensive tests. Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.

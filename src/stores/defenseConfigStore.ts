@@ -86,6 +86,7 @@ export interface DefenseConfigState {
   ) => void;
   
   setSelectedFaction: (faction: Faction | null) => void;
+  setSelectedPresetId: (presetId: string | null) => void;
   setActiveMode: (mode: 'custom' | 'unit-builder') => void;
   loadPreset: (
     presetId: string,
@@ -105,6 +106,7 @@ type DefenseConfigFields = Omit<
   DefenseConfigState,
   | 'setField'
   | 'setSelectedFaction'
+  | 'setSelectedPresetId'
   | 'setActiveMode'
   | 'loadPreset'
   | 'reset'
@@ -204,6 +206,10 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   setSelectedFaction: (faction) =>
     set({ selectedFaction: faction }),
 
+  // Set selected preset (UI-only state)
+  setSelectedPresetId: (presetId) =>
+    set({ selectedPresetId: presetId }),
+
   // Setter for mode toggle
   setActiveMode: (mode) =>
     set({ activeMode: mode }),
@@ -260,6 +266,7 @@ export function selectDefenderConfig(state: DefenseConfigState): DefenderConfig 
     equippedUpgradeIds,
     setField,
     setSelectedFaction,
+    setSelectedPresetId,
     setActiveMode,
     loadPreset,
     reset,

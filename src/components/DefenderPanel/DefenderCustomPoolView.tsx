@@ -1,492 +1,301 @@
-import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
 import {
+  CoverType,
   DefenseDieColor,
   DefenseSurgeChart,
-  CoverType,
 } from '../../engine/types';
+import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import NumberSpinner from '../shared/NumberSpinner';
+import SectionHeader from '../shared/SectionHeader';
+import Select, { type SelectOption } from '../shared/Select';
+import Toggle from '../shared/Toggle';
+
+const DEFENSE_DIE_OPTIONS: SelectOption<DefenseDieColor>[] = [
+  { value: DefenseDieColor.White, label: 'White' },
+  { value: DefenseDieColor.Red, label: 'Red' },
+];
+
+const DEFENSE_SURGE_OPTIONS: SelectOption<DefenseSurgeChart>[] = [
+  { value: DefenseSurgeChart.None, label: 'None' },
+  { value: DefenseSurgeChart.ToBlock, label: 'e → d (Block)' },
+];
+
+const COVER_OPTIONS: SelectOption<CoverType>[] = [
+  { value: CoverType.None, label: 'None' },
+  { value: CoverType.Light, label: 'Light' },
+  { value: CoverType.Heavy, label: 'Heavy' },
+];
 
 export default function DefenderCustomPoolView() {
   const store = useDefenseConfigStore();
-  const {
-    disableDefenseDice,
-    dieColor,
-    surgeChart,
-    minisInLOS,
-    coverType,
-    coverX,
-    smokeTokens,
-    suppressed,
-    dodgeTokens,
-    surgeTokens,
-    suppressionTokens,
-    armorX,
-    weakPointX,
-    immunePierce,
-    immuneMeleePierce,
-    immuneBlast,
-    impervious,
-    dangerSenseX,
-    uncannyLuckX,
-    block,
-    deflect,
-    shienMastery,
-    outmaneuver,
-    lowProfile,
-    shieldedX,
-    djemSoMastery,
-    soresuMastery,
-    duelistDefender,
-    backup,
-    holdTheLine,
-    guardianX,
-    guardianDieColor,
-    guardianSurgeChart,
-    guardianDeflect,
-    guardianSoresuMastery,
-    guardianDodgeTokens,
-    setField,
-  } = store;
 
   return (
-    <div className="space-y-6">
-      {/* Defense Section */}
-      <section>
-        <h3 className="text-lg font-semibold mb-3 border-b border-gray-700 pb-2">Defense</h3>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={disableDefenseDice}
-              onChange={(e) => setField('disableDefenseDice', e.target.checked)}
-              className="rounded"
-            />
-            <span>Disable defense dice</span>
-          </label>
+    <>
+      <SectionHeader title="Defense">
+        <div className="space-y-3">
+          <Toggle
+            label="Disable Defense Dice"
+            value={store.disableDefenseDice}
+            onChange={(value) => store.setField('disableDefenseDice', value)}
+          />
 
-          {!disableDefenseDice && (
+          {!store.disableDefenseDice && (
             <>
-              <div>
-                <label className="block text-sm mb-1">Defense Die Color</label>
-                <select
-                  value={dieColor}
-                  onChange={(e) => setField('dieColor', e.target.value as DefenseDieColor)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-                >
-                  <option value={DefenseDieColor.White}>White</option>
-                  <option value={DefenseDieColor.Red}>Red</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1">Surge Chart</label>
-                <select
-                  value={surgeChart}
-                  onChange={(e) => setField('surgeChart', e.target.value as DefenseSurgeChart)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-                >
-                  <option value={DefenseSurgeChart.None}>None</option>
-                  <option value={DefenseSurgeChart.ToBlock}>To Block</option>
-                </select>
-              </div>
+              <Select
+                label="Defense Die Color"
+                value={store.dieColor}
+                onChange={(value) => store.setField('dieColor', value)}
+                options={DEFENSE_DIE_OPTIONS}
+              />
+              <Select
+                label="Surge Chart"
+                value={store.surgeChart}
+                onChange={(value) => store.setField('surgeChart', value)}
+                options={DEFENSE_SURGE_OPTIONS}
+              />
             </>
           )}
 
-          <div>
-            <label className="block text-sm mb-1">Minis in LOS</label>
-            <input
-              type="number"
-              value={minisInLOS}
-              onChange={(e) => setField('minisInLOS', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={1}
-              max={20}
-            />
-          </div>
+          <NumberSpinner
+            label="Minis in LOS"
+            value={store.minisInLOS}
+            onChange={(value) => store.setField('minisInLOS', value)}
+            min={1}
+            max={12}
+          />
         </div>
-      </section>
+      </SectionHeader>
 
-      {/* Cover Section */}
-      <section>
-        <h3 className="text-lg font-semibold mb-3 border-b border-gray-700 pb-2">Cover</h3>
-        <div className="space-y-2">
-          <div>
-            <label className="block text-sm mb-1">Cover Type</label>
-            <select
-              value={coverType}
-              onChange={(e) => setField('coverType', e.target.value as CoverType)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-            >
-              <option value={CoverType.None}>None</option>
-              <option value={CoverType.Light}>Light</option>
-              <option value={CoverType.Heavy}>Heavy</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Cover X</label>
-            <input
-              type="number"
-              value={coverX}
-              onChange={(e) => setField('coverX', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={2}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Smoke Tokens</label>
-            <input
-              type="number"
-              value={smokeTokens}
-              onChange={(e) => setField('smokeTokens', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={3}
-            />
-          </div>
-
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={suppressed}
-              onChange={(e) => setField('suppressed', e.target.checked)}
-              className="rounded"
-            />
-            <span>Suppressed</span>
-          </label>
+      <SectionHeader title="Cover">
+        <div className="space-y-3">
+          <Select
+            label="Cover Type"
+            value={store.coverType}
+            onChange={(value) => store.setField('coverType', value)}
+            options={COVER_OPTIONS}
+          />
+          <NumberSpinner
+            label="Cover X"
+            value={store.coverX}
+            onChange={(value) => store.setField('coverX', value)}
+            min={0}
+            max={2}
+          />
+          <NumberSpinner
+            label="Smoke Tokens"
+            value={store.smokeTokens}
+            onChange={(value) => store.setField('smokeTokens', value)}
+            min={0}
+            max={3}
+          />
+          <Toggle
+            label="Suppressed"
+            value={store.suppressed}
+            onChange={(value) => store.setField('suppressed', value)}
+          />
         </div>
-      </section>
+      </SectionHeader>
 
-      {/* Tokens Section */}
-      <section>
-        <h3 className="text-lg font-semibold mb-3 border-b border-gray-700 pb-2">Tokens</h3>
-        <div className="space-y-2">
-          <div>
-            <label className="block text-sm mb-1">Dodge Tokens</label>
-            <input
-              type="number"
-              value={dodgeTokens}
-              onChange={(e) => setField('dodgeTokens', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={5}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Surge Tokens</label>
-            <input
-              type="number"
-              value={surgeTokens}
-              onChange={(e) => setField('surgeTokens', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={5}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Suppression Tokens</label>
-            <input
-              type="number"
-              value={suppressionTokens}
-              onChange={(e) => setField('suppressionTokens', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
+      <SectionHeader title="Tokens">
+        <div className="space-y-3">
+          <NumberSpinner
+            label="Dodge Tokens"
+            value={store.dodgeTokens}
+            onChange={(value) => store.setField('dodgeTokens', value)}
+            min={0}
+            max={5}
+          />
+          <NumberSpinner
+            label="Surge Tokens"
+            value={store.surgeTokens}
+            onChange={(value) => store.setField('surgeTokens', value)}
+            min={0}
+            max={5}
+          />
+          {store.dangerSenseX > 0 && (
+            <NumberSpinner
+              label="Suppression Tokens"
+              value={store.suppressionTokens}
+              onChange={(value) => store.setField('suppressionTokens', value)}
               min={0}
               max={10}
             />
-          </div>
+          )}
         </div>
-      </section>
+      </SectionHeader>
 
-      {/* Keywords Section */}
-      <section>
-        <h3 className="text-lg font-semibold mb-3 border-b border-gray-700 pb-2">Keywords</h3>
-        <div className="space-y-2">
-          {/* Numeric Keywords */}
-          <div>
-            <label className="block text-sm mb-1">Armor X</label>
-            <input
-              type="number"
-              value={armorX}
-              onChange={(e) => setField('armorX', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={10}
+      <SectionHeader title="Keywords">
+        <div className="space-y-3">
+          <NumberSpinner
+            label="Armor X"
+            value={store.armorX}
+            onChange={(value) => store.setField('armorX', value)}
+            min={0}
+            max={6}
+          />
+          <NumberSpinner
+            label="Weak Point X"
+            value={store.weakPointX}
+            onChange={(value) => store.setField('weakPointX', value)}
+            min={0}
+            max={2}
+          />
+          <NumberSpinner
+            label="Danger Sense X"
+            value={store.dangerSenseX}
+            onChange={(value) => store.setField('dangerSenseX', value)}
+            min={0}
+            max={5}
+          />
+          <NumberSpinner
+            label="Uncanny Luck X"
+            value={store.uncannyLuckX}
+            onChange={(value) => store.setField('uncannyLuckX', value)}
+            min={0}
+            max={5}
+          />
+          <NumberSpinner
+            label="Shielded X"
+            value={store.shieldedX}
+            onChange={(value) => store.setField('shieldedX', value)}
+            min={0}
+            max={6}
+          />
+
+          <Toggle
+            label="Block"
+            value={store.block}
+            onChange={(value) => store.setField('block', value)}
+          />
+          <Toggle
+            label="Deflect"
+            value={store.deflect}
+            onChange={(value) => store.setField('deflect', value)}
+          />
+          {store.deflect && (
+            <Toggle
+              label="Shien Mastery"
+              value={store.shienMastery}
+              onChange={(value) => store.setField('shienMastery', value)}
             />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Danger Sense X</label>
-            <input
-              type="number"
-              value={dangerSenseX}
-              onChange={(e) => setField('dangerSenseX', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={5}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Uncanny Luck X</label>
-            <input
-              type="number"
-              value={uncannyLuckX}
-              onChange={(e) => setField('uncannyLuckX', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={5}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Shielded X</label>
-            <input
-              type="number"
-              value={shieldedX}
-              onChange={(e) => setField('shieldedX', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={6}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Weak Point X</label>
-            <input
-              type="number"
-              value={weakPointX}
-              onChange={(e) => setField('weakPointX', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={2}
-            />
-          </div>
-
-          {/* Boolean Keywords */}
-          <div className="pt-2 space-y-1">
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={deflect}
-                onChange={(e) => setField('deflect', e.target.checked)}
-                className="rounded"
-              />
-              <span>Deflect</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={block}
-                onChange={(e) => setField('block', e.target.checked)}
-                className="rounded"
-              />
-              <span>Block</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={shienMastery}
-                onChange={(e) => setField('shienMastery', e.target.checked)}
-                className="rounded"
-              />
-              <span>Shien Mastery</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={soresuMastery}
-                onChange={(e) => setField('soresuMastery', e.target.checked)}
-                className="rounded"
-              />
-              <span>Soresu Mastery</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={djemSoMastery}
-                onChange={(e) => setField('djemSoMastery', e.target.checked)}
-                className="rounded"
-              />
-              <span>Djem So Mastery</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={outmaneuver}
-                onChange={(e) => setField('outmaneuver', e.target.checked)}
-                className="rounded"
-              />
-              <span>Outmaneuver</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={lowProfile}
-                onChange={(e) => setField('lowProfile', e.target.checked)}
-                className="rounded"
-              />
-              <span>Low Profile</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={impervious}
-                onChange={(e) => setField('impervious', e.target.checked)}
-                className="rounded"
-              />
-              <span>Impervious</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={immunePierce}
-                onChange={(e) => setField('immunePierce', e.target.checked)}
-                className="rounded"
-              />
-              <span>Immune: Pierce</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={immuneMeleePierce}
-                onChange={(e) => setField('immuneMeleePierce', e.target.checked)}
-                className="rounded"
-              />
-              <span>Immune: Melee Pierce</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={immuneBlast}
-                onChange={(e) => setField('immuneBlast', e.target.checked)}
-                className="rounded"
-              />
-              <span>Immune: Blast</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={duelistDefender}
-                onChange={(e) => setField('duelistDefender', e.target.checked)}
-                className="rounded"
-              />
-              <span>Duelist</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={backup}
-                onChange={(e) => setField('backup', e.target.checked)}
-                className="rounded"
-              />
-              <span>Backup</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={holdTheLine}
-                onChange={(e) => setField('holdTheLine', e.target.checked)}
-                className="rounded"
-              />
-              <span>Hold the Line</span>
-            </label>
-          </div>
+          )}
+          <Toggle
+            label="Soresu Mastery"
+            value={store.soresuMastery}
+            onChange={(value) => store.setField('soresuMastery', value)}
+          />
+          <Toggle
+            label="Djem So Mastery"
+            value={store.djemSoMastery}
+            onChange={(value) => store.setField('djemSoMastery', value)}
+          />
+          <Toggle
+            label="Outmaneuver"
+            value={store.outmaneuver}
+            onChange={(value) => store.setField('outmaneuver', value)}
+          />
+          <Toggle
+            label="Low Profile"
+            value={store.lowProfile}
+            onChange={(value) => store.setField('lowProfile', value)}
+          />
+          <Toggle
+            label="Impervious"
+            value={store.impervious}
+            onChange={(value) => store.setField('impervious', value)}
+          />
+          <Toggle
+            label="Immune: Pierce"
+            value={store.immunePierce}
+            onChange={(value) => store.setField('immunePierce', value)}
+          />
+          <Toggle
+            label="Immune: Melee Pierce"
+            value={store.immuneMeleePierce}
+            onChange={(value) => store.setField('immuneMeleePierce', value)}
+          />
+          <Toggle
+            label="Immune: Blast"
+            value={store.immuneBlast}
+            onChange={(value) => store.setField('immuneBlast', value)}
+          />
+          <Toggle
+            label="Duelist"
+            value={store.duelistDefender}
+            onChange={(value) => store.setField('duelistDefender', value)}
+          />
+          <Toggle
+            label="Backup"
+            value={store.backup}
+            onChange={(value) => store.setField('backup', value)}
+          />
+          <Toggle
+            label="Hold the Line"
+            value={store.holdTheLine}
+            onChange={(value) => store.setField('holdTheLine', value)}
+          />
+          <Toggle
+            label="Dug In"
+            value={store.dugIn}
+            onChange={(value) => store.setField('dugIn', value)}
+          />
         </div>
-      </section>
+      </SectionHeader>
 
-      {/* Guardian Section */}
-      <section>
-        <h3 className="text-lg font-semibold mb-3 border-b border-gray-700 pb-2">Guardian</h3>
-        <div className="space-y-2">
-          <div>
-            <label className="block text-sm mb-1">Guardian X</label>
-            <input
-              type="number"
-              value={guardianX}
-              onChange={(e) => setField('guardianX', parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              min={0}
-              max={3}
-            />
-          </div>
+      <SectionHeader title="Guardian">
+        <div className="space-y-3">
+          <NumberSpinner
+            label="Guardian X"
+            value={store.guardianX}
+            onChange={(value) => store.setField('guardianX', value)}
+            min={0}
+            max={3}
+          />
 
-          {guardianX > 0 && (
+          {store.guardianX > 0 && (
             <>
-              <div>
-                <label className="block text-sm mb-1">Guardian Die Color</label>
-                <select
-                  value={guardianDieColor}
-                  onChange={(e) => setField('guardianDieColor', e.target.value as DefenseDieColor)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-                >
-                  <option value={DefenseDieColor.White}>White</option>
-                  <option value={DefenseDieColor.Red}>Red</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1">Guardian Surge</label>
-                <select
-                  value={guardianSurgeChart}
-                  onChange={(e) => setField('guardianSurgeChart', e.target.value as DefenseSurgeChart)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-                >
-                  <option value={DefenseSurgeChart.None}>None</option>
-                  <option value={DefenseSurgeChart.ToBlock}>To Block</option>
-                </select>
-              </div>
-
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={guardianDeflect}
-                  onChange={(e) => setField('guardianDeflect', e.target.checked)}
-                  className="rounded"
-                />
-                <span>Guardian Deflect</span>
-              </label>
-
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={guardianSoresuMastery}
-                  onChange={(e) => setField('guardianSoresuMastery', e.target.checked)}
-                  className="rounded"
-                />
-                <span>Guardian Soresu Mastery</span>
-              </label>
-
-              <div>
-                <label className="block text-sm mb-1">Guardian Dodge Tokens</label>
-                <input
-                  type="number"
-                  value={guardianDodgeTokens}
-                  onChange={(e) => setField('guardianDodgeTokens', parseInt(e.target.value) || 0)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-                  min={0}
-                  max={5}
-                />
-              </div>
+              <Select
+                label="Guardian Die Color"
+                value={store.guardianDieColor}
+                onChange={(value) => store.setField('guardianDieColor', value)}
+                options={DEFENSE_DIE_OPTIONS}
+              />
+              <Select
+                label="Guardian Surge"
+                value={store.guardianSurgeChart}
+                onChange={(value) => store.setField('guardianSurgeChart', value)}
+                options={DEFENSE_SURGE_OPTIONS}
+              />
+              <Toggle
+                label="Guardian Deflect"
+                value={store.guardianDeflect}
+                onChange={(value) => store.setField('guardianDeflect', value)}
+              />
+              <Toggle
+                label="Guardian Soresu Mastery"
+                value={store.guardianSoresuMastery}
+                onChange={(value) => store.setField('guardianSoresuMastery', value)}
+              />
+              <NumberSpinner
+                label="Guardian Dodge Tokens"
+                value={store.guardianDodgeTokens}
+                onChange={(value) => store.setField('guardianDodgeTokens', value)}
+                min={0}
+                max={5}
+              />
             </>
           )}
         </div>
-      </section>
-    </div>
+      </SectionHeader>
+
+      <SectionHeader title="Points">
+        <NumberSpinner
+          label="Unit Cost"
+          value={store.unitCost}
+          onChange={(value) => store.setField('unitCost', value)}
+          min={0}
+          max={999}
+        />
+      </SectionHeader>
+    </>
   );
 }

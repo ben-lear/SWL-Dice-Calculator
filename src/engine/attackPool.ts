@@ -20,6 +20,10 @@ function isWeaponUsableForAttackType(
 
 export function getWeaponsForAttackType(config: AttackConfig): WeaponProfile[] {
   return config.attacker.weapons.filter((weapon) => {
+    if (weapon.enabled === false) {
+      return false;
+    }
+
     // Basic attack type compatibility
     if (!isWeaponUsableForAttackType(weapon.weaponType, config.attackType)) {
       return false;

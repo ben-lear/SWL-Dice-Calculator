@@ -1,24 +1,30 @@
 import { useMemo } from 'react';
-import {
-  getDefenderPresetById,
-  getDefenderPresets,
-  getFactionOptions,
-} from '../../data/presetHelpers';
+import { AttackType } from '../../engine/types';
+import { getAttackerPresetById, getAttackerPresets, getFactionOptions } from '../../data/presetHelpers';
 import type { Faction } from '../../data/presets';
-import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import { useAttackConfigStore } from '../../stores/attackConfigStore';
+import { useAttackTypeStore } from '../../stores/attackTypeStore';
 import SearchableCombobox, { type ComboboxOption } from '../shared/SearchableCombobox';
-import SectionHeader from '../shared/SectionHeader';
 import Select, { type SelectOption } from '../shared/Select';
-import DefenderCustomPoolView from './DefenderCustomPoolView';
-import DefenderUnitBuilderView from './DefenderUnitBuilderView';
+import SectionHeader from '../shared/SectionHeader';
+import AttackerCustomPoolView from './AttackerCustomPoolView';
+import AttackerUnitBuilderView from './AttackerUnitBuilderView';
 
 const MODE_OPTIONS: SelectOption<'custom' | 'unit-builder'>[] = [
   { value: 'custom', label: 'Custom Pool' },
   { value: 'unit-builder', label: 'Unit Builder' },
 ];
 
-export default function DefenderPanel() {
-  const store = useDefenseConfigStore();
+const ATTACK_TYPE_TO_PRESET_TYPE: Record<AttackType, AttackType> = {
+  [AttackType.Ranged]: AttackType.Ranged,
+  [AttackType.Melee]: AttackType.Melee,
+  [AttackType.Hybrid]: AttackType.Ranged,
+  [AttackType.Overrun]: AttackType.Overrun,
+};
+
+export default function AttackerPanel() {
+  const store = useAttackConfigStore();
+  const attackType = useAttackTypeStore((state) => state.attackType);
 
   const factionOptions: SelectOption<string>[] = useMemo(
     () => [
@@ -29,12 +35,16 @@ export default function DefenderPanel() {
   );
 
   const unitOptions: ComboboxOption[] = useMemo(() => {
-    const presets = getDefenderPresets(store.selectedFaction);
+    const filtered = getAttackerPresets(
+      store.selectedFaction,
+      ATTACK_TYPE_TO_PRESET_TYPE[attackType],
+    );
+
     return [
       { value: '', label: 'Custom' },
-      ...presets.map((preset) => ({ value: preset.id, label: preset.name })),
+      ...filtered.map((preset) => ({ value: preset.id, label: preset.name })),
     ];
-  }, [store.selectedFaction]);
+  }, [attackType, store.selectedFaction]);
 
   const handlePresetChange = (presetId: string) => {
     if (presetId === '') {
@@ -42,7 +52,11 @@ export default function DefenderPanel() {
       return;
     }
 
-    const preset = getDefenderPresetById(presetId);
+    const preset = getAttackerPresetById(
+      presetId,
+      ATTACK_TYPE_TO_PRESET_TYPE[attackType],
+    );
+
     if (preset) {
       store.loadPreset(preset.id, preset.profile, preset.upgradeBar);
     }
@@ -51,7 +65,7 @@ export default function DefenderPanel() {
   return (
     <div className="flex h-full flex-col overflow-y-auto rounded-lg border border-gray-800 bg-gray-900">
       <div className="sticky top-0 z-10 border-b border-gray-800 bg-gray-900 px-4 py-3">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-gray-300">Defender</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wider text-gray-300">Attacker</h2>
       </div>
 
       <div className="space-y-4 px-4 py-4">
@@ -73,7 +87,7 @@ export default function DefenderPanel() {
               options={factionOptions}
             />
             <SearchableCombobox
-              label="Unit"
+              label="Unit / Weapon"
               value={store.selectedPresetId ?? ''}
               onChange={handlePresetChange}
               options={unitOptions}
@@ -82,8 +96,11 @@ export default function DefenderPanel() {
           </div>
         </SectionHeader>
 
-        {store.activeMode === 'unit-builder' && <DefenderUnitBuilderView />}
-        <DefenderCustomPoolView />
+        {store.activeMode === 'custom' ? (
+          <AttackerCustomPoolView />
+        ) : (
+          <AttackerUnitBuilderView />
+        )}
       </div>
     </div>
   );

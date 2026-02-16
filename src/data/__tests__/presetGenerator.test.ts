@@ -74,7 +74,6 @@ describe('presetGenerator', () => {
       
       // Some units MAY have multiple presets (one per weapon)
       // This is optional depending on enrichment data completeness
-      const multiPresetUnits = Array.from(unitGroups.values()).filter(g => g.length > 1);
       // Just verify the data structure is reasonable
       expect(unitGroups.size).toBeGreaterThan(0);
     });
@@ -92,9 +91,6 @@ describe('presetGenerator', () => {
       for (const preset of rangedPresets) {
         if (preset.profile.weapons && preset.profile.weapons.length > 0) {
           // All weapons should be ranged-compatible (weaponType: Ranged or Versatile)
-          const hasRangedWeapons = preset.profile.weapons.some(w =>
-            w.weaponType === 'ranged' || w.weaponType === 'hybrid'
-          );
           // For incomplete enrichment data, just verify weapons exist
           expect(preset.profile.weapons.length).toBeGreaterThan(0);
         }
@@ -111,9 +107,7 @@ describe('presetGenerator', () => {
         for (const preset of meleePresets) {
           if (preset.profile.weapons && preset.profile.weapons.length > 0) {
             // All weapons should be melee-compatible (weaponType: Melee or Versatile)
-            const hasMeleeWeapons = preset.profile.weapons.some(w =>
-              w.weaponType === 'melee' || w.weaponType === 'hybrid'
-            );
+            // For incomplete enrichment data, just verify weapons exist
             expect(preset.profile.weapons.length).toBeGreaterThan(0);
           }
         }

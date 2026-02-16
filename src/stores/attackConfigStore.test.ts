@@ -13,6 +13,7 @@ describe('attackConfigStore', () => {
   it('initializes with one empty weapon', () => {
     const state = useAttackConfigStore.getState();
     expect(state.weapons).toHaveLength(1);
+    expect(state.weapons[0].enabled).toBe(true);
     expect(state.weapons[0].redDice).toBe(0);
     expect(state.weapons[0].blackDice).toBe(0);
     expect(state.weapons[0].whiteDice).toBe(0);
@@ -90,6 +91,11 @@ describe('attackConfigStore', () => {
   it('sets weapon keyword', () => {
     useAttackConfigStore.getState().setWeaponKeyword(0, 'pierceX', 3);
     expect(useAttackConfigStore.getState().weapons[0].keywords.pierceX).toBe(3);
+  });
+
+  it('sets weapon enabled state', () => {
+    useAttackConfigStore.getState().setWeaponEnabled(0, false);
+    expect(useAttackConfigStore.getState().weapons[0].enabled).toBe(false);
   });
 
   it('adds a new weapon', () => {
@@ -205,5 +211,27 @@ describe('attackConfigStore', () => {
     expect(config).not.toHaveProperty('activeMode');
     expect(config).not.toHaveProperty('setField');
     expect(config).not.toHaveProperty('reset');
+  });
+
+  it('filters disabled weapons from selected attacker config', () => {
+    const state = useAttackConfigStore.getState();
+    state.addWeapon({ redDice: 3 });
+    state.setWeaponEnabled(0, false);
+    state.setWeaponEnabled(1, true);
+
+    const config = selectAttackerConfig(useAttackConfigStore.getState());
+    expect(config.weapons).toHaveLength(1);
+    expect(config.weapons[0].redDice).toBe(3);
+  });
+
+  it('returns an empty fallback weapon when all weapons are disabled', () => {
+    useAttackConfigStore.getState().setWeaponEnabled(0, false);
+
+    const config = selectAttackerConfig(useAttackConfigStore.getState());
+    expect(config.weapons).toHaveLength(1);
+    expect(config.weapons[0].enabled).toBe(true);
+    expect(config.weapons[0].redDice).toBe(0);
+    expect(config.weapons[0].blackDice).toBe(0);
+    expect(config.weapons[0].whiteDice).toBe(0);
   });
 });

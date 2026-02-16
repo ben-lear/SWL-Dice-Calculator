@@ -1,30 +1,52 @@
-export default function DefenderUnitBuilderView() {
-  return (
-    <div className="space-y-4">
-      <div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
-        <h3 className="text-lg font-semibold mb-3">Unit Builder Mode</h3>
-        <p className="text-gray-400 mb-4">
-          Unit Builder mode will be available after Phase 5.5 (Unit Data Layer & Upgrade System) is implemented.
-        </p>
-        
-        <div className="space-y-2 text-sm text-gray-500">
-          <p><strong>Coming Soon:</strong></p>
-          <ul className="list-disc list-inside space-y-1 ml-4">
-            <li>Faction selection dropdown</li>
-            <li>Searchable unit combobox</li>
-            <li>Auto-populated defense die, surge chart, and keywords from preset</li>
-            <li>Upgrade slot selection</li>
-            <li>Automatic cost calculation (base + upgrades)</li>
-            <li>Editable situational inputs (Cover, Tokens, Guardian)</li>
-          </ul>
-        </div>
+import { useMemo } from 'react';
+import { getUpgradesForSlot } from '../../data/upgradeResolver';
+import { UPGRADE_SLOT_LABELS, type UpgradeSlot } from '../../data/types';
+import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import SectionHeader from '../shared/SectionHeader';
+import Select, { type SelectOption } from '../shared/Select';
 
-        <div className="mt-6 p-4 bg-blue-900/20 border border-blue-700/50 rounded">
-          <p className="text-sm text-blue-300">
-            <strong>Note:</strong> Use Custom Pool mode for manual configuration while this feature is being developed.
-          </p>
-        </div>
+export default function DefenderUnitBuilderView() {
+  const store = useDefenseConfigStore();
+
+  const slotRows = useMemo(
+    () => store.upgradeBar.map((slot, index) => ({ slot, index })),
+    [store.upgradeBar],
+  );
+
+  return (
+    <SectionHeader title="Upgrade Slots">
+      <div className="space-y-3">
+        {store.selectedPresetId === null && (
+          <p className="text-sm text-gray-500">Select a unit preset to enable upgrade slots.</p>
+        )}
+
+        {slotRows.length === 0 && store.selectedPresetId !== null && (
+          <p className="text-sm text-gray-500">This unit has no upgrade slots.</p>
+        )}
+
+        {slotRows.map(({ slot, index }) => {
+          const upgrades = getUpgradesForSlot(slot as UpgradeSlot);
+          const selectedValue = store.equippedUpgradeIds[index] ?? '';
+          const options: SelectOption<string>[] = [
+            { value: '', label: 'None' },
+            ...upgrades.map((upgrade) => ({
+              value: upgrade.id,
+              label: `${upgrade.name} (${upgrade.cost})`,
+            })),
+          ];
+
+          return (
+            <Select
+              key={`${slot}-${index}`}
+              label={UPGRADE_SLOT_LABELS[slot as UpgradeSlot]}
+              value={selectedValue}
+              onChange={(value) => store.equipUpgrade(index, value === '' ? null : value)}
+              options={options}
+              disabled={store.selectedPresetId === null}
+            />
+          );
+        })}
       </div>
-    </div>
+    </SectionHeader>
   );
 }

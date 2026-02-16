@@ -1,0 +1,22 @@
+import { AttackType } from '../../engine/types';
+import { useAttackTypeStore } from '../../stores/attackTypeStore';
+import Select, { type SelectOption } from '../shared/Select';
+
+const ATTACK_TYPE_OPTIONS: SelectOption<AttackType>[] = [
+  { value: AttackType.Ranged, label: 'Ranged' },
+  { value: AttackType.Melee, label: 'Melee' },
+  { value: AttackType.Overrun, label: 'Overrun' },
+];
+
+export default function AttackTypeSelector() {
+  const { attackType, setAttackType } = useAttackTypeStore();
+
+  return (
+    <Select
+      label="Attack Type"
+      value={attackType}
+      onChange={setAttackType}
+      options={ATTACK_TYPE_OPTIONS}
+    />
+  );
+}

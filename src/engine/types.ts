@@ -132,6 +132,8 @@ export interface WeaponProfile {
   name?: string;
   /** Weapon attack type; if omitted, treated as valid for all attack types. */
   weaponType?: AttackType;
+  /** Whether this weapon is enabled in Unit Builder mode. */
+  enabled?: boolean;
 
   // Dice contributed by this weapon
   redDice: number;

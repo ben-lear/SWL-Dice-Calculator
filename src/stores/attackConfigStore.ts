@@ -84,10 +84,12 @@ export interface AttackConfigState {
   // Weapon mutation actions
   setWeaponDice: (weaponIndex: number, color: 'red' | 'black' | 'white', count: number) => void;
   setWeaponKeyword: (weaponIndex: number, keyword: keyof WeaponKeywords, value: number | boolean) => void;
+  setWeaponEnabled: (weaponIndex: number, enabled: boolean) => void;
   addWeapon: (weapon?: Partial<WeaponProfile>) => void;
   removeWeapon: (weaponIndex: number) => void;
   
   setSelectedFaction: (faction: Faction | null) => void;
+  setSelectedPresetId: (presetId: string | null) => void;
   setActiveMode: (mode: 'custom' | 'unit-builder') => void;
   loadPreset: (
     presetId: string,
@@ -108,9 +110,11 @@ type AttackConfigFields = Omit<
   | 'setField'
   | 'setWeaponDice'
   | 'setWeaponKeyword'
+  | 'setWeaponEnabled'
   | 'addWeapon'
   | 'removeWeapon'
   | 'setSelectedFaction'
+  | 'setSelectedPresetId'
   | 'setActiveMode'
   | 'loadPreset'
   | 'reset'
@@ -131,6 +135,7 @@ type AttackConfigFields = Omit<
 /** Helper: create an empty weapon profile */
 function createEmptyWeapon(): WeaponProfile {
   return {
+    enabled: true,
     redDice: 0,
     blackDice: 0,
     whiteDice: 0,
@@ -231,10 +236,28 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       return { weapons };
     }),
 
+  setWeaponEnabled: (weaponIndex, enabled) =>
+    set((state) => {
+      const weapons = [...state.weapons];
+      weapons[weaponIndex] = { ...weapons[weaponIndex], enabled };
+      return { weapons };
+    }),
+
   addWeapon: (weapon) =>
-    set((state) => ({
-      weapons: [...state.weapons, { ...createEmptyWeapon(), ...weapon }],
-    })),
+    set((state) => {
+      const emptyWeapon = createEmptyWeapon();
+      return {
+        weapons: [
+          ...state.weapons,
+          {
+            ...emptyWeapon,
+            ...weapon,
+            enabled: weapon?.enabled ?? true,
+            keywords: { ...emptyWeapon.keywords, ...weapon?.keywords },
+          },
+        ],
+      };
+    }),
 
   removeWeapon: (weaponIndex) =>
     set((state) => {
@@ -246,21 +269,36 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   setSelectedFaction: (faction) =>
     set({ selectedFaction: faction }),
 
+  // Setter for preset combobox (UI-only state)
+  setSelectedPresetId: (presetId) =>
+    set({ selectedPresetId: presetId }),
+
   // Setter for mode toggle
   setActiveMode: (mode) =>
     set({ activeMode: mode }),
 
   // Load a preset: reset to defaults, then apply preset overrides
   loadPreset: (presetId, profile, upgradeBar = []) =>
-    set(() => ({
-      ...DEFAULT_ATTACK_CONFIG,
-      ...profile,
-      baseMiniatureCount: profile.baseMiniatureCount ?? 1,  // ← NEW
-      unitBaseWeapons: profile.unitBaseWeapons ?? [],        // ← NEW
-      selectedPresetId: presetId,
-      upgradeBar,
-      equippedUpgradeIds: new Array(upgradeBar.length).fill(null),
-    })),
+    set(() => {
+      const emptyWeapon = createEmptyWeapon();
+      const normalizedWeapons = profile.weapons?.map((weapon) => ({
+        ...emptyWeapon,
+        ...weapon,
+        enabled: weapon.enabled ?? true,
+        keywords: { ...emptyWeapon.keywords, ...weapon.keywords },
+      }));
+
+      return {
+        ...DEFAULT_ATTACK_CONFIG,
+        ...profile,
+        weapons: normalizedWeapons ?? DEFAULT_ATTACK_CONFIG.weapons,
+        baseMiniatureCount: profile.baseMiniatureCount ?? 1,  // ← NEW
+        unitBaseWeapons: profile.unitBaseWeapons ?? [],        // ← NEW
+        selectedPresetId: presetId,
+        upgradeBar,
+        equippedUpgradeIds: new Array(upgradeBar.length).fill(null),
+      };
+    }),
 
   // Equip an upgrade in a specific slot (by index in upgradeBar)
   equipUpgrade: (slotIndex, upgradeId) =>
@@ -302,14 +340,21 @@ export function selectAttackerConfig(state: AttackConfigState) {
     setField,
     setWeaponDice,
     setWeaponKeyword,
+    setWeaponEnabled,
     addWeapon,
     removeWeapon,
     setSelectedFaction,
+    setSelectedPresetId,
     setActiveMode,
     loadPreset,
     reset,
     equipUpgrade,
     ...config
   } = state;
-  return config;
+
+  const enabledWeapons = config.weapons.filter((weapon) => weapon.enabled !== false);
+  return {
+    ...config,
+    weapons: enabledWeapons.length > 0 ? enabledWeapons : [createEmptyWeapon()],
+  };
 }

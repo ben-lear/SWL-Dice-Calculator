@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { applyAttackerUpgrades } from '../upgradeApplicator';
-import { AttackType } from '../../engine/types';
-import type { DataLayerWeaponProfile } from '../types';
+import { AttackType, WeaponProfile } from '../../engine/types';
+import type { WeaponProfile as DataLayerWeaponProfile } from '../types';
 
 describe('upgradeApplicator', () => {
   // Helper: minimal attack config for Unit Builder mode
@@ -11,6 +11,8 @@ describe('upgradeApplicator', () => {
     weapons: Array(weaponCount).fill({
       name: 'E-11 Blaster Rifle',
       weaponType: AttackType.Ranged,
+      redDice: 0,
+      blackDice: 0,
       whiteDice: 1,
       keywords: {
         sidearmMelee: false,
@@ -26,13 +28,17 @@ describe('upgradeApplicator', () => {
       weaponType: AttackType.Ranged,
       minRange: 1,
       maxRange: 3,
+      redDice: 0,
+      blackDice: 0,
       whiteDice: 1,
       keywords: {},
     },
     {
       name: 'Unarmed',
       weaponType: AttackType.Melee,
+      redDice: 0,
       blackDice: 1,
+      whiteDice: 0,
       keywords: {},
     },
   ];
@@ -243,7 +249,7 @@ describe('upgradeApplicator', () => {
       const config = {
         unitCost: 44,
         baseMiniatureCount: 4,
-        weapons: [],
+        weapons: [] as WeaponProfile[],
       };
       const result = applyAttackerUpgrades(
         config,
@@ -261,7 +267,7 @@ describe('upgradeApplicator', () => {
       const config = {
         unitCost: 44,
         baseMiniatureCount: 4,
-        weapons: [],
+        weapons: [] as WeaponProfile[],
       };
       const result = applyAttackerUpgrades(
         config,
