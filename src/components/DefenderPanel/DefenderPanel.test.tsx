@@ -70,7 +70,7 @@ describe('DefenderPanel', () => {
 
     render(<DefenderPanel />);
 
-    expect(screen.getByText('Suppression Tokens')).toBeInTheDocument();
+    expect(screen.getByText('Suppression')).toBeInTheDocument();
   });
 
   it('shows guardian sub-config when Guardian X is above zero', () => {
@@ -105,7 +105,7 @@ describe('DefenderPanel', () => {
     fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     const factionValue = getFactionOptions()[0]?.value as Faction;
-    const expectedOptions = getDefenderPresets(factionValue).length + 1;
+    const expectedOptions = getDefenderPresets(factionValue).length;
 
     fireEvent.change(screen.getByLabelText('Faction'), {
       target: { value: factionValue },
@@ -126,14 +126,16 @@ describe('DefenderPanel', () => {
 
     const preset = getDefenderPresets(null)[0];
     expect(preset).toBeDefined();
+    const rankLabel = preset.rank.charAt(0).toUpperCase() + preset.rank.slice(1);
+    const displayName = `${preset.name} (${rankLabel})`;
 
     await userEvent.click(screen.getByRole('combobox', { name: 'Unit' }));
-    await userEvent.click(screen.getByRole('option', { name: preset.name }));
+    await userEvent.click(screen.getByRole('option', { name: displayName }));
 
     expect(useDefenseConfigStore.getState().selectedPresetId).toBe(preset.id);
   });
 
-  it('selecting Custom clears defender selected preset without resetting fields', async () => {
+  it('clearing selection clears defender selected preset without resetting fields', async () => {
     render(<DefenderPanel />);
 
     // Need to be in unit-builder mode to see the Unit Preset section
@@ -141,14 +143,16 @@ describe('DefenderPanel', () => {
 
     const preset = getDefenderPresets(null)[0];
     expect(preset).toBeDefined();
+    const rankLabel = preset.rank.charAt(0).toUpperCase() + preset.rank.slice(1);
+    const displayName = `${preset.name} (${rankLabel})`;
 
     await userEvent.click(screen.getByRole('combobox', { name: 'Unit' }));
-    await userEvent.click(screen.getByRole('option', { name: preset.name }));
+    await userEvent.click(screen.getByRole('option', { name: displayName }));
 
     const previousDieColor = useDefenseConfigStore.getState().dieColor;
 
-    await userEvent.click(screen.getByRole('combobox', { name: 'Unit' }));
-    await userEvent.click(screen.getByRole('option', { name: 'Custom' }));
+    // Clear the selection using the Clear button
+    await userEvent.click(screen.getByRole('button', { name: 'Clear selection' }));
 
     expect(useDefenseConfigStore.getState().selectedPresetId).toBeNull();
     expect(useDefenseConfigStore.getState().dieColor).toBe(previousDieColor);

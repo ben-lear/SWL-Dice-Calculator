@@ -14,7 +14,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icons/*.png'],
+      includeAssets: ['justrollcrits_noburst.png', 'justrollcrits.png', 'icons/*.png'],
       manifest: {
         name: 'Just Roll Crits',
         short_name: 'Just Roll Crits',

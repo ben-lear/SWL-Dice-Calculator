@@ -12,13 +12,19 @@ export interface NumberSpinnerProps {
   /** Step size for increment/decrement (default: 1) */
   step?: number;
   /** Label text displayed above or beside the input */
-  label: string;
+  label?: string;
+  /** Custom label content (e.g., icon) - overrides label if provided */
+  labelContent?: React.ReactNode;
   /** Tooltip text (rendered as title attribute) */
   tooltip?: string;
   /** Explicit ID for input element (auto-generated if omitted) */
   id?: string;
   /** Disable all interaction */
   disabled?: boolean;
+  /** Compact mode: smaller controls, no justify-between spacing */
+  compact?: boolean;
+  /** Custom gap between label and controls (default: gap-2) */
+  gap?: string;
 }
 
 export default function NumberSpinner({
@@ -28,9 +34,12 @@ export default function NumberSpinner({
   max = 99,
   step = 1,
   label,
+  labelContent,
   tooltip,
   id: externalId,
   disabled = false,
+  compact = false,
+  gap = 'gap-2',
 }: NumberSpinnerProps) {
   const autoId = useId();
   const inputId = externalId ?? autoId;
@@ -70,22 +79,32 @@ export default function NumberSpinner({
     }
   };
 
+  const buttonSize = compact ? 'h-8 w-6' : 'h-8 w-8';
+  const inputSize = compact ? 'h-8 w-8' : 'h-8 w-12';
+  const textSize = 'text-sm';
+  const labelSize = 'text-sm';
+  
+  const displayLabel = labelContent ?? label;
+  const ariaLabel = label ?? 'value';
+
   return (
-    <div className={`flex items-center justify-between gap-2 ${disabled ? 'opacity-50' : ''}`}>
-      <label
-        htmlFor={inputId}
-        className="text-sm font-medium text-gray-300 select-none"
-        title={tooltip}
-      >
-        {label}
-      </label>
+    <div className={`flex items-center justify-between ${gap} ${disabled ? 'opacity-50' : ''}`}>
+      {displayLabel && (
+        <label
+          htmlFor={inputId}
+          className={`${labelSize} font-medium text-gray-300 select-none`}
+          title={tooltip}
+        >
+          {displayLabel}
+        </label>
+      )}
       <div className="flex items-center">
         <button
           type="button"
           onClick={decrement}
           disabled={disabled || value <= min}
-          aria-label={`Decrease ${label}`}
-          className="flex h-8 w-8 items-center justify-center rounded-l border border-r-0 border-gray-700 bg-gray-800 text-gray-300 transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:text-gray-600 disabled:hover:bg-gray-800"
+          aria-label={`Decrease ${ariaLabel}`}
+          className={`flex ${buttonSize} items-center justify-center rounded-l border border-r-0 border-gray-700 bg-gray-800 ${textSize} text-gray-300 transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:text-gray-600 disabled:hover:bg-gray-800`}
         >
           −
         </button>
@@ -102,14 +121,14 @@ export default function NumberSpinner({
           aria-valuemax={max}
           aria-valuenow={value}
           role="spinbutton"
-          className="h-8 w-12 border-y border-gray-700 bg-gray-800 text-center text-sm text-gray-100 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:cursor-not-allowed disabled:text-gray-500"
+          className={`${inputSize} border-y border-gray-700 bg-gray-800 text-center ${textSize} text-gray-100 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:cursor-not-allowed disabled:text-gray-500`}
         />
         <button
           type="button"
           onClick={increment}
           disabled={disabled || value >= max}
-          aria-label={`Increase ${label}`}
-          className="flex h-8 w-8 items-center justify-center rounded-r border border-l-0 border-gray-700 bg-gray-800 text-gray-300 transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:text-gray-600 disabled:hover:bg-gray-800"
+          aria-label={`Increase ${ariaLabel}`}
+          className={`flex ${buttonSize} items-center justify-center rounded-r border border-l-0 border-gray-700 bg-gray-800 ${textSize} text-gray-300 transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:text-gray-600 disabled:hover:bg-gray-800`}
         >
           +
         </button>

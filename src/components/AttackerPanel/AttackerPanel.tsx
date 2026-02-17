@@ -67,6 +67,11 @@ export default function AttackerPanel() {
   }, [attackType, store.selectedFaction]);
 
   const handlePresetChange = (presetId: string) => {
+    if (!presetId || presetId === '') {
+      // Clear selection
+      store.setSelectedPresetId(null);
+      return;
+    }
     const preset = getAttackerPresetById(
       presetId,
       ATTACK_TYPE_TO_PRESET_TYPE[attackType],

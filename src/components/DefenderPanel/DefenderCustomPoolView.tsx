@@ -108,70 +108,81 @@ export default function DefenderCustomPoolView() {
       </SectionHeader>
 
       <SectionHeader title="Tokens">
-        <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-2">
           <NumberSpinner
-            label="Dodge Tokens"
+            label="Dodge"
             value={store.dodgeTokens}
             onChange={(value) => store.setField('dodgeTokens', value)}
             min={0}
             max={5}
+            compact
           />
           <NumberSpinner
-            label="Surge Tokens"
+            label="Surge"
             value={store.surgeTokens}
             onChange={(value) => store.setField('surgeTokens', value)}
             min={0}
             max={5}
+            compact
           />
           {store.dangerSenseX > 0 && (
             <NumberSpinner
-              label="Suppression Tokens"
+              label="Suppression"
               value={store.suppressionTokens}
               onChange={(value) => store.setField('suppressionTokens', value)}
               min={0}
               max={10}
+              compact
+              tooltip="Suppression Tokens"
             />
           )}
         </div>
       </SectionHeader>
 
       <SectionHeader title="Keywords">
-        <div className="space-y-3">
-          <NumberSpinner
-            label="Armor X"
-            value={store.armorX}
-            onChange={(value) => store.setField('armorX', value)}
-            min={0}
-            max={6}
-          />
-          <NumberSpinner
-            label="Weak Point X"
-            value={store.weakPointX}
-            onChange={(value) => store.setField('weakPointX', value)}
-            min={0}
-            max={2}
-          />
-          <NumberSpinner
-            label="Danger Sense X"
-            value={store.dangerSenseX}
-            onChange={(value) => store.setField('dangerSenseX', value)}
-            min={0}
-            max={5}
-          />
-          <NumberSpinner
-            label="Uncanny Luck X"
-            value={store.uncannyLuckX}
-            onChange={(value) => store.setField('uncannyLuckX', value)}
-            min={0}
-            max={5}
-          />
-          <NumberSpinner
-            label="Shielded X"
-            value={store.shieldedX}
-            onChange={(value) => store.setField('shieldedX', value)}
-            min={0}
-            max={6}
-          />
+        <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+            <NumberSpinner
+              label="Armor X"
+              value={store.armorX}
+              onChange={(value) => store.setField('armorX', value)}
+              min={0}
+              max={6}
+              compact
+            />
+            <NumberSpinner
+              label="Weak Point X"
+              value={store.weakPointX}
+              onChange={(value) => store.setField('weakPointX', value)}
+              min={0}
+              max={2}
+              compact
+            />
+            <NumberSpinner
+              label="Danger Sense X"
+              value={store.dangerSenseX}
+              onChange={(value) => store.setField('dangerSenseX', value)}
+              min={0}
+              max={5}
+              compact
+            />
+            <NumberSpinner
+              label="Uncanny Luck X"
+              value={store.uncannyLuckX}
+              onChange={(value) => store.setField('uncannyLuckX', value)}
+              min={0}
+              max={5}
+              compact
+            />
+            <NumberSpinner
+              label="Shielded X"
+              value={store.shieldedX}
+              onChange={(value) => store.setField('shieldedX', value)}
+              min={0}
+              max={6}
+              compact
+            />
+          </div>
 
           <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
             <Checkbox

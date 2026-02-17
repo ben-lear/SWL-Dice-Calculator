@@ -25,33 +25,53 @@ export default function AttackerCustomPoolView() {
 
   if (!weapon) return null;
 
+  // Diamond icon components for dice
+  const DiceIcon = ({ color, title }: { color: string; title: string }) => (
+    <div
+      className={`h-3.5 w-3.5 rotate-45 ${color}`}
+      title={title}
+    />
+  );
+
   return (
     <>
       <SectionHeader title="Dice Pool">
         <div className="space-y-3">
-          <NumberSpinner
-            label="Red Dice"
-            value={weapon.redDice}
-            onChange={(value) => store.setWeaponDice(0, 'red', value)}
-            min={0}
-            max={12}
-          />
-          <NumberSpinner
-            label="Black Dice"
-            value={weapon.blackDice}
-            onChange={(value) => store.setWeaponDice(0, 'black', value)}
-            min={0}
-            max={12}
-          />
-          <NumberSpinner
-            label="White Dice"
-            value={weapon.whiteDice}
-            onChange={(value) => store.setWeaponDice(0, 'white', value)}
-            min={0}
-            max={12}
-          />
+          {/* Compact dice pool row with icons */}
+          <div className="flex items-center justify-between">
+            <NumberSpinner
+              labelContent={<DiceIcon color="bg-red-500 ring-2 ring-red-600" title="Red Dice" />}
+              label="Red Dice"
+              value={weapon.redDice}
+              onChange={(value) => store.setWeaponDice(0, 'red', value)}
+              min={0}
+              max={12}
+              compact
+              gap="gap-3"
+            />
+            <NumberSpinner
+              labelContent={<DiceIcon color="bg-gray-900 ring-2 ring-gray-600" title="Black Dice" />}
+              label="Black Dice"
+              value={weapon.blackDice}
+              onChange={(value) => store.setWeaponDice(0, 'black', value)}
+              min={0}
+              max={12}
+              compact
+              gap="gap-3"
+            />
+            <NumberSpinner
+              labelContent={<DiceIcon color="bg-gray-100 ring-2 ring-gray-300" title="White Dice" />}
+              label="White Dice"
+              value={weapon.whiteDice}
+              onChange={(value) => store.setWeaponDice(0, 'white', value)}
+              min={0}
+              max={12}
+              compact
+              gap="gap-3"
+            />
+          </div>
           <SegmentedControl
-            label="Attack Surge"
+            label="Surge Chart"
             value={store.surgeChart}
             onChange={(value) => store.setField('surgeChart', value)}
             options={ATTACK_SURGE_OPTIONS}
@@ -60,88 +80,90 @@ export default function AttackerCustomPoolView() {
       </SectionHeader>
 
       <SectionHeader title="Tokens">
-        <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-2">
           <NumberSpinner
-            label="Aim Tokens"
+            label="Aim"
             value={store.aimTokens}
             onChange={(value) => store.setField('aimTokens', value)}
             min={0}
             max={5}
+            compact
           />
           <NumberSpinner
-            label="Surge Tokens"
+            label="Surge"
             value={store.surgeTokens}
             onChange={(value) => store.setField('surgeTokens', value)}
             min={0}
             max={5}
+            compact
           />
           <NumberSpinner
-            label="Observation Tokens"
+            label="Obs"
             value={store.observationTokens}
             onChange={(value) => store.setField('observationTokens', value)}
             min={0}
             max={5}
+            compact
+            tooltip="Observation Tokens"
           />
           {store.jarKaiMastery && (
             <NumberSpinner
-              label="Dodge Tokens (Jar'Kai)"
+              label="Dodge"
               value={store.dodgeTokensAttacker}
               onChange={(value) => store.setField('dodgeTokensAttacker', value)}
               min={0}
               max={5}
+              compact
+              tooltip="Dodge Tokens (Jar'Kai Mastery)"
             />
           )}
         </div>
       </SectionHeader>
 
-      {store.marksman && (
-        <div className="mb-4">
-          <SegmentedControl
-            label="Marksman Strategy"
-            value={store.marksmanStrategy}
-            onChange={(value) => store.setField('marksmanStrategy', value)}
-            options={MARKSMAN_STRATEGY_OPTIONS}
-          />
-        </div>
-      )}
-
       <SectionHeader title="Weapon Keywords">
-        <div className="space-y-3">
-          <NumberSpinner
-            label="Critical X"
-            value={weapon.keywords.criticalX}
-            onChange={(value) => store.setWeaponKeyword(0, 'criticalX', value)}
-            min={0}
-            max={5}
-          />
-          <NumberSpinner
-            label="Lethal X"
-            value={weapon.keywords.lethalX}
-            onChange={(value) => store.setWeaponKeyword(0, 'lethalX', value)}
-            min={0}
-            max={5}
-          />
-          <NumberSpinner
-            label="Pierce X"
-            value={weapon.keywords.pierceX}
-            onChange={(value) => store.setWeaponKeyword(0, 'pierceX', value)}
-            min={0}
-            max={5}
-          />
-          <NumberSpinner
-            label="Impact X"
-            value={weapon.keywords.impactX}
-            onChange={(value) => store.setWeaponKeyword(0, 'impactX', value)}
-            min={0}
-            max={6}
-          />
-          <NumberSpinner
-            label="Ram X"
-            value={weapon.keywords.ramX}
-            onChange={(value) => store.setWeaponKeyword(0, 'ramX', value)}
-            min={0}
-            max={5}
-          />
+        <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+            <NumberSpinner
+              label="Critical X"
+              value={weapon.keywords.criticalX}
+              onChange={(value) => store.setWeaponKeyword(0, 'criticalX', value)}
+              min={0}
+              max={5}
+              compact
+            />
+            <NumberSpinner
+              label="Lethal X"
+              value={weapon.keywords.lethalX}
+              onChange={(value) => store.setWeaponKeyword(0, 'lethalX', value)}
+              min={0}
+              max={5}
+              compact
+            />
+            <NumberSpinner
+              label="Pierce X"
+              value={weapon.keywords.pierceX}
+              onChange={(value) => store.setWeaponKeyword(0, 'pierceX', value)}
+              min={0}
+              max={5}
+              compact
+            />
+            <NumberSpinner
+              label="Impact X"
+              value={weapon.keywords.impactX}
+              onChange={(value) => store.setWeaponKeyword(0, 'impactX', value)}
+              min={0}
+              max={6}
+              compact
+            />
+            <NumberSpinner
+              label="Ram X"
+              value={weapon.keywords.ramX}
+              onChange={(value) => store.setWeaponKeyword(0, 'ramX', value)}
+              min={0}
+              max={5}
+              compact
+            />
+          </div>
 
           <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
             <Checkbox
@@ -169,28 +191,33 @@ export default function AttackerCustomPoolView() {
       </SectionHeader>
 
       <SectionHeader title="Unit Keywords">
-        <div className="space-y-3">
-          <NumberSpinner
-            label="Precise X"
-            value={store.preciseX}
-            onChange={(value) => store.setField('preciseX', value)}
-            min={0}
-            max={3}
-          />
-          <NumberSpinner
-            label="Sharpshooter X"
-            value={store.sharpshooterX}
-            onChange={(value) => store.setField('sharpshooterX', value)}
-            min={0}
-            max={3}
-          />
-          <NumberSpinner
-            label="Arsenal X"
-            value={store.arsenalX}
-            onChange={(value) => store.setField('arsenalX', value)}
-            min={0}
-            max={4}
-          />
+        <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+            <NumberSpinner
+              label="Precise X"
+              value={store.preciseX}
+              onChange={(value) => store.setField('preciseX', value)}
+              min={0}
+              max={3}
+              compact
+            />
+            <NumberSpinner
+              label="Sharpshooter X"
+              value={store.sharpshooterX}
+              onChange={(value) => store.setField('sharpshooterX', value)}
+              min={0}
+              max={3}
+              compact
+            />
+            <NumberSpinner
+              label="Arsenal X"
+              value={store.arsenalX}
+              onChange={(value) => store.setField('arsenalX', value)}
+              min={0}
+              max={4}
+              compact
+            />
+          </div>
 
           <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
             <Checkbox
@@ -234,6 +261,17 @@ export default function AttackerCustomPoolView() {
               onChange={(value) => store.setField('holdTheLine', value)}
             />
           </div>
+
+          {store.marksman && (
+            <div className="mb-2">
+              <SegmentedControl
+                label="Marksman Strategy"
+                value={store.marksmanStrategy}
+                onChange={(value) => store.setField('marksmanStrategy', value)}
+                options={MARKSMAN_STRATEGY_OPTIONS}
+              />
+            </div>
+          )}
 
           <NumberSpinner
             label="Unit Cost"

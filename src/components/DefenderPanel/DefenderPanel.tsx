@@ -42,6 +42,11 @@ export default function DefenderPanel() {
   }, [store.selectedFaction]);
 
   const handlePresetChange = (presetId: string) => {
+    if (!presetId || presetId === '') {
+      // Clear selection
+      store.setSelectedPresetId(null);
+      return;
+    }
     const preset = getDefenderPresetById(presetId);
     if (preset) {
       store.loadPreset(preset.id, preset.profile, preset.upgradeBar, preset.unitApiId);
