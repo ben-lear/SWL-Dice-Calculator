@@ -1,6 +1,14 @@
 import type { AttackConfig, SimulationResult } from '../types';
 import type { SimulationRequest, WorkerResponse } from './protocol';
 
+// Vite requires the literal `new Worker(new URL(...))` pattern to detect and
+// bundle the worker for production builds. The webworker lib reference in
+// simulation.worker.ts conflicts with DOM Worker types across the compilation,
+// so we declare the constructor locally.
+declare const Worker: {
+  new (scriptURL: URL, options: { type: string }): unknown;
+};
+
 interface WorkerMessageEvent<T> {
   data: T;
 }
@@ -9,15 +17,11 @@ interface WorkerErrorEvent {
   message?: string;
 }
 
-interface WorkerLike {
+export interface WorkerLike {
   onmessage: ((event: WorkerMessageEvent<WorkerResponse>) => void) | null;
   onerror: ((event: WorkerErrorEvent) => void) | null;
   postMessage(message: SimulationRequest): void;
   terminate(): void;
-}
-
-interface WorkerConstructorLike {
-  new (url: URL, options: { type: 'module' }): WorkerLike;
 }
 
 /**
@@ -26,6 +30,10 @@ interface WorkerConstructorLike {
  * Provides a Promise-based API for running simulations off the main thread.
  * Handles request ID tracking to discard stale results when a new simulation
  * supersedes a previous one.
+ *
+ * Accepts an optional pre-constructed worker for testing. When omitted,
+ * creates a real Web Worker using the standard `new Worker(...)` pattern
+ * that Vite can statically detect and bundle for production.
  */
 export class SimulationWorkerClient {
   private worker: WorkerLike;
@@ -34,16 +42,14 @@ export class SimulationWorkerClient {
   private pendingReject: ((error: Error) => void) | null = null;
   private requestCounter = 0;
 
-  constructor() {
-    const WorkerCtor = (globalThis as { Worker?: WorkerConstructorLike }).Worker;
-    if (!WorkerCtor) {
-      throw new Error('Web Worker is not supported in this environment.');
-    }
-
-    this.worker = new WorkerCtor(
+  constructor(injectedWorker?: WorkerLike) {
+    // Use the literal `new Worker(new URL(...), ...)` pattern so Vite can
+    // statically detect and bundle the worker file for production builds.
+    // In tests, pass an injected mock worker instead.
+    this.worker = injectedWorker ?? new Worker(
       new URL('./simulation.worker.ts', import.meta.url),
       { type: 'module' }
-    );
+    ) as unknown as WorkerLike;
 
     this.worker.onmessage = (event) => {
       this.handleMessage(event.data);
