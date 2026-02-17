@@ -48,7 +48,7 @@ describe('attackRoll', () => {
         observationTokens: 1,
         aimTokens: 1,
       });
-      const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
+      const config = { attacker, defender: createMinimalDefender(), attackType: AttackType.Ranged };
       const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false };
 
       const results = [
@@ -87,7 +87,7 @@ describe('attackRoll', () => {
         surgeChart: AttackSurgeChart.None,
         surgeTokens: 0,
       });
-      const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
+      const config = { attacker, defender: createMinimalDefender(), attackType: AttackType.Ranged };
       const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false };
 
       const results = [

@@ -33,7 +33,7 @@ export function simulate(
   const mainTargetWoundsArr: number[] = new Array(iterations);
   const deflectWoundsArr: number[] = new Array(iterations);
   const djemSoWoundsArr: number[] = new Array(iterations);
-  let suppressionValue = 1;
+  const suppressionArr: number[] = new Array(iterations);
 
   for (let i = 0; i < iterations; i++) {
     const r = executeAttackSequence(config);
@@ -42,7 +42,7 @@ export function simulate(
     mainTargetWoundsArr[i] = r.mainTargetWoundsNoPierce;
     deflectWoundsArr[i] = r.deflectWounds;
     djemSoWoundsArr[i] = r.djemSoWounds;
-    if (i === 0) suppressionValue = r.suppressionApplied;
+    suppressionArr[i] = r.suppressionApplied;
   }
 
   // ── Compute statistics ──────────────────────────────────────────
@@ -51,6 +51,11 @@ export function simulate(
   const mainTargetWoundsStats = computeStatsSummary(mainTargetWoundsArr);
   const deflectWoundsStats = computeStatsSummary(deflectWoundsArr);
   const djemSoWoundsStats = computeStatsSummary(djemSoWoundsArr);
+
+  // ── Compute suppression value (mode across all iterations) ──────
+  // Suppression can vary when Shien Mastery is active (0 if no wounds)
+  const suppressionStats = computeStatsSummary(suppressionArr);
+  const suppressionValue = suppressionStats.mode;
 
   // ── Compute distributions ──────────────────────────────────────
   const totalWoundsDist = computeDistribution(totalWoundsArr);

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { modifyDefenseDice } from './defenseModifiers';
-import { DefenseFace, DefenseDieColor } from './types';
+import { DefenseFace, DefenseDieColor, AttackType } from './types';
 import { createMinimalAttacker, createMinimalDefender } from './testHelpers';
 
 describe('defenseModifiers', () => {
@@ -8,7 +8,7 @@ describe('defenseModifiers', () => {
     const config = {
       attacker: createMinimalAttacker(),
       defender: createMinimalDefender(),
-      attackType: 'ranged' as any,
+      attackType: AttackType.Ranged,
     };
 
     const results = [
@@ -27,7 +27,7 @@ describe('defenseModifiers', () => {
     const config = {
       attacker: createMinimalAttacker(),
       defender: createMinimalDefender(),
-      attackType: 'ranged' as any,
+      attackType: AttackType.Ranged,
     };
 
     const { blocks } = modifyDefenseDice([], config, false);
@@ -39,7 +39,7 @@ describe('defenseModifiers', () => {
     const config = {
       attacker: createMinimalAttacker(),
       defender: createMinimalDefender(),
-      attackType: 'ranged' as any,
+      attackType: AttackType.Ranged,
     };
 
     const results = [
@@ -56,7 +56,7 @@ describe('defenseModifiers', () => {
     const config = {
       attacker: createMinimalAttacker(),
       defender: createMinimalDefender(),
-      attackType: 'ranged' as any,
+      attackType: AttackType.Ranged,
     };
 
     const results = [
@@ -74,13 +74,13 @@ describe('defenseModifiers', () => {
     const config1 = {
       attacker: createMinimalAttacker({ aimTokens: 5 }),
       defender: createMinimalDefender({ armorX: 10 }),
-      attackType: 'melee' as any,
+      attackType: AttackType.Melee,
     };
 
     const config2 = {
       attacker: createMinimalAttacker(),
       defender: createMinimalDefender(),
-      attackType: 'ranged' as any,
+      attackType: AttackType.Ranged,
     };
 
     const results = [

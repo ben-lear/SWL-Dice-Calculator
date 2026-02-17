@@ -1,5 +1,5 @@
-import type { AttackerConfig, AggregatedWeaponKeywords, AttackType } from './types';
-import { AttackSurgeChart, AttackType as AttackTypeEnum } from './types';
+import type { AttackerConfig, AggregatedWeaponKeywords } from './types';
+import { AttackSurgeChart, AttackType } from './types';
 
 /**
  * Calculate total available surge conversions for the given attacker configuration.
@@ -37,7 +37,7 @@ export function calculateAvailableSurgeConversions(
   availableConversions += poolKeywords.criticalX;
 
   // Priority 4: Hold the Line (unlimited, melee only)
-  if (attacker.holdTheLine && attackType === AttackTypeEnum.Melee) {
+  if (attacker.holdTheLine && attackType === AttackType.Melee) {
     return Infinity;
   }
 
@@ -73,7 +73,7 @@ export function calculateSurgeConversionsByType(
   if (attacker.surgeChart === AttackSurgeChart.ToHit) {
     return { critConversions: 0, hitConversions: Infinity };
   }
-  if (attacker.holdTheLine && attackType === AttackTypeEnum.Melee) {
+  if (attacker.holdTheLine && attackType === AttackType.Melee) {
     return { critConversions: 0, hitConversions: Infinity };
   }
 

@@ -146,7 +146,7 @@ describe('marksmanDecision', () => {
           attacker: createMinimalAttacker({
             marksman: true,
             marksmanStrategy: MarksmanStrategy.Averages,
-            surgeChart: 'to-hit' as any, // Surges convert, making White reroll less favorable (2/8)
+            surgeChart: AttackSurgeChart.ToHit, // Surges convert, making White reroll less favorable (2/8)
           }),
           defender: createMinimalDefender(), // No Armor, blank→hit has EV of 1.0
         };
@@ -285,7 +285,7 @@ describe('marksmanDecision', () => {
           attacker: createMinimalAttacker({
             marksman: true,
             marksmanStrategy: MarksmanStrategy.Averages,
-            surgeChart: 'none' as any, // Surges not converted
+            surgeChart: AttackSurgeChart.None, // Surges not converted
           }),
           defender: createMinimalDefender(),
         };

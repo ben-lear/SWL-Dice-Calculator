@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import type { SimulationResult } from '../types';
+import type { SimulationResult, AttackConfig } from '../types';
 import type { WorkerResponse } from './protocol';
 import { SimulationWorkerClient } from './simulationWorkerClient';
 
@@ -43,7 +43,7 @@ vi.stubGlobal('Worker', class {
 describe('SimulationWorkerClient', () => {
   it('posts a run message to the worker', () => {
     const client = new SimulationWorkerClient();
-    const config = {} as any; // Minimal config for testing
+    const config = {} as AttackConfig; // Minimal config for testing
 
     client.run(config, 1000);
 
@@ -58,7 +58,7 @@ describe('SimulationWorkerClient', () => {
 
   it('resolves the promise when worker responds with result', async () => {
     const client = new SimulationWorkerClient();
-    const config = {} as any;
+    const config = {} as AttackConfig;
 
     const resultPromise = client.run(config, 1000);
 
@@ -80,7 +80,7 @@ describe('SimulationWorkerClient', () => {
 
   it('rejects the promise when worker responds with error', async () => {
     const client = new SimulationWorkerClient();
-    const config = {} as any;
+    const config = {} as AttackConfig;
 
     const resultPromise = client.run(config, 1000);
 
@@ -97,7 +97,7 @@ describe('SimulationWorkerClient', () => {
 
   it('ignores results from superseded requests', async () => {
     const client = new SimulationWorkerClient();
-    const config = {} as any;
+    const config = {} as AttackConfig;
 
     // Start first simulation
     void client.run(config, 1000); // Intentionally not awaited - will be superseded

@@ -16,7 +16,7 @@ export function rollGuardianDefense(
 
   // ── Default die color if not specified ──
   const guardianDieColor = defender.guardianDieColor ?? DefenseDieColor.White;
-  const guardianSurgeChart = defender.guardianSurgeChart ?? 'none';
+  const guardianSurgeChart = defender.guardianSurgeChart ?? DefenseSurgeChart.None;
 
   // ── Roll defense dice ──
   // No Danger Sense or Impervious for Guardian — just base dice equal to absorbed hits.
@@ -99,6 +99,11 @@ export function rollDefenseDice(
 ): { results: RolledDefenseDie[]; surgeCountBeforeConversion: number } {
   const { defender, attacker } = config;
   const totalAttackResults = attackResults.hits + attackResults.crits;
+
+  // ── Check if defense dice are disabled (Custom Pool mode) ──
+  if (defender.disableDefenseDice) {
+    return { results: [], surgeCountBeforeConversion: 0 };
+  }
 
   // ── 7a. Base pool ──
   let dieCount = totalAttackResults;
