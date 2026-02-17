@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { getFullConfig } from '../stores/configSelectors';
-import { useResultsStore } from '../stores/resultsStore';
+import { useResultsStore, selectIsFull } from '../stores/resultsStore';
 import { useAttackConfigStore } from '../stores/attackConfigStore';
 import { useDefenseConfigStore } from '../stores/defenseConfigStore';
 import { useAttackTypeStore } from '../stores/attackTypeStore';
@@ -23,18 +23,17 @@ function hasDice(config: AttackConfig): boolean {
  *
  * - Manages the SimulationWorkerClient lifecycle
  * - Exposes a `runSimulation()` function to trigger simulation on-demand
- * - Writes results to the ResultsStore
- * - Skips simulation when dice pool is empty
+ * - Appends results to the ResultsStore (multi-slot model)
+ * - Skips simulation when dice pool is empty or max slots reached
  *
- * Note: Staleness tracking is handled by the consuming component by comparing
- * config changes manually or through user interaction patterns.
+ * Note: Staleness tracking is handled by subscribing to config changes.
  *
  * Usage: Call once in the ResultsPanel and use the returned function.
  *
  * ```tsx
  * function ResultsPanel() {
  *   const { runSimulation } = useSimulation();
- *   const { result, loading, error, stale } = useResultsStore();
+ *   const { slots, loading, error, stale } = useResultsStore();
  *
  *   return (
  *     <button onClick={runSimulation}>Run Simulation</button>
@@ -43,7 +42,7 @@ function hasDice(config: AttackConfig): boolean {
  * ```
  */
 export function useSimulation(): { runSimulation: () => void } {
-  const { result, setResult, setLoading, setError, clear, markStale } = useResultsStore();
+  const { slots, appendResult, setLoading, setError, clearAll, markStale } = useResultsStore();
   const workerRef = useRef<SimulationWorkerClient | null>(null);
 
   // Initialize worker on mount, terminate on unmount
@@ -56,21 +55,22 @@ export function useSimulation(): { runSimulation: () => void } {
   }, []);
 
   // Track staleness: subscribe to all config stores and mark stale when any changes
+  // Only mark stale if we have results to compare against
   useEffect(() => {
     const unsubAttack = useAttackConfigStore.subscribe(() => {
-      if (result !== null) {
+      if (slots.length > 0) {
         markStale();
       }
     });
 
     const unsubDefense = useDefenseConfigStore.subscribe(() => {
-      if (result !== null) {
+      if (slots.length > 0) {
         markStale();
       }
     });
 
     const unsubAttackType = useAttackTypeStore.subscribe(() => {
-      if (result !== null) {
+      if (slots.length > 0) {
         markStale();
       }
     });
@@ -80,19 +80,24 @@ export function useSimulation(): { runSimulation: () => void } {
       unsubDefense();
       unsubAttackType();
     };
-  }, [result, markStale]);
+  }, [slots.length, markStale]);
 
   /**
    * Imperatively run the simulation with the current config snapshot.
-   * Called when the user clicks the "Run Simulation" button.
+   * Called when the user clicks the "Run Simulation" or "Add Simulation" button.
    */
   const runSimulation = async () => {
-    // Read current config (non-reactive snapshot)
+    // Read current config (non-reactive snapshot) before dispatch
     const currentConfig = getFullConfig();
 
     // Skip simulation if no dice configured
     if (!hasDice(currentConfig)) {
-      clear();
+      clearAll();
+      return;
+    }
+
+    // Guard: no-op if already at max slots
+    if (selectIsFull(useResultsStore.getState())) {
       return;
     }
 
@@ -103,7 +108,7 @@ export function useSimulation(): { runSimulation: () => void } {
     try {
       const simResult = await workerRef.current.run(currentConfig, DEFAULT_ITERATIONS);
       setError(null); // Clear any previous error on success
-      setResult(simResult); // setResult also clears stale flag
+      appendResult(simResult, currentConfig); // appendResult also clears stale flag
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     }

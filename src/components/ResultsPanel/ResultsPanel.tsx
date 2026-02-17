@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react';
 import { useSimulation } from '../../hooks/useSimulation';
-import { useResultsStore } from '../../stores/resultsStore';
+import { useResultsStore, selectIsFull, selectViewedSlot } from '../../stores/resultsStore';
+import { resetAll } from '../../stores/resetAll';
 import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import { SlotSelector } from './SlotSelector';
 import CoreStats from './CoreStats';
 import WoundDistributionChart from './WoundDistributionChart';
 import CumulativeTable from './CumulativeTable';
@@ -15,13 +18,68 @@ export default function ResultsPanel() {
   const { runSimulation } = useSimulation();
 
   // Read results from store
-  const result = useResultsStore((s) => s.result);
+  const slots = useResultsStore((s) => s.slots);
+  const viewedSlotId = useResultsStore((s) => s.viewedSlotId);
   const loading = useResultsStore((s) => s.loading);
   const error = useResultsStore((s) => s.error);
   const stale = useResultsStore((s) => s.stale);
+  const isFull = useResultsStore(selectIsFull);
+
+  // Store actions
+  const setViewedSlotId = useResultsStore((s) => s.setViewedSlotId);
+  const removeSlot = useResultsStore((s) => s.removeSlot);
+  const renameSlot = useResultsStore((s) => s.renameSlot);
+
+  // Derived: viewed slot
+  const viewedSlot = useResultsStore(selectViewedSlot);
 
   // Read guardian state for secondary stats
   const guardianActive = useDefenseConfigStore((s) => s.guardianX > 0);
+
+  // Reset All confirmation state
+  const [confirmingReset, setConfirmingReset] = useState(false);
+
+  // Reset confirmation timeout (2 seconds)
+  useEffect(() => {
+    if (!confirmingReset) return;
+
+    const timeout = setTimeout(() => {
+      setConfirmingReset(false);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [confirmingReset]);
+
+  // Handle Reset All button
+  const handleResetAll = () => {
+    if (!confirmingReset) {
+      setConfirmingReset(true);
+    } else {
+      resetAll();
+      setConfirmingReset(false);
+    }
+  };
+
+  // Button label logic
+  const getRunButtonLabel = (): string => {
+    if (loading) return 'Simulating...';
+    if (slots.length === 0) return 'Run Simulation';
+    return 'Add Simulation';
+  };
+
+  // Build series arrays for chart and table
+  const chartSeries = slots.map((slot) => ({
+    label: slot.label,
+    distribution: slot.result.totalWoundsDistribution,
+    color: slot.color,
+    mode: slot.result.totalWounds.mode,
+  }));
+
+  const tableSeries = slots.map((slot) => ({
+    label: slot.label,
+    distribution: slot.result.totalWoundsDistribution,
+    color: slot.color,
+  }));
 
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-gray-900 p-4">
@@ -30,43 +88,64 @@ export default function ResultsPanel() {
         Results
       </h2>
 
-      {/* Run Simulation Button */}
-      <button
-        onClick={runSimulation}
-        disabled={loading}
-        className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400"
-      >
-        {loading ? (
-          <>
-            <svg
-              className="h-5 w-5 animate-spin text-gray-400"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            Simulating...
-          </>
-        ) : (
-          'Run Simulation'
-        )}
-      </button>
+      {/* Action buttons: Run/Add Simulation + Reset All */}
+      <div className="flex gap-2">
+        <button
+          onClick={runSimulation}
+          disabled={loading || isFull}
+          className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400"
+        >
+          {loading ? (
+            <>
+              <svg
+                className="h-5 w-5 animate-spin text-gray-400"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              {getRunButtonLabel()}
+            </>
+          ) : (
+            getRunButtonLabel()
+          )}
+        </button>
+
+        <button
+          onClick={handleResetAll}
+          disabled={loading}
+          className={`px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
+            confirmingReset
+              ? 'bg-red-700 text-white'
+              : 'bg-gray-700 text-gray-300 hover:bg-red-700 hover:text-white'
+          }`}
+        >
+          {confirmingReset ? 'Confirm Reset?' : 'Reset All'}
+        </button>
+      </div>
+
+      {/* Max slots hint */}
+      {isFull && !loading && (
+        <div className="text-xs text-gray-500 text-center -mt-2">
+          Remove a result to run another.
+        </div>
+      )}
 
       {/* Stale results indicator */}
-      {stale && result && (
+      {stale && slots.length > 0 && (
         <div className="flex items-center gap-2 rounded border border-amber-700/50 bg-amber-900/30 px-3 py-2 text-sm text-amber-400">
           <svg
             className="h-5 w-5 flex-shrink-0"
@@ -80,14 +159,14 @@ export default function ResultsPanel() {
               clipRule="evenodd"
             />
           </svg>
-          <span>Config changed — results may be outdated. Click Run to update.</span>
+          <span>Config changed — results may be outdated. Click Add to run with new config.</span>
         </div>
       )}
 
-      {/* Duration indicator (subtle, top-right) */}
-      {result && !loading && (
+      {/* Duration indicator (for viewed slot) */}
+      {viewedSlot && !loading && (
         <div className="absolute right-4 top-4 text-xs text-gray-600">
-          {new Intl.NumberFormat('en-US').format(result.iterations)} sims · {result.durationMs.toFixed(0)}ms
+          {new Intl.NumberFormat('en-US').format(viewedSlot.result.iterations)} sims · {viewedSlot.result.durationMs.toFixed(0)}ms
         </div>
       )}
 
@@ -98,33 +177,50 @@ export default function ResultsPanel() {
       {error && !loading && <ErrorDisplay message={error} />}
 
       {/* Empty state (no results yet and no error) */}
-      {!result && !error && !loading && <EmptyState />}
+      {slots.length === 0 && !error && !loading && <EmptyState />}
 
       {/* Results content */}
-      {result && !error && (
+      {slots.length > 0 && !error && (
         <div className="flex flex-col gap-4">
-          {/* Core stats: Mean / Median / Mode */}
-          <CoreStats stats={result.totalWounds} />
-
-          {/* Wound distribution bar chart */}
-          <WoundDistributionChart
-            distribution={result.totalWoundsDistribution}
-            mode={result.totalWounds.mode}
+          {/* Slot selector chips */}
+          <SlotSelector
+            slots={slots}
+            viewedSlotId={viewedSlotId}
+            onSelect={setViewedSlotId}
+            onRemove={removeSlot}
+            onRename={renameSlot}
           />
 
-          {/* Cumulative probability table */}
-          <CumulativeTable
-            distribution={result.totalWoundsDistribution}
-          />
+          {/* Wound distribution bar chart (multi-series) */}
+          <WoundDistributionChart series={chartSeries} />
 
-          {/* Secondary stats (Deflect, Djem So, Guardian) */}
-          <SecondaryStats
-            result={result}
-            guardianActive={guardianActive}
-          />
+          {/* Cumulative probability table (multi-column) */}
+          <CumulativeTable series={tableSeries} />
 
-          {/* Points efficiency (shown when any unit cost > 0) */}
-          <EfficiencyDisplay efficiency={result.efficiency} />
+          {/* Detail stats for viewed slot */}
+          {viewedSlot && (
+            <>
+              {/* Viewed slot label */}
+              <div className="text-sm text-gray-400 border-t border-gray-700 pt-3">
+                Viewing: <span className="text-gray-200 font-medium">{viewedSlot.label}</span>
+              </div>
+
+              {/* Core stats: Mean / Median / Mode */}
+              <CoreStats
+                stats={viewedSlot.result.totalWounds}
+                accentColor={viewedSlot.color}
+              />
+
+              {/* Secondary stats (Deflect, Djem So, Guardian) */}
+              <SecondaryStats
+                result={viewedSlot.result}
+                guardianActive={guardianActive}
+              />
+
+              {/* Points efficiency (shown when any unit cost > 0) */}
+              <EfficiencyDisplay efficiency={viewedSlot.result.efficiency} />
+            </>
+          )}
         </div>
       )}
     </div>

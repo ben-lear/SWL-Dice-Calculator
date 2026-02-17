@@ -11,53 +11,129 @@ import {
 import type { DistributionEntry } from '../../engine/types';
 import { formatPercent } from '../../utils/format';
 
-interface WoundDistributionChartProps {
+// ============================================================================
+// Types
+// ============================================================================
+
+interface ChartSeries {
+  label: string;
   distribution: DistributionEntry[];
-  /** The mode (most probable wound count) to highlight */
+  color: string; // hex color for this series
   mode: number;
 }
 
-/** Transform distribution data for Recharts (probability → percentage). */
-function toChartData(distribution: DistributionEntry[]) {
-  return distribution.map((entry) => ({
-    wounds: entry.wounds,
-    probability: entry.probability * 100, // Chart shows 0–100
-    raw: entry.probability,               // Keep raw for tooltip
-    cumulative: entry.cumulative,         // For enhanced tooltip
-  }));
+interface WoundDistributionChartProps {
+  series: ChartSeries[];
 }
 
-/** Custom tooltip for bar hover. */
-function ChartTooltip({
+// ============================================================================
+// Color Mapping
+// ============================================================================
+
+const COLOR_MAP: Record<string, { base: string; light: string }> = {
+  indigo: { base: '#6366f1', light: '#818cf8' },
+  emerald: { base: '#10b981', light: '#34d399' },
+  amber: { base: '#f59e0b', light: '#fbbf24' },
+  rose: { base: '#f43f5e', light: '#fb7185' },
+};
+
+function getSeriesColor(colorName: string): { base: string; light: string } {
+  return COLOR_MAP[colorName] || { base: '#6366f1', light: '#818cf8' };
+}
+
+// ============================================================================
+// Data Transformation
+// ============================================================================
+
+/**
+ * Transform multiple series into a unified chart dataset.
+ * Returns: [{ wounds: number, [seriesLabel]: probability, ... }]
+ */
+function toMultiSeriesChartData(series: ChartSeries[]) {
+  // Union all wound counts across series
+  const woundCounts = new Set<number>();
+  series.forEach((s) => {
+    s.distribution.forEach((entry) => woundCounts.add(entry.wounds));
+  });
+
+  const sortedWounds = Array.from(woundCounts).sort((a, b) => a - b);
+
+  // Build unified data structure
+  return sortedWounds.map((wounds) => {
+    const dataPoint: Record<string, number | string> = { wounds };
+
+    series.forEach((s) => {
+      const entry = s.distribution.find((e) => e.wounds === wounds);
+      // Store probability as percentage (0-100) for chart display
+      dataPoint[s.label] = entry ? entry.probability * 100 : 0;
+      // Store raw probability and cumulative for tooltip
+      dataPoint[`${s.label}_raw`] = entry ? entry.probability : 0;
+      dataPoint[`${s.label}_cumulative`] = entry ? entry.cumulative : 0;
+    });
+
+    return dataPoint;
+  });
+}
+
+// ============================================================================
+// Custom Tooltip
+// ============================================================================
+
+function MultiSeriesTooltip({
   active,
   payload,
+  series,
 }: {
   active?: boolean;
   payload?: Array<{
-    payload: { wounds: number; raw: number; cumulative: number };
+    dataKey: string;
+    payload: Record<string, number | string>;
   }>;
+  series: ChartSeries[];
 }) {
   if (!active || !payload?.length) return null;
 
   const data = payload[0].payload;
+  const wounds = data.wounds as number;
+
   return (
     <div className="rounded-md bg-gray-900 px-3 py-2 text-sm shadow-lg border border-gray-700">
-      <div className="font-semibold text-gray-100">
-        {data.wounds} wound{data.wounds !== 1 ? 's' : ''}
+      <div className="font-semibold text-gray-100 mb-1">
+        {wounds} wound{wounds !== 1 ? 's' : ''}
       </div>
-      <div className="mt-1 space-y-0.5 text-gray-400">
-        <div>Exactly: {formatPercent(data.raw)}</div>
-        <div>At least: {formatPercent(data.cumulative)}</div>
+      <div className="space-y-0.5 text-xs">
+        {series.map((s) => {
+          const raw = data[`${s.label}_raw`] as number;
+          const cumulative = data[`${s.label}_cumulative`] as number;
+          const colors = getSeriesColor(s.color);
+
+          return (
+            <div key={s.label} className="flex items-center gap-1.5">
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: colors.base }}
+              />
+              <span className="text-gray-300">
+                {s.label}: {formatPercent(raw)} (≥{formatPercent(cumulative)})
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
+// ============================================================================
+// Component
+// ============================================================================
+
 export default function WoundDistributionChart({
-  distribution,
-  mode,
+  series,
 }: WoundDistributionChartProps) {
-  const data = toChartData(distribution);
+  if (series.length === 0) return null;
+
+  const data = toMultiSeriesChartData(series);
 
   return (
     <div className="h-44 w-full sm:h-52 md:h-64">
@@ -99,17 +175,33 @@ export default function WoundDistributionChart({
             }}
           />
           <Tooltip
-            content={<ChartTooltip />}
+            content={<MultiSeriesTooltip series={series} />}
             cursor={{ fill: 'rgba(99, 102, 241, 0.1)' }}
           />
-          <Bar dataKey="probability" radius={[2, 2, 0, 0]}>
-            {data.map((entry, index) => (
-              <Cell
-                key={index}
-                fill={entry.wounds === mode ? '#818cf8' : '#6366f1'}
-              />
-            ))}
-          </Bar>
+
+          {/* Render one Bar per series */}
+          {series.map((s) => {
+            const colors = getSeriesColor(s.color);
+            return (
+              <Bar
+                key={s.label}
+                dataKey={s.label}
+                radius={[2, 2, 0, 0]}
+                fill={colors.base}
+              >
+                {data.map((entry, index) => {
+                  const wounds = entry.wounds as number;
+                  const isMode = wounds === s.mode;
+                  return (
+                    <Cell
+                      key={index}
+                      fill={isMode ? colors.light : colors.base}
+                    />
+                  );
+                })}
+              </Bar>
+            );
+          })}
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -1,24 +1,73 @@
 import type { DistributionEntry } from '../../engine/types';
 import { formatPercent } from '../../utils/format';
 
-interface CumulativeTableProps {
+// ============================================================================
+// Types
+// ============================================================================
+
+interface TableSeries {
+  label: string;
   distribution: DistributionEntry[];
+  color: string; // color name for header accent
 }
+
+interface CumulativeTableProps {
+  series: TableSeries[];
+}
+
+// ============================================================================
+// Color Mapping
+// ============================================================================
+
+const COLOR_MAP: Record<string, string> = {
+  indigo: '#6366f1',
+  emerald: '#10b981',
+  amber: '#f59e0b',
+  rose: '#f43f5e',
+};
+
+function getSeriesHexColor(colorName: string): string {
+  return COLOR_MAP[colorName] || '#6366f1';
+}
+
+// ============================================================================
+// Constants
+// ============================================================================
 
 /**
  * Minimum cumulative probability to display a row.
  * Rows below this threshold are omitted for cleanliness.
- * 0.001 = 0.1% — anything rounding to 0.0% is hidden.
+ * 0.0005 = 0.05% — anything rounding to 0.0% is hidden.
  */
 const MIN_CUMULATIVE = 0.0005;
 
-export default function CumulativeTable({
-  distribution,
-}: CumulativeTableProps) {
-  // Filter out rows where cumulative rounds to 0.0%
-  const visibleRows = distribution.filter(
-    (entry) => entry.cumulative >= MIN_CUMULATIVE
-  );
+// ============================================================================
+// Component
+// ============================================================================
+
+export default function CumulativeTable({ series }: CumulativeTableProps) {
+  if (series.length === 0) return null;
+
+  // Union all wound counts across all series
+  const woundCounts = new Set<number>();
+  series.forEach((s) => {
+    s.distribution.forEach((entry) => {
+      if (entry.cumulative >= MIN_CUMULATIVE) {
+        woundCounts.add(entry.wounds);
+      }
+    });
+  });
+
+  const sortedWounds = Array.from(woundCounts).sort((a, b) => a - b);
+
+  // Build lookup maps for each series
+  const seriesMaps = series.map((s) => {
+    const map = new Map<number, number>();
+    s.distribution.forEach((entry) => {
+      map.set(entry.wounds, entry.cumulative);
+    });
+    return map;
+  });
 
   return (
     <div className="rounded-lg bg-gray-800">
@@ -28,23 +77,43 @@ export default function CumulativeTable({
             <th className="px-3 py-2 text-left font-semibold text-gray-300">
               Wounds
             </th>
-            <th className="px-3 py-2 text-right font-semibold text-gray-300">
-              P(≥ X)
-            </th>
+            {series.map((s) => {
+              const hexColor = getSeriesHexColor(s.color);
+              return (
+                <th
+                  key={s.label}
+                  className="px-3 py-2 text-right font-semibold text-gray-300"
+                >
+                  <div className="inline-flex items-center gap-1.5 justify-end">
+                    <div
+                      className="w-2 h-2 rounded-full"
+                      style={{ backgroundColor: hexColor }}
+                    />
+                    <span>{s.label}</span>
+                  </div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
-          {visibleRows.map((entry) => (
+          {sortedWounds.map((wounds) => (
             <tr
-              key={entry.wounds}
+              key={wounds}
               className="border-b border-gray-700/50 last:border-0"
             >
-              <td className="px-3 py-1.5 text-gray-100">
-                ≥ {entry.wounds}
-              </td>
-              <td className="px-3 py-1.5 text-right font-mono text-gray-100">
-                {formatPercent(entry.cumulative)}
-              </td>
+              <td className="px-3 py-1.5 text-gray-100">≥ {wounds}</td>
+              {seriesMaps.map((map, idx) => {
+                const cumulative = map.get(wounds);
+                return (
+                  <td
+                    key={idx}
+                    className="px-3 py-1.5 text-right font-mono text-gray-100"
+                  >
+                    {cumulative !== undefined ? formatPercent(cumulative) : '—'}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

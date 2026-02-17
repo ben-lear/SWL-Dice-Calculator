@@ -6,6 +6,8 @@ This plan breaks the MVP into major components, ordered by dependency. Each sect
 
 ## Phase 1: Project Scaffolding
 
+**Status:** ✅ **COMPLETE** — Basic project structure and tooling working.
+
 Set up the development environment and project structure.
 
 - [x] Initialize Vite + React + TypeScript project
@@ -23,6 +25,8 @@ Set up the development environment and project structure.
 ---
 
 ## Phase 2: Core Dice Engine
+
+**Status:** ✅ **COMPLETE** — Complete simulation engine that takes a config object and returns wound counts + side effects. Fully tested independently of UI.
 
 Pure TypeScript module — no React dependencies. This is the foundation everything else builds on.
 
@@ -75,6 +79,8 @@ The core function: takes a full config (attacker + defender + context) and retur
 
 ## Phase 2.5: Multi-Weapon Attack Pool Restructuring
 
+**Status:** ✅ **COMPLETE** — Engine correctly handles per-weapon keywords (Spray, Cumbersome, etc.) and aggregates pool-level keywords across multiple weapons. All existing tests migrated and passing.
+
 Restructure `AttackerConfig` to separate unit-level keywords from weapon-level keywords. Introduce `WeaponProfile` with per-weapon dice and keywords, and a `weapons: WeaponProfile[]` array on `AttackerConfig`. The engine always operates on weapon arrays — Custom Pool mode uses a single-weapon array, Unit Builder mode uses multiple weapons. See `plans/phase2.5-multi-weapon-pool.md` for the full implementation plan.
 
 ### 2.5A: Type Restructuring
@@ -116,6 +122,8 @@ Restructure `AttackerConfig` to separate unit-level keywords from weapon-level k
 
 ## Phase 2.6: Defender Custom Pool & Unit Builder Modes
 
+**Status:** ✅ **COMPLETE** — Defender Panel supports two-mode operation (Custom Pool / Unit Builder) with full upgrade system functionality. Preset data is provided through stub helpers ready for Phase 5.5 data layer integration.
+
 Extend the two-mode design pattern (Custom Pool / Unit Builder) to the Defender Panel, mirroring the attacker-side implementation from Phase 2.5. Both modes operate on the same underlying `DefenderConfig` structure (already flat, no restructuring needed). See `plans/phase2.6-defender-modes.md` for the full implementation plan.
 
 ### 2.6A: DefenderConfig Structure Review
@@ -148,6 +156,8 @@ Extend the two-mode design pattern (Custom Pool / Unit Builder) to the Defender 
 
 ## Phase 3: Monte Carlo Simulator & Web Worker
 
+**Status:** ✅ **COMPLETE** — Simulation runs in background thread, returns full stats object without blocking UI.
+
 ### 3A: Simulator (`engine/simulator.ts`)
 
 - [x] `simulate(config, iterations)` → run attack sequence N times, collect wound counts
@@ -173,6 +183,8 @@ Extend the two-mode design pattern (Custom Pool / Unit Builder) to the Defender 
 
 ## Phase 4: Shared UI Components
 
+**Status:** ✅ **COMPLETE** — Component library ready for panel assembly. All shared components implemented with Tailwind styling, keyboard navigation, ARIA labels, and comprehensive test coverage.
+
 Reusable input primitives used by both panels.
 
 - [x] **NumberSpinner** — increment/decrement with min/max bounds, label, tooltip
@@ -189,15 +201,17 @@ Reusable input primitives used by both panels.
 
 ## Phase 5: State Management
 
+**Status:** ✅ **COMPLETE** (via Phase 2.6) — All app state managed centrally, presets load correctly, config object ready for engine.
+
 ### 5A: Zustand Stores
 
-- [ ] **Attack Config Store** — all attacker inputs: `weapons: WeaponProfile[]` (per-weapon dice + keywords), unit-level keywords, surge chart, tokens, upgrade/downgrade settings, unit cost, Hold the Line. Custom Pool mode operates on `weapons[0]`; Unit Builder mode populates multiple weapons from presets.
-- [ ] **Defense Config Store** — all defender inputs: die color, surge chart, cover, tokens, keywords, minis in LOS, unit cost, Hold the Line
-- [ ] **Attack Type Store** — attack type selection (Ranged / Melee / Overrun), default: Ranged
-- [ ] **Results Store** — simulation output (stats, distribution, efficiency metrics), loading state
-- [ ] Define TypeScript interfaces for each store's state shape
-- [ ] Implement reset/clear actions for each store
-- [ ] Implement `getFullConfig()` selector that merges all stores into the engine's input format (ensures `weapons[]` array is populated)
+- [x] **Attack Config Store** — all attacker inputs: `weapons: WeaponProfile[]` (per-weapon dice + keywords), unit-level keywords, surge chart, tokens, upgrade/downgrade settings, unit cost, Hold the Line. Custom Pool mode operates on `weapons[0]`; Unit Builder mode populates multiple weapons from presets.
+- [x] **Defense Config Store** — all defender inputs: die color, surge chart, cover, tokens, keywords, minis in LOS, unit cost, Hold the Line
+- [x] **Attack Type Store** — attack type selection (Ranged / Melee / Overrun), default: Ranged
+- [x] **Results Store** — simulation output (stats, distribution, efficiency metrics), loading state
+- [x] Define TypeScript interfaces for each store's state shape
+- [x] Implement reset/clear actions for each store
+- [x] Implement `getFullConfig()` selector that merges all stores into the engine's input format (ensures `weapons[]` array is populated)
 
 ### 5B: Preset Data & Loading
 
@@ -343,6 +357,8 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 
 ## Phase 6: UI Panels
 
+**Status:** ✅ **COMPLETE** — Both input panels fully functional with two-mode design (Custom Pool / Unit Builder). All inputs wired to state, presets load correctly, upgrade system integrated. Attack Type Selector in header. Responsive layout working. All tests passing (27 total: 10 AttackerPanel + 14 DefenderPanel + 3 AttackTypeSelector).
+
 ### 6A: Attacker Panel (`components/AttackerPanel/`)
 
 - [x] Faction dropdown + Unit/Weapon searchable combobox (loads presets)
@@ -458,53 +474,53 @@ Addresses three fundamental UX issues from Phases 6–7: (1) simulation should b
 
 ## Phase 7.2: Multi-Result Comparison
 
-**Status:** 🔲 **PLANNED** — See `plans/phase7.2-multi-result-comparison.md` for the full implementation plan.
+**Status:** ✅ **COMPLETE** — Fully implemented with comprehensive test coverage.
 
-Reworks the Results Panel to support up to 4 simultaneous simulation result slots for side-by-side comparison. Every click of "Run / Add Simulation" appends a new result. The wound distribution chart shows grouped color-coded bars and the cumulative table adds columns per result. Core/secondary stats are tab-switched via slot chips. Each slot is auto-labeled ("Sim 1", "Sim 2"…) with optional user rename and an × remove button. A "Reset All" button clears all results and resets all form stores to defaults. Requires Phase 7.1A (imperative simulation).
+Reworked the Results Panel to support up to 4 simultaneous simulation result slots for side-by-side comparison. Every click of "Run / Add Simulation" appends a new result. The wound distribution chart shows grouped color-coded bars and the cumulative table adds columns per result. Core/secondary stats are tab-switched via slot chips. Each slot is auto-labeled ("Sim 1", "Sim 2"…) with optional user rename and an × remove button. A "Reset All" button clears all results and resets all form stores to defaults.
 
 ### 7.2A: Store & Utility Rework
 
-- [ ] Define `ResultSlot` type (id, label, result, configSnapshot, color)
-- [ ] Rework `resultsStore` to slot-based append model (max 4 slots, color palette, label counter)
-- [ ] Implement `appendResult`, `removeSlot`, `renameSlot`, `setViewedSlotId`, `clearAll` actions
-- [ ] Create `resetAll()` cross-store utility (`src/stores/resetAll.ts`) — resets all 4 stores to defaults
-- [ ] Export `resetAll` from store barrel
+- [x] Define `ResultSlot` type (id, label, result, configSnapshot, color)
+- [x] Rework `resultsStore` to slot-based append model (max 4 slots, color palette, label counter)
+- [x] Implement `appendResult`, `removeSlot`, `renameSlot`, `setViewedSlotId`, `clearAll` actions
+- [x] Create `resetAll()` cross-store utility (`src/stores/resetAll.ts`) — resets all 4 stores to defaults
+- [x] Export `resetAll` from store barrel
 
 ### 7.2B: Hook Update
 
-- [ ] Update `useSimulation` — `runSimulation()` calls `appendResult` with config snapshot (not `setResult`)
-- [ ] Guard against appending when store is full (4 slots)
-- [ ] Stale tracking watches config changes when `slots.length > 0`
+- [x] Update `useSimulation` — `runSimulation()` calls `appendResult` with config snapshot (not `setResult`)
+- [x] Guard against appending when store is full (4 slots)
+- [x] Stale tracking watches config changes when `slots.length > 0`
 
 ### 7.2C: Result Slot UI
 
-- [ ] Create `SlotSelector` component — horizontal slot chips with color dots, labels, × remove buttons
-- [ ] Inline rename on double-click
-- [ ] Active/viewed chip gets highlighted border ring
-- [ ] Renders nothing when 0 slots
+- [x] Create `SlotSelector` component — horizontal slot chips with color dots, labels, × remove buttons
+- [x] Inline rename on double-click
+- [x] Active/viewed chip gets highlighted border ring
+- [x] Renders nothing when 0 slots
 
 ### 7.2D: Multi-Series Chart & Table
 
-- [ ] Update `WoundDistributionChart` — accept `series[]` array, render grouped bars per series, multi-series tooltip
-- [ ] Update `CumulativeTable` — accept `series[]` array, render one P(≥X) column per series with color-coded headers
-- [ ] Add optional `accentColor` prop to `CoreStats` (top-border linking stats to chart series)
+- [x] Update `WoundDistributionChart` — accept `series[]` array, render grouped bars per series, multi-series tooltip
+- [x] Update `CumulativeTable` — accept `series[]` array, render one P(≥X) column per series with color-coded headers
+- [x] Add optional `accentColor` prop to `CoreStats` (top-border linking stats to chart series)
 
 ### 7.2E: ResultsPanel Wiring
 
-- [ ] Dynamic button label: "Run Simulation" (0 slots) → "Add Simulation" (1–3 slots) → disabled at 4 with hint
-- [ ] "Reset All" button with 2-second confirmation guard (first click → "Confirm Reset?", second click → execute)
-- [ ] Wire `SlotSelector`, multi-series chart/table data from all slots
-- [ ] Pass viewed slot's result to CoreStats/SecondaryStats/EfficiencyDisplay
-- [ ] Handle edge cases: remove viewed slot, remove all, single-slot backward compatibility
+- [x] Dynamic button label: "Run Simulation" (0 slots) → "Add Simulation" (1–3 slots) → disabled at 4 with hint
+- [x] "Reset All" button with 2-second confirmation guard (first click → "Confirm Reset?", second click → execute)
+- [x] Wire `SlotSelector`, multi-series chart/table data from all slots
+- [x] Pass viewed slot's result to CoreStats/SecondaryStats/EfficiencyDisplay
+- [x] Handle edge cases: remove viewed slot, remove all, single-slot backward compatibility
 
 ### 7.2F: Tests
 
-- [ ] Store tests: slot CRUD, max cap, color assignment/recycling, label counter, `clearAll`
-- [ ] `resetAll` test: all four stores return to defaults
-- [ ] Hook tests: `appendResult` call, full guard, stale tracking
-- [ ] `SlotSelector` tests: chip rendering, click-to-select, remove, rename interaction
-- [ ] Chart/table tests: single-series backward-compatible, multi-series rendering
-- [ ] ResultsPanel integration: button label changes, disabled at max, slot switching, Reset All
+- [x] Store tests: slot CRUD, max cap, color assignment/recycling, label counter, `clearAll`
+- [x] `resetAll` test: all four stores return to defaults (`resetAll.test.ts`)
+- [x] Hook tests: `appendResult` call, full guard, stale tracking
+- [x] `SlotSelector` tests: chip rendering, click-to-select, remove, rename interaction (`SlotSelector.test.tsx`)
+- [x] Chart/table tests: single-series backward-compatible, multi-series rendering (`WoundDistributionChart.test.tsx`, `CumulativeTable.test.tsx`)
+- [x] ResultsPanel integration: button label changes, disabled at max, slot switching, Reset All
 
 **Output:** Up to 4 simulation results compared side-by-side with color-coded overlaid charts and tabbed stats. Reset All clears everything.
 

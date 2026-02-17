@@ -2,7 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { useResultsStore } from '../../stores/resultsStore';
 import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
-import type { SimulationResult } from '../../engine/types';
+import type { SimulationResult, AttackConfig } from '../../engine/types';
+import { AttackType, DefenseDieColor, CoverType, DefenseSurgeChart, AttackSurgeChart, MarksmanStrategy, RerollStrategy } from '../../engine/types';
 
 // Mock the useSimulation hook (we don't want actual worker interaction)
 vi.mock('../../hooks/useSimulation', () => ({
@@ -88,13 +89,73 @@ function createMockResult(
   };
 }
 
+const mockConfig: AttackConfig = {
+  attackType: AttackType.Ranged,
+  attacker: {
+    weapons: [{ redDice: 2, blackDice: 0, whiteDice: 0, keywords: { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, spray: false, antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false, sidearmMelee: false, sidearmRanged: false } }],
+    surgeChart: AttackSurgeChart.None,
+    aimTokens: 0,
+    surgeTokens: 0,
+    observationTokens: 0,
+    dodgeTokensAttacker: 0,
+    preciseX: 0,
+    sharpshooterX: 0,
+    arsenalX: 0,
+    marksman: false,
+    marksmanStrategy: MarksmanStrategy.Deterministic,
+    rerollStrategy: RerollStrategy.Conservative,
+    jediHunter: false,
+    jarKaiMastery: false,
+    duelistAttacker: false,
+    makashiMastery: false,
+    immuneDeflect: false,
+    deathFromAbove: false,
+    holdTheLine: false,
+    unitCost: 0,
+  },
+  defender: {
+    dieColor: DefenseDieColor.White,
+    surgeChart: DefenseSurgeChart.None,
+    coverType: CoverType.None,
+    coverX: 0,
+    smokeTokens: 0,
+    suppressed: false,
+    dodgeTokens: 0,
+    surgeTokens: 0,
+    suppressionTokens: 0,
+    minisInLOS: 1,
+    armorX: 0,
+    weakPointX: 0,
+    immunePierce: false,
+    immuneMeleePierce: false,
+    immuneBlast: false,
+    impervious: false,
+    dangerSenseX: 0,
+    uncannyLuckX: 0,
+    block: false,
+    deflect: false,
+    shienMastery: false,
+    outmaneuver: false,
+    lowProfile: false,
+    shieldedX: 0,
+    djemSoMastery: false,
+    soresuMastery: false,
+    duelistDefender: false,
+    backup: false,
+    holdTheLine: false,
+    dugIn: false,
+    guardianX: 0,
+    unitCost: 0,
+  },
+};
+
 // ============================================================================
 // Tests
 // ============================================================================
 
 describe('ResultsPanel', () => {
   beforeEach(() => {
-    useResultsStore.getState().clear();
+    useResultsStore.getState().clearAll();
     useDefenseConfigStore.getState().reset();
   });
 
@@ -103,8 +164,22 @@ describe('ResultsPanel', () => {
     expect(screen.getByText('No Results Yet')).toBeInTheDocument();
   });
 
-  it('shows core stats when results are available', () => {
-    useResultsStore.getState().setResult(createMockResult());
+  it('shows "Run Simulation" button when no slots', () => {
+    render(<ResultsPanel />);
+    // "Run Simulation" appears in both the button and the instructional text
+    expect(screen.getAllByText('Run Simulation')).toHaveLength(2);
+  });
+
+  it('shows "Add Simulation" button when slots exist', () => {
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+
+    render(<ResultsPanel />);
+
+    expect(screen.getByText('Add Simulation')).toBeInTheDocument();
+  });
+
+  it('shows core stats when a result slot exists', () => {
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
 
     render(<ResultsPanel />);
 
@@ -116,20 +191,31 @@ describe('ResultsPanel', () => {
   });
 
   it('shows cumulative probability table', () => {
-    useResultsStore.getState().setResult(createMockResult());
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
 
     render(<ResultsPanel />);
 
-    expect(screen.getByText('P(≥ X)')).toBeInTheDocument();
+    // "Sim 1" appears in slot chip, table header, and viewing label - at least 3 times
+    expect(screen.getAllByText(/Sim 1/).length).toBeGreaterThanOrEqual(3);
     expect(screen.getByText('100.0%')).toBeInTheDocument();
   });
 
   it('renders bar chart component', () => {
-    useResultsStore.getState().setResult(createMockResult());
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
 
     render(<ResultsPanel />);
 
     expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
+  });
+
+  it('renders slot selector when slots exist', () => {
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+
+    render(<ResultsPanel />);
+
+    // Should show slot chips
+    expect(screen.getAllByText(/Sim \d/).length).toBeGreaterThanOrEqual(2);
   });
 
   it('shows loading overlay when loading', () => {
@@ -137,7 +223,7 @@ describe('ResultsPanel', () => {
 
     render(<ResultsPanel />);
 
-    expect(screen.getByText('Simulating…')).toBeInTheDocument();
+    expect(screen.getByText('Simulating...')).toBeInTheDocument();
   });
 
   it('shows error display on error', () => {
@@ -149,8 +235,8 @@ describe('ResultsPanel', () => {
     expect(screen.getByText('Worker crashed')).toBeInTheDocument();
   });
 
-  it('shows simulation duration when results available', () => {
-    useResultsStore.getState().setResult(createMockResult());
+  it('shows simulation duration for viewed slot', () => {
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
 
     render(<ResultsPanel />);
 
@@ -159,7 +245,7 @@ describe('ResultsPanel', () => {
   });
 
   it('does not show efficiency section when costs are zero', () => {
-    useResultsStore.getState().setResult(createMockResult());
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
 
     render(<ResultsPanel />);
 
@@ -167,7 +253,7 @@ describe('ResultsPanel', () => {
   });
 
   it('shows efficiency section when costs are set', () => {
-    useResultsStore.getState().setResult(
+    useResultsStore.getState().appendResult(
       createMockResult({
         efficiency: {
           attackerWoundsPerPoint: 0.03,
@@ -176,7 +262,8 @@ describe('ResultsPanel', () => {
           defenderPointsPerWound: 16.7,
           attackerEfficiencyRatio: 0.0006,
         },
-      })
+      }),
+      mockConfig
     );
 
     render(<ResultsPanel />);
@@ -185,7 +272,7 @@ describe('ResultsPanel', () => {
   });
 
   it('shows secondary stats when deflect wounds > 0', () => {
-    useResultsStore.getState().setResult(
+    useResultsStore.getState().appendResult(
       createMockResult({
         deflectWounds: {
           mean: 0.5,
@@ -195,7 +282,8 @@ describe('ResultsPanel', () => {
           max: 1,
           standardDeviation: 0.5,
         },
-      })
+      }),
+      mockConfig
     );
 
     render(<ResultsPanel />);
@@ -206,7 +294,7 @@ describe('ResultsPanel', () => {
   });
 
   it('shows secondary stats when djem so wounds > 0', () => {
-    useResultsStore.getState().setResult(
+    useResultsStore.getState().appendResult(
       createMockResult({
         djemSoWounds: {
           mean: 1.2,
@@ -216,7 +304,8 @@ describe('ResultsPanel', () => {
           max: 3,
           standardDeviation: 0.8,
         },
-      })
+      }),
+      mockConfig
     );
 
     render(<ResultsPanel />);
@@ -228,7 +317,7 @@ describe('ResultsPanel', () => {
 
   it('shows guardian breakdown when guardian is active', () => {
     useDefenseConfigStore.getState().setField('guardianX', 2);
-    useResultsStore.getState().setResult(
+    useResultsStore.getState().appendResult(
       createMockResult({
         guardianWounds: {
           mean: 1.5,
@@ -246,7 +335,8 @@ describe('ResultsPanel', () => {
           max: 4,
           standardDeviation: 1.1,
         },
-      })
+      }),
+      mockConfig
     );
 
     render(<ResultsPanel />);
@@ -256,7 +346,7 @@ describe('ResultsPanel', () => {
   });
 
   it('does not show secondary stats section when no effects active', () => {
-    useResultsStore.getState().setResult(createMockResult());
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
 
     render(<ResultsPanel />);
 
@@ -264,7 +354,7 @@ describe('ResultsPanel', () => {
   });
 
   it('hides previous results when error occurs', () => {
-    useResultsStore.getState().setResult(createMockResult());
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
     const { rerender } = render(<ResultsPanel />);
     
     expect(screen.getByText('Mean')).toBeInTheDocument();
@@ -277,13 +367,42 @@ describe('ResultsPanel', () => {
   });
 
   it('preserves results while loading overlay is shown', () => {
-    useResultsStore.getState().setResult(createMockResult());
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
     useResultsStore.getState().setLoading(true);
 
     render(<ResultsPanel />);
 
     // Both results and loading overlay should be visible
     expect(screen.getByText('Mean')).toBeInTheDocument();
-    expect(screen.getByText('Simulating…')).toBeInTheDocument();
+    expect(screen.getByText('Simulating...')).toBeInTheDocument();
+  });
+
+  it('shows Reset All button', () => {
+    render(<ResultsPanel />);
+    expect(screen.getByText('Reset All')).toBeInTheDocument();
+  });
+
+  it('disables Add Simulation button at 4 slots', () => {
+    // Fill to capacity
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+
+    render(<ResultsPanel />);
+
+    const button = screen.getByText('Add Simulation');
+    expect(button).toBeDisabled();
+    expect(screen.getByText('Remove a result to run another.')).toBeInTheDocument();
+  });
+
+  it('shows "Viewing: Sim X" label for viewed slot', () => {
+    useResultsStore.getState().appendResult(createMockResult(), mockConfig);
+
+    render(<ResultsPanel />);
+
+    expect(screen.getByText(/Viewing:/)).toBeInTheDocument();
+    // "Sim 1" appears in slot chip, table header, and viewing label - at least 3 times
+    expect(screen.getAllByText(/Sim 1/).length).toBeGreaterThanOrEqual(3);
   });
 });

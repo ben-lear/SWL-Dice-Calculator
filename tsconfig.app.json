@@ -26,5 +26,5 @@
     /* Testing */
     "types": ["vitest/globals"]
   },
-  "include": ["src"]
+  "include": ["src","public"]
 }

@@ -17,14 +17,14 @@ Phase 8 consists of five sub-phases:
 - **8E:** Performance — simulation profiling, Web Worker lifecycle, debounce tuning, bundle optimization
 
 Phase 8 depends on:
-- **Phase 1** (App shell, Layout, Tailwind, PWA plugin)
-- **Phase 2** (Dice engine — `isKeywordActive`, `isCoverActive`, `isDodgeActive`, `isDeflectActive` from `engine/modifiers.ts`)
-- **Phase 3** (Simulator + Web Worker — `SimulationWorkerClient`)
-- **Phase 4** (Shared UI components — `disabled` prop on all components)
-- **Phase 5A** (Zustand stores — `useAttackConfigStore`, `useDefenseConfigStore`, `useAttackTypeStore`, `useResultsStore`, `useFullConfig`)
-- **Phase 5.5** (Unit data & upgrades — preset loading, upgrade applicator, `getFullConfig` with upgrade effects)
-- **Phase 6** (UI panels — AttackerPanel, DefenderPanel, AttackTypeSelector wired to stores)
-- **Phase 7** (Results panel — `useSimulation` hook, stat display, chart, cumulative table)
+- **Phase 1** (App shell, `Layout.tsx` + `App.tsx`, Tailwind, PWA plugin)
+- **Phase 2** (Dice engine — attack-type gating handled inline in `cover.ts`, `dodgeCover.ts`, `defenseModifiers.ts`, etc. No centralized `engine/modifiers.ts` — each step gates keywords individually)
+- **Phase 3** (Simulator + Web Worker — `SimulationWorkerClient` in `src/engine/worker/`)
+- **Phase 4** (Shared UI components — `disabled` prop on `NumberSpinner`, `Checkbox`, `Toggle`, `Select`, `SegmentedControl`, `SearchableCombobox`, `SectionHeader`)
+- **Phase 5A** (Zustand stores — `useAttackConfigStore`, `useDefenseConfigStore`, `useAttackTypeStore`, `useResultsStore` (multi-slot, max 4), `useFullConfig` / `getFullConfig`)
+- **Phase 5.5** (Unit data & upgrades — preset loading, `applyAttackerUpgrades` / `applyDefenderUpgrades`, `getFullConfig` with upgrade effects)
+- **Phase 6** (UI panels — `AttackerPanel` → `AttackerCustomPoolView` / `AttackerUnitBuilderView`; `DefenderPanel` → `DefenderCustomPoolView` / `DefenderUnitBuilderView`; `AttackTypeSelector` wired to stores)
+- **Phase 7** (Results panel — `useSimulation` hook (button-triggered, imperative), multi-slot results, stat display, chart, cumulative table)
 
 Phase 8 does **not** produce new modules — it validates, connects, and refines existing ones.
 
@@ -34,28 +34,33 @@ Phase 8 does **not** produce new modules — it validates, connects, and refines
 
 The following design decisions are documented for clarity:
 
-1. **Attack-Type Keyword Filtering (UI)** — The engine already handles attack-type filtering internally (via `isKeywordActive` in `engine/modifiers.ts`). Phase 8 adds a *visual* layer: when a specific attack type is selected (Ranged, Melee, Overrun), keyword inputs that don't apply to that type are visually disabled (grayed out, non-interactive). This provides immediate feedback that the keyword won't affect results, without removing or hiding the input. The input values are preserved — switching to a different attack type re-enables them if applicable. This is implemented via a custom hook `useKeywordDisabled` that maps each keyword field to its attack-type restriction.
+1. **Attack-Type Keyword Filtering (UI)** — The engine already handles attack-type filtering internally (inline gating in `cover.ts`, `dodgeCover.ts`, `defenseModifiers.ts`, `attackSurges.ts`, etc. — there is no centralized `isKeywordActive` function in `engine/modifiers.ts` as originally planned in Phase 2; each step gates keywords individually). Phase 8 adds a *visual* layer: when a specific attack type is selected (Ranged, Melee, Overrun), keyword inputs that don't apply to that type are visually disabled (grayed out, non-interactive). This provides immediate feedback that the keyword won't affect results, without removing or hiding the input. The input values are preserved — switching to a different attack type re-enables them if applicable. This is implemented via a custom hook `useKeywordDisabled` that maps each keyword field to its attack-type restriction.
+
+   **Important:** The `AttackType` enum also includes `Hybrid = 'hybrid'`, but only Ranged, Melee, and Overrun are exposed in the `AttackTypeSelector` UI. The `isFieldActiveForAttackType()` helper should treat `Hybrid` the same as unrestricted (all keywords enabled), since Hybrid is not user-selectable but may appear in engine configs.
 
 2. **Disabled vs Hidden** — Disabled is preferred over hidden for attack-type filtering. Hiding inputs changes layout flow and confuses users who set up a profile and then switch attack types. Disabling keeps the layout stable, shows what's configured but inactive, and matches the `disabled` prop already implemented on all shared components in Phase 4.
 
-3. **Keyword Restriction Map** — A static lookup table maps each keyword field name (e.g., `'deflect'`, `'soresuMastery'`, `'backup'`) to its attack-type restriction (`'ranged'`, `'melee'`, or `'all'`). This is the single source of truth for UI disabling and is consistent with the engine's `isKeywordActive` function. The map lives in a shared location (`engine/modifiers.ts` or a new `src/utils/keywordRestrictions.ts`) so both the engine and UI reference the same data.
+3. **Keyword Restriction Map** — A static lookup table maps each keyword field name (e.g., `'deflect'`, `'soresuMastery'`, `'backup'`) to its attack-type restriction (`'ranged'`, `'melee'`, or `'all'`). This is the single source of truth for UI disabling and can be cross-referenced against the engine's inline gating logic. The map lives in `src/utils/keywordRestrictions.ts`.
+
+   **Important architectural note:** Attacker keywords are split between **unit-level** keywords (on `AttackConfigStore` directly, e.g., `sharpshooterX`, `duelistAttacker`, `holdTheLine`) and **weapon-level** keywords (on `WeaponKeywords` per weapon, e.g., `highVelocity`, `blast`, `pierceX`, `impactX`). The restriction map must cover both categories. In the UI, weapon keywords are set via `store.setWeaponKeyword(index, fieldName, value)` and are rendered in `AttackerCustomPoolView.tsx` inside the "Weapon Keywords" section, while unit keywords are in the "Unit Keywords" section.
 
 4. **Overrun Attack Type** — Overrun disables Cover, Deflect, and Engaged rules. In the UI, this means: Cover select is disabled, Deflect toggle is disabled, and Hold the Line toggles are disabled. Dodge tokens remain enabled — the defender can still spend Dodge tokens during Overrun (unless High Velocity disables them). The engine already handles Overrun by treating it as neither Ranged nor Melee.
 
-5. **Melee Attack Type Restrictions** — When Melee is selected, the following defender keywords are disabled in the UI: Cover (entire section stays visible but Cover select is disabled), Deflect, Soresu Mastery, Backup, Shielded (cancel), and High Velocity has no effect (informational — it's an attacker keyword). Dodge tokens are NOT disabled in Melee — the defender can spend Dodge tokens to cancel hits normally in Melee. They also interact with Duelist (Immune: Pierce) and Block (surge→block conversion).
+5. **Melee Attack Type Restrictions** — When Melee is selected, the following defender keywords are disabled in the UI: Cover (entire section stays visible but Cover select is disabled), Deflect, Soresu Mastery, Backup, Shielded (cancel), Guardian, Low Profile, Dug In, and Smoke Tokens. High Velocity has no effect (informational — it's a weapon-level attacker keyword). Dodge tokens are NOT disabled in Melee — the defender can spend Dodge tokens to cancel hits normally in Melee. They also interact with Duelist (Immune: Pierce) and Block (surge→block conversion).
 
-6. **Ranged Attack Type Restrictions** — When Ranged is selected, the following keywords are disabled: Djem So Mastery, Duelist (Immune: Pierce in Melee only), Immune: Melee Pierce. Hold the Line (attacker) is NOT disabled because its surge conversion works in all contexts — the engine handles the nuance.
+   On the attacker side: Sharpshooter, Immune: Deflect, Death From Above, and the weapon keyword High Velocity are disabled for Melee.
+
+6. **Ranged Attack Type Restrictions** — When Ranged is selected, the following keywords are disabled: Djem So Mastery, Duelist (Immune: Pierce in Melee only), Immune: Melee Pierce. On the attacker side: Duelist (attacker), Makashi Mastery, Jar'Kai Mastery, Hold the Line are disabled for Ranged.
 
 7. **Cover Cap Enforcement** — The engine already caps effective cover at 2 (Heavy). Phase 8 verifies this is working correctly in the UI by testing scenarios: Cover X 2 + Suppressed + Smoke should not exceed effective cover 2. Improvements are applied before reductions (per the rulebook). The UI does not enforce the cap on the inputs — the user can set Cover X to 2, Suppressed, and Smoke simultaneously. The engine resolves the effective value. An informational tooltip or visual indicator in the results panel could show the computed effective cover value (nice-to-have, not required).
 
 8. **Aim Token Economy Validation** — Aim tokens are shared between rerolls, Lethal X, Marksman, and Duelist. The engine handles consumption order internally. Phase 8 verifies that the total Aim consumption never exceeds the Aim tokens available, and that the correct priority order is followed. This is validated via integration tests, not UI changes.
 
-9. **Responsive Breakpoints** — The app uses three layout breakpoints:
-   - **Mobile** (<768px): Single column, stacked: Attacker → Defender → Results. Panels are collapsible sections.
-   - **Tablet** (768px–1023px): Two columns: [Attacker | Defender] stacked above Results row, or stacked single column with horizontal Results bar.
+9. **Responsive Breakpoints** — The app uses two primary layout breakpoints:
+   - **Mobile** (<1024px): Single column, stacked: Attacker → Defender → Results (via CSS `order`). Panels scroll the page.
    - **Desktop** (≥1024px): Three columns: Attacker | Results | Defender. Each column scrolls independently.
    
-   The Phase 1 shell uses `lg:grid-cols-3` (1024px breakpoint) as the primary split. Phase 8 refines the intermediate tablet breakpoint using `md:` (768px).
+   The current `App.tsx` uses `lg:grid-cols-3` (1024px breakpoint) with `order-*` utilities to reorder Results to the center on desktop. The `Layout.tsx` provides the shared header (logo + title + `AttackTypeSelector`) and a `max-w-7xl` container. Phase 8 may optionally add a tablet breakpoint at `md:` (768px) for 2-column [Attacker | Defender] + full-width Results, but this is a refinement, not a rewrite. The existing Layout.tsx + App.tsx separation is preserved.
 
 10. **PWA Offline Testing** — The vite-plugin-pwa (Workbox) precaches all static assets. Since the app has zero runtime network dependencies (no API calls — all data is baked in at build time), offline support is inherent. Phase 8 verifies this by building, serving the production build, enabling airplane mode, and confirming the app functions identically.
 
@@ -71,8 +76,8 @@ The following design decisions are documented for clarity:
 
 13. **Performance Targets** — 
     - Simulation of 10,000 iterations: < 500ms on modern hardware
-    - UI remains responsive during simulation (Web Worker)
-    - No visible jank when changing inputs rapidly (debounce)
+    - UI remains responsive during simulation (Web Worker via `SimulationWorkerClient`)
+    - Simulation is button-triggered (`useSimulation().runSimulation()`) — no debounce needed since there is no auto-run. Staleness is tracked via `markStale()` and indicated visually.
     - Production bundle size: target < 500KB gzipped (React + Recharts + app code)
     - Lighthouse Performance score: ≥ 90
 
@@ -99,27 +104,53 @@ import { AttackType } from '../engine/types';
 /**
  * Maps keyword field names to their attack-type restriction.
  * - 'all': active for all attack types (no restriction)
- * - 'ranged': active only for Ranged (and All) attacks
- * - 'melee': active only for Melee (and All) attacks
+ * - 'ranged': active only for Ranged attacks
+ * - 'melee': active only for Melee attacks
  * - 'ranged-melee': active for Ranged and Melee (disabled for Overrun)
  *
  * Fields not listed here are unrestricted ('all').
+ *
+ * Note: AttackType.Hybrid exists in the enum but is not user-selectable
+ * in the UI — it is treated as unrestricted (all keywords enabled).
  */
 export type KeywordRestriction = 'all' | 'ranged' | 'melee' | 'ranged-melee';
 
-// ── Attacker Keywords ──
+// ── Attacker Unit-Level Keywords ──
+// These are fields on AttackConfigStore (set via store.setField()).
 
 export const ATTACKER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> = {
   // Unrestricted (all attack types)
-  redDice: 'all',
-  blackDice: 'all',
-  whiteDice: 'all',
   surgeChart: 'all',
   aimTokens: 'all',
   surgeTokens: 'all',
   observationTokens: 'all',
   dodgeTokensAttacker: 'all',
   preciseX: 'all',
+  arsenalX: 'all',
+  marksman: 'all',
+  marksmanStrategy: 'all',
+  rerollStrategy: 'all',
+  jediHunter: 'all',
+  unitCost: 'all',
+
+  // Ranged-only attacker unit keywords
+  sharpshooterX: 'ranged',     // Reduces cover (cover is ranged-only concept)
+  immuneDeflect: 'ranged',     // Deflect is ranged-only
+  deathFromAbove: 'ranged',    // Cover interaction (ranged context)
+
+  // Melee-only attacker unit keywords
+  duelistAttacker: 'melee',    // Melee: spend Aim → Pierce 1
+  makashiMastery: 'melee',     // Melee: reduce Pierce to disable Immune: Pierce
+  jarKaiMastery: 'melee',      // Melee: spend attacker Dodge tokens for blank→hit, hit→crit
+  holdTheLine: 'melee',        // While Engaged — attacker can only be engaged in Melee
+};
+
+// ── Attacker Weapon-Level Keywords ──
+// These are fields on WeaponKeywords (set via store.setWeaponKeyword()).
+// The field names here match the keys on the WeaponKeywords interface.
+
+export const WEAPON_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> = {
+  // Unrestricted (aggregated across weapons, no attack-type restriction)
   criticalX: 'all',
   lethalX: 'all',
   pierceX: 'all',
@@ -127,41 +158,26 @@ export const ATTACKER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
   ramX: 'all',
   blast: 'all',
   suppressive: 'all',
-  marksman: 'all',
-  marksmanStrategy: 'all',
-  rerollStrategy: 'all',
-  jediHunter: 'all',
   spray: 'all',
   antiMaterielX: 'all',
   antiPersonnelX: 'all',
   cumbersome: 'all',
-  unitCost: 'all',
 
-  // Ranged-only attacker keywords
-  sharpshooterX: 'ranged',     // Reduces cover (cover is ranged-only concept)
+  // Ranged-only weapon keyword (AND-aggregated across weapons)
   highVelocity: 'ranged',      // Disables dodge/deflect (ranged-only interaction)
-  immuneDeflect: 'ranged',     // Deflect is ranged-only
-
-  // Melee-only attacker keywords
-  duelistAttacker: 'melee',    // Melee: spend Aim → Pierce 1
-  makashiMastery: 'melee',     // Melee: reduce Pierce to disable Immune: Pierce
-  jarKaiMastery: 'melee',      // Melee: spend attacker Dodge tokens for blank→hit, hit→crit
-
-  // Ranged+Melee (disabled for Overrun)
-  deathFromAbove: 'ranged',    // Cover interaction (ranged context)
-
-  // Melee-only attacker keywords (Hold the Line offensive surge→hit only while Engaged)
-  holdTheLine: 'melee',        // While Engaged — attacker can only be engaged in Melee
 };
 
 // ── Defender Keywords ──
+// These are fields on DefenseConfigStore (set via store.setField()).
 
 export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> = {
   // Unrestricted (all attack types)
   dieColor: 'all',
   surgeChart: 'all',
+  disableDefenseDice: 'all',
   dodgeTokens: 'all',            // Dodge can be spent in all attack types (HV check is separate)
   surgeTokens: 'all',
+  suppressionTokens: 'all',
   minisInLOS: 'all',
   armorX: 'all',
   weakPointX: 'all',
@@ -169,25 +185,29 @@ export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
   immuneBlast: 'all',
   impervious: 'all',
   dangerSenseX: 'all',
-  suppressionTokens: 'all',
   uncannyLuckX: 'all',
   block: 'all',
   outmaneuver: 'all',
   unitCost: 'all',
+
+  // Ranged+Melee (disabled for Overrun only)
   holdTheLine: 'ranged-melee',
 
   // Ranged-only defender keywords (cover/guardian/shielded ecosystem)
-  lowProfile: 'ranged',       // Modifies cover pool roll (cover is ranged-only)
-  guardianX: 'ranged',        // Guardian only works vs Ranged attacks
-  guardianDieColor: 'ranged', // Guardian sub-config (shown only when Guardian X > 0)
-  guardianSurgeChart: 'ranged', // Guardian sub-config
-  dugIn: 'ranged',            // Red cover dice (cover pools are ranged-only)
-
-  // Ranged-only defender keywords
   coverType: 'ranged',         // Cover only applies to ranged attacks
   coverX: 'ranged',            // Cover X increases cover vs Ranged
   smokeTokens: 'ranged',       // Smoke improves cover
   suppressed: 'ranged',        // Suppressed improves cover
+  lowProfile: 'ranged',       // Modifies cover pool roll (cover is ranged-only)
+  dugIn: 'ranged',            // Red cover dice (cover pools are ranged-only)
+
+  guardianX: 'ranged',        // Guardian only works vs Ranged attacks
+  guardianDieColor: 'ranged', // Guardian sub-config (shown only when Guardian X > 0)
+  guardianSurgeChart: 'ranged', // Guardian sub-config
+  guardianDeflect: 'ranged',   // Guardian unit's Deflect (ranged-only)
+  guardianSoresuMastery: 'ranged', // Guardian unit's Soresu Mastery
+  guardianDodgeTokens: 'ranged',   // Guardian unit's Dodge tokens
+
   deflect: 'ranged',           // Deflect: gains surge→block vs Ranged
   shienMastery: 'ranged',      // Modifies Deflect (ranged-only)
   soresuMastery: 'ranged',     // Reroll all defense dice (Ranged only)
@@ -209,12 +229,17 @@ export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
  * for the current attack type.
  *
  * When attackType is 'overrun', only unrestricted keywords are active.
+ * When attackType is 'hybrid', all keywords are active (Hybrid is not
+ * user-selectable but exists in the enum).
  */
 export function isFieldActiveForAttackType(
   restriction: KeywordRestriction,
   attackType: AttackType,
 ): boolean {
   if (restriction === 'all') return true;
+
+  // Hybrid is treated as unrestricted (all keywords enabled)
+  if (attackType === AttackType.Hybrid) return true;
 
   switch (restriction) {
     case 'ranged':
@@ -275,18 +300,19 @@ A hook that reads the current attack type from the store and provides a function
 import { useAttackTypeStore } from '../stores/attackTypeStore';
 import {
   ATTACKER_KEYWORD_RESTRICTIONS,
+  WEAPON_KEYWORD_RESTRICTIONS,
   DEFENDER_KEYWORD_RESTRICTIONS,
   isFieldActiveForAttackType,
 } from '../utils/keywordRestrictions';
 
 /**
- * Returns a function that checks if a given attacker keyword field
+ * Returns a function that checks if a given attacker unit-level keyword field
  * should be disabled based on the current attack type.
  *
  * Usage:
  * ```tsx
  * const isDisabled = useAttackerKeywordDisabled();
- * <Toggle label="Deflect" disabled={isDisabled('deflect')} ... />
+ * <Checkbox label="Duelist" disabled={isDisabled('duelistAttacker')} ... />
  * ```
  */
 export function useAttackerKeywordDisabled(): (field: string) => boolean {
@@ -295,6 +321,26 @@ export function useAttackerKeywordDisabled(): (field: string) => boolean {
   return (field: string): boolean => {
     const restriction = ATTACKER_KEYWORD_RESTRICTIONS[field];
     if (!restriction) return false; // Unknown fields are never disabled
+    return !isFieldActiveForAttackType(restriction, attackType);
+  };
+}
+
+/**
+ * Returns a function that checks if a given weapon-level keyword field
+ * should be disabled based on the current attack type.
+ *
+ * Usage:
+ * ```tsx
+ * const isWeaponDisabled = useWeaponKeywordDisabled();
+ * <Checkbox label="High Velocity" disabled={isWeaponDisabled('highVelocity')} ... />
+ * ```
+ */
+export function useWeaponKeywordDisabled(): (field: string) => boolean {
+  const attackType = useAttackTypeStore((s) => s.attackType);
+
+  return (field: string): boolean => {
+    const restriction = WEAPON_KEYWORD_RESTRICTIONS[field];
+    if (!restriction) return false;
     return !isFieldActiveForAttackType(restriction, attackType);
   };
 }
@@ -316,242 +362,269 @@ export function useDefenderKeywordDisabled(): (field: string) => boolean {
 
 **Verify:**
 - TypeScript compiles without errors
-- When `attackType` is `All`, both hooks return `false` for all fields
+- Default attack type after `reset()` is `AttackType.Ranged`, so both hooks will disable melee-only fields
+- When `attackType` is `Ranged`, `useAttackerKeywordDisabled()('duelistAttacker')` returns `true`
 - When `attackType` is `Melee`, `useDefenderKeywordDisabled()('deflect')` returns `true`
 - When `attackType` is `Ranged`, `useDefenderKeywordDisabled()('djemSoMastery')` returns `true`
+- When `attackType` is `Hybrid`, all hooks return `false` for all fields (everything enabled)
 
 ---
 
 ## Step 8A.3 — Wire Attack-Type Filtering into Attacker Panel
 
-**File:** `src/components/AttackerPanel/AttackerPanel.tsx` (modify existing)
+**File:** `src/components/AttackerPanel/AttackerCustomPoolView.tsx` (modify existing)
 
-Import `useAttackerKeywordDisabled` and pass `disabled` prop to all keyword inputs that have attack-type restrictions.
+The keyword inputs live in `AttackerCustomPoolView.tsx` (not `AttackerPanel.tsx`). `AttackerPanel.tsx` is a thin wrapper that delegates to `AttackerCustomPoolView` or `AttackerUnitBuilderView` based on the active mode.
+
+Import `useAttackerKeywordDisabled` and `useWeaponKeywordDisabled`, then pass `disabled` prop to all keyword inputs that have attack-type restrictions.
+
+**Important:** Attacker keywords use two separate components:
+- **`NumberSpinner`** for numeric keywords (Sharpshooter X, etc.) — these have `compact` mode
+- **`Checkbox`** for boolean keywords (Marksman, Duelist, High Velocity, etc.) — NOT `Toggle`
 
 ```tsx
-// Add import at top of file:
-import { useAttackerKeywordDisabled } from '../../hooks/useKeywordDisabled';
+// Add imports at top of AttackerCustomPoolView.tsx:
+import { useAttackerKeywordDisabled, useWeaponKeywordDisabled } from '../../hooks/useKeywordDisabled';
 
-// Inside AttackerPanel component, add near the top:
+// Inside AttackerCustomPoolView component, add near the top:
 const isDisabled = useAttackerKeywordDisabled();
+const isWeaponDisabled = useWeaponKeywordDisabled();
 
 // Then update each restricted keyword input to include `disabled`:
 
-// Example — Sharpshooter (ranged-only):
+// ── Unit Keywords section ──
+
+// Example — Sharpshooter (ranged-only, unit-level):
 <NumberSpinner
   label="Sharpshooter X"
   value={store.sharpshooterX}
-  onChange={(v) => store.setField('sharpshooterX', v)}
+  onChange={(value) => store.setField('sharpshooterX', value)}
   min={0}
-  max={3}
-  tooltip="Reduce defender's Cover value by X (Ranged only)"
+  max={2}
+  compact
   disabled={isDisabled('sharpshooterX')}     // ← ADD
 />
 
-// Example — High Velocity (ranged-only):
-<Toggle
-  label="High Velocity"
-  value={store.highVelocity}
-  onChange={(v) => store.setField('highVelocity', v)}
-  tooltip="Defender can't spend Dodge; Deflect disabled (Ranged only)"
-  disabled={isDisabled('highVelocity')}      // ← ADD
-/>
-
-// Example — Duelist attacker (melee-only):
-<Toggle
-  label="Duelist (attacker)"
+// Example — Duelist attacker (melee-only, unit-level):
+<Checkbox
+  label="Duelist"
   value={store.duelistAttacker}
-  onChange={(v) => store.setField('duelistAttacker', v)}
-  tooltip="Melee: spend Aim → Pierce 1 (Melee only)"
+  onChange={(value) => store.setField('duelistAttacker', value)}
   disabled={isDisabled('duelistAttacker')}   // ← ADD
 />
 
-// Example — Makashi Mastery (melee-only):
-<Toggle
+// Example — Makashi Mastery (melee-only, unit-level):
+<Checkbox
   label="Makashi Mastery"
   value={store.makashiMastery}
-  onChange={(v) => store.setField('makashiMastery', v)}
-  tooltip="Melee: reduce Pierce to disable Immune: Pierce (Melee only)"
+  onChange={(value) => store.setField('makashiMastery', value)}
   disabled={isDisabled('makashiMastery')}    // ← ADD
 />
 
-// Example — Immune: Deflect (ranged-only):
-<Toggle
+// Example — Jar'Kai Mastery (melee-only, unit-level):
+<Checkbox
+  label="Jar'Kai Mastery"
+  value={store.jarKaiMastery}
+  onChange={(value) => store.setField('jarKaiMastery', value)}
+  disabled={isDisabled('jarKaiMastery')}     // ← ADD
+/>
+
+// Example — Immune: Deflect (ranged-only, unit-level):
+<Checkbox
   label="Immune: Deflect"
   value={store.immuneDeflect}
-  onChange={(v) => store.setField('immuneDeflect', v)}
-  tooltip="Attacker cannot suffer Deflect/Shien reflection wounds (Ranged only)"
+  onChange={(value) => store.setField('immuneDeflect', value)}
   disabled={isDisabled('immuneDeflect')}     // ← ADD
 />
 
-// Example — Hold the Line (ranged+melee, disabled for Overrun):
-<Toggle
+// Example — Hold the Line (melee-only, unit-level):
+<Checkbox
   label="Hold the Line"
   value={store.holdTheLine}
-  onChange={(v) => store.setField('holdTheLine', v)}
-  tooltip="While Engaged: surge → hit (disabled in Overrun)"
+  onChange={(value) => store.setField('holdTheLine', value)}
   disabled={isDisabled('holdTheLine')}       // ← ADD
 />
 
-// Example — Death From Above (ranged-only):
-<Toggle
+// Example — Death From Above (ranged-only, unit-level):
+<Checkbox
   label="Death From Above"
   value={store.deathFromAbove}
-  onChange={(v) => store.setField('deathFromAbove', v)}
-  tooltip="Defender can't use Cover (Ranged only)"
+  onChange={(value) => store.setField('deathFromAbove', value)}
   disabled={isDisabled('deathFromAbove')}    // ← ADD
+/>
+
+// ── Weapon Keywords section ──
+
+// Example — High Velocity (ranged-only, weapon-level):
+<Checkbox
+  label="High Velocity"
+  value={weapon.keywords.highVelocity}
+  onChange={(value) => store.setWeaponKeyword(0, 'highVelocity', value)}
+  disabled={isWeaponDisabled('highVelocity')}  // ← ADD
 />
 ```
 
+**Also update:** `src/components/AttackerPanel/AttackerUnitBuilderView.tsx` — if it renders keyword inputs directly, apply the same `disabled` pattern. (Unit Builder view may render fewer keyword inputs since they come from the preset, but any editable overrides should be gated.)
+
 **Verify:**
 - Select "Melee" attack type → Sharpshooter, High Velocity, Immune: Deflect, Death From Above are visually grayed out and non-interactive
-- Select "Ranged" attack type → Duelist (attacker), Makashi Mastery are visually grayed out
-- Select "Overrun" attack type → Hold the Line is also disabled
-- Select "All" → everything is enabled
+- Select "Ranged" attack type → Duelist (attacker), Makashi Mastery, Jar'Kai Mastery, Hold the Line are visually grayed out
+- Select "Overrun" attack type → all of the above are disabled (both ranged-only and melee-only)
 - Changing attack type does NOT clear the values — switching back restores previous state with values intact
 - Disabled inputs still show their current values
+- Both `Checkbox` and `NumberSpinner` respect the `disabled` prop visually (grayed out, non-interactive)
 
 ---
 
 ## Step 8A.4 — Wire Attack-Type Filtering into Defender Panel
 
-**File:** `src/components/DefenderPanel/DefenderPanel.tsx` (modify existing)
+**File:** `src/components/DefenderPanel/DefenderCustomPoolView.tsx` (modify existing)
 
-Same pattern as Step 8A.3 but for defender keyword inputs.
+Same pattern as Step 8A.3 but for defender keyword inputs. The keyword inputs live in `DefenderCustomPoolView.tsx` (not `DefenderPanel.tsx`). `DefenderPanel.tsx` is a thin wrapper that delegates to `DefenderCustomPoolView` or `DefenderUnitBuilderView`.
+
+**Important:** Defender keywords use a mix of components:
+- **`SegmentedControl`** for Cover Type, Defense Die, Surge Chart
+- **`NumberSpinner`** for numeric keywords (Cover X, Smoke Tokens, Armor X, etc.)
+- **`Toggle`** for Suppressed, Guardian Deflect, Guardian Soresu Mastery
+- **`Checkbox`** for most boolean keywords (Block, Deflect, Soresu Mastery, etc.)
+- **`Select`** for Guardian Die Color, Guardian Surge
 
 ```tsx
-// Add import at top of file:
+// Add import at top of DefenderCustomPoolView.tsx:
 import { useDefenderKeywordDisabled } from '../../hooks/useKeywordDisabled';
 
-// Inside DefenderPanel component:
+// Inside DefenderCustomPoolView component:
 const isDisabled = useDefenderKeywordDisabled();
 
 // Update each restricted defender keyword input:
 
 // Cover section (ranged-only):
-<Select
-  label="Cover"
+<SegmentedControl
+  label="Cover Type"
   value={store.coverType}
-  onChange={(v) => store.setField('coverType', v as CoverType)}
+  onChange={(value) => store.setField('coverType', value)}
   options={COVER_OPTIONS}
-  tooltip="Terrain-based cover (Ranged only)"
   disabled={isDisabled('coverType')}         // ← ADD
 />
 <NumberSpinner
   label="Cover X"
   value={store.coverX}
-  onChange={(v) => store.setField('coverX', v)}
+  onChange={(value) => store.setField('coverX', value)}
   min={0}
   max={2}
-  tooltip="Increases Cover vs Ranged (Ranged only)"
   disabled={isDisabled('coverX')}            // ← ADD
 />
 <NumberSpinner
-  label="Smoke tokens"
+  label="Smoke Tokens"
   value={store.smokeTokens}
-  onChange={(v) => store.setField('smokeTokens', v)}
+  onChange={(value) => store.setField('smokeTokens', value)}
   min={0}
-  max={3}
-  tooltip="Each improves Cover by 1 (Ranged only)"
+  max={99}
   disabled={isDisabled('smokeTokens')}       // ← ADD
 />
 <Toggle
   label="Suppressed"
   value={store.suppressed}
-  onChange={(v) => store.setField('suppressed', v)}
-  tooltip="Improves Cover by 1 (max Cover 2) (Ranged only)"
+  onChange={(value) => store.setField('suppressed', value)}
   disabled={isDisabled('suppressed')}        // ← ADD
 />
 
-// Deflect / Shien (ranged-only):
-<Toggle
+// Keywords section — Checkbox-based booleans:
+<Checkbox
   label="Deflect"
   value={store.deflect}
-  onChange={(v) => store.setField('deflect', v)}
-  tooltip="Gains surge → block vs Ranged (Ranged only)"
+  onChange={(value) => store.setField('deflect', value)}
   disabled={isDisabled('deflect')}           // ← ADD
 />
 {store.deflect && (
-  <Toggle
+  <Checkbox
     label="Shien Mastery"
     value={store.shienMastery}
-    onChange={(v) => store.setField('shienMastery', v)}
-    tooltip="Modifies Deflect reflection (Ranged only)"
+    onChange={(value) => store.setField('shienMastery', value)}
     disabled={isDisabled('shienMastery')}    // ← ADD
   />
 )}
-
-// Soresu Mastery (ranged-only):
-<Toggle
+<Checkbox
   label="Soresu Mastery"
   value={store.soresuMastery}
-  onChange={(v) => store.setField('soresuMastery', v)}
-  tooltip="Reroll all defense dice (Ranged only)"
+  onChange={(value) => store.setField('soresuMastery', value)}
   disabled={isDisabled('soresuMastery')}     // ← ADD
 />
-
-// Backup (ranged-only):
-<Toggle
+<Checkbox
   label="Backup"
   value={store.backup}
-  onChange={(v) => store.setField('backup', v)}
-  tooltip="Cancel up to 2 hits (Ranged only)"
+  onChange={(value) => store.setField('backup', value)}
   disabled={isDisabled('backup')}            // ← ADD
 />
-
-// Shielded (ranged-only in combat context):
 <NumberSpinner
   label="Shielded X"
   value={store.shieldedX}
-  onChange={(v) => store.setField('shieldedX', v)}
+  onChange={(value) => store.setField('shieldedX', value)}
   min={0}
-  max={5}
-  tooltip="Each cancels 1 hit or crit (Ranged only)"
+  max={99}
+  compact
   disabled={isDisabled('shieldedX')}         // ← ADD
 />
-
-// Djem So Mastery (melee-only):
-<Toggle
+<Checkbox
+  label="Low Profile"
+  value={store.lowProfile}
+  onChange={(value) => store.setField('lowProfile', value)}
+  disabled={isDisabled('lowProfile')}        // ← ADD
+/>
+<Checkbox
+  label="Dug In"
+  value={store.dugIn}
+  onChange={(value) => store.setField('dugIn', value)}
+  disabled={isDisabled('dugIn')}             // ← ADD
+/>
+<Checkbox
   label="Djem So Mastery"
   value={store.djemSoMastery}
-  onChange={(v) => store.setField('djemSoMastery', v)}
-  tooltip="Melee: attacker suffers 1 wound per blank (Melee only)"
+  onChange={(value) => store.setField('djemSoMastery', value)}
   disabled={isDisabled('djemSoMastery')}     // ← ADD
 />
-
-// Duelist defender (melee-only):
-<Toggle
-  label="Duelist (defender)"
+<Checkbox
+  label="Duelist"
   value={store.duelistDefender}
-  onChange={(v) => store.setField('duelistDefender', v)}
-  tooltip="Melee: spend Dodge → Immune: Pierce (Melee only)"
+  onChange={(value) => store.setField('duelistDefender', value)}
   disabled={isDisabled('duelistDefender')}   // ← ADD
 />
-
-// Immune: Melee Pierce (melee-only):
-<Toggle
+<Checkbox
   label="Immune: Melee Pierce"
   value={store.immuneMeleePierce}
-  onChange={(v) => store.setField('immuneMeleePierce', v)}
-  tooltip="Pierce cannot cancel blocks in Melee (Melee only)"
+  onChange={(value) => store.setField('immuneMeleePierce', value)}
   disabled={isDisabled('immuneMeleePierce')} // ← ADD
 />
-
-// Hold the Line (ranged+melee, disabled for Overrun):
-<Toggle
+<Checkbox
   label="Hold the Line"
   value={store.holdTheLine}
-  onChange={(v) => store.setField('holdTheLine', v)}
-  tooltip="While Engaged: surge → block (disabled in Overrun)"
+  onChange={(value) => store.setField('holdTheLine', value)}
   disabled={isDisabled('holdTheLine')}       // ← ADD
 />
+
+// Guardian section (ranged-only — entire section):
+<NumberSpinner
+  label="Guardian X"
+  value={store.guardianX}
+  onChange={(value) => store.setField('guardianX', value)}
+  min={0}
+  max={99}
+  disabled={isDisabled('guardianX')}         // ← ADD
+/>
+// Guardian sub-config (already conditionally rendered when guardianX > 0):
+<Select ... disabled={isDisabled('guardianDieColor')} />
+<Select ... disabled={isDisabled('guardianSurgeChart')} />
+<Toggle ... disabled={isDisabled('guardianDeflect')} />
+<Toggle ... disabled={isDisabled('guardianSoresuMastery')} />
+<NumberSpinner ... disabled={isDisabled('guardianDodgeTokens')} />
 ```
 
+**Also update:** `src/components/DefenderPanel/DefenderUnitBuilderView.tsx` — apply the same `disabled` pattern to any keyword inputs it renders.
+
 **Verify:**
-- Select "Melee" attack type → Cover section, Deflect, Shien Mastery, Soresu Mastery, Backup, Shielded are disabled
+- Select "Melee" attack type → Cover section, Deflect, Shien Mastery, Soresu Mastery, Backup, Shielded, Low Profile, Dug In, Guardian section are disabled
 - Select "Ranged" attack type → Djem So Mastery, Duelist (defender), Immune: Melee Pierce are disabled
-- Select "Overrun" → Cover, Deflect, Hold the Line are disabled; Dodge remains enabled
-- Select "All" → everything enabled
+- Select "Overrun" → Cover, Deflect, Hold the Line, Guardian are disabled; Dodge remains enabled
 - Values are preserved when switching attack types
 
 ---
@@ -630,8 +703,30 @@ describe('ATTACKER_KEYWORD_RESTRICTIONS', () => {
     expect(ATTACKER_KEYWORD_RESTRICTIONS['duelistAttacker']).toBe('melee');
   });
 
+  it('marksman is unrestricted', () => {
+    expect(ATTACKER_KEYWORD_RESTRICTIONS['marksman']).toBe('all');
+  });
+
+  it('holdTheLine (attacker) is melee-only', () => {
+    expect(ATTACKER_KEYWORD_RESTRICTIONS['holdTheLine']).toBe('melee');
+  });
+
+  it('jarKaiMastery is melee-only', () => {
+    expect(ATTACKER_KEYWORD_RESTRICTIONS['jarKaiMastery']).toBe('melee');
+  });
+});
+
+describe('WEAPON_KEYWORD_RESTRICTIONS', () => {
+  it('highVelocity is ranged-only', () => {
+    expect(WEAPON_KEYWORD_RESTRICTIONS['highVelocity']).toBe('ranged');
+  });
+
   it('pierceX is unrestricted', () => {
-    expect(ATTACKER_KEYWORD_RESTRICTIONS['pierceX']).toBe('all');
+    expect(WEAPON_KEYWORD_RESTRICTIONS['pierceX']).toBe('all');
+  });
+
+  it('blast is unrestricted', () => {
+    expect(WEAPON_KEYWORD_RESTRICTIONS['blast']).toBe('all');
   });
 });
 
@@ -684,41 +779,67 @@ describe('ATTACKER_KEYWORD_RESTRICTIONS (additional)', () => {
 ```ts
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useAttackerKeywordDisabled, useDefenderKeywordDisabled } from './useKeywordDisabled';
+import {
+  useAttackerKeywordDisabled,
+  useWeaponKeywordDisabled,
+  useDefenderKeywordDisabled,
+} from './useKeywordDisabled';
 import { useAttackTypeStore } from '../stores/attackTypeStore';
 import { AttackType } from '../engine/types';
 
 describe('useAttackerKeywordDisabled', () => {
   beforeEach(() => {
-    useAttackTypeStore.getState().reset();
+    useAttackTypeStore.getState().reset(); // defaults to Ranged
   });
 
-  it('returns false for all fields when attack type is All', () => {
+  it('enables all unit-level keywords for default (Ranged)', () => {
     const { result } = renderHook(() => useAttackerKeywordDisabled());
     expect(result.current('sharpshooterX')).toBe(false);
-    expect(result.current('duelistAttacker')).toBe(false);
-    expect(result.current('pierceX')).toBe(false);
+    expect(result.current('marksman')).toBe(false);
+    // melee-only keywords should be disabled for Ranged
+    expect(result.current('duelistAttacker')).toBe(true);
+    expect(result.current('makashiMastery')).toBe(true);
   });
 
-  it('disables ranged-only attacker keywords for Melee', () => {
+  it('disables ranged-only unit keywords for Melee', () => {
     useAttackTypeStore.getState().setAttackType(AttackType.Melee);
     const { result } = renderHook(() => useAttackerKeywordDisabled());
     expect(result.current('sharpshooterX')).toBe(true);
-    expect(result.current('highVelocity')).toBe(true);
     expect(result.current('immuneDeflect')).toBe(true);
   });
 
-  it('disables melee-only attacker keywords for Ranged', () => {
-    useAttackTypeStore.getState().setAttackType(AttackType.Ranged);
+  it('enables all unit keywords for Hybrid', () => {
+    useAttackTypeStore.getState().setAttackType(AttackType.Hybrid);
     const { result } = renderHook(() => useAttackerKeywordDisabled());
-    expect(result.current('duelistAttacker')).toBe(true);
-    expect(result.current('makashiMastery')).toBe(true);
+    expect(result.current('sharpshooterX')).toBe(false);
+    expect(result.current('duelistAttacker')).toBe(false);
+    expect(result.current('marksman')).toBe(false);
   });
 
   it('returns false for unknown fields', () => {
     useAttackTypeStore.getState().setAttackType(AttackType.Melee);
     const { result } = renderHook(() => useAttackerKeywordDisabled());
     expect(result.current('nonExistentField')).toBe(false);
+  });
+});
+
+describe('useWeaponKeywordDisabled', () => {
+  beforeEach(() => {
+    useAttackTypeStore.getState().reset();
+  });
+
+  it('disables ranged-only weapon keywords for Melee', () => {
+    useAttackTypeStore.getState().setAttackType(AttackType.Melee);
+    const { result } = renderHook(() => useWeaponKeywordDisabled());
+    expect(result.current('highVelocity')).toBe(true);
+  });
+
+  it('keeps unrestricted weapon keywords enabled for any type', () => {
+    useAttackTypeStore.getState().setAttackType(AttackType.Melee);
+    const { result } = renderHook(() => useWeaponKeywordDisabled());
+    expect(result.current('pierceX')).toBe(false);
+    expect(result.current('blast')).toBe(false);
+    expect(result.current('criticalX')).toBe(false);
   });
 });
 
@@ -734,6 +855,7 @@ describe('useDefenderKeywordDisabled', () => {
     expect(result.current('soresuMastery')).toBe(true);
     expect(result.current('backup')).toBe(true);
     expect(result.current('coverType')).toBe(true);
+    expect(result.current('guardianX')).toBe(true);
   });
 
   it('disables melee-only defender keywords for Ranged', () => {
@@ -786,7 +908,7 @@ describe('End-to-End Pipeline', () => {
     useAttackConfigStore.getState().reset();
     useDefenseConfigStore.getState().reset();
     useAttackTypeStore.getState().reset();
-    useResultsStore.getState().clear();
+    useResultsStore.getState().clearAll();
   });
 
   it('produces zero wounds with zero dice', () => {
@@ -796,7 +918,7 @@ describe('End-to-End Pipeline', () => {
   });
 
   it('produces wounds with configured dice', () => {
-    useAttackConfigStore.getState().setField('redDice', 6);
+    useAttackConfigStore.getState().setWeaponDice(0, 'red', 6);
     useAttackConfigStore.getState().setField('surgeChart', AttackSurgeChart.ToCrit);
 
     const config = getFullConfig();
@@ -806,7 +928,7 @@ describe('End-to-End Pipeline', () => {
 
   it('applies attack type filtering correctly in engine', () => {
     // Configure deflect (ranged-only keyword)
-    useAttackConfigStore.getState().setField('redDice', 6);
+    useAttackConfigStore.getState().setWeaponDice(0, 'red', 6);
     useDefenseConfigStore.getState().setField('deflect', true);
     useDefenseConfigStore.getState().setField('dieColor', DefenseDieColor.Red);
     useDefenseConfigStore.getState().setField('surgeChart', DefenseSurgeChart.None);
@@ -827,7 +949,7 @@ describe('End-to-End Pipeline', () => {
   });
 
   it('cover cap does not exceed 2', () => {
-    useAttackConfigStore.getState().setField('redDice', 6);
+    useAttackConfigStore.getState().setWeaponDice(0, 'red', 6);
     useDefenseConfigStore.getState().setField('coverType', CoverType.Heavy); // 2
     useDefenseConfigStore.getState().setField('coverX', 2);                  // +2
     useDefenseConfigStore.getState().setField('suppressed', true);           // +1
@@ -847,10 +969,10 @@ describe('End-to-End Pipeline', () => {
 
   it('preset loading produces valid config', () => {
     // Simulate loading a preset by setting typical values
-    useAttackConfigStore.getState().setField('redDice', 6);
+    useAttackConfigStore.getState().setWeaponDice(0, 'red', 6);
     useAttackConfigStore.getState().setField('surgeChart', AttackSurgeChart.ToCrit);
-    useAttackConfigStore.getState().setField('pierceX', 3);
-    useAttackConfigStore.getState().setField('impactX', 3);
+    useAttackConfigStore.getState().setWeaponKeyword(0, 'pierceX', 3);
+    useAttackConfigStore.getState().setWeaponKeyword(0, 'impactX', 3);
     useAttackConfigStore.getState().setField('unitCost', 190);
 
     useDefenseConfigStore.getState().setField('dieColor', DefenseDieColor.White);
@@ -867,9 +989,9 @@ describe('End-to-End Pipeline', () => {
   });
 
   it('Aim token economy — total consumption does not exceed available', () => {
-    useAttackConfigStore.getState().setField('redDice', 4);
+    useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
     useAttackConfigStore.getState().setField('aimTokens', 2);
-    useAttackConfigStore.getState().setField('lethalX', 3);
+    useAttackConfigStore.getState().setWeaponKeyword(0, 'lethalX', 3);
     useAttackConfigStore.getState().setField('marksman', true);
     useAttackConfigStore.getState().setField('duelistAttacker', true);
 
@@ -890,54 +1012,56 @@ describe('End-to-End Pipeline', () => {
 
 ## Step 8B.1 — Refine Responsive Layout
 
-**File:** `src/app/App.tsx` (modify existing)
+**Files:** `src/Layout.tsx` and `src/App.tsx` (modify existing)
 
-Update the layout to handle the tablet breakpoint (768px–1023px) and improve mobile behavior.
+The existing layout uses `Layout.tsx` (header wrapper with logo/title/`AttackTypeSelector`) and `App.tsx` (3-column grid). The current grid has only 2 breakpoints: `grid-cols-1` (mobile) and `lg:grid-cols-3` (desktop ≥1024px). Refine the layout to add a tablet breakpoint at `md` (768px–1023px).
+
+**`src/Layout.tsx`** — Make header sticky:
 
 ```tsx
-import { AttackerPanel } from '../components/AttackerPanel';
-import { DefenderPanel } from '../components/DefenderPanel';
-import { ResultsPanel } from '../components/ResultsPanel';
-import { AttackTypeSelector } from '../components/AttackTypeSelector';
+// Change the header element to add sticky positioning:
+<header className="sticky top-0 z-20 border-b border-gray-800 bg-gray-950/95 px-4 py-3 backdrop-blur-sm">
+  {/* existing content unchanged */}
+</header>
+```
+
+**`src/App.tsx`** — Add tablet (md) breakpoint:
+
+```tsx
+import Layout from './Layout';
+import { AttackerPanel, DefenderPanel, ResultsPanel } from './components';
 
 export default function App() {
   return (
-    <div className="flex min-h-screen flex-col bg-gray-950 text-gray-100">
-      {/* Top Bar */}
-      <header className="sticky top-0 z-20 flex items-center justify-between border-b border-gray-800 bg-gray-950/95 px-4 py-3 backdrop-blur-sm">
-        <h1 className="text-sm font-bold tracking-wide text-gray-200">
-          ⚔️ Just Roll Crits
-        </h1>
-        <AttackTypeSelector />
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        {/* ── Mobile: stacked layout (<768px) ── */}
-        {/* ── Tablet: 2-column panels + full-width results (768–1023px) ── */}
-        {/* ── Desktop: 3-column layout (≥1024px) ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_minmax(320px,400px)_1fr] lg:divide-x lg:divide-gray-800">
-          {/* Left Column: Attacker */}
-          <div className="border-b border-gray-800 md:border-b-0 md:border-r md:border-gray-800 lg:h-[calc(100vh-49px)] lg:overflow-y-auto">
+    <Layout>
+      {/* Mobile: stacked (1 col), Tablet: 2 cols, Desktop: 3 cols */}
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-4
+                      md:grid-cols-2 md:gap-0 md:divide-x md:divide-gray-800
+                      lg:auto-rows-fr lg:grid-cols-3 lg:divide-x lg:divide-gray-800">
+        {/* Attacker — always col 1 */}
+        <div className="order-1 flex min-h-0 flex-col lg:pr-4">
+          <div className="flex-1 overflow-y-auto">
             <AttackerPanel />
           </div>
+        </div>
 
-          {/* Center Column: Results
-               Mobile: appears after Defender
-               Tablet: spans full width below the 2-column panels
-               Desktop: center column
-          */}
-          <div className="order-last md:order-last md:col-span-2 lg:order-none lg:col-span-1 lg:h-[calc(100vh-49px)] lg:overflow-y-auto">
+        {/* Results — last on mobile/tablet, center on desktop */}
+        <div className="order-3 flex min-h-0 flex-col
+                        md:order-3 md:col-span-2
+                        lg:order-2 lg:col-span-1 lg:px-4">
+          <div className="flex-1 overflow-y-auto">
             <ResultsPanel />
           </div>
+        </div>
 
-          {/* Right Column: Defender */}
-          <div className="border-b border-gray-800 lg:h-[calc(100vh-49px)] lg:overflow-y-auto lg:border-b-0">
+        {/* Defender — col 2 on tablet, col 3 on desktop */}
+        <div className="order-2 flex min-h-0 flex-col lg:order-3 lg:pl-4">
+          <div className="flex-1 overflow-y-auto">
             <DefenderPanel />
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }
 ```
@@ -1011,55 +1135,22 @@ Ensure spinner buttons are large enough for touch targets (minimum 44×44px per 
 
 **Files:** `src/components/ResultsPanel/WoundDistributionChart.tsx` and `src/components/ResultsPanel/CumulativeTable.tsx` (modify existing)
 
-Verify Recharts `ResponsiveContainer` properly resizes in `WoundDistributionChart`. Add small-screen adjustments for `CumulativeTable`.
+Verify Recharts `ResponsiveContainer` properly resizes in `WoundDistributionChart`. The chart already implements multi-series support via the `series: ChartSeries[]` prop (each series has `label`, `distribution`, and `color`). Add small-screen adjustments for `CumulativeTable`.
 
 ```tsx
+// WoundDistributionChart already uses multi-series via:
+//   toMultiSeriesChartData(series) → merged dataset
+//   One <Bar> per series with unique dataKey={s.label}
+// Verify responsive behavior at small viewports:
+
 // Chart container — ensure proper responsive sizing:
 <div className="w-full" style={{ minHeight: '200px' }}>
   <ResponsiveContainer width="100%" height={250}>
-    <BarChart data={distribution} margin={{ top: 5, right: 5, bottom: 20, left: 5 }}>
-      <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-      <XAxis
-        dataKey="wounds"
-        stroke="#9ca3af"
-        tick={{ fontSize: 12 }}
-        label={{
-          value: 'Wounds',
-          position: 'insideBottom',
-          offset: -10,
-          fill: '#9ca3af',
-          fontSize: 12,
-        }}
-      />
-      <YAxis
-        stroke="#9ca3af"
-        tick={{ fontSize: 12 }}
-        tickFormatter={(v: number) => `${(v * 100).toFixed(0)}%`}
-        label={{
-          value: 'Probability',
-          angle: -90,
-          position: 'insideLeft',
-          fill: '#9ca3af',
-          fontSize: 12,
-        }}
-      />
-      <Tooltip
-        formatter={(value: number) => [`${(value * 100).toFixed(1)}%`, 'Probability']}
-        labelFormatter={(label: number) => `${label} wound${label !== 1 ? 's' : ''}`}
-        contentStyle={{
-          backgroundColor: '#1f2937',
-          border: '1px solid #374151',
-          borderRadius: '6px',
-          color: '#f3f4f6',
-          fontSize: '12px',
-        }}
-      />
-      <Bar
-        dataKey="probability"
-        fill="#6366f1"
-        radius={[2, 2, 0, 0]}
-        activeBar={{ fill: '#818cf8' }}
-      />
+    <BarChart data={mergedData} margin={{ top: 5, right: 5, bottom: 20, left: 5 }}>
+      {/* XAxis, YAxis, Tooltip already configured */}
+      {series.map((s) => (
+        <Bar key={s.label} dataKey={s.label} fill={getSeriesColor(s.color).base} ... />
+      ))}
     </BarChart>
   </ResponsiveContainer>
 </div>
@@ -1103,7 +1194,7 @@ Confirm the `vite-plugin-pwa` configuration from Phase 1 correctly precaches all
 // Verify these settings in the existing vite.config.ts:
 VitePWA({
   registerType: 'autoUpdate',
-  includeAssets: ['favicon.svg', 'icons/*.png'],
+  includeAssets: ['justrollcrits_noburst.png', 'justrollcrits.png', 'icons/*.png'],
   manifest: {
     name: 'Just Roll Crits',
     short_name: 'Just Roll Crits',
@@ -1346,41 +1437,44 @@ import {
   MarksmanStrategy,
   RerollStrategy,
 } from '../engine/types';
+import type { AttackConfig, WeaponProfile } from '../engine/types';
 
 describe('Performance', () => {
   it('completes 10,000 iterations in under 500ms', () => {
-    const config = {
+    const weapon: WeaponProfile = {
+      enabled: true,
+      redDice: 6,
+      blackDice: 0,
+      whiteDice: 0,
+      keywords: {
+        criticalX: 0, lethalX: 0, pierceX: 3, impactX: 3, ramX: 0,
+        blast: false, highVelocity: false, suppressive: false, spray: false,
+        antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false,
+        sidearmMelee: false, sidearmRanged: false,
+      },
+    };
+
+    const config: AttackConfig = {
       attacker: {
-        redDice: 6,
-        blackDice: 0,
-        whiteDice: 0,
+        weapons: [weapon],
         surgeChart: AttackSurgeChart.ToCrit,
         aimTokens: 2,
         surgeTokens: 0,
         observationTokens: 0,
+        dodgeTokensAttacker: 0,
         preciseX: 1,
-        criticalX: 0,
-        lethalX: 0,
         sharpshooterX: 0,
-        pierceX: 3,
-        impactX: 3,
-        ramX: 0,
-        blast: false,
-        highVelocity: false,
-        suppressive: false,
+        arsenalX: 0,
         marksman: false,
         marksmanStrategy: MarksmanStrategy.Deterministic,
         rerollStrategy: RerollStrategy.Conservative,
         jediHunter: false,
+        jarKaiMastery: false,
         duelistAttacker: false,
         makashiMastery: false,
-        spray: false,
         immuneDeflect: false,
         deathFromAbove: false,
         holdTheLine: false,
-        antiMaterielX: 0,
-        antiPersonnelX: 0,
-        cumbersome: false,
         unitCost: 190,
       },
       defender: {
@@ -1413,6 +1507,7 @@ describe('Performance', () => {
         duelistDefender: false,
         backup: false,
         holdTheLine: false,
+        dugIn: false,
         guardianX: 0,
         unitCost: 40,
       },
@@ -1425,42 +1520,44 @@ describe('Performance', () => {
 
     console.log(`Simulation: ${elapsed.toFixed(1)}ms for 10,000 iterations`);
     expect(elapsed).toBeLessThan(500);
-    expect(result.stats.mean).toBeGreaterThan(0);
+    expect(result.totalWounds.mean).toBeGreaterThan(0);
   });
 
   it('completes complex config (all keywords active) in under 1000ms', () => {
-    const config = {
+    const weapon: WeaponProfile = {
+      enabled: true,
+      redDice: 4,
+      blackDice: 4,
+      whiteDice: 4,
+      keywords: {
+        criticalX: 3, lethalX: 2, pierceX: 4, impactX: 4, ramX: 2,
+        blast: false, highVelocity: false, suppressive: true, spray: true,
+        antiMaterielX: 2, antiPersonnelX: 0, cumbersome: false,
+        sidearmMelee: false, sidearmRanged: false,
+      },
+    };
+
+    const config: AttackConfig = {
       attacker: {
-        redDice: 4,
-        blackDice: 4,
-        whiteDice: 4,
+        weapons: [weapon],
         surgeChart: AttackSurgeChart.ToCrit,
         aimTokens: 3,
         surgeTokens: 2,
         observationTokens: 2,
+        dodgeTokensAttacker: 0,
         preciseX: 2,
-        criticalX: 3,
-        lethalX: 2,
         sharpshooterX: 2,
-        pierceX: 4,
-        impactX: 4,
-        ramX: 2,
-        blast: false,
-        highVelocity: false,
-        suppressive: true,
+        arsenalX: 0,
         marksman: true,
         marksmanStrategy: MarksmanStrategy.Averages,
         rerollStrategy: RerollStrategy.CritFishing,
         jediHunter: true,
+        jarKaiMastery: false,
         duelistAttacker: true,
         makashiMastery: false,
-        spray: true,
         immuneDeflect: false,
         deathFromAbove: false,
         holdTheLine: true,
-        antiMaterielX: 2,
-        antiPersonnelX: 0,
-        cumbersome: false,
         unitCost: 200,
       },
       defender: {
@@ -1493,6 +1590,7 @@ describe('Performance', () => {
         duelistDefender: false,
         backup: true,
         holdTheLine: true,
+        dugIn: false,
         guardianX: 2,
         guardianDieColor: DefenseDieColor.Red,
         guardianSurgeChart: DefenseSurgeChart.ToBlock,
@@ -1551,29 +1649,38 @@ useEffect(() => {
 - Only 1 worker thread exists at any time
 - Worker terminates on component unmount / app close
 - No "worker already terminated" errors in console
-- Rapid input changes don't create multiple pending worker tasks (debounce prevents this)
+- Rapid input changes don't create multiple pending worker tasks (button-triggered, so user must explicitly re-run)
 
 ---
 
-## Step 8E.3 — Debounce Tuning Verification
+## Step 8E.3 — Staleness Tracking Verification
 
-Verify the 300ms debounce timing feels responsive without causing excessive simulations.
+Verify the staleness indicator correctly marks results as stale when config changes, and that re-running simulation clears the stale state.
 
 **Test procedure:**
-1. Open the app with DevTools Console open
-2. Add `console.log('Simulation dispatched')` in `useSimulation.ts` (temporary)
-3. Rapidly increment a spinner 5 times (click ++++$+) quickly
-4. Verify only 1 simulation runs (not 5)
-5. Change a single input and wait — verify results appear within ~500ms (300ms debounce + simulation time)
-6. Remove the temporary `console.log`
+1. Open the app, configure attacker/defender, run simulation so results appear
+2. Change any config value (e.g., increment red dice)
+3. Verify that existing results show a "stale" visual indicator (e.g., reduced opacity, badge, or overlay)
+4. Click "Run Simulation" / "Add Simulation" again
+5. Verify the new result is not stale and any stale indicators update correctly
 
-**If 300ms feels too slow:** Reduce to 200ms.
-**If too many simulations fire:** Increase to 400ms.
+**Code checks:**
+```ts
+// In useSimulation.ts — verify staleness tracking:
+// The hook subscribes to all config stores and calls markStale() when config changes
+// while result slots exist. This is already implemented.
+
+// Verify in ResultsStore:
+// - markStale() marks all existing slots as stale
+// - appendResult() adds a fresh (non-stale) result slot
+// - Stale results render with visual differentiation
+```
 
 **Verify:**
-- Single simulation per burst of rapid changes
-- Results appear within noticeable-but-not-sluggish delay (300–500ms total)
-- No visible UI jank during input changes
+- Changing any config input marks existing result slots as stale
+- Running a new simulation adds a non-stale result
+- Visual distinction between stale and fresh results is clear
+- Staleness resets correctly across multiple config-change → simulation cycles
 
 ---
 
@@ -1673,7 +1780,7 @@ After completing all steps, confirm:
 | **Keyword filtering (Melee)** | Select Melee → Deflect, Cover, Soresu Mastery disabled; Djem So, Duelist (def) enabled |
 | **Keyword filtering (Ranged)** | Select Ranged → Djem So, Duelist (def/atk), Immune: Melee Pierce disabled; Cover, Deflect enabled |
 | **Keyword filtering (Overrun)** | Select Overrun → Cover, Deflect, Hold the Line disabled; Dodge enabled |
-| **Keyword filtering (All)** | Select All → everything enabled |
+| **Keyword filtering (Hybrid)** | Select Hybrid → all keywords enabled (combined ranged+melee) |
 | **Values preserved** | Set Cover to Heavy + Deflect → switch to Melee → switch back to Ranged → Cover and Deflect still set |
 | **E2E simulation** | Set 6 red dice, surge→crit, Pierce 3 vs White defense, surge→block → results show reasonable wounds |
 | **Preset loading** | Select faction + unit → dice, keywords, surge populate → results update |
@@ -1707,9 +1814,10 @@ After completing all steps, confirm:
 
 | File | Change |
 |------|--------|
-| `src/components/AttackerPanel/AttackerPanel.tsx` | Add `disabled` prop to restricted keyword inputs |
-| `src/components/DefenderPanel/DefenderPanel.tsx` | Add `disabled` prop to restricted keyword inputs |
-| `src/app/App.tsx` | Refine responsive grid for tablet breakpoint, sticky header |
+| `src/components/AttackerPanel/AttackerCustomPoolView.tsx` | Add `disabled` prop to restricted keyword inputs using `useAttackerKeywordDisabled` and `useWeaponKeywordDisabled` |
+| `src/components/DefenderPanel/DefenderCustomPoolView.tsx` | Add `disabled` prop to restricted keyword inputs using `useDefenderKeywordDisabled` |
+| `src/Layout.tsx` | Make header sticky with `backdrop-blur-sm` |
+| `src/App.tsx` | Add tablet (md) breakpoint to responsive grid |
 | `src/components/shared/NumberSpinner.tsx` | Touch target sizing, `touch-manipulation` |
 | `src/components/ResultsPanel/ResultsPanel.tsx` | ARIA labels, chart responsiveness, loading state accessibility |
 | `src/index.css` | Focus-visible global styles |
@@ -1720,7 +1828,6 @@ After completing all steps, confirm:
 ## Dependency Graph (Within Phase 8)
 
 ```
-Phase 2D (modifiers.ts — isKeywordActive)
 Phase 4 (disabled prop on all shared components)
 Phase 5A (useAttackTypeStore)
        │
@@ -1728,23 +1835,26 @@ Phase 5A (useAttackTypeStore)
 ┌─────────────────────────┐
 │ Step 8A.1               │
 │ keywordRestrictions.ts   │
-│ (restriction map)        │
+│ (restriction maps:       │
+│  attacker, weapon,       │
+│  defender)               │
 └────────────┬────────────┘
              │
              ▼
 ┌─────────────────────────┐
 │ Step 8A.2               │
 │ useKeywordDisabled.ts    │
-│ (hooks)                  │
+│ (3 hooks: attacker,     │
+│  weapon, defender)       │
 └────────────┬────────────┘
              │
        ┌─────┴──────┐
        ▼             ▼
-┌────────────┐ ┌────────────┐
-│ Step 8A.3  │ │ Step 8A.4  │
-│ Attacker   │ │ Defender   │
-│ Panel Wire │ │ Panel Wire │
-└────────────┘ └────────────┘
+┌────────────────┐ ┌────────────────┐
+│ Step 8A.3      │ │ Step 8A.4      │
+│ AttackerCustom │ │ DefenderCustom │
+│ PoolView Wire  │ │ PoolView Wire  │
+└────────────────┘ └────────────────┘
        │             │
        └──────┬──────┘
               ▼
@@ -1760,6 +1870,8 @@ Phase 5A (useAttackTypeStore)
 │ Step 8B.1–3  │    │ Step 8C.1–2  │
 │ Responsive   │    │ PWA Final    │
 │ Layout       │    │              │
+│ (Layout.tsx  │    │              │
+│  + App.tsx)  │    │              │
 └──────────────┘    └──────────────┘
 
 ┌──────────────┐    ┌──────────────┐

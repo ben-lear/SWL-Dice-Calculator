@@ -66,7 +66,7 @@ describe('useSimulation', () => {
     mockRun.mockReset();
     mockTerminate.mockReset();
     useAttackConfigStore.getState().reset();
-    useResultsStore.getState().clear();
+    useResultsStore.getState().clearAll();
   });
 
   afterEach(() => {
@@ -106,7 +106,7 @@ describe('useSimulation', () => {
     });
 
     expect(mockRun).toHaveBeenCalledTimes(1);
-    expect(useResultsStore.getState().result).not.toBeNull();
+    expect(useResultsStore.getState().slots).toHaveLength(1);
   });
 
   it('clears results when runSimulation is called with no dice', async () => {
@@ -123,7 +123,7 @@ describe('useSimulation', () => {
       await result.current.runSimulation();
     });
 
-    expect(useResultsStore.getState().result).not.toBeNull();
+    expect(useResultsStore.getState().slots).toHaveLength(1);
 
     // Now remove all dice
     act(() => {
@@ -136,7 +136,7 @@ describe('useSimulation', () => {
     });
 
     // Results should be cleared
-    expect(useResultsStore.getState().result).toBeNull();
+    expect(useResultsStore.getState().slots).toHaveLength(0);
   });
 
   it('sets loading state while simulation is running', async () => {
@@ -236,7 +236,7 @@ describe('useSimulation', () => {
     expect(useResultsStore.getState().stale).toBe(false);
   });
 
-  it('writes simulation results to the store', async () => {
+  it('writes simulation results to a slot', async () => {
     const mockResult = createMockResult({ totalWounds: { mean: 5, median: 5, mode: 5, min: 0, max: 10, standardDeviation: 2 } });
     mockRun.mockResolvedValue(mockResult);
 
@@ -250,8 +250,61 @@ describe('useSimulation', () => {
       await result.current.runSimulation();
     });
 
-    const storeResult = useResultsStore.getState().result;
-    expect(storeResult).toEqual(mockResult);
+    const slots = useResultsStore.getState().slots;
+    expect(slots).toHaveLength(1);
+    expect(slots[0].result).toEqual(mockResult);
+  });
+
+  it('appends multiple results to slots', async () => {
+    mockRun.mockResolvedValue(createMockResult());
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    expect(useResultsStore.getState().slots).toHaveLength(1);
+
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    expect(useResultsStore.getState().slots).toHaveLength(2);
+  });
+
+  it('does nothing when store is full (4 slots)', async () => {
+    mockRun.mockResolvedValue(createMockResult());
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    // Fill to capacity
+    await act(async () => {
+      await result.current.runSimulation();
+      await result.current.runSimulation();
+      await result.current.runSimulation();
+      await result.current.runSimulation();
+    });
+
+    expect(useResultsStore.getState().slots).toHaveLength(4);
+    const callCount = mockRun.mock.calls.length;
+
+    // Try to run again
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    // Should not have called the worker again
+    expect(mockRun).toHaveBeenCalledTimes(callCount);
+    expect(useResultsStore.getState().slots).toHaveLength(4);
   });
 
   it('terminates worker on unmount', () => {
