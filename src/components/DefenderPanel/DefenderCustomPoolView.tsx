@@ -72,7 +72,7 @@ export default function DefenderCustomPoolView() {
             value={store.minisInLOS}
             onChange={(value) => store.setField('minisInLOS', value)}
             min={1}
-            max={12}
+            max={99}
           />
         </div>
       </SectionHeader>
@@ -97,7 +97,7 @@ export default function DefenderCustomPoolView() {
             value={store.smokeTokens}
             onChange={(value) => store.setField('smokeTokens', value)}
             min={0}
-            max={3}
+            max={99}
           />
           <Toggle
             label="Suppressed"
@@ -114,7 +114,7 @@ export default function DefenderCustomPoolView() {
             value={store.dodgeTokens}
             onChange={(value) => store.setField('dodgeTokens', value)}
             min={0}
-            max={5}
+            max={99}
             compact
           />
           <NumberSpinner
@@ -122,7 +122,7 @@ export default function DefenderCustomPoolView() {
             value={store.surgeTokens}
             onChange={(value) => store.setField('surgeTokens', value)}
             min={0}
-            max={5}
+            max={99}
             compact
           />
           {store.dangerSenseX > 0 && (
@@ -131,7 +131,7 @@ export default function DefenderCustomPoolView() {
               value={store.suppressionTokens}
               onChange={(value) => store.setField('suppressionTokens', value)}
               min={0}
-              max={10}
+              max={99}
               compact
               tooltip="Suppression Tokens"
             />
@@ -147,7 +147,7 @@ export default function DefenderCustomPoolView() {
               value={store.armorX}
               onChange={(value) => store.setField('armorX', value)}
               min={0}
-              max={6}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -155,7 +155,7 @@ export default function DefenderCustomPoolView() {
               value={store.weakPointX}
               onChange={(value) => store.setField('weakPointX', value)}
               min={0}
-              max={2}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -163,7 +163,7 @@ export default function DefenderCustomPoolView() {
               value={store.dangerSenseX}
               onChange={(value) => store.setField('dangerSenseX', value)}
               min={0}
-              max={5}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -171,7 +171,7 @@ export default function DefenderCustomPoolView() {
               value={store.uncannyLuckX}
               onChange={(value) => store.setField('uncannyLuckX', value)}
               min={0}
-              max={5}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -179,7 +179,7 @@ export default function DefenderCustomPoolView() {
               value={store.shieldedX}
               onChange={(value) => store.setField('shieldedX', value)}
               min={0}
-              max={6}
+              max={99}
               compact
             />
           </div>
@@ -281,7 +281,7 @@ export default function DefenderCustomPoolView() {
             value={store.guardianX}
             onChange={(value) => store.setField('guardianX', value)}
             min={0}
-            max={3}
+            max={99}
           />
 
           {store.guardianX > 0 && (
@@ -313,7 +313,7 @@ export default function DefenderCustomPoolView() {
                 value={store.guardianDodgeTokens}
                 onChange={(value) => store.setField('guardianDodgeTokens', value)}
                 min={0}
-                max={5}
+                max={99}
               />
             </>
           )}

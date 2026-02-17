@@ -45,7 +45,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.redDice}
               onChange={(value) => store.setWeaponDice(0, 'red', value)}
               min={0}
-              max={12}
+              max={99}
               compact
               gap="gap-3"
             />
@@ -55,7 +55,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.blackDice}
               onChange={(value) => store.setWeaponDice(0, 'black', value)}
               min={0}
-              max={12}
+              max={99}
               compact
               gap="gap-3"
             />
@@ -65,7 +65,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.whiteDice}
               onChange={(value) => store.setWeaponDice(0, 'white', value)}
               min={0}
-              max={12}
+              max={99}
               compact
               gap="gap-3"
             />
@@ -86,7 +86,7 @@ export default function AttackerCustomPoolView() {
             value={store.aimTokens}
             onChange={(value) => store.setField('aimTokens', value)}
             min={0}
-            max={5}
+            max={99}
             compact
           />
           <NumberSpinner
@@ -94,17 +94,16 @@ export default function AttackerCustomPoolView() {
             value={store.surgeTokens}
             onChange={(value) => store.setField('surgeTokens', value)}
             min={0}
-            max={5}
+            max={99}
             compact
           />
           <NumberSpinner
-            label="Obs"
+            label="Observation"
             value={store.observationTokens}
             onChange={(value) => store.setField('observationTokens', value)}
             min={0}
-            max={5}
+            max={99}
             compact
-            tooltip="Observation Tokens"
           />
           {store.jarKaiMastery && (
             <NumberSpinner
@@ -112,7 +111,7 @@ export default function AttackerCustomPoolView() {
               value={store.dodgeTokensAttacker}
               onChange={(value) => store.setField('dodgeTokensAttacker', value)}
               min={0}
-              max={5}
+              max={99}
               compact
               tooltip="Dodge Tokens (Jar'Kai Mastery)"
             />
@@ -128,7 +127,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.keywords.criticalX}
               onChange={(value) => store.setWeaponKeyword(0, 'criticalX', value)}
               min={0}
-              max={5}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -136,7 +135,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.keywords.lethalX}
               onChange={(value) => store.setWeaponKeyword(0, 'lethalX', value)}
               min={0}
-              max={5}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -144,7 +143,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.keywords.pierceX}
               onChange={(value) => store.setWeaponKeyword(0, 'pierceX', value)}
               min={0}
-              max={5}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -152,7 +151,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.keywords.impactX}
               onChange={(value) => store.setWeaponKeyword(0, 'impactX', value)}
               min={0}
-              max={6}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -160,7 +159,7 @@ export default function AttackerCustomPoolView() {
               value={weapon.keywords.ramX}
               onChange={(value) => store.setWeaponKeyword(0, 'ramX', value)}
               min={0}
-              max={5}
+              max={99}
               compact
             />
           </div>
@@ -198,7 +197,7 @@ export default function AttackerCustomPoolView() {
               value={store.preciseX}
               onChange={(value) => store.setField('preciseX', value)}
               min={0}
-              max={3}
+              max={99}
               compact
             />
             <NumberSpinner
@@ -206,7 +205,7 @@ export default function AttackerCustomPoolView() {
               value={store.sharpshooterX}
               onChange={(value) => store.setField('sharpshooterX', value)}
               min={0}
-              max={3}
+              max={2}
               compact
             />
             <NumberSpinner
@@ -214,7 +213,7 @@ export default function AttackerCustomPoolView() {
               value={store.arsenalX}
               onChange={(value) => store.setField('arsenalX', value)}
               min={0}
-              max={4}
+              max={99}
               compact
             />
           </div>
