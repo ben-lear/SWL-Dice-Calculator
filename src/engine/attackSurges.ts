@@ -101,8 +101,10 @@ export function convertAttackSurges(
  *   - blank → crit (2 Aims, via iterative loop)
  *
  * Strategy:
- * - Deterministic: Always convert when possible (prioritize hit→crit)
- * - Averages: (simplified - always convert for now)
+ * - The decision to save aims for Marksman happens earlier in Step 4c (reroll phase)
+ *   via calculateMarksmanDecision() which compares EV and respects marksmanStrategy
+ * - This function executes the conversions using the saved aim tokens
+ * - Both modes: prioritize hit→crit over blank→hit (crits bypass more keywords)
  */
 export function applyMarksman(
   results: RolledAttackDie[],

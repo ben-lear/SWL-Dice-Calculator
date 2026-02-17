@@ -1,6 +1,8 @@
 import type { AttackConfig, RolledAttackDie, AttackerConfig, AggregatedWeaponKeywords } from './types';
 import { rollAttackDie } from './dice';
-import { AttackDieColor, AttackFace, AttackSurgeChart, AttackType } from './types';
+import { AttackDieColor, AttackFace, AttackType, RerollStrategy } from './types';
+import { calculateMarksmanDecision } from './marksmanDecision';
+import { calculateAvailableSurgeConversions, calculateSurgeConversionsByType } from './surgeConversionUtils';
 
 /**
  * Step 4b — Roll Attack Dice
@@ -17,23 +19,22 @@ export function rollAttackDice(pool: AttackDieColor[]): RolledAttackDie[] {
 function calculateExcessSurgeIndices(
   surgeIndices: Array<{ idx: number; colorRank: number }>,
   attacker: AttackerConfig,
-  poolKeywords: AggregatedWeaponKeywords
+  poolKeywords: AggregatedWeaponKeywords,
+  attackType: AttackType
 ): Array<{ idx: number; colorRank: number }> {
   if (surgeIndices.length === 0) return [];
 
-  // Check for unlimited conversion sources
-  const hasChartConversion =
-    attacker.surgeChart === AttackSurgeChart.ToHit ||
-    attacker.surgeChart === AttackSurgeChart.ToCrit;
-  const hasUnlimitedConversion = attacker.jediHunter || attacker.holdTheLine;
+  // Calculate total available surge conversions using shared utility
+  const totalConversions = calculateAvailableSurgeConversions(
+    attacker,
+    poolKeywords,
+    attackType
+  );
 
-  if (hasChartConversion || hasUnlimitedConversion) {
-    // All surges will be converted → none are excess
+  // If unlimited conversions, all surges will be converted
+  if (totalConversions === Infinity) {
     return [];
   }
-
-  // Limited conversion: surgeTokens + criticalX
-  const totalConversions = attacker.surgeTokens + poolKeywords.criticalX;
 
   if (totalConversions === 0) {
     // No conversions at all → ALL surges are excess
@@ -56,20 +57,70 @@ function calculateExcessSurgeIndices(
 }
 
 /**
+ * Identify surge indices that would convert to hits (not crits) for Crit Fishing mode.
+ * These surges are valid reroll targets because they won't become crits.
+ * 
+ * Protects surges that would convert to crits via Critical X, Jedi Hunter, or ToCrit chart.
+ */
+function identifySurgeToHitIndices(
+  surgeIndices: Array<{ idx: number; colorRank: number }>,
+  attacker: AttackerConfig,
+  poolKeywords: AggregatedWeaponKeywords,
+  attackType: AttackType
+): Array<{ idx: number; colorRank: number }> {
+  if (surgeIndices.length === 0) return [];
+
+  const { critConversions, hitConversions } = calculateSurgeConversionsByType(
+    attacker,
+    poolKeywords,
+    attackType
+  );
+
+  // If unlimited hit conversions, all surges would become hits (rerollable)
+  if (hitConversions === Infinity) {
+    return [...surgeIndices];
+  }
+
+  // If unlimited crit conversions, all surges become crits (protected)
+  if (critConversions === Infinity) {
+    return [];
+  }
+
+  // Sort by color rank ascending (White=1 first, lowest value)
+  // This matches conversion priority: lowest-value surges converted first
+  const sorted = [...surgeIndices].sort((a, b) => a.colorRank - b.colorRank);
+
+  // First N surges are protected for crit conversion
+  const protectedCount = Math.min(critConversions, sorted.length);
+  
+  // Next M surges would convert to hits (rerollable in Crit Fishing)
+  const hitConversionStart = protectedCount;
+  const hitConversionEnd = Math.min(protectedCount + hitConversions, sorted.length);
+  
+  return sorted.slice(hitConversionStart, hitConversionEnd);
+}
+
+/**
  * Identify indices of dice worth rerolling.
  * Returns indices sorted by die color priority: Red > Black > White.
  *
- * Targets:
+ * Conservative mode targets:
  * - All blanks
  * - Excess surges (surges beyond available conversions)
+ * 
+ * Crit Fishing mode adds:
+ * - Surges that would convert to hits (not crits)
+ * - Regular hits
  */
 function identifyRerollTargetIndices(
   results: RolledAttackDie[],
-  attacker: AttackerConfig,
+  config: AttackConfig,
   poolKeywords: AggregatedWeaponKeywords
 ): number[] {
+  const { attacker, attackType } = config;
   const blankIndices: Array<{ idx: number; colorRank: number }> = [];
   const surgeIndices: Array<{ idx: number; colorRank: number }> = [];
+  const hitIndices: Array<{ idx: number; colorRank: number }> = [];
 
   const colorRank: Record<string, number> = {
     [AttackDieColor.Red]: 3,
@@ -77,19 +128,30 @@ function identifyRerollTargetIndices(
     [AttackDieColor.White]: 1,
   };
 
+  const isCritFishing = attacker.rerollStrategy === RerollStrategy.CritFishing;
+
   results.forEach((die, idx) => {
     if (die.face === AttackFace.Blank) {
       blankIndices.push({ idx, colorRank: colorRank[die.color] });
     } else if (die.face === AttackFace.Surge) {
       surgeIndices.push({ idx, colorRank: colorRank[die.color] });
+    } else if (die.face === AttackFace.Hit && isCritFishing) {
+      hitIndices.push({ idx, colorRank: colorRank[die.color] });
     }
+    // Critical results are never rerolled
   });
 
   // Determine which surges are "excess" (won't be converted)
-  const excessSurgeIndices = calculateExcessSurgeIndices(surgeIndices, attacker, poolKeywords);
+  const excessSurgeIndices = calculateExcessSurgeIndices(surgeIndices, attacker, poolKeywords, attackType);
 
-  // Combine blanks + excess surges, sort by color rank descending (Red first)
-  const allTargets = [...blankIndices, ...excessSurgeIndices];
+  // In Crit Fishing mode, also identify surges that would convert to hits (not crits)
+  const surgeToHitIndices = isCritFishing
+    ? identifySurgeToHitIndices(surgeIndices, attacker, poolKeywords, attackType)
+    : [];
+
+  // Combine targets: blanks > excess surges > surge-to-hit > regular hits
+  // Sort by color rank descending (Red first) within combined list
+  const allTargets = [...blankIndices, ...excessSurgeIndices, ...surgeToHitIndices, ...hitIndices];
   allTargets.sort((a, b) => b.colorRank - a.colorRank);
 
   return allTargets.map(t => t.idx);
@@ -114,8 +176,9 @@ export function rerollAttackDice(
   // ── Observation Tokens ──
   // Each Observation token provides exactly 1 reroll.
   // Processed FIRST (before Aim tokens) so Marksman decisions see post-observation state.
+  // FWIW, in the real world players would likely spend observation tokens last against healthy enemy units, this is a "greedier" approach to maximize damage for a single attack sequence.
   for (let obs = 0; obs < attacker.observationTokens; obs++) {
-    const targetIndices = identifyRerollTargetIndices(workingResults, attacker, poolKeywords);
+    const targetIndices = identifyRerollTargetIndices(workingResults, config, poolKeywords);
 
     if (targetIndices.length > 0) {
       // Reroll the highest-priority target (1 reroll per observation token)
@@ -135,25 +198,25 @@ export function rerollAttackDice(
     // If Marksman is active and it's better to save aims for post-surge conversion,
     // save this aim and ALL remaining aims for Marksman.
     if (attacker.marksman) {
-      // Simplified decision: if we have blanks or hits that Marksman could convert,
-      // and we have few reroll targets, save for Marksman.
-      const targetIndices = identifyRerollTargetIndices(workingResults, attacker, poolKeywords);
-      const blankCount = workingResults.filter(d => d.face === AttackFace.Blank).length;
-      const hitCount = workingResults.filter(d => d.face === AttackFace.Hit).length;
-      const canConvert = blankCount > 0 || hitCount > 0;
+      const decision = calculateMarksmanDecision(
+        workingResults, config, poolKeywords,
+        aimsSpent,                          // aims already spent on rerolls
+        attacker.aimTokens - aimIndex        // aims remaining (including this one)
+      );
 
-      // If we have convertible dice and few/no reroll targets, save for Marksman
-      if (canConvert && targetIndices.length <= 1) {
+      if (!decision.useRerollInstead) {
+        // Save this aim and ALL remaining aims for Marksman post-surge conversion
         aimsSavedForMarksman = attacker.aimTokens - aimIndex;
         break; // Exit aim loop
       }
+      // else: decision says reroll is better, fall through to reroll below
     }
 
     // ── Execute Rerolls ──
     const selectedIndices: number[] = [];
 
     // Select blanks and excess surges
-    const targetIndices = identifyRerollTargetIndices(workingResults, attacker, poolKeywords);
+    const targetIndices = identifyRerollTargetIndices(workingResults, config, poolKeywords);
     for (const idx of targetIndices) {
       if (selectedIndices.length >= rerollsPerAim) break;
       selectedIndices.push(idx);
