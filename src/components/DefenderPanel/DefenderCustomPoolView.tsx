@@ -4,6 +4,7 @@ import {
   DefenseSurgeChart,
 } from '../../engine/types';
 import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import { useDefenderKeywordDisabled } from '../../hooks/useKeywordDisabled';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 import Select from '../shared/Select';
@@ -39,6 +40,7 @@ const COVER_OPTIONS: SegmentedControlOption<CoverType>[] = [
 
 export default function DefenderCustomPoolView() {
   const store = useDefenseConfigStore();
+  const isDisabled = useDefenderKeywordDisabled();
 
   return (
     <>
@@ -56,6 +58,7 @@ export default function DefenderCustomPoolView() {
               }
             }}
             options={DEFENSE_DIE_OPTIONS}
+            tooltip="The color of defense die rolled for this unit. Red dice have a higher block chance than white."
           />
 
           {!store.disableDefenseDice && (
@@ -64,6 +67,7 @@ export default function DefenderCustomPoolView() {
               value={store.surgeChart}
               onChange={(value) => store.setField('surgeChart', value)}
               options={DEFENSE_SURGE_OPTIONS}
+              tooltip="Whether defense surge results convert to blocks."
             />
           )}
 
@@ -73,6 +77,7 @@ export default function DefenderCustomPoolView() {
             onChange={(value) => store.setField('minisInLOS', value)}
             min={1}
             max={99}
+            tooltip="Number of defending miniatures in line of sight — used to multiply the dice of Spray weapons."
           />
         </div>
       </SectionHeader>
@@ -84,6 +89,8 @@ export default function DefenderCustomPoolView() {
             value={store.coverType}
             onChange={(value) => store.setField('coverType', value)}
             options={COVER_OPTIONS}
+            disabled={isDisabled('coverType')}
+            tooltip="Terrain-based cover that reduces incoming hit results before defense dice are rolled."
           />
           <NumberSpinner
             label="Cover X"
@@ -91,6 +98,8 @@ export default function DefenderCustomPoolView() {
             onChange={(value) => store.setField('coverX', value)}
             min={0}
             max={2}
+            disabled={isDisabled('coverX')}
+            tooltip="The Cover X keyword improves this unit's cover level by X, stacking with terrain cover (capped at heavy)."
           />
           <NumberSpinner
             label="Smoke Tokens"
@@ -98,11 +107,15 @@ export default function DefenderCustomPoolView() {
             onChange={(value) => store.setField('smokeTokens', value)}
             min={0}
             max={99}
+            disabled={isDisabled('smokeTokens')}
+            tooltip="Each smoke token grants this unit light cover against ranged attacks."
           />
           <Toggle
             label="Suppressed"
             value={store.suppressed}
             onChange={(value) => store.setField('suppressed', value)}
+            disabled={isDisabled('suppressed')}
+            tooltip="This unit is suppressed: it improves its cover by 1 (e.g. no cover → light, light → heavy)."
           />
         </div>
       </SectionHeader>
@@ -116,6 +129,7 @@ export default function DefenderCustomPoolView() {
             min={0}
             max={99}
             compact
+            tooltip="Spend dodge tokens to cancel hit results before defense dice are rolled. Each token cancels 1 hit."
           />
           <NumberSpinner
             label="Surge"
@@ -124,6 +138,7 @@ export default function DefenderCustomPoolView() {
             min={0}
             max={99}
             compact
+            tooltip="Spend surge tokens to convert defense surge results to blocks."
           />
           {store.dangerSenseX > 0 && (
             <NumberSpinner
@@ -133,7 +148,7 @@ export default function DefenderCustomPoolView() {
               min={0}
               max={99}
               compact
-              tooltip="Suppression Tokens"
+              tooltip="Current suppression tokens on this unit; used by Danger Sense X to roll additional defense dice."
             />
           )}
         </div>
@@ -149,6 +164,7 @@ export default function DefenderCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="Cancel up to X non-critical hit results before rolling defense dice. Critical hits bypass Armor."
             />
             <NumberSpinner
               label="Weak Point X"
@@ -157,6 +173,7 @@ export default function DefenderCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="When attacked from this unit's weak-point arc, the attacker's attack pool gains Impact X, converting up to X hits into crits."
             />
             <NumberSpinner
               label="Danger Sense X"
@@ -165,6 +182,7 @@ export default function DefenderCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="Roll 1 additional defense die per suppression token on this unit, up to X additional dice total."
             />
             <NumberSpinner
               label="Uncanny Luck X"
@@ -173,6 +191,7 @@ export default function DefenderCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="After rolling defense dice, reroll up to X results once per attack."
             />
             <NumberSpinner
               label="Shielded X"
@@ -181,6 +200,8 @@ export default function DefenderCustomPoolView() {
               min={0}
               max={99}
               compact
+              disabled={isDisabled('shieldedX')}
+              tooltip="This unit has X active shield tokens. Flip shields to cancel hit or critical results before defense dice are rolled (ranged attacks only)."
             />
           </div>
 
@@ -189,78 +210,103 @@ export default function DefenderCustomPoolView() {
               label="Block"
               value={store.block}
               onChange={(value) => store.setField('block', value)}
+              tooltip="When this unit spends a dodge token, its defense surge results convert to blocks for this attack."
             />
             <Checkbox
               label="Deflect"
               value={store.deflect}
               onChange={(value) => store.setField('deflect', value)}
+              disabled={isDisabled('deflect')}
+              tooltip="While defending against ranged attacks, surge results convert to blocks. If at least 1 surge was rolled, the attacker suffers 1 wound."
             />
             {store.deflect && (
               <Checkbox
                 label="Shien Mastery"
                 value={store.shienMastery}
                 onChange={(value) => store.setField('shienMastery', value)}
+                disabled={isDisabled('shienMastery')}
+                tooltip="Enhances Deflect: the attacker suffers 1 wound per defense surge result instead of 1 total. If no wounds are dealt, no suppression is applied."
               />
             )}
             <Checkbox
               label="Soresu Mastery"
               value={store.soresuMastery}
               onChange={(value) => store.setField('soresuMastery', value)}
+              disabled={isDisabled('soresuMastery')}
+              tooltip="While defending against a ranged attack, reroll all your defense dice."
             />
             <Checkbox
               label="Djem So Mastery"
               value={store.djemSoMastery}
               onChange={(value) => store.setField('djemSoMastery', value)}
+              disabled={isDisabled('djemSoMastery')}
+              tooltip="While defending against a melee attack, if the attacker's roll contained any blank results, the attacker suffers 1 wound."
             />
             <Checkbox
               label="Outmaneuver"
               value={store.outmaneuver}
               onChange={(value) => store.setField('outmaneuver', value)}
+              tooltip="While defending, your dodge tokens can also cancel critical hit results (normally they only cancel hits)."
             />
             <Checkbox
               label="Low Profile"
               value={store.lowProfile}
               onChange={(value) => store.setField('lowProfile', value)}
+              disabled={isDisabled('lowProfile')}
+              tooltip="While this unit has cover, it gains 1 additional cover result."
             />
             <Checkbox
               label="Impervious"
               value={store.impervious}
               onChange={(value) => store.setField('impervious', value)}
+              tooltip="While defending, roll additional defense dice equal to the attacker's total Pierce value."
             />
             <Checkbox
               label="Immune: Pierce"
               value={store.immunePierce}
               onChange={(value) => store.setField('immunePierce', value)}
+              tooltip="Pierce has no effect when attacking this unit."
             />
             <Checkbox
               label="Immune: Melee Pierce"
               value={store.immuneMeleePierce}
               onChange={(value) => store.setField('immuneMeleePierce', value)}
+              disabled={isDisabled('immuneMeleePierce')}
+              tooltip="Pierce has no effect when the attacker is in melee with this unit."
             />
             <Checkbox
               label="Immune: Blast"
               value={store.immuneBlast}
               onChange={(value) => store.setField('immuneBlast', value)}
+              tooltip="Blast has no effect against this unit."
             />
             <Checkbox
               label="Duelist"
               value={store.duelistDefender}
               onChange={(value) => store.setField('duelistDefender', value)}
+              disabled={isDisabled('duelistDefender')}
+              tooltip="While defending against a melee attack, if you spend a dodge token, you gain Immune: Pierce for this attack."
             />
             <Checkbox
               label="Backup"
               value={store.backup}
               onChange={(value) => store.setField('backup', value)}
+              disabled={isDisabled('backup')}
+              tooltip="While defending against a ranged attack, cancel up to 2 hit results."
             />
             <Checkbox
               label="Hold the Line"
               value={store.holdTheLine}
               onChange={(value) => store.setField('holdTheLine', value)}
+              disabled={isDisabled('holdTheLine')}
+              tooltip="While this unit is engaged in melee, defense surge results convert to blocks."
             />
             <Checkbox
               label="Dug In"
               value={store.dugIn}
               onChange={(value) => store.setField('dugIn', value)}
+              disabled={isDisabled('dugIn')}
+              tooltip="This unit's cover pool rolls red defense dice instead of white (higher chance to block with cover)."
             />
           </div>
 
@@ -270,6 +316,7 @@ export default function DefenderCustomPoolView() {
             onChange={(value) => store.setField('unitCost', value)}
             min={0}
             max={999}
+            tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
           />
         </div>
       </SectionHeader>
@@ -282,6 +329,8 @@ export default function DefenderCustomPoolView() {
             onChange={(value) => store.setField('guardianX', value)}
             min={0}
             max={99}
+            disabled={isDisabled('guardianX')}
+            tooltip="Cancel up to X hit results from an attack targeting an adjacent friendly unit; this unit rolls 1 defense die per hit absorbed."
           />
 
           {store.guardianX > 0 && (
@@ -291,22 +340,30 @@ export default function DefenderCustomPoolView() {
                 value={store.guardianDieColor}
                 onChange={(value) => store.setField('guardianDieColor', value)}
                 options={GUARDIAN_DIE_OPTIONS}
+                disabled={isDisabled('guardianDieColor')}
+                tooltip="The color of defense die rolled when this unit uses Guardian."
               />
               <Select
                 label="Guardian Surge"
                 value={store.guardianSurgeChart}
                 onChange={(value) => store.setField('guardianSurgeChart', value)}
                 options={DEFENSE_SURGE_OPTIONS}
+                disabled={isDisabled('guardianSurgeChart')}
+                tooltip="Whether the Guardian unit's defense surge results convert to blocks."
               />
               <Toggle
                 label="Guardian Deflect"
                 value={store.guardianDeflect}
                 onChange={(value) => store.setField('guardianDeflect', value)}
+                disabled={isDisabled('guardianDeflect')}
+                tooltip="While using Guardian, surge results count as blocks. If at least 1 surge was rolled, the attacker suffers 1 wound."
               />
               <Toggle
                 label="Guardian Soresu Mastery"
                 value={store.guardianSoresuMastery}
                 onChange={(value) => store.setField('guardianSoresuMastery', value)}
+                disabled={isDisabled('guardianSoresuMastery')}
+                tooltip="While using Guardian, spend a dodge token to reroll all Guardian defense dice before converting surges."
               />
               <NumberSpinner
                 label="Guardian Dodge Tokens"
@@ -314,6 +371,8 @@ export default function DefenderCustomPoolView() {
                 onChange={(value) => store.setField('guardianDodgeTokens', value)}
                 min={0}
                 max={99}
+                disabled={isDisabled('guardianDodgeTokens')}
+                tooltip="Dodge tokens available to the Guardian unit when making Guardian defense rolls."
               />
             </>
           )}

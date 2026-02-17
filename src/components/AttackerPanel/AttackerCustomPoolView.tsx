@@ -3,6 +3,7 @@ import {
   MarksmanStrategy,
 } from '../../engine/types';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
+import { useAttackerKeywordDisabled, useWeaponKeywordDisabled } from '../../hooks/useKeywordDisabled';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
@@ -22,6 +23,8 @@ const MARKSMAN_STRATEGY_OPTIONS: SegmentedControlOption<MarksmanStrategy>[] = [
 export default function AttackerCustomPoolView() {
   const store = useAttackConfigStore();
   const weapon = store.weapons[0];
+  const isDisabled = useAttackerKeywordDisabled();
+  const isWeaponDisabled = useWeaponKeywordDisabled();
 
   if (!weapon) return null;
 
@@ -75,6 +78,7 @@ export default function AttackerCustomPoolView() {
             value={store.surgeChart}
             onChange={(value) => store.setField('surgeChart', value)}
             options={ATTACK_SURGE_OPTIONS}
+            tooltip="What attack surge results convert to: nothing, hits, or critical hits."
           />
         </div>
       </SectionHeader>
@@ -88,6 +92,7 @@ export default function AttackerCustomPoolView() {
             min={0}
             max={99}
             compact
+            tooltip="Spend aim tokens to reroll attack dice. Each token lets you reroll up to 2 dice."
           />
           <NumberSpinner
             label="Surge"
@@ -96,6 +101,7 @@ export default function AttackerCustomPoolView() {
             min={0}
             max={99}
             compact
+            tooltip="Spend surge tokens to convert attack surge results to hits."
           />
           <NumberSpinner
             label="Observation"
@@ -104,6 +110,7 @@ export default function AttackerCustomPoolView() {
             min={0}
             max={99}
             compact
+            tooltip="Spend observation tokens on the defending unit to reroll 1 attack die per token spent."
           />
           {store.jarKaiMastery && (
             <NumberSpinner
@@ -113,7 +120,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
-              tooltip="Dodge Tokens (Jar'Kai Mastery)"
+              tooltip="Spend dodge tokens to upgrade results in melee: blank → hit (1 token), hit → crit (1 token), or blank → crit (2 tokens)."
             />
           )}
         </div>
@@ -129,6 +136,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="Convert the first X attack surge results into critical hits. Remaining surges still convert via the surge chart."
             />
             <NumberSpinner
               label="Lethal X"
@@ -137,6 +145,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="Spend unspent aim tokens (up to X) to gain Pierce 1 per token. Aims spent this way cannot be used for rerolling."
             />
             <NumberSpinner
               label="Pierce X"
@@ -145,6 +154,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="Cancel X of the defender's block results after defense dice are rolled."
             />
             <NumberSpinner
               label="Impact X"
@@ -153,6 +163,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="Convert up to X hit results into critical hits when attacking a unit with the Armor keyword."
             />
             <NumberSpinner
               label="Ram X"
@@ -161,6 +172,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="While performing a melee or overrun attack, convert up to X attack die results (blanks first, then hits) into critical hits."
             />
           </div>
 
@@ -169,21 +181,26 @@ export default function AttackerCustomPoolView() {
               label="Blast"
               value={weapon.keywords.blast}
               onChange={(value) => store.setWeaponKeyword(0, 'blast', value)}
+              tooltip="This weapon ignores all cover when attacking."
             />
             <Checkbox
               label="Suppressive"
               value={weapon.keywords.suppressive}
               onChange={(value) => store.setWeaponKeyword(0, 'suppressive', value)}
+              tooltip="This weapon applies 1 additional suppression token to the defender beyond the normal amount."
             />
             <Checkbox
               label="High Velocity"
               value={weapon.keywords.highVelocity}
               onChange={(value) => store.setWeaponKeyword(0, 'highVelocity', value)}
+              disabled={isWeaponDisabled('highVelocity')}
+              tooltip="The defender cannot spend dodge tokens when defending against this weapon."
             />
             <Checkbox
               label="Spray"
               value={weapon.keywords.spray}
               onChange={(value) => store.setWeaponKeyword(0, 'spray', value)}
+              tooltip="This weapon's dice are added once per defending miniature in line of sight, multiplying its contribution to the attack pool."
             />
           </div>
         </div>
@@ -199,6 +216,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="Each aim token lets you reroll X additional dice beyond the normal 2-die reroll limit."
             />
             <NumberSpinner
               label="Sharpshooter X"
@@ -207,6 +225,8 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={2}
               compact
+              disabled={isDisabled('sharpshooterX')}
+              tooltip="Reduce the defender's cover by X (minimum 0) when making ranged attacks."
             />
             <NumberSpinner
               label="Arsenal X"
@@ -215,6 +235,7 @@ export default function AttackerCustomPoolView() {
               min={0}
               max={99}
               compact
+              tooltip="This unit may attack with up to X different weapons in a single attack action."
             />
           </div>
 
@@ -223,41 +244,55 @@ export default function AttackerCustomPoolView() {
               label="Marksman"
               value={store.marksman}
               onChange={(value) => store.setField('marksman', value)}
+              tooltip="After converting surges, spend saved aim tokens to upgrade results: blank → hit (1 aim), hit → crit (1 aim), or blank → crit (2 aims)."
             />
             <Checkbox
               label="Jedi Hunter"
               value={store.jediHunter}
               onChange={(value) => store.setField('jediHunter', value)}
+              tooltip="While attacking a unit with a Force upgrade slot, all attack surge results convert to critical hits."
             />
             <Checkbox
               label="Jar'Kai Mastery"
               value={store.jarKaiMastery}
               onChange={(value) => store.setField('jarKaiMastery', value)}
+              disabled={isDisabled('jarKaiMastery')}
+              tooltip="While making a melee attack, spend dodge tokens to upgrade results: blank → hit (1 token), hit → crit (1 token), or blank → crit (2 tokens)."
             />
             <Checkbox
               label="Duelist"
               value={store.duelistAttacker}
               onChange={(value) => store.setField('duelistAttacker', value)}
+              disabled={isDisabled('duelistAttacker')}
+              tooltip="While making a melee attack, if you spend 1 or more aim tokens to reroll, the attack pool gains Pierce 1."
             />
             <Checkbox
               label="Makashi Mastery"
               value={store.makashiMastery}
               onChange={(value) => store.setField('makashiMastery', value)}
+              disabled={isDisabled('makashiMastery')}
+              tooltip="While making a melee attack, reduce your Pierce by 1 to disable the defender's Immune: Pierce, Immune: Melee Pierce, and Impervious."
             />
             <Checkbox
               label="Immune: Deflect"
               value={store.immuneDeflect}
               onChange={(value) => store.setField('immuneDeflect', value)}
+              disabled={isDisabled('immuneDeflect')}
+              tooltip="This unit's attacks cannot be deflected back at the attacker by Deflect."
             />
             <Checkbox
               label="Death From Above"
               value={store.deathFromAbove}
               onChange={(value) => store.setField('deathFromAbove', value)}
+              disabled={isDisabled('deathFromAbove')}
+              tooltip="The defending unit cannot benefit from cover if this unit's leader is at a higher elevation."
             />
             <Checkbox
               label="Hold the Line"
               value={store.holdTheLine}
               onChange={(value) => store.setField('holdTheLine', value)}
+              disabled={isDisabled('holdTheLine')}
+              tooltip="While engaged in melee, your attack surge results convert to hits."
             />
           </div>
 
@@ -268,6 +303,7 @@ export default function AttackerCustomPoolView() {
                 value={store.marksmanStrategy}
                 onChange={(value) => store.setField('marksmanStrategy', value)}
                 options={MARKSMAN_STRATEGY_OPTIONS}
+                tooltip="How to evaluate Marksman aim-token conversions: Deterministic uses exact math; Averages uses expected-value comparison."
               />
             </div>
           )}
@@ -278,6 +314,7 @@ export default function AttackerCustomPoolView() {
             onChange={(value) => store.setField('unitCost', value)}
             min={0}
             max={999}
+            tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
           />
         </div>
       </SectionHeader>

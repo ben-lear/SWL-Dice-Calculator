@@ -11,6 +11,11 @@ export function determineCoverValue(
 ): number {
   const { attacker, defender } = config;
 
+  // Cover only applies to Ranged attacks (per rulebook §03)
+  if (config.attackType !== AttackType.Ranged) {
+    return 0;
+  }
+
   // ── Override checks ──
   // Blast sets cover to 0 (unless defender has Immune: Blast)
   if (poolBlast && !defender.immuneBlast) {

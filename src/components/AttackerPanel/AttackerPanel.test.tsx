@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 import AttackerPanel from './AttackerPanel';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
+import { useAttackTypeStore } from '../../stores/attackTypeStore';
 import { getAttackerPresets, getFactionOptions } from '../../data/presetHelpers';
 import { AttackType } from '../../engine/types';
 import type { Faction } from '../../data/presets';
@@ -10,6 +11,7 @@ import type { Faction } from '../../data/presets';
 describe('AttackerPanel', () => {
   beforeEach(() => {
     useAttackConfigStore.getState().reset();
+    useAttackTypeStore.getState().reset();
   });
 
   it('renders attacker header', () => {
@@ -84,6 +86,8 @@ describe('AttackerPanel', () => {
   });
 
   it("shows Jar'Kai dodge token input only when Jar'Kai Mastery is enabled", async () => {
+    // Jar'Kai Mastery is melee-only, so set attack type to Melee first
+    useAttackTypeStore.getState().setAttackType(AttackType.Melee);
     render(<AttackerPanel />);
 
     expect(screen.queryByText("Dodge")).not.toBeInTheDocument();

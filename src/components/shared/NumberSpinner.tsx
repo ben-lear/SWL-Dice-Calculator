@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, useRef, useEffect } from 'react';
 
 export interface NumberSpinnerProps {
   /** Current numeric value (controlled) */
@@ -44,14 +44,44 @@ export default function NumberSpinner({
   const autoId = useId();
   const inputId = externalId ?? autoId;
 
+  // Use refs so hold callbacks always read latest value/step/min/max via closures via valueRef
+  const valueRef = useRef(value);
+  valueRef.current = value;
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
+  const holdDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const holdIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const stopHold = () => {
+    if (holdDelayRef.current !== null) {
+      clearTimeout(holdDelayRef.current);
+      holdDelayRef.current = null;
+    }
+    if (holdIntervalRef.current !== null) {
+      clearInterval(holdIntervalRef.current);
+      holdIntervalRef.current = null;
+    }
+  };
+
+  // Clean up timers on unmount
+  useEffect(() => stopHold, []);
+
   const decrement = () => {
-    const next = value - step;
-    if (next >= min) onChange(next);
+    const next = valueRef.current - step;
+    if (next >= min) onChangeRef.current(next);
   };
 
   const increment = () => {
-    const next = value + step;
-    if (next <= max) onChange(next);
+    const next = valueRef.current + step;
+    if (next <= max) onChangeRef.current(next);
+  };
+
+  const startHold = (action: () => void) => {
+    action(); // immediate first tick
+    holdDelayRef.current = setTimeout(() => {
+      holdIntervalRef.current = setInterval(action, 80);
+    }, 400);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +131,13 @@ export default function NumberSpinner({
       <div className="flex items-center">
         <button
           type="button"
-          onClick={decrement}
+          onPointerDown={(e) => {
+            if (disabled || value <= min) return;
+            e.preventDefault();
+            startHold(decrement);
+          }}
+          onPointerUp={stopHold}
+          onPointerLeave={stopHold}
           disabled={disabled || value <= min}
           aria-label={`Decrease ${ariaLabel}`}
           className={`flex ${buttonSize} items-center justify-center rounded-l border border-r-0 border-gray-700 bg-gray-800 ${textSize} text-gray-300 transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:text-gray-600 disabled:hover:bg-gray-800`}
@@ -125,7 +161,13 @@ export default function NumberSpinner({
         />
         <button
           type="button"
-          onClick={increment}
+          onPointerDown={(e) => {
+            if (disabled || value >= max) return;
+            e.preventDefault();
+            startHold(increment);
+          }}
+          onPointerUp={stopHold}
+          onPointerLeave={stopHold}
           disabled={disabled || value >= max}
           aria-label={`Increase ${ariaLabel}`}
           className={`flex ${buttonSize} items-center justify-center rounded-r border border-l-0 border-gray-700 bg-gray-800 ${textSize} text-gray-300 transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:text-gray-600 disabled:hover:bg-gray-800`}

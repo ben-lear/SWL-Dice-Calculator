@@ -4,14 +4,14 @@ import { AttackerPanel, DefenderPanel, ResultsPanel } from './components';
 export default function App() {
   return (
     <Layout>
-      <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:auto-rows-fr lg:grid-cols-3 lg:gap-0 lg:divide-x lg:divide-gray-800">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 md:grid-cols-2 md:gap-0 md:divide-x md:divide-gray-800 lg:auto-rows-fr lg:grid-cols-3 lg:gap-0 lg:divide-x lg:divide-gray-800">
         <div className="order-1 flex min-h-0 flex-col lg:pr-4">
           <div className="flex-1 overflow-y-auto">
             <AttackerPanel />
           </div>
         </div>
 
-        <div className="order-3 flex min-h-0 flex-col lg:order-2 lg:px-4">
+        <div className="order-3 flex min-h-0 flex-col md:col-span-2 lg:order-2 lg:col-span-1 lg:px-4">
           <div className="flex-1 overflow-y-auto">
             <ResultsPanel />
           </div>
