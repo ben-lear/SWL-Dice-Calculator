@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { useFullConfig } from '../stores/configSelectors';
+import { getFullConfig } from '../stores/configSelectors';
 import { useResultsStore } from '../stores/resultsStore';
+import { useAttackConfigStore } from '../stores/attackConfigStore';
+import { useDefenseConfigStore } from '../stores/defenseConfigStore';
+import { useAttackTypeStore } from '../stores/attackTypeStore';
 import { SimulationWorkerClient } from '../engine/worker/simulationWorkerClient';
 import { DEFAULT_ITERATIONS } from '../engine/simulator';
 import type { AttackConfig } from '../engine/types';
-
-/** Debounce delay in milliseconds before triggering a simulation */
-const DEBOUNCE_MS = 300;
 
 /**
  * Check whether the attack config has any dice to roll.
@@ -19,29 +19,32 @@ function hasDice(config: AttackConfig): boolean {
 }
 
 /**
- * Hook that auto-runs Monte Carlo simulation when config changes.
+ * Hook that provides imperative simulation control (button-triggered).
  *
- * - Subscribes to the merged AttackConfig via useFullConfig()
- * - Debounces changes (300ms) to avoid excessive worker dispatches
- * - Dispatches to the SimulationWorkerClient (off main thread)
+ * - Manages the SimulationWorkerClient lifecycle
+ * - Exposes a `runSimulation()` function to trigger simulation on-demand
  * - Writes results to the ResultsStore
  * - Skips simulation when dice pool is empty
  *
- * Usage: Call once in the App shell or ResultsPanel. No arguments needed.
+ * Note: Staleness tracking is handled by the consuming component by comparing
+ * config changes manually or through user interaction patterns.
+ *
+ * Usage: Call once in the ResultsPanel and use the returned function.
  *
  * ```tsx
  * function ResultsPanel() {
- *   useSimulation();
- *   const { result, loading, error } = useResultsStore();
- *   // ... render
+ *   const { runSimulation } = useSimulation();
+ *   const { result, loading, error, stale } = useResultsStore();
+ *
+ *   return (
+ *     <button onClick={runSimulation}>Run Simulation</button>
+ *   );
  * }
  * ```
  */
-export function useSimulation(): void {
-  const config = useFullConfig();
-  const { setResult, setLoading, setError, clear } = useResultsStore();
+export function useSimulation(): { runSimulation: () => void } {
+  const { result, setResult, setLoading, setError, clear, markStale } = useResultsStore();
   const workerRef = useRef<SimulationWorkerClient | null>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Initialize worker on mount, terminate on unmount
   useEffect(() => {
@@ -52,38 +55,59 @@ export function useSimulation(): void {
     };
   }, []);
 
-  // Run simulation whenever config changes (debounced)
+  // Track staleness: subscribe to all config stores and mark stale when any changes
   useEffect(() => {
-    // Clear any pending debounce
-    if (debounceRef.current !== null) {
-      clearTimeout(debounceRef.current);
-    }
+    const unsubAttack = useAttackConfigStore.subscribe(() => {
+      if (result !== null) {
+        markStale();
+      }
+    });
+
+    const unsubDefense = useDefenseConfigStore.subscribe(() => {
+      if (result !== null) {
+        markStale();
+      }
+    });
+
+    const unsubAttackType = useAttackTypeStore.subscribe(() => {
+      if (result !== null) {
+        markStale();
+      }
+    });
+
+    return () => {
+      unsubAttack();
+      unsubDefense();
+      unsubAttackType();
+    };
+  }, [result, markStale]);
+
+  /**
+   * Imperatively run the simulation with the current config snapshot.
+   * Called when the user clicks the "Run Simulation" button.
+   */
+  const runSimulation = async () => {
+    // Read current config (non-reactive snapshot)
+    const currentConfig = getFullConfig();
 
     // Skip simulation if no dice configured
-    if (!hasDice(config)) {
+    if (!hasDice(currentConfig)) {
       clear();
       return;
     }
 
-    debounceRef.current = setTimeout(async () => {
-      if (!workerRef.current) return;
+    if (!workerRef.current) return;
 
-      setLoading(true);
+    setLoading(true);
 
-      try {
-        const result = await workerRef.current.run(config, DEFAULT_ITERATIONS);
-        setError(null); // Clear any previous error on success
-        setResult(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : String(err));
-      }
-    }, DEBOUNCE_MS);
+    try {
+      const simResult = await workerRef.current.run(currentConfig, DEFAULT_ITERATIONS);
+      setError(null); // Clear any previous error on success
+      setResult(simResult); // setResult also clears stale flag
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    }
+  };
 
-    // Cleanup debounce on re-render or unmount
-    return () => {
-      if (debounceRef.current !== null) {
-        clearTimeout(debounceRef.current);
-      }
-    };
-  }, [config, setResult, setLoading, setError, clear]);
+  return { runSimulation };
 }

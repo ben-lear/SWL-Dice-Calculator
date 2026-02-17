@@ -61,10 +61,10 @@ export default function WoundDistributionChart({
 
   return (
     <div className="h-44 w-full sm:h-52 md:h-64">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
         <BarChart
           data={data}
-          margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
+          margin={{ top: 10, right: 10, left: 0, bottom: 4 }}
         >
           <CartesianGrid
             strokeDasharray="3 3"

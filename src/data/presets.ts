@@ -7,7 +7,7 @@ import type {
   RerollStrategy,
   WeaponProfile,
 } from '../engine/types';
-import type { UpgradeSlot } from './types';
+import type { UpgradeSlot, UnitRank } from './types';
 import type { WeaponProfile as DataLayerWeaponProfile } from './types';
 
 // ============================================================================
@@ -148,14 +148,18 @@ export interface AttackerPreset {
   faction: Faction;
   name: string;             // e.g., "Darth Vader (Lightsaber)"
   attackType: AttackType;
+  rank: UnitRank;           // Unit rank for display in dropdowns
   profile: AttackerPresetProfile;
   upgradeBar: UpgradeSlot[];  // Available upgrade slots
+  unitApiId: number;          // API ID used for upgrade slot filtering
 }
 
 export interface DefenderPreset {
   id: string;
   faction: Faction;
   name: string;             // e.g., "Stormtroopers"
+  rank: UnitRank;           // Unit rank for display in dropdowns
   profile: DefenderPresetProfile;
   upgradeBar: UpgradeSlot[];  // Available upgrade slots
+  unitApiId: number;          // API ID used for upgrade slot filtering
 }

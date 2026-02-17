@@ -25,11 +25,15 @@ export default function DefenderUnitBuilderView() {
         )}
 
         {slotRows.map(({ slot, index }) => {
-          const upgrades = getUpgradesForSlot(slot as UpgradeSlot);
+          const upgrades = getUpgradesForSlot(slot as UpgradeSlot, store.unitApiId ?? undefined);
+          // Deduplicate: keep first occurrence of each upgrade ID
+          const uniqueUpgrades = upgrades.filter(
+            (u, i, arr) => arr.findIndex(x => x.id === u.id) === i
+          );
           const selectedValue = store.equippedUpgradeIds[index] ?? '';
           const options: SelectOption<string>[] = [
             { value: '', label: 'None' },
-            ...upgrades.map((upgrade) => ({
+            ...uniqueUpgrades.map((upgrade) => ({
               value: upgrade.id,
               label: `${upgrade.name} (${upgrade.cost})`,
             })),

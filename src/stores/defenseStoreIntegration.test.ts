@@ -16,22 +16,23 @@ describe('Defense Store Integration', () => {
     // Initially no upgrades
     expect(store.equippedUpgradeIds).toHaveLength(0);
     
-    // Need upgrade bar first
-    store.upgradeBar = [UpgradeSlot.Gear, UpgradeSlot.Training];
-    store.equippedUpgradeIds = [null, null];
+    // Load a preset with upgrade bar to initialize slots
+    store.loadPreset('test-unit', {}, [UpgradeSlot.Gear, UpgradeSlot.Training]);
+    
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds).toHaveLength(2);
     
     // Equip an upgrade
     store.equipUpgrade(0, 'stub-armor-upgrade');
-    expect(store.equippedUpgradeIds[0]).toBe('stub-armor-upgrade');
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds[0]).toBe('stub-armor-upgrade');
     
     // Equip another upgrade
     store.equipUpgrade(1, 'stub-defensive-upgrade');
-    expect(store.equippedUpgradeIds[1]).toBe('stub-defensive-upgrade');
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds[1]).toBe('stub-defensive-upgrade');
     
     // Unequip an upgrade
     store.equipUpgrade(0, null);
-    expect(store.equippedUpgradeIds[0]).toBeNull();
-    expect(store.equippedUpgradeIds[1]).toBe('stub-defensive-upgrade');
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds[0]).toBeNull();
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds[1]).toBe('stub-defensive-upgrade');
   });
 
   it('should apply upgrades to full defender config', () => {
@@ -40,9 +41,8 @@ describe('Defense Store Integration', () => {
     // Set base armor to 1
     store.setField('armorX', 1);
     
-    // Setup upgrade bar and equip armor upgrade
-    store.upgradeBar = [UpgradeSlot.Gear];
-    store.equippedUpgradeIds = [null];
+    // Load a preset with upgrade bar and equip armor upgrade
+    store.loadPreset('test-unit', { armorX: 1 }, [UpgradeSlot.Gear]);
     store.equipUpgrade(0, 'stub-armor-upgrade');
     
     // Get full config should apply upgrades
@@ -55,35 +55,33 @@ describe('Defense Store Integration', () => {
   it('should reset equipped upgrades when resetting config', () => {
     const store = useDefenseConfigStore.getState();
     
-    // Setup upgrade bar and equip some upgrades
-    store.upgradeBar = [UpgradeSlot.Gear, UpgradeSlot.Training];
-    store.equippedUpgradeIds = [null, null];
+    // Load a preset with upgrade bar and equip some upgrades
+    store.loadPreset('test-unit', {}, [UpgradeSlot.Gear, UpgradeSlot.Training]);
     store.equipUpgrade(0, 'stub-armor-upgrade');
     store.equipUpgrade(1, 'stub-defensive-upgrade');
-    expect(store.equippedUpgradeIds.filter(id => id !== null)).toHaveLength(2);
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds.filter(id => id !== null)).toHaveLength(2);
     
     // Reset should clear upgrades
     store.reset();
-    expect(store.equippedUpgradeIds).toHaveLength(0);
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds).toHaveLength(0);
   });
 
   it('should not equip the same upgrade twice', () => {
     const store = useDefenseConfigStore.getState();
     
-    // Setup upgrade bar with multiple slots
-    store.upgradeBar = [UpgradeSlot.Gear, UpgradeSlot.Gear];
-    store.equippedUpgradeIds = [null, null];
+    // Load a preset with multiple slots
+    store.loadPreset('test-unit', {}, [UpgradeSlot.Gear, UpgradeSlot.Gear]);
     
     // Equip upgrade in first slot
     store.equipUpgrade(0, 'stub-armor-upgrade');
-    expect(store.equippedUpgradeIds[0]).toBe('stub-armor-upgrade');
+    expect(useDefenseConfigStore.getState().equippedUpgradeIds[0]).toBe('stub-armor-upgrade');
     
     // Try to equip same upgrade in second slot - should prevent duplicates
     // (Note: this test may need adjustment based on actual duplicate prevention logic)
     store.equipUpgrade(1, 'stub-armor-upgrade');
     
     // Verify upgrade is in one of the slots
-    const equippedCount = store.equippedUpgradeIds.filter(id => id === 'stub-armor-upgrade').length;
+    const equippedCount = useDefenseConfigStore.getState().equippedUpgradeIds.filter(id => id === 'stub-armor-upgrade').length;
     expect(equippedCount).toBeGreaterThan(0);
   });
 
@@ -93,10 +91,10 @@ describe('Defense Store Integration', () => {
     expect(store.activeMode).toBe('custom');
     
     store.setActiveMode('unit-builder');
-    expect(store.activeMode).toBe('unit-builder');
+    expect(useDefenseConfigStore.getState().activeMode).toBe('unit-builder');
     
     store.setActiveMode('custom');
-    expect(store.activeMode).toBe('custom');
+    expect(useDefenseConfigStore.getState().activeMode).toBe('custom');
   });
 
   it('should track selected faction and preset', () => {
@@ -106,12 +104,13 @@ describe('Defense Store Integration', () => {
     expect(store.selectedPresetId).toBeNull();
     
     store.setSelectedFaction(Faction.GalacticEmpire);
-    expect(store.selectedFaction).toBe(Faction.GalacticEmpire);
+    expect(useDefenseConfigStore.getState().selectedFaction).toBe(Faction.GalacticEmpire);
     
     // Load a preset
     store.loadPreset('test-preset', { unitCost: 50 }, [UpgradeSlot.HeavyWeapon]);
-    expect(store.selectedPresetId).toBe('test-preset');
-    expect(store.unitCost).toBe(50);
-    expect(store.upgradeBar).toEqual([UpgradeSlot.HeavyWeapon]);
+    const updatedStore = useDefenseConfigStore.getState();
+    expect(updatedStore.selectedPresetId).toBe('test-preset');
+    expect(updatedStore.unitCost).toBe(50);
+    expect(updatedStore.upgradeBar).toEqual([UpgradeSlot.HeavyWeapon]);
   });
 });

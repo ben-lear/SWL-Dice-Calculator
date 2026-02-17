@@ -29,48 +29,40 @@ describe('DefenderPanel', () => {
 
   it('switches to unit builder mode from select', () => {
     render(<DefenderPanel />);
-    fireEvent.change(screen.getByLabelText('Mode'), {
-      target: { value: 'unit-builder' },
-    });
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
     expect(useDefenseConfigStore.getState().activeMode).toBe('unit-builder');
   });
 
   it('switches back to custom pool mode from select', () => {
     render(<DefenderPanel />);
 
-    fireEvent.change(screen.getByLabelText('Mode'), {
-      target: { value: 'unit-builder' },
-    });
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
     expect(useDefenseConfigStore.getState().activeMode).toBe('unit-builder');
 
-    fireEvent.change(screen.getByLabelText('Mode'), {
-      target: { value: 'custom' },
-    });
+    fireEvent.click(screen.getByRole('radio', { name: 'Custom Pool' }));
     expect(useDefenseConfigStore.getState().activeMode).toBe('custom');
   });
 
   it('renders defense controls by default', () => {
     render(<DefenderPanel />);
     expect(screen.getByText('Defense')).toBeInTheDocument();
-    expect(screen.getByText('Defense Die Color')).toBeInTheDocument();
+    expect(screen.getByText('Defense Die')).toBeInTheDocument();
   });
 
   it('renders upgrade section when mode is unit-builder', () => {
     render(<DefenderPanel />);
-    fireEvent.change(screen.getByLabelText('Mode'), {
-      target: { value: 'unit-builder' },
-    });
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
     expect(screen.getByText('Upgrade Slots')).toBeInTheDocument();
   });
 
   it('shows Shien Mastery only when Deflect is enabled', () => {
     render(<DefenderPanel />);
 
-    expect(screen.queryByRole('switch', { name: 'Shien Mastery' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('checkbox', { name: 'Shien Mastery' })).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('switch', { name: 'Deflect' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Deflect' }));
 
-    expect(screen.getByRole('switch', { name: 'Shien Mastery' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Shien Mastery' })).toBeInTheDocument();
   });
 
   it('shows suppression token input when Danger Sense X is above zero', () => {
@@ -91,19 +83,26 @@ describe('DefenderPanel', () => {
     expect(screen.getByRole('switch', { name: 'Guardian Deflect' })).toBeInTheDocument();
   });
 
-  it('hides defense die controls when defense dice are disabled', () => {
+  it('hides Surge Chart when Defense Die is set to None', () => {
     render(<DefenderPanel />);
 
-    expect(screen.getByLabelText('Defense Die Color')).toBeInTheDocument();
+    // Surge Chart should be visible by default (when Defense Die is White)
+    expect(screen.getByLabelText('Surge Chart')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('switch', { name: 'Disable Defense Dice' }));
+    // Find the Defense Die control and click the 'None' option within it
+    const defenseDieControl = screen.getByLabelText('Defense Die');
+    const noneButton = within(defenseDieControl).getByRole('radio', { name: 'None' });
+    fireEvent.click(noneButton);
 
-    expect(screen.queryByLabelText('Defense Die Color')).not.toBeInTheDocument();
+    // Surge Chart should now be hidden
     expect(screen.queryByLabelText('Surge Chart')).not.toBeInTheDocument();
   });
 
   it('updates selected faction and filters defender unit options', async () => {
     render(<DefenderPanel />);
+
+    // Need to be in unit-builder mode to see the Unit Preset section
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     const factionValue = getFactionOptions()[0]?.value as Faction;
     const expectedOptions = getDefenderPresets(factionValue).length + 1;
@@ -122,6 +121,9 @@ describe('DefenderPanel', () => {
   it('loads selected defender preset from combobox', async () => {
     render(<DefenderPanel />);
 
+    // Need to be in unit-builder mode to see the Unit Preset section
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
+
     const preset = getDefenderPresets(null)[0];
     expect(preset).toBeDefined();
 
@@ -133,6 +135,9 @@ describe('DefenderPanel', () => {
 
   it('selecting Custom clears defender selected preset without resetting fields', async () => {
     render(<DefenderPanel />);
+
+    // Need to be in unit-builder mode to see the Unit Preset section
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     const preset = getDefenderPresets(null)[0];
     expect(preset).toBeDefined();
@@ -147,5 +152,18 @@ describe('DefenderPanel', () => {
 
     expect(useDefenseConfigStore.getState().selectedPresetId).toBeNull();
     expect(useDefenseConfigStore.getState().dieColor).toBe(previousDieColor);
+  });
+
+  it('hides Unit Preset section in Custom Pool mode', () => {
+    render(<DefenderPanel />);
+
+    // Initially in custom mode, Unit Preset section should not be visible
+    expect(screen.queryByText('Unit Preset')).not.toBeInTheDocument();
+
+    // Switch to unit-builder mode
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
+
+    // Now Unit Preset section should be visible
+    expect(screen.getByText('Unit Preset')).toBeInTheDocument();
   });
 });

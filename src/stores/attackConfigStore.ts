@@ -8,6 +8,7 @@ import {
 } from '../engine/types';
 import type { Faction, AttackerPresetProfile } from '../data/presets';
 import type { UpgradeSlot, WeaponProfile as DataLayerWeaponProfile } from '../data/types';
+import { getResolvedUpgradeById } from '../data/upgradeResolver';
 
 // ============================================================================
 // State Interface
@@ -46,11 +47,15 @@ export interface AttackConfigState {
 
   // ── Points ──
   unitCost: number;
+  baseUnitCost: number;  // Base cost before upgrades (for auto-calculation)
 
   // ── UI State (not sent to engine) ──
   selectedFaction: Faction | null;
   selectedPresetId: string | null;
   activeMode: 'custom' | 'unit-builder';  // Track which mode is active
+
+  /** API ID of the selected unit. Used for filtering upgrade dropdowns. UI-only. */
+  unitApiId: number | null;
 
   /**
    * Base miniature count for the selected unit (before upgrades).
@@ -94,7 +99,8 @@ export interface AttackConfigState {
   loadPreset: (
     presetId: string,
     profile: AttackerPresetProfile,
-    upgradeBar?: UpgradeSlot[]
+    upgradeBar?: UpgradeSlot[],
+    unitApiId?: number
   ) => void;
   /** Equip an upgrade in a specific slot (by index in upgradeBar) */
   equipUpgrade: (slotIndex: number, upgradeId: string | null) => void;
@@ -126,6 +132,7 @@ type AttackConfigFields = Omit<
   | 'upgradeBar'
   | 'equippedUpgradeIds'
   | 'equipUpgrade'
+  | 'unitApiId'
 >;
 
 // ============================================================================
@@ -190,6 +197,7 @@ const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
 
   // Points
   unitCost: 0,
+  baseUnitCost: 0,
 };
 
 // ============================================================================
@@ -206,6 +214,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   activeMode: 'custom',  // Default to Custom Pool mode
   baseMiniatureCount: 1,    // ← NEW: default for Custom Pool
   unitBaseWeapons: [],      // ← NEW: empty in Custom Pool mode
+  unitApiId: null,          // ← NEW: API ID for upgrade filtering
 
   // Upgrade system
   upgradeBar: [],
@@ -278,7 +287,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
     set({ activeMode: mode }),
 
   // Load a preset: reset to defaults, then apply preset overrides
-  loadPreset: (presetId, profile, upgradeBar = []) =>
+  loadPreset: (presetId, profile, upgradeBar = [], unitApiId) =>
     set(() => {
       const emptyWeapon = createEmptyWeapon();
       const normalizedWeapons = profile.weapons?.map((weapon) => ({
@@ -288,6 +297,8 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         keywords: { ...emptyWeapon.keywords, ...weapon.keywords },
       }));
 
+      const baseCost = profile.unitCost ?? 0;
+
       return {
         ...DEFAULT_ATTACK_CONFIG,
         ...profile,
@@ -295,8 +306,11 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         baseMiniatureCount: profile.baseMiniatureCount ?? 1,  // ← NEW
         unitBaseWeapons: profile.unitBaseWeapons ?? [],        // ← NEW
         selectedPresetId: presetId,
-        upgradeBar,
-        equippedUpgradeIds: new Array(upgradeBar.length).fill(null),
+        upgradeBar: upgradeBar ?? [],
+        equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),
+        unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
+        unitCost: baseCost,
+        baseUnitCost: baseCost,  // Store base cost for upgrade calculations
       };
     }),
 
@@ -306,7 +320,22 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       if (slotIndex < 0 || slotIndex >= state.equippedUpgradeIds.length) return state;
       const newIds = [...state.equippedUpgradeIds];
       newIds[slotIndex] = upgradeId;
-      return { equippedUpgradeIds: newIds };
+
+      // Calculate total cost: base cost + sum of all equipped upgrade costs
+      let totalCost = state.baseUnitCost;
+      for (const id of newIds) {
+        if (id !== null) {
+          const upgrade = getResolvedUpgradeById(id);
+          if (upgrade) {
+            totalCost += upgrade.cost;
+          }
+        }
+      }
+
+      return {
+        equippedUpgradeIds: newIds,
+        unitCost: totalCost,
+      };
     }),
 
   // Full reset to defaults
@@ -320,6 +349,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       unitBaseWeapons: [],
       upgradeBar: [],
       equippedUpgradeIds: [],
+      unitApiId: null,  // ← NEW: reset API ID
     })),
 }));
 
@@ -335,6 +365,7 @@ export function selectAttackerConfig(state: AttackConfigState) {
     activeMode,
     baseMiniatureCount,      // ← NEW: exclude from engine config
     unitBaseWeapons,          // ← NEW: exclude (passed separately)
+    unitApiId,                // ← NEW: exclude (UI-only)
     upgradeBar,
     equippedUpgradeIds,
     setField,

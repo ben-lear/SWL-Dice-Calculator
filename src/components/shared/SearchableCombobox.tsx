@@ -146,7 +146,7 @@ export default function SearchableCombobox({
     >
       <label
         htmlFor={inputId}
-        className="mb-1 block text-sm font-medium text-gray-400 select-none"
+        className="mb-1 block text-sm font-medium text-gray-300 select-none"
         title={tooltip}
       >
         {label}

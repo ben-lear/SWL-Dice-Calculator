@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useDefenseConfigStore } from './defenseConfigStore';
+import { useDefenseConfigStore, selectDefenderConfig } from './defenseConfigStore';
 import { DefenseDieColor, DefenseSurgeChart, CoverType } from '../engine/types';
 
 describe('defenseConfigStore', () => {
@@ -151,11 +151,12 @@ describe('defenseConfigStore', () => {
 
   it('extracts engine-compatible config without UI fields', () => {
     const state = useDefenseConfigStore.getState();
+    const config = selectDefenderConfig(state);
 
-    expect(state).toHaveProperty('dieColor');
-    expect(state).toHaveProperty('minisInLOS');
-    expect(state).toHaveProperty('disableDefenseDice');
-    expect(state).not.toHaveProperty('setField');
+    expect(config).toHaveProperty('dieColor');
+    expect(config).toHaveProperty('minisInLOS');
+    expect(config).toHaveProperty('disableDefenseDice');
+    expect(config).not.toHaveProperty('setField');
   });
 
   it('includes optional disableDefenseDice field when true', () => {

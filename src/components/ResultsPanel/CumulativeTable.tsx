@@ -21,14 +21,14 @@ export default function CumulativeTable({
   );
 
   return (
-    <div className="max-h-48 overflow-y-auto rounded-lg bg-gray-800">
+    <div className="rounded-lg bg-gray-800">
       <table className="w-full text-sm">
         <thead className="sticky top-0 bg-gray-800">
           <tr className="border-b border-gray-700">
-            <th className="px-3 py-2 text-left font-medium text-gray-400">
+            <th className="px-3 py-2 text-left font-semibold text-gray-300">
               Wounds
             </th>
-            <th className="px-3 py-2 text-right font-medium text-gray-400">
+            <th className="px-3 py-2 text-right font-semibold text-gray-300">
               P(≥ X)
             </th>
           </tr>

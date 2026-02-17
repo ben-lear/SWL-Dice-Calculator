@@ -118,13 +118,15 @@ The UI is divided into two main columns — **Attacker** and **Defender** — wi
 
 ### 4.0 Two-Mode Design
 
-Both the Attacker and Defender panels support two modes, selectable via a toggle/tab at the top of each panel:
+Both the Attacker and Defender panels support two modes, selectable via a **segmented control** (inline button group) at the top of each panel:
 
 - **Custom Pool** (default) — The user manually builds a single attack pool (attacker) or defense configuration (defender) by setting dice counts and all keywords directly. This is the simple, fast-configuration mode for quick calculations.
 
 - **Unit Builder** — The user selects a unit from preset data, equips upgrades, and the app auto-populates dice, surge chart, and keywords. On the attacker side, the user can choose which weapon(s) contribute to the attack pool. On the defender side, situational settings (Cover, tokens, Guardian) remain user-editable.
 
 Both modes produce the same engine input structures: `AttackerConfig` with `weapons: WeaponProfile[]` for the attacker, and `DefenderConfig` (flat fields) for the defender.
+
+**Custom Pool mode hides unit preset controls.** When a panel is in Custom Pool mode, the Faction dropdown and Unit/Weapon searchable combobox are hidden — the user is manually building a pool, not selecting a preset. Switching to Unit Builder mode reveals these controls. Store state (`selectedFaction`, `selectedPresetId`) persists across mode changes.
 
 ### 4.1 Attacker Panel — Custom Pool Mode
 
@@ -144,7 +146,7 @@ In Custom Pool mode, the user configures a single flat dice pool and all keyword
 
 | Input | Type | Notes |
 |-------|------|-------|
-| **Attack surge conversion** | Select: None / c→a / c→b | Unit card surge chart |
+| **Attack surge conversion** | Segmented: None / c→a / c→b | Unit card surge chart |
 | **Aim tokens** | Number spinner (0–5) | Each rerolls up to 2 dice |
 | **Surge tokens (attack)** | Number spinner (0–5) | Each converts 1 c→a |
 | **Observation tokens** | Number spinner (0–5) | Each rerolls 1 die |
@@ -270,9 +272,9 @@ Example presets (available in Unit Builder mode):
 | Input | Type | Notes |
 |-------|------|-------|
 | **Disable defense dice** | Toggle | When enabled, defender rolls 0 defense dice (shows attack results before any defense is applied) |
-| **Defense die color** | Select: White / Red | Unit card |
-| **Defense surge conversion** | Select: None / e→d | Unit card surge chart |
-| **Cover** | Select: None / Light / Heavy | Terrain-based |
+| **Defense die color** | Segmented: White / Red | Unit card |
+| **Defense surge conversion** | Segmented: None / e→d | Unit card surge chart |
+| **Cover** | Segmented: None / Light / Heavy | Terrain-based |
 | **Dodge tokens** | Number spinner (0–5) | Each cancels 1 a |
 | **Surge tokens (defense)** | Number spinner (0–5) | Each converts 1 e→d |
 | **Suppressed** | Toggle | Improves Cover by 1 (max Cover 2) |
@@ -335,7 +337,7 @@ Even in Unit Builder mode, the user must set situational battlefield conditions:
 
 | Input | Type | Notes |
 |-------|------|-------|
-| **Attack type** | Select: Ranged (default) / Melee / Overrun | See behavior below |
+| **Attack type** | Segmented: Ranged (default) / Melee / Overrun | See behavior below |
 
 **Attack type behavior:**
 - **Ranged** (default) — Melee-only keywords are ignored: Djem So Mastery, Duelist (Immune: Pierce), Immune: Melee Pierce. Defender may use Cover, Dodge, Deflect, Soresu Mastery.
@@ -346,9 +348,43 @@ Even in Unit Builder mode, the user must set situational battlefield conditions:
 
 ## 5. Output / Results Panel
 
-All results are computed via Monte Carlo simulation (10,000+ iterations) and displayed together:
+Simulation is **user-triggered** — the user clicks a **"Run Simulation"** button in the Results Panel to execute a Monte Carlo run (10,000+ iterations). Results are NOT auto-computed on every config change.
+
+### Simulation Trigger
+- A prominent **"Run Simulation"** / **"Add Simulation"** button at the top of the Results Panel dispatches to the Web Worker.
+- The button is disabled while a simulation is in progress (shows "Simulating..." with spinner).
+- When no simulation has been run yet, an **empty state** prompts: *"Configure your attack and defense, then click Run Simulation to see results."*
+
+### Multi-Result Comparison (up to 4 slots)
+
+Every click of the Run/Add button **appends** a new result slot (up to 4 maximum). All saved results are displayed simultaneously for side-by-side comparison:
+
+- **Button label transitions:** "Run Simulation" (0 results) → "Add Simulation" (1–3 results) → disabled at 4 with hint "Remove a result to run another."
+- Each result is assigned a **color** from a fixed 4-color palette (indigo, emerald, amber, rose) and an **auto-label** ("Sim 1", "Sim 2"…) with optional user rename.
+- A **slot selector** row of color-coded chips lets the user:
+  - Click a chip to **view** that result's detail stats (CoreStats, SecondaryStats, Efficiency).
+  - Double-click a chip label to **rename** it.
+  - Click **×** on a chip to **remove** that result from the comparison.
+
+### Chart & Table Comparison
+- **Wound Distribution Chart** — grouped/side-by-side color-coded bars at each wound count, one bar group per saved result. Tooltip shows all series values.
+- **Cumulative Probability Table** — one P(≥X) column per saved result, with color-coded headers.
+- Single-result display is visually identical to pre-comparison design.
+
+### Tabbed Detail Stats
+- **Core Stats (Mean / Median / Mode)**, **Secondary Stats**, and **Efficiency** are shown for **one result at a time**, controlled by the slot selector. A color accent on the stat cards links them to the corresponding chart series.
+
+### Stale Results Indicator
+- When the user changes any config value after a simulation has completed, existing results are **preserved** but marked as **stale** with a subtle amber banner: *"⚠ Config changed — results may be outdated. Click Run to update."*
+- Re-running the simulation clears the stale indicator.
+- This preserves the last results for reference while signaling they don't reflect current config.
+
+### Reset All
+- A **"Reset All"** button clears all result slots AND resets all form stores (attacker, defender, attack type) to factory defaults.
+- A 2-second confirmation guard prevents accidental data loss: first click changes the button to "Confirm Reset?" (red), requiring a second click to execute.
 
 ### Core Stats
+All results are computed via Monte Carlo simulation and displayed together:
 - **Average (mean) wounds** dealt
 - **Median wounds**
 - **Mode wounds** (most likely outcome)
@@ -381,9 +417,9 @@ src/
 ├── components/
 │   ├── AttackerPanel/      # All attacker inputs
 │   ├── DefenderPanel/      # All defender inputs
-│   ├── ResultsPanel/       # Output display
+│   ├── ResultsPanel/       # Output display (Run button, stale indicator, stats/charts)
 │   ├── DiceDisplay/        # Visual dice rendering
-│   └── shared/             # NumberSpinner, Toggle, Select, etc.
+│   └── shared/             # NumberSpinner, Toggle, Select, SegmentedControl, etc.
 ├── data/
 │   ├── types.ts            # UpgradeSlot, RawUnit, ProcessedUnit, ResolvedUnit
 │   ├── keywordMap.ts       # Keyword metadata + keyword→store field mapping
@@ -631,45 +667,50 @@ The following is a distilled list of every keyword from the rulebook that modifi
 
 Detailed wireframes for both Custom Pool mode and Unit Builder mode are in `plans/wireframe-two-modes.md`.
 
-High-level layout (Custom Pool mode shown):
+> **Phase 7.1 note:** The conceptual wireframe below shows a Unit Builder layout. In Custom Pool mode, the Faction/Unit dropdowns and Upgrades section are hidden. Attack Type, Mode toggles, Surge, Defense Die Color, and Cover Type are rendered as segmented controls (inline button groups), not dropdowns. The Results Panel uses an imperative "Run Simulation" button with stale-result indicators.
+
+> **Phase 7.2 note:** The Results Panel supports up to 4 simultaneous result slots. Each Run/Add appends a new color-coded result. The chart shows grouped bars per result, the cumulative table adds a column per result, and stat cards switch via slot chip tabs. A "Reset All" button clears all results and form data.
+
+High-level layout (Unit Builder mode shown, with two result slots):
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  ⚔️  Just Roll Crits                           [Ranged ▼]      │
+│  ⚔️  Just Roll Crits              [Ranged] [Melee] [Overrun]   │
 ├──────────────────────┬────────────────────┬──────────────────────┤
 │   ATTACKER           │     RESULTS        │     DEFENDER         │
-│ Faction: [Empire ▼]  │                    │ Faction: [Rebels ▼]  │
-│ Unit: [Darth Vader▼] │                    │ Unit: [Reb.Troop. ▼]│
+│ [Custom][Unit Builder]│                    │ [Custom][Unit Builder]│
+│ Faction: [Empire ▼]  │ [Add Simulation]   │ Faction: [Rebels ▼]  │
+│ Unit: [Darth Vader▼] │       [Reset All]  │ Unit: [Reb.Troop. ▼]│
 │                      │                    │                      │
-│ ─── Upgrades ───     │                    │ ─── Upgrades ───     │
-│ Force: [Force Push▼] │                    │ HvyWpn:[Z-6 Troop▼] │
-│ Force: [Saber Thr▼]  │                    │ Pers:  [None      ▼] │
+│ ─── Upgrades ───     │ ⚠ Config changed — │ ─── Upgrades ───     │
+│ Force: [Force Push▼] │ results may be     │ HvyWpn:[Z-6 Troop▼] │
+│ Force: [Saber Thr▼]  │ outdated.          │ Pers:  [None      ▼] │
 │ Force: [Force Ref▼]  │                    │ Gear:  [None      ▼] │
-│ Command:[None     ▼] │                    │ Grenad:[Imp.Gren. ▼] │
-│ Total: 195 pts       │                    │ Training:[None    ▼]  │
+│ Command:[None     ▼] │ [● Sim 1 ×]       │ Grenad:[Imp.Gren. ▼] │
+│ Total: 195 pts       │ [● Sim 2 ×]       │ Training:[None    ▼]  │
 │                      │                    │ Total: 57 pts        │
-│ ─── Dice Pool ───    │  Mean: 3.21        │                      │
-│ 🔴 Red dice:  [6]   │  Median: 3         │ ─── Defense ───      │
-│ ⚫ Black dice: [0]   │  Mode: 3           │ Defense: [White ▼]   │
-│ ⚪ White dice: [0]   │                    │ Surge:  [e→d ▼]     │
-│ Surge: [c→b ▼]     │  ┌──────────────┐  │ Minis in LOS:  [5]  │
-│                      │  │  ▌           │  │                      │
-│ ─── Tokens ───       │  │  █▌          │  │ ─── Cover ───       │
-│ Aim tokens:   [1]   │  │  ██          │  │ Cover: [Heavy ▼]    │
-│ Surge tokens: [0]   │  │  ███▌        │  │ Cover X:       [0]  │
-│ Observation:  [0]   │  │  █████       │  │ Smoke tokens:  [0]  │
-│                      │  │  ███▌        │  │ Suppressed:       □ │
-│                      │  │  ██          │  │                      │
-│ ─── Keywords ───     │  │  █▌          │  │ ─── Tokens ───      │
-│ Precise:      [0]    │  │  ▌           │  │ Dodge tokens:  [1]  │
-│ Critical:     [0]    │  └──────────────┘  │ Surge tokens:  [0]  │
-│ Pierce:       [3]    │  0 1 2 3 4 5 6 7   │                      │
-│ Impact:       [3]    │                    │ ─── Keywords ───     │
-│ Sharpshooter: [0]    │  P(≥1W): 94.2%    │ Armor:         [0]  │
-│ Lethal:       [0]    │  P(≥2W): 78.1%    │ Weak Point:    [0]  │
-│ Ram:          [0]    │  P(≥3W): 51.3%    │ Imm.Pierce:       □ │
-│ Blast:           □   │  P(≥4W): 24.7%    │ Imm.Melee P:      □ │
-│ High Velocity:   □   │  P(≥5W):  8.1%    │ Imm.Blast:        □ │
+│ ─── Dice Pool ───    │                    │                      │
+│ 🔴 Red dice:  [6]   │  ┌──────────────┐  │ ─── Defense ───      │
+│ ⚫ Black dice: [0]   │  │ ▌▌ █▌ ██ ███│  │ Die: [White] [Red]   │
+│ ⚪ White dice: [0]   │  │ (grouped bars│  │ Surge: [None] [e→d] │
+│ Surge [None][c→a]   │  │  per result) │  │ Minis in LOS:  [5]  │
+│       [c→b]         │  └──────────────┘  │                      │
+│ ─── Tokens ───       │  0 1 2 3 4 5 6 7  │ ─── Cover ───       │
+│ Aim tokens:   [1]   │                    │ [None][Light][Heavy] │
+│ Surge tokens: [0]   │  Wounds│●Sim1│●Sim2│ Cover X:       [0]  │
+│ Observation:  [0]   │  ≥ 1   │94.2%│87.3%│ Smoke tokens:  [0]  │
+│                      │  ≥ 2   │78.1%│64.5%│ Suppressed:       □ │
+│                      │  ≥ 3   │51.3%│42.1%│                      │
+│                      │                    │ ─── Tokens ───      │
+│ ─── Keywords ───     │ ── Sim 1 (viewed) ─│ Dodge tokens:  [1]  │
+│ Precise:      [0]    │  Mean: 3.21        │ Surge tokens:  [0]  │
+│ Critical:     [0]    │  Median: 3         │                      │
+│ Pierce:       [3]    │  Mode: 3           │ ─── Keywords ───     │
+│ Impact:       [3]    │                    │ Armor:         [0]  │
+│ Sharpshooter: [0]    │  10,000 sims · 42ms│ Weak Point:    [0]  │
+│ Lethal:       [0]    │                    │ Imm.Pierce:       □ │
+│ Ram:          [0]    │                    │ Imm.Melee P:      □ │
+│ Blast:           □   │                    │ Imm.Blast:        □ │
 │ Marksman:        □   │                    │ Impervious:       □ │
 │ Jar'Kai Mast:    □   │                    │ Danger Sense:  [0]  │
 │ Jedi Hunter:     □   │                    │ Uncanny Luck:  [0]  │

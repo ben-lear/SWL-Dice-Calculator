@@ -21,7 +21,7 @@ export default function EfficiencyDisplay({
 
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-medium uppercase tracking-wider text-gray-500">
+      <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
         Points Efficiency
       </h3>
 
@@ -73,7 +73,7 @@ function EfficiencyRow({ label, value, tooltip, span2 }: EfficiencyRowProps) {
       }`}
       title={tooltip}
     >
-      <span className="text-gray-400">{label}</span>
+      <span className="text-gray-300">{label}</span>
       <span className="font-mono font-semibold text-gray-200">{value}</span>
     </div>
   );

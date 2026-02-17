@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import {
   AttackSurgeChart,
   MarksmanStrategy,
-  RerollStrategy,
 } from '../../engine/types';
 import { getUpgradesForSlot } from '../../data/upgradeResolver';
 import { UPGRADE_SLOT_LABELS, type UpgradeSlot } from '../../data/types';
@@ -10,22 +9,19 @@ import { useAttackConfigStore } from '../../stores/attackConfigStore';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 import Select, { type SelectOption } from '../shared/Select';
-import Toggle from '../shared/Toggle';
+import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
+import Checkbox from '../shared/Checkbox';
+import DiceIconDisplay from '../shared/DiceIconDisplay';
 
-const ATTACK_SURGE_OPTIONS: SelectOption<AttackSurgeChart>[] = [
+const ATTACK_SURGE_OPTIONS: SegmentedControlOption<AttackSurgeChart>[] = [
   { value: AttackSurgeChart.None, label: 'None' },
-  { value: AttackSurgeChart.ToHit, label: 'c → a (Hit)' },
-  { value: AttackSurgeChart.ToCrit, label: 'c → b (Crit)' },
+  { value: AttackSurgeChart.ToHit, label: 'Hit' },
+  { value: AttackSurgeChart.ToCrit, label: 'Crit' },
 ];
 
-const MARKSMAN_STRATEGY_OPTIONS: SelectOption<MarksmanStrategy>[] = [
+const MARKSMAN_STRATEGY_OPTIONS: SegmentedControlOption<MarksmanStrategy>[] = [
   { value: MarksmanStrategy.Deterministic, label: 'Deterministic' },
   { value: MarksmanStrategy.Averages, label: 'Averages' },
-];
-
-const REROLL_STRATEGY_OPTIONS: SelectOption<RerollStrategy>[] = [
-  { value: RerollStrategy.Conservative, label: 'Conservative' },
-  { value: RerollStrategy.CritFishing, label: 'Crit Fishing' },
 ];
 
 export default function AttackerUnitBuilderView() {
@@ -53,16 +49,19 @@ export default function AttackerUnitBuilderView() {
                 }`}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <span>{weapon.name ?? `Weapon ${index + 1}`}</span>
-                  <span className="text-gray-500">
-                    R{weapon.redDice} B{weapon.blackDice} W{weapon.whiteDice}
-                  </span>
-                </div>
-                <div className="mt-2">
-                  <Toggle
-                    label="Enabled"
-                    value={weapon.enabled !== false}
-                    onChange={(value) => store.setWeaponEnabled(index, value)}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={weapon.enabled !== false}
+                      onChange={(e) => store.setWeaponEnabled(index, e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-600 bg-gray-800 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                    />
+                    <span>{weapon.name ?? `Weapon ${index + 1}`}</span>
+                  </div>
+                  <DiceIconDisplay
+                    redDice={weapon.redDice}
+                    blackDice={weapon.blackDice}
+                    whiteDice={weapon.whiteDice}
                   />
                 </div>
               </div>
@@ -82,11 +81,15 @@ export default function AttackerUnitBuilderView() {
           )}
 
           {slotRows.map(({ slot, index }) => {
-            const upgrades = getUpgradesForSlot(slot as UpgradeSlot);
+            const upgrades = getUpgradesForSlot(slot as UpgradeSlot, store.unitApiId ?? undefined);
+            // Deduplicate: keep first occurrence of each upgrade ID
+            const uniqueUpgrades = upgrades.filter(
+              (u, i, arr) => arr.findIndex(x => x.id === u.id) === i
+            );
             const selectedValue = store.equippedUpgradeIds[index] ?? '';
             const options: SelectOption<string>[] = [
               { value: '', label: 'None' },
-              ...upgrades.map((upgrade) => ({
+              ...uniqueUpgrades.map((upgrade) => ({
                 value: upgrade.id,
                 label: `${upgrade.name} (${upgrade.cost})`,
               })),
@@ -143,7 +146,7 @@ export default function AttackerUnitBuilderView() {
 
       <SectionHeader title="Unit Keywords">
         <div className="space-y-3">
-          <Select
+          <SegmentedControl
             label="Attack Surge"
             value={store.surgeChart}
             onChange={(value) => store.setField('surgeChart', value)}
@@ -171,13 +174,51 @@ export default function AttackerUnitBuilderView() {
             max={4}
           />
 
-          <Toggle
-            label="Marksman"
-            value={store.marksman}
-            onChange={(value) => store.setField('marksman', value)}
-          />
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+            <Checkbox
+              label="Marksman"
+              value={store.marksman}
+              onChange={(value) => store.setField('marksman', value)}
+            />
+            <Checkbox
+              label="Jedi Hunter"
+              value={store.jediHunter}
+              onChange={(value) => store.setField('jediHunter', value)}
+            />
+            <Checkbox
+              label="Jar'Kai Mastery"
+              value={store.jarKaiMastery}
+              onChange={(value) => store.setField('jarKaiMastery', value)}
+            />
+            <Checkbox
+              label="Duelist"
+              value={store.duelistAttacker}
+              onChange={(value) => store.setField('duelistAttacker', value)}
+            />
+            <Checkbox
+              label="Makashi Mastery"
+              value={store.makashiMastery}
+              onChange={(value) => store.setField('makashiMastery', value)}
+            />
+            <Checkbox
+              label="Immune: Deflect"
+              value={store.immuneDeflect}
+              onChange={(value) => store.setField('immuneDeflect', value)}
+            />
+            <Checkbox
+              label="Death From Above"
+              value={store.deathFromAbove}
+              onChange={(value) => store.setField('deathFromAbove', value)}
+            />
+            <Checkbox
+              label="Hold the Line"
+              value={store.holdTheLine}
+              onChange={(value) => store.setField('holdTheLine', value)}
+            />
+          </div>
+
           {store.marksman && (
-            <Select
+            <SegmentedControl
               label="Marksman Strategy"
               value={store.marksmanStrategy}
               onChange={(value) => store.setField('marksmanStrategy', value)}
@@ -185,59 +226,14 @@ export default function AttackerUnitBuilderView() {
             />
           )}
 
-          <Select
-            label="Reroll Strategy"
-            value={store.rerollStrategy}
-            onChange={(value) => store.setField('rerollStrategy', value)}
-            options={REROLL_STRATEGY_OPTIONS}
-          />
-
-          <Toggle
-            label="Jedi Hunter"
-            value={store.jediHunter}
-            onChange={(value) => store.setField('jediHunter', value)}
-          />
-          <Toggle
-            label="Jar'Kai Mastery"
-            value={store.jarKaiMastery}
-            onChange={(value) => store.setField('jarKaiMastery', value)}
-          />
-          <Toggle
-            label="Duelist"
-            value={store.duelistAttacker}
-            onChange={(value) => store.setField('duelistAttacker', value)}
-          />
-          <Toggle
-            label="Makashi Mastery"
-            value={store.makashiMastery}
-            onChange={(value) => store.setField('makashiMastery', value)}
-          />
-          <Toggle
-            label="Immune: Deflect"
-            value={store.immuneDeflect}
-            onChange={(value) => store.setField('immuneDeflect', value)}
-          />
-          <Toggle
-            label="Death From Above"
-            value={store.deathFromAbove}
-            onChange={(value) => store.setField('deathFromAbove', value)}
-          />
-          <Toggle
-            label="Hold the Line"
-            value={store.holdTheLine}
-            onChange={(value) => store.setField('holdTheLine', value)}
+          <NumberSpinner
+            label="Unit Cost"
+            value={store.unitCost}
+            onChange={(value) => store.setField('unitCost', value)}
+            min={0}
+            max={999}
           />
         </div>
-      </SectionHeader>
-
-      <SectionHeader title="Points">
-        <NumberSpinner
-          label="Unit Cost"
-          value={store.unitCost}
-          onChange={(value) => store.setField('unitCost', value)}
-          min={0}
-          max={999}
-        />
       </SectionHeader>
     </>
   );

@@ -389,7 +389,7 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 
 ## Phase 7: Results Panel
 
-**Status:** ✅ **COMPLETE** - All functionality implemented with comprehensive tests. useSimulation hook auto-runs simulations with 300ms debounce, displays mean/median/mode stats, interactive bar chart with mode highlighting, cumulative probability table, conditional secondary stats (Deflect/Djem So/Guardian), and points efficiency metrics. Fully tested with 16 format tests, 8 hook tests, 8 efficiency tests, and 15 integration tests.
+**Status:** ✅ **COMPLETE** (simulation trigger refactored in Phase 7.1) - All display functionality implemented with comprehensive tests. Displays mean/median/mode stats, interactive bar chart with mode highlighting, cumulative probability table, conditional secondary stats (Deflect/Djem So/Guardian), and points efficiency metrics. Fully tested with 16 format tests, 8 hook tests, 8 efficiency tests, and 15 integration tests.
 
 ### 7A: Core Results Display (`components/ResultsPanel/`)
 
@@ -415,7 +415,98 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 - [x] Responsive chart sizing
 - [x] Color coding (attacker color vs defender color)
 
-**Output:** ✅ **COMPLETE** - Results update live as user changes inputs, all stats and charts render correctly.
+**Output:** ✅ **COMPLETE** - Results display stats and charts correctly. Simulation trigger mechanism refactored in Phase 7.1.
+
+---
+
+## Phase 7.1: UX Corrections — Imperative Simulation, Segmented Controls, Custom Pool Cleanup
+
+**Status:** ✅ **COMPLETE** — See `plans/phase7.1-ux-corrections.md` for the full implementation plan.
+
+Addresses three fundamental UX issues from Phases 6–7: (1) simulation should be user-triggered, not auto-debounced on every config change; (2) low-cardinality fields should be segmented controls, not dropdowns; (3) Unit Preset section should be hidden in Custom Pool mode.
+
+### 7.1A: Imperative Simulation (Button-Triggered)
+
+- [x] Add `stale` boolean and `markStale()` action to results store
+- [x] Refactor `useSimulation` hook: remove auto-run/debounce, expose `runSimulation()` function
+- [x] Add staleness-tracking effect (config change while result exists → `markStale()`)
+- [x] Add "Run Simulation" button to ResultsPanel (disabled while loading)
+- [x] Add stale results indicator (amber banner when config changed since last run)
+- [x] Update EmptyState copy to reference Run button
+- [x] Update simulation hook and ResultsPanel tests
+
+### 7.1B: Segmented Control Component & Conversions
+
+- [x] Create `SegmentedControl` shared component (`role="radiogroup"`, keyboard nav, active highlighting)
+- [x] Export from `shared/index.ts`
+- [x] Add SegmentedControl component tests
+- [x] Convert Mode toggle to segmented control (both panels)
+- [x] Convert Attack Type selector to segmented control (3 options)
+- [x] Convert Attack Surge chart to segmented control (both Custom Pool and Unit Builder views)
+- [x] Convert Defense Die Color, Defense Surge, Cover Type to segmented controls
+- [x] Update panel component tests for new control type
+
+### 7.1C: Hide Unit Preset Section in Custom Pool Mode
+
+- [x] Conditionally render Unit Preset section in AttackerPanel (`activeMode === 'unit-builder'` only)
+- [x] Conditionally render Unit Preset section in DefenderPanel (`activeMode === 'unit-builder'` only)
+- [x] Add panel visibility tests (hidden in Custom Pool, visible in Unit Builder)
+
+**Output:** ✅ **COMPLETE** - Simulation runs only when user clicks Run. Six fields render as inline button groups. Unit Preset section hidden in Custom Pool mode. All code complete, typecheck/lint passing. Test failures are pre-existing issues from earlier phases (ResultsPanel mock, defenseStore tests), not Phase 7.1 implementation issues.
+
+---
+
+## Phase 7.2: Multi-Result Comparison
+
+**Status:** 🔲 **PLANNED** — See `plans/phase7.2-multi-result-comparison.md` for the full implementation plan.
+
+Reworks the Results Panel to support up to 4 simultaneous simulation result slots for side-by-side comparison. Every click of "Run / Add Simulation" appends a new result. The wound distribution chart shows grouped color-coded bars and the cumulative table adds columns per result. Core/secondary stats are tab-switched via slot chips. Each slot is auto-labeled ("Sim 1", "Sim 2"…) with optional user rename and an × remove button. A "Reset All" button clears all results and resets all form stores to defaults. Requires Phase 7.1A (imperative simulation).
+
+### 7.2A: Store & Utility Rework
+
+- [ ] Define `ResultSlot` type (id, label, result, configSnapshot, color)
+- [ ] Rework `resultsStore` to slot-based append model (max 4 slots, color palette, label counter)
+- [ ] Implement `appendResult`, `removeSlot`, `renameSlot`, `setViewedSlotId`, `clearAll` actions
+- [ ] Create `resetAll()` cross-store utility (`src/stores/resetAll.ts`) — resets all 4 stores to defaults
+- [ ] Export `resetAll` from store barrel
+
+### 7.2B: Hook Update
+
+- [ ] Update `useSimulation` — `runSimulation()` calls `appendResult` with config snapshot (not `setResult`)
+- [ ] Guard against appending when store is full (4 slots)
+- [ ] Stale tracking watches config changes when `slots.length > 0`
+
+### 7.2C: Result Slot UI
+
+- [ ] Create `SlotSelector` component — horizontal slot chips with color dots, labels, × remove buttons
+- [ ] Inline rename on double-click
+- [ ] Active/viewed chip gets highlighted border ring
+- [ ] Renders nothing when 0 slots
+
+### 7.2D: Multi-Series Chart & Table
+
+- [ ] Update `WoundDistributionChart` — accept `series[]` array, render grouped bars per series, multi-series tooltip
+- [ ] Update `CumulativeTable` — accept `series[]` array, render one P(≥X) column per series with color-coded headers
+- [ ] Add optional `accentColor` prop to `CoreStats` (top-border linking stats to chart series)
+
+### 7.2E: ResultsPanel Wiring
+
+- [ ] Dynamic button label: "Run Simulation" (0 slots) → "Add Simulation" (1–3 slots) → disabled at 4 with hint
+- [ ] "Reset All" button with 2-second confirmation guard (first click → "Confirm Reset?", second click → execute)
+- [ ] Wire `SlotSelector`, multi-series chart/table data from all slots
+- [ ] Pass viewed slot's result to CoreStats/SecondaryStats/EfficiencyDisplay
+- [ ] Handle edge cases: remove viewed slot, remove all, single-slot backward compatibility
+
+### 7.2F: Tests
+
+- [ ] Store tests: slot CRUD, max cap, color assignment/recycling, label counter, `clearAll`
+- [ ] `resetAll` test: all four stores return to defaults
+- [ ] Hook tests: `appendResult` call, full guard, stale tracking
+- [ ] `SlotSelector` tests: chip rendering, click-to-select, remove, rename interaction
+- [ ] Chart/table tests: single-series backward-compatible, multi-series rendering
+- [ ] ResultsPanel integration: button label changes, disabled at max, slot switching, Reset All
+
+**Output:** Up to 4 simulation results compared side-by-side with color-coded overlaid charts and tabbed stats. Reset All clears everything.
 
 ---
 
@@ -423,7 +514,10 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 
 ### 8A: Full Pipeline Wiring
 
-- [ ] Verify end-to-end flow: change input → store update → simulation runs → results display
+- [ ] Verify end-to-end flow: change input → store update → click Run → simulation runs → results display
+- [ ] Verify multi-result comparison: Run appends slots, chart shows grouped bars, table shows columns, slot chips switch stats
+- [ ] Verify Reset All: clears all result slots and resets all form stores to defaults
+- [ ] Verify max 4 slots: button disabled with hint, remove re-enables
 - [ ] Verify attack type filtering disables correct keywords per type
 - [ ] Verify preset loading populates all relevant fields
 - [ ] Verify Cover cap at 2, improvement-before-reduction ordering in live UI
@@ -522,6 +616,12 @@ Phase 1 (Scaffolding)
   │   └─────────────────────────────────────────────────────┘
   │                         │
   │                         ▼
+  │   ┌─────────────────────────────────────────────────────┐
+  │   │ Phase 7.2 (Multi-Result Comparison)                 │
+  │   │   requires: Phase 7.1A                              │
+  │   └─────────────────────────────────────────────────────┘
+  │                         │
+  │                         ▼
   │               Phase 8 (Integration)
   │                         │
   │                         ▼
@@ -534,3 +634,19 @@ Phase 1 (Scaffolding)
 - **Track C:** Phase 5A → Phase 5.5 → Phase 5.6 (stores + data layer + multi-mini pools) ✅ **COMPLETE** (5.6 UI components deferred)
 
 Phase 2.5 restructures the attacker engine to support per-weapon keywords before downstream phases consume the config types. Phase 2.6 extends the two-mode design to the Defender Panel (depends on Phase 2.5 pattern and Phase 5.5 data layer). Phase 5.5 replaces Phase 5B — the hardcoded preset data is superseded by the API-backed data pipeline and preset generator. Phase 5.6 extends Phase 5.5 with multi-miniature attack pool mechanics (per-mini weapon entries, heavy weapon/personnel/squad leader add, grenades, sidearm, noncombatant, dynamic upgrade slots). Phase 6A (Attacker Panel) requires Phases 4 + 5A + 5.5 + 5.6 and implements the two-mode design with per-miniature weapon assignment. Phase 6B (Defender Panel) requires Phases 4 + 5A + 5.5 + 2.6. ✅ **Phase 6 COMPLETE** - All panels implemented with two-mode design, upgrade system, and comprehensive tests. Phase 7 (Results Panel) requires Phases 3 + 4 + 5A. Phase 8 integrates everything, and Phase 9 runs throughout but has a final dedicated pass.
+
+---
+
+## Phase 7.1.1: Playwright QA Bugfixes
+
+Four bugs found via automated Playwright QA testing. Engine math verified correct (6/6 deterministic tests passed). UI overflow testing confirmed only one clipping issue.
+
+**Detailed plan:** [`plans/phase7.1.1-playwright-qa-bugfixes.md`](plans/phase7.1.1-playwright-qa-bugfixes.md)
+
+- [ ] **7.1.1A** — "Overrun" attack type button clipped at all viewports (`Layout.tsx` `w-56` too narrow)
+- [ ] **7.1.1B** — Upgrade dropdowns not filtered by unit (thread `unitApiId` through preset → store → UI)
+- [ ] **7.1.1C** — Duplicate React keys in upgrade dropdowns (deduplicate + `Select.tsx` key fix)
+- [ ] **7.1.1D** — Recharts ResponsiveContainer -1 dimension warnings (`minWidth`/`minHeight` props)
+
+**Implementation order:** A first (quick CSS), then B+C together (single changeset), then D (cosmetic).
+**Files:** ~11-14 files changed, 0 engine changes.

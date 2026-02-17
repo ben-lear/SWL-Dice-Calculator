@@ -1,28 +1,22 @@
 import {
   AttackSurgeChart,
   MarksmanStrategy,
-  RerollStrategy,
 } from '../../engine/types';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
-import Select, { type SelectOption } from '../shared/Select';
-import Toggle from '../shared/Toggle';
+import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
+import Checkbox from '../shared/Checkbox';
 
-const ATTACK_SURGE_OPTIONS: SelectOption<AttackSurgeChart>[] = [
+const ATTACK_SURGE_OPTIONS: SegmentedControlOption<AttackSurgeChart>[] = [
   { value: AttackSurgeChart.None, label: 'None' },
-  { value: AttackSurgeChart.ToHit, label: 'c → a (Hit)' },
-  { value: AttackSurgeChart.ToCrit, label: 'c → b (Crit)' },
+  { value: AttackSurgeChart.ToHit, label: 'Hit' },
+  { value: AttackSurgeChart.ToCrit, label: 'Crit' },
 ];
 
-const MARKSMAN_STRATEGY_OPTIONS: SelectOption<MarksmanStrategy>[] = [
+const MARKSMAN_STRATEGY_OPTIONS: SegmentedControlOption<MarksmanStrategy>[] = [
   { value: MarksmanStrategy.Deterministic, label: 'Deterministic' },
   { value: MarksmanStrategy.Averages, label: 'Averages' },
-];
-
-const REROLL_STRATEGY_OPTIONS: SelectOption<RerollStrategy>[] = [
-  { value: RerollStrategy.Conservative, label: 'Conservative' },
-  { value: RerollStrategy.CritFishing, label: 'Crit Fishing' },
 ];
 
 export default function AttackerCustomPoolView() {
@@ -56,7 +50,7 @@ export default function AttackerCustomPoolView() {
             min={0}
             max={12}
           />
-          <Select
+          <SegmentedControl
             label="Attack Surge"
             value={store.surgeChart}
             onChange={(value) => store.setField('surgeChart', value)}
@@ -100,6 +94,17 @@ export default function AttackerCustomPoolView() {
         </div>
       </SectionHeader>
 
+      {store.marksman && (
+        <div className="mb-4">
+          <SegmentedControl
+            label="Marksman Strategy"
+            value={store.marksmanStrategy}
+            onChange={(value) => store.setField('marksmanStrategy', value)}
+            options={MARKSMAN_STRATEGY_OPTIONS}
+          />
+        </div>
+      )}
+
       <SectionHeader title="Weapon Keywords">
         <div className="space-y-3">
           <NumberSpinner
@@ -137,26 +142,29 @@ export default function AttackerCustomPoolView() {
             min={0}
             max={5}
           />
-          <Toggle
-            label="Blast"
-            value={weapon.keywords.blast}
-            onChange={(value) => store.setWeaponKeyword(0, 'blast', value)}
-          />
-          <Toggle
-            label="Suppressive"
-            value={weapon.keywords.suppressive}
-            onChange={(value) => store.setWeaponKeyword(0, 'suppressive', value)}
-          />
-          <Toggle
-            label="High Velocity"
-            value={weapon.keywords.highVelocity}
-            onChange={(value) => store.setWeaponKeyword(0, 'highVelocity', value)}
-          />
-          <Toggle
-            label="Spray"
-            value={weapon.keywords.spray}
-            onChange={(value) => store.setWeaponKeyword(0, 'spray', value)}
-          />
+
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+            <Checkbox
+              label="Blast"
+              value={weapon.keywords.blast}
+              onChange={(value) => store.setWeaponKeyword(0, 'blast', value)}
+            />
+            <Checkbox
+              label="Suppressive"
+              value={weapon.keywords.suppressive}
+              onChange={(value) => store.setWeaponKeyword(0, 'suppressive', value)}
+            />
+            <Checkbox
+              label="High Velocity"
+              value={weapon.keywords.highVelocity}
+              onChange={(value) => store.setWeaponKeyword(0, 'highVelocity', value)}
+            />
+            <Checkbox
+              label="Spray"
+              value={weapon.keywords.spray}
+              onChange={(value) => store.setWeaponKeyword(0, 'spray', value)}
+            />
+          </div>
         </div>
       </SectionHeader>
 
@@ -184,73 +192,57 @@ export default function AttackerCustomPoolView() {
             max={4}
           />
 
-          <Toggle
-            label="Marksman"
-            value={store.marksman}
-            onChange={(value) => store.setField('marksman', value)}
-          />
-          {store.marksman && (
-            <Select
-              label="Marksman Strategy"
-              value={store.marksmanStrategy}
-              onChange={(value) => store.setField('marksmanStrategy', value)}
-              options={MARKSMAN_STRATEGY_OPTIONS}
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+            <Checkbox
+              label="Marksman"
+              value={store.marksman}
+              onChange={(value) => store.setField('marksman', value)}
             />
-          )}
+            <Checkbox
+              label="Jedi Hunter"
+              value={store.jediHunter}
+              onChange={(value) => store.setField('jediHunter', value)}
+            />
+            <Checkbox
+              label="Jar'Kai Mastery"
+              value={store.jarKaiMastery}
+              onChange={(value) => store.setField('jarKaiMastery', value)}
+            />
+            <Checkbox
+              label="Duelist"
+              value={store.duelistAttacker}
+              onChange={(value) => store.setField('duelistAttacker', value)}
+            />
+            <Checkbox
+              label="Makashi Mastery"
+              value={store.makashiMastery}
+              onChange={(value) => store.setField('makashiMastery', value)}
+            />
+            <Checkbox
+              label="Immune: Deflect"
+              value={store.immuneDeflect}
+              onChange={(value) => store.setField('immuneDeflect', value)}
+            />
+            <Checkbox
+              label="Death From Above"
+              value={store.deathFromAbove}
+              onChange={(value) => store.setField('deathFromAbove', value)}
+            />
+            <Checkbox
+              label="Hold the Line"
+              value={store.holdTheLine}
+              onChange={(value) => store.setField('holdTheLine', value)}
+            />
+          </div>
 
-          <Select
-            label="Reroll Strategy"
-            value={store.rerollStrategy}
-            onChange={(value) => store.setField('rerollStrategy', value)}
-            options={REROLL_STRATEGY_OPTIONS}
-          />
-
-          <Toggle
-            label="Jedi Hunter"
-            value={store.jediHunter}
-            onChange={(value) => store.setField('jediHunter', value)}
-          />
-          <Toggle
-            label="Jar'Kai Mastery"
-            value={store.jarKaiMastery}
-            onChange={(value) => store.setField('jarKaiMastery', value)}
-          />
-          <Toggle
-            label="Duelist"
-            value={store.duelistAttacker}
-            onChange={(value) => store.setField('duelistAttacker', value)}
-          />
-          <Toggle
-            label="Makashi Mastery"
-            value={store.makashiMastery}
-            onChange={(value) => store.setField('makashiMastery', value)}
-          />
-          <Toggle
-            label="Immune: Deflect"
-            value={store.immuneDeflect}
-            onChange={(value) => store.setField('immuneDeflect', value)}
-          />
-          <Toggle
-            label="Death From Above"
-            value={store.deathFromAbove}
-            onChange={(value) => store.setField('deathFromAbove', value)}
-          />
-          <Toggle
-            label="Hold the Line"
-            value={store.holdTheLine}
-            onChange={(value) => store.setField('holdTheLine', value)}
+          <NumberSpinner
+            label="Unit Cost"
+            value={store.unitCost}
+            onChange={(value) => store.setField('unitCost', value)}
+            min={0}
+            max={999}
           />
         </div>
-      </SectionHeader>
-
-      <SectionHeader title="Points">
-        <NumberSpinner
-          label="Unit Cost"
-          value={store.unitCost}
-          onChange={(value) => store.setField('unitCost', value)}
-          min={0}
-          max={999}
-        />
       </SectionHeader>
     </>
   );

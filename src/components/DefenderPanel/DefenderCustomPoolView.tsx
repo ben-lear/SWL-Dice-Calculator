@@ -6,20 +6,32 @@ import {
 import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
-import Select, { type SelectOption } from '../shared/Select';
+import Select from '../shared/Select';
+import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
 import Toggle from '../shared/Toggle';
+import Checkbox from '../shared/Checkbox';
 
-const DEFENSE_DIE_OPTIONS: SelectOption<DefenseDieColor>[] = [
+// UI-only type for defense die selector (includes 'none' option)
+type DefenseDieOption = 'none' | DefenseDieColor;
+
+const DEFENSE_DIE_OPTIONS: SegmentedControlOption<DefenseDieOption>[] = [
+  { value: 'none', label: 'None' },
   { value: DefenseDieColor.White, label: 'White' },
   { value: DefenseDieColor.Red, label: 'Red' },
 ];
 
-const DEFENSE_SURGE_OPTIONS: SelectOption<DefenseSurgeChart>[] = [
-  { value: DefenseSurgeChart.None, label: 'None' },
-  { value: DefenseSurgeChart.ToBlock, label: 'e → d (Block)' },
+// Guardian die color options (no 'none' option for Guardian)
+const GUARDIAN_DIE_OPTIONS = [
+  { value: DefenseDieColor.White, label: 'White' },
+  { value: DefenseDieColor.Red, label: 'Red' },
 ];
 
-const COVER_OPTIONS: SelectOption<CoverType>[] = [
+const DEFENSE_SURGE_OPTIONS: SegmentedControlOption<DefenseSurgeChart>[] = [
+  { value: DefenseSurgeChart.None, label: 'None' },
+  { value: DefenseSurgeChart.ToBlock, label: 'Block' },
+];
+
+const COVER_OPTIONS: SegmentedControlOption<CoverType>[] = [
   { value: CoverType.None, label: 'None' },
   { value: CoverType.Light, label: 'Light' },
   { value: CoverType.Heavy, label: 'Heavy' },
@@ -32,27 +44,27 @@ export default function DefenderCustomPoolView() {
     <>
       <SectionHeader title="Defense">
         <div className="space-y-3">
-          <Toggle
-            label="Disable Defense Dice"
-            value={store.disableDefenseDice}
-            onChange={(value) => store.setField('disableDefenseDice', value)}
+          <SegmentedControl
+            label="Defense Die"
+            value={store.disableDefenseDice ? 'none' : store.dieColor}
+            onChange={(value: DefenseDieOption) => {
+              if (value === 'none') {
+                store.setField('disableDefenseDice', true);
+              } else {
+                store.setField('disableDefenseDice', false);
+                store.setField('dieColor', value);
+              }
+            }}
+            options={DEFENSE_DIE_OPTIONS}
           />
 
           {!store.disableDefenseDice && (
-            <>
-              <Select
-                label="Defense Die Color"
-                value={store.dieColor}
-                onChange={(value) => store.setField('dieColor', value)}
-                options={DEFENSE_DIE_OPTIONS}
-              />
-              <Select
-                label="Surge Chart"
-                value={store.surgeChart}
-                onChange={(value) => store.setField('surgeChart', value)}
-                options={DEFENSE_SURGE_OPTIONS}
-              />
-            </>
+            <SegmentedControl
+              label="Surge Chart"
+              value={store.surgeChart}
+              onChange={(value) => store.setField('surgeChart', value)}
+              options={DEFENSE_SURGE_OPTIONS}
+            />
           )}
 
           <NumberSpinner
@@ -67,7 +79,7 @@ export default function DefenderCustomPoolView() {
 
       <SectionHeader title="Cover">
         <div className="space-y-3">
-          <Select
+          <SegmentedControl
             label="Cover Type"
             value={store.coverType}
             onChange={(value) => store.setField('coverType', value)}
@@ -161,82 +173,92 @@ export default function DefenderCustomPoolView() {
             max={6}
           />
 
-          <Toggle
-            label="Block"
-            value={store.block}
-            onChange={(value) => store.setField('block', value)}
-          />
-          <Toggle
-            label="Deflect"
-            value={store.deflect}
-            onChange={(value) => store.setField('deflect', value)}
-          />
-          {store.deflect && (
-            <Toggle
-              label="Shien Mastery"
-              value={store.shienMastery}
-              onChange={(value) => store.setField('shienMastery', value)}
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+            <Checkbox
+              label="Block"
+              value={store.block}
+              onChange={(value) => store.setField('block', value)}
             />
-          )}
-          <Toggle
-            label="Soresu Mastery"
-            value={store.soresuMastery}
-            onChange={(value) => store.setField('soresuMastery', value)}
-          />
-          <Toggle
-            label="Djem So Mastery"
-            value={store.djemSoMastery}
-            onChange={(value) => store.setField('djemSoMastery', value)}
-          />
-          <Toggle
-            label="Outmaneuver"
-            value={store.outmaneuver}
-            onChange={(value) => store.setField('outmaneuver', value)}
-          />
-          <Toggle
-            label="Low Profile"
-            value={store.lowProfile}
-            onChange={(value) => store.setField('lowProfile', value)}
-          />
-          <Toggle
-            label="Impervious"
-            value={store.impervious}
-            onChange={(value) => store.setField('impervious', value)}
-          />
-          <Toggle
-            label="Immune: Pierce"
-            value={store.immunePierce}
-            onChange={(value) => store.setField('immunePierce', value)}
-          />
-          <Toggle
-            label="Immune: Melee Pierce"
-            value={store.immuneMeleePierce}
-            onChange={(value) => store.setField('immuneMeleePierce', value)}
-          />
-          <Toggle
-            label="Immune: Blast"
-            value={store.immuneBlast}
-            onChange={(value) => store.setField('immuneBlast', value)}
-          />
-          <Toggle
-            label="Duelist"
-            value={store.duelistDefender}
-            onChange={(value) => store.setField('duelistDefender', value)}
-          />
-          <Toggle
-            label="Backup"
-            value={store.backup}
-            onChange={(value) => store.setField('backup', value)}
-          />
-          <Toggle
-            label="Hold the Line"
-            value={store.holdTheLine}
-            onChange={(value) => store.setField('holdTheLine', value)}
-          />
-          <Toggle
-            label="Dug In"
-            value={store.dugIn}
-            onChange={(value) => store.setField('dugIn', value)}
+            <Checkbox
+              label="Deflect"
+              value={store.deflect}
+              onChange={(value) => store.setField('deflect', value)}
+            />
+            {store.deflect && (
+              <Checkbox
+                label="Shien Mastery"
+                value={store.shienMastery}
+                onChange={(value) => store.setField('shienMastery', value)}
+              />
+            )}
+            <Checkbox
+              label="Soresu Mastery"
+              value={store.soresuMastery}
+              onChange={(value) => store.setField('soresuMastery', value)}
+            />
+            <Checkbox
+              label="Djem So Mastery"
+              value={store.djemSoMastery}
+              onChange={(value) => store.setField('djemSoMastery', value)}
+            />
+            <Checkbox
+              label="Outmaneuver"
+              value={store.outmaneuver}
+              onChange={(value) => store.setField('outmaneuver', value)}
+            />
+            <Checkbox
+              label="Low Profile"
+              value={store.lowProfile}
+              onChange={(value) => store.setField('lowProfile', value)}
+            />
+            <Checkbox
+              label="Impervious"
+              value={store.impervious}
+              onChange={(value) => store.setField('impervious', value)}
+            />
+            <Checkbox
+              label="Immune: Pierce"
+              value={store.immunePierce}
+              onChange={(value) => store.setField('immunePierce', value)}
+            />
+            <Checkbox
+              label="Immune: Melee Pierce"
+              value={store.immuneMeleePierce}
+              onChange={(value) => store.setField('immuneMeleePierce', value)}
+            />
+            <Checkbox
+              label="Immune: Blast"
+              value={store.immuneBlast}
+              onChange={(value) => store.setField('immuneBlast', value)}
+            />
+            <Checkbox
+              label="Duelist"
+              value={store.duelistDefender}
+              onChange={(value) => store.setField('duelistDefender', value)}
+            />
+            <Checkbox
+              label="Backup"
+              value={store.backup}
+              onChange={(value) => store.setField('backup', value)}
+            />
+            <Checkbox
+              label="Hold the Line"
+              value={store.holdTheLine}
+              onChange={(value) => store.setField('holdTheLine', value)}
+            />
+            <Checkbox
+              label="Dug In"
+              value={store.dugIn}
+              onChange={(value) => store.setField('dugIn', value)}
+            />
+          </div>
+
+          <NumberSpinner
+            label="Unit Cost"
+            value={store.unitCost}
+            onChange={(value) => store.setField('unitCost', value)}
+            min={0}
+            max={999}
           />
         </div>
       </SectionHeader>
@@ -257,7 +279,7 @@ export default function DefenderCustomPoolView() {
                 label="Guardian Die Color"
                 value={store.guardianDieColor}
                 onChange={(value) => store.setField('guardianDieColor', value)}
-                options={DEFENSE_DIE_OPTIONS}
+                options={GUARDIAN_DIE_OPTIONS}
               />
               <Select
                 label="Guardian Surge"
@@ -285,16 +307,6 @@ export default function DefenderCustomPoolView() {
             </>
           )}
         </div>
-      </SectionHeader>
-
-      <SectionHeader title="Points">
-        <NumberSpinner
-          label="Unit Cost"
-          value={store.unitCost}
-          onChange={(value) => store.setField('unitCost', value)}
-          min={0}
-          max={999}
-        />
       </SectionHeader>
     </>
   );

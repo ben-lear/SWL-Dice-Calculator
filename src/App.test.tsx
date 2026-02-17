@@ -4,7 +4,7 @@ import App from './App';
 
 // Mock the useSimulation hook to avoid Web Worker in test environment
 vi.mock('./hooks/useSimulation', () => ({
-  useSimulation: vi.fn(),
+  useSimulation: () => ({ runSimulation: vi.fn() }),
 }));
 
 describe('App', () => {

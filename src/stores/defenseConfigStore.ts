@@ -7,6 +7,7 @@ import {
 } from '../engine/types';
 import type { UpgradeSlot } from '../data/types';
 import type { Faction, DefenderPresetProfile } from '../data/presets';
+import { getResolvedUpgradeById } from '../data/upgradeResolver';
 
 // ============================================================================
 // State Interface
@@ -66,11 +67,15 @@ export interface DefenseConfigState {
 
   // ── Points ──
   unitCost: number;
+  baseUnitCost: number;  // Base cost before upgrades (for auto-calculation)
 
   // ── UI State (not sent to engine) ──
   selectedFaction: Faction | null;
   selectedPresetId: string | null;
   activeMode: 'custom' | 'unit-builder';  // Track which mode is active
+
+  /** API ID of the selected unit. Used for filtering upgrade dropdowns. UI-only. */
+  unitApiId: number | null;
 
   // ── Upgrade System ──
   /** Available upgrade slots for the selected unit (set by loadPreset) */
@@ -91,7 +96,8 @@ export interface DefenseConfigState {
   loadPreset: (
     presetId: string,
     profile: DefenderPresetProfile,
-    upgradeBar?: UpgradeSlot[]
+    upgradeBar?: UpgradeSlot[],
+    unitApiId?: number
   ) => void;
   /** Equip an upgrade in a specific slot (by index in upgradeBar) */
   equipUpgrade: (slotIndex: number, upgradeId: string | null) => void;
@@ -116,6 +122,7 @@ type DefenseConfigFields = Omit<
   | 'upgradeBar'
   | 'equippedUpgradeIds'
   | 'equipUpgrade'
+  | 'unitApiId'
 >;
 
 // ============================================================================
@@ -176,6 +183,7 @@ const DEFAULT_DEFENSE_CONFIG = {
 
   // Points
   unitCost: 0,
+  baseUnitCost: 0,
 } as const;
 
 // ============================================================================
@@ -190,6 +198,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   selectedFaction: null,
   selectedPresetId: null,
   activeMode: 'custom',
+  unitApiId: null,  // ← NEW: API ID for upgrade filtering
 
   // Upgrade system
   upgradeBar: [],
@@ -215,22 +224,29 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
     set({ activeMode: mode }),
 
   // Load a preset: reset to defaults, then apply preset overrides
-  loadPreset: (presetId, profile, upgradeBar = []) =>
-    set(() => ({
-      ...DEFAULT_DEFENSE_CONFIG,
-      ...profile,
-      selectedPresetId: presetId,
-      upgradeBar,
-      equippedUpgradeIds: new Array(upgradeBar.length).fill(null),
-      // Reset situational fields (user must set these per-attack)
-      coverType: CoverType.None,
-      dodgeTokens: 0,
-      surgeTokens: 0,
-      suppressionTokens: 0,
-      suppressed: false,
-      smokeTokens: 0,
-      guardianX: 0,
-    })),
+  loadPreset: (presetId, profile, upgradeBar = [], unitApiId) =>
+    set(() => {
+      const baseCost = profile.unitCost ?? 0;
+
+      return {
+        ...DEFAULT_DEFENSE_CONFIG,
+        ...profile,
+        selectedPresetId: presetId,
+        upgradeBar: upgradeBar ?? [],
+        equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),
+        unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
+        unitCost: baseCost,
+        baseUnitCost: baseCost,  // Store base cost for upgrade calculations
+        // Reset situational fields (user must set these per-attack)
+        coverType: CoverType.None,
+        dodgeTokens: 0,
+        surgeTokens: 0,
+        suppressionTokens: 0,
+        suppressed: false,
+        smokeTokens: 0,
+        guardianX: 0,
+      };
+    }),
 
   // Equip an upgrade in a specific slot (by index in upgradeBar)
   equipUpgrade: (slotIndex, upgradeId) =>
@@ -238,7 +254,22 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       if (slotIndex < 0 || slotIndex >= state.equippedUpgradeIds.length) return state;
       const newIds = [...state.equippedUpgradeIds];
       newIds[slotIndex] = upgradeId;
-      return { equippedUpgradeIds: newIds };
+
+      // Calculate total cost: base cost + sum of all equipped upgrade costs
+      let totalCost = state.baseUnitCost;
+      for (const id of newIds) {
+        if (id !== null) {
+          const upgrade = getResolvedUpgradeById(id);
+          if (upgrade) {
+            totalCost += upgrade.cost;
+          }
+        }
+      }
+
+      return {
+        equippedUpgradeIds: newIds,
+        unitCost: totalCost,
+      };
     }),
 
   // Full reset to defaults
@@ -250,6 +281,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       activeMode: 'custom',
       upgradeBar: [],
       equippedUpgradeIds: [],
+      unitApiId: null,  // ← NEW: reset API ID
     })),
 }));
 
@@ -262,6 +294,7 @@ export function selectDefenderConfig(state: DefenseConfigState): DefenderConfig 
     selectedFaction,
     selectedPresetId,
     activeMode,
+    unitApiId,  // ← NEW: exclude (UI-only)
     upgradeBar,
     equippedUpgradeIds,
     setField,

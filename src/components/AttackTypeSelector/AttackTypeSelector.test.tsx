@@ -12,14 +12,14 @@ describe('AttackTypeSelector', () => {
   it('defaults to ranged attack type', () => {
     render(<AttackTypeSelector />);
 
-    expect(screen.getByLabelText('Attack Type')).toHaveValue(AttackType.Ranged);
+    // Attack Type is now a segmented control (radio group)
+    expect(screen.getByRole('radio', { name: 'Ranged' })).toHaveAttribute('aria-checked', 'true');
   });
 
   it('renders and updates attack type store', () => {
     render(<AttackTypeSelector />);
 
-    const select = screen.getByLabelText('Attack Type');
-    fireEvent.change(select, { target: { value: AttackType.Melee } });
+    fireEvent.click(screen.getByRole('radio', { name: 'Melee'}));
 
     expect(useAttackTypeStore.getState().attackType).toBe(AttackType.Melee);
   });
@@ -27,8 +27,8 @@ describe('AttackTypeSelector', () => {
   it('renders all phase 6 attack type options', () => {
     render(<AttackTypeSelector />);
 
-    expect(screen.getByRole('option', { name: 'Ranged' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Melee' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'Overrun' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Ranged' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Melee' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Overrun' })).toBeInTheDocument();
   });
 });

@@ -24,7 +24,7 @@ export default function SectionHeader({
         aria-expanded={isExpanded}
         className="flex w-full items-center justify-between py-2 text-left"
       >
-        <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+        <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
           {title}
         </span>
         <span
@@ -37,11 +37,11 @@ export default function SectionHeader({
         </span>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-200 ease-in-out ${
-          isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+        className={`transition-all duration-200 ease-in-out ${
+          isExpanded ? 'max-h-[2000px] opacity-100 overflow-visible' : 'max-h-0 opacity-0 overflow-hidden'
         }`}
       >
-        <div className="space-y-3 pb-2">
+        <div className="space-y-2 pb-1">
           {children}
         </div>
       </div>

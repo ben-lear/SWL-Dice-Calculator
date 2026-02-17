@@ -148,8 +148,10 @@ function generateAttackerPreset(
     faction: unit.faction as Faction,
     name: `${unit.name} (${weapon.name})`,
     attackType: weapon.weaponType,
+    rank: unit.rank,
     profile,
     upgradeBar: unit.upgradeBar,
+    unitApiId: unit.apiId,
   };
 }
 
@@ -229,8 +231,10 @@ function generateMultiMiniAttackerPreset(unit: ResolvedUnit): AttackerPreset {
     faction: unit.faction as Faction,
     name: `${unit.name} (${defaultWeapon.name})`,
     attackType: defaultAttackType,
+    rank: unit.rank,
     profile,
     upgradeBar: unit.upgradeBar,
+    unitApiId: unit.apiId,
   };
 }
 
@@ -276,8 +280,10 @@ function generateSkeletonAttackerPreset(
     faction: unit.faction as Faction,
     name: `${unit.name} (no weapon data)`,
     attackType: AttackType.Ranged,
+    rank: unit.rank,
     profile,
     upgradeBar: unit.upgradeBar,
+    unitApiId: unit.apiId,
   };
 }
 
@@ -309,8 +315,10 @@ function generateDefenderPreset(unit: ResolvedUnit): DefenderPreset {
     id: unit.id,
     faction: unit.faction as Faction,
     name: unit.name,
+    rank: unit.rank,
     profile,
     upgradeBar: unit.upgradeBar,
+    unitApiId: unit.apiId,
   };
 }
 

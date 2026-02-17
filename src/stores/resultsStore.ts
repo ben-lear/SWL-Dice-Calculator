@@ -15,10 +15,14 @@ export interface ResultsState {
   /** Error message if the last simulation failed */
   error: string | null;
 
+  /** True when config has changed since the last simulation run */
+  stale: boolean;
+
   // ── Actions ──
   setResult: (result: SimulationResult) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
+  markStale: () => void;
   clear: () => void;
 }
 
@@ -30,12 +34,14 @@ export const useResultsStore = create<ResultsState>((set) => ({
   result: null,
   loading: false,
   error: null,
+  stale: false,
 
   setResult: (result) =>
     set({
       result,
       loading: false,
       error: null,
+      stale: false,
     }),
 
   setLoading: (loading) =>
@@ -47,10 +53,14 @@ export const useResultsStore = create<ResultsState>((set) => ({
       loading: false,
     }),
 
+  markStale: () =>
+    set({ stale: true }),
+
   clear: () =>
     set({
       result: null,
       loading: false,
       error: null,
+      stale: false,
     }),
 }));

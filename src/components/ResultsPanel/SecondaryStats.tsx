@@ -20,7 +20,7 @@ export default function SecondaryStats({
 
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-medium uppercase tracking-wider text-gray-500">
+      <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
         Additional Effects
       </h3>
 
@@ -62,7 +62,7 @@ interface SecondaryStatLineProps {
 function SecondaryStatLine({ label, value }: SecondaryStatLineProps) {
   return (
     <div className="flex items-center justify-between rounded bg-gray-800/50 px-3 py-1.5 text-sm">
-      <span className="text-gray-400">{label}</span>
+      <span className="text-gray-300">{label}</span>
       <span className="font-semibold text-gray-200">{value}</span>
     </div>
   );

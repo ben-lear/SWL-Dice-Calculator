@@ -63,7 +63,6 @@ function createMockResult(overrides?: Partial<SimulationResult>): SimulationResu
 
 describe('useSimulation', () => {
   beforeEach(() => {
-    vi.useFakeTimers();
     mockRun.mockReset();
     mockTerminate.mockReset();
     useAttackConfigStore.getState().reset();
@@ -71,69 +70,188 @@ describe('useSimulation', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    vi.clearAllMocks();
   });
 
-  it('does not run simulation when all weapons have zero dice', () => {
-    renderHook(() => useSimulation());
-
-    // Advance past debounce
-    act(() => {
-      vi.advanceTimersByTime(500);
-    });
-
-    expect(mockRun).not.toHaveBeenCalled();
+  it('returns a runSimulation function', () => {
+    const { result } = renderHook(() => useSimulation());
+    expect(result.current.runSimulation).toBeInstanceOf(Function);
   });
 
-  it('runs simulation after debounce when dice are configured', async () => {
-    mockRun.mockResolvedValue(createMockResult());
-
-    // Set some dice on the first weapon
-    act(() => {
-      useAttackConfigStore.getState().updateWeapon(0, { redDice: 4 });
-    });
-
+  it('does not auto-run simulation when config changes', () => {
     renderHook(() => useSimulation());
 
-    // Advance past debounce
-    await act(async () => {
-      vi.advanceTimersByTime(500);
-    });
-
-    expect(mockRun).toHaveBeenCalledTimes(1);
-  });
-
-  it('debounces rapid config changes', async () => {
-    renderHook(() => useSimulation());
-
-    // Set initial dice
+    // Change config
     act(() => {
-      useAttackConfigStore.getState().setWeaponDice(0, 'red', 1);
-    });
-
-    // Simulate rapid changes within debounce window
-    act(() => {
-      vi.advanceTimersByTime(100);
-      useAttackConfigStore.getState().setWeaponDice(0, 'red', 2);
-    });
-
-    act(() => {
-      vi.advanceTimersByTime(100);
-      useAttackConfigStore.getState().setWeaponDice(0, 'red', 3);
-    });
-
-    act(() => {
-      vi.advanceTimersByTime(100);
       useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
     });
 
-    // Now advance past the full debounce from last change
-    await act(async () => {
-      vi.advanceTimersByTime(400);
+    // Simulation should not have been triggered
+    expect(mockRun).not.toHaveBeenCalled();
+  });
+
+  it('runs simulation when runSimulation is called with dice configured', async () => {
+    mockRun.mockResolvedValue(createMockResult());
+
+    // Set some dice
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
     });
 
-    // Should only run once despite 4 changes
+    const { result } = renderHook(() => useSimulation());
+
+    // Manually trigger simulation
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
     expect(mockRun).toHaveBeenCalledTimes(1);
+    expect(useResultsStore.getState().result).not.toBeNull();
+  });
+
+  it('clears results when runSimulation is called with no dice', async () => {
+    // First, run a simulation with dice
+    mockRun.mockResolvedValue(createMockResult());
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    expect(useResultsStore.getState().result).not.toBeNull();
+
+    // Now remove all dice
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 0);
+    });
+
+    // Run simulation with no dice
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    // Results should be cleared
+    expect(useResultsStore.getState().result).toBeNull();
+  });
+
+  it('sets loading state while simulation is running', async () => {
+    mockRun.mockImplementation(
+      () => new Promise((resolve) => setTimeout(() => resolve(createMockResult()), 100))
+    );
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    const simulationPromise = act(async () => {
+      const promise = result.current.runSimulation();
+      // Check loading state immediately after call
+      expect(useResultsStore.getState().loading).toBe(true);
+      await promise;
+    });
+
+    await simulationPromise;
+
+    // After completion, loading should be false
+    expect(useResultsStore.getState().loading).toBe(false);
+  });
+
+  it('handles simulation errors', async () => {
+    const errorMessage = 'Simulation failed';
+    mockRun.mockRejectedValue(new Error(errorMessage));
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    expect(useResultsStore.getState().error).toBe(errorMessage);
+    expect(useResultsStore.getState().loading).toBe(false);
+  });
+
+  it('marks results as stale when attack config changes after a result exists', async () => {
+    mockRun.mockResolvedValue(createMockResult());
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    // Run initial simulation
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    expect(useResultsStore.getState().stale).toBe(false);
+
+    // Change attack config
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'black', 2);
+    });
+
+    // Results should be marked stale
+    expect(useResultsStore.getState().stale).toBe(true);
+  });
+
+  it('clears stale flag when simulation completes', async () => {
+    mockRun.mockResolvedValue(createMockResult());
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    // Run initial simulation
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    // Change config to mark stale
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'black', 2);
+    });
+
+    expect(useResultsStore.getState().stale).toBe(true);
+
+    // Run simulation again
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    // Stale flag should be cleared
+    expect(useResultsStore.getState().stale).toBe(false);
+  });
+
+  it('writes simulation results to the store', async () => {
+    const mockResult = createMockResult({ totalWounds: { mean: 5, median: 5, mode: 5, min: 0, max: 10, standardDeviation: 2 } });
+    mockRun.mockResolvedValue(mockResult);
+
+    act(() => {
+      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
+    });
+
+    const { result } = renderHook(() => useSimulation());
+
+    await act(async () => {
+      await result.current.runSimulation();
+    });
+
+    const storeResult = useResultsStore.getState().result;
+    expect(storeResult).toEqual(mockResult);
   });
 
   it('terminates worker on unmount', () => {
@@ -141,101 +259,6 @@ describe('useSimulation', () => {
 
     unmount();
 
-    expect(mockTerminate).toHaveBeenCalled();
-  });
-
-  it('clears results when all dice are set to zero', () => {
-    // Start with dice configured
-    act(() => {
-      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
-    });
-
-    renderHook(() => useSimulation());
-
-    // Remove all dice
-    act(() => {
-      useAttackConfigStore.getState().setWeaponDice(0, 'red', 0);
-      useAttackConfigStore.getState().setWeaponDice(0, 'black', 0);
-      useAttackConfigStore.getState().setWeaponDice(0, 'white', 0);
-    });
-
-    // Results should be cleared
-    const resultsState = useResultsStore.getState();
-    expect(resultsState.result).toBeNull();
-  });
-
-  it('sets loading state before running simulation', async () => {
-    mockRun.mockImplementation(() => new Promise(resolve => setTimeout(() => resolve(createMockResult()), 100)));
-
-    act(() => {
-      useAttackConfigStore.getState().updateWeapon(0, { redDice: 4 });
-    });
-
-    renderHook(() => useSimulation());
-
-    // Advance past debounce
-    act(() => {
-      vi.advanceTimersByTime(400);
-    });
-
-    // Should be loading now
-    expect(useResultsStore.getState().loading).toBe(true);
-
-    // Complete the async work
-    await act(async () => {
-      vi.advanceTimersByTime(200);
-    });
-  });
-
-  it('sets error state when worker throws', async () => {
-    const errorMessage = 'Worker crashed';
-    mockRun.mockRejectedValue(new Error(errorMessage));
-
-    act(() => {
-      useAttackConfigStore.getState().updateWeapon(0, { redDice: 4 });
-    });
-
-    renderHook(() => useSimulation());
-
-    // Advance past debounce and let error propagate
-    await act(async () => {
-      vi.advanceTimersByTime(500);
-    });
-
-    const resultsState = useResultsStore.getState();
-    expect(resultsState.error).toBe(errorMessage);
-    expect(resultsState.loading).toBe(false);
-  });
-
-  it('clears error on successful simulation after previous error', async () => {
-    // First simulation fails
-    mockRun.mockRejectedValueOnce(new Error('First error'));
-
-    act(() => {
-      useAttackConfigStore.getState().setWeaponDice(0, 'red', 4);
-    });
-
-    renderHook(() => useSimulation());
-
-    await act(async () => {
-      vi.advanceTimersByTime(500);
-    });
-
-    expect(useResultsStore.getState().error).toBe('First error');
-
-    // Second simulation succeeds
-    mockRun.mockResolvedValueOnce(createMockResult());
-
-    act(() => {
-      useAttackConfigStore.getState().setWeaponDice(0, 'black', 2);
-    });
-
-    await act(async () => {
-      vi.advanceTimersByTime(500);
-    });
-
-    const resultsState = useResultsStore.getState();
-    expect(resultsState.error).toBeNull();
-    expect(resultsState.result).not.toBeNull();
+    expect(mockTerminate).toHaveBeenCalledTimes(1);
   });
 });

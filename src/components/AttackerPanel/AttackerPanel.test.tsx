@@ -21,9 +21,8 @@ describe('AttackerPanel', () => {
   it('updates mode from the mode select', () => {
     render(<AttackerPanel />);
 
-    fireEvent.change(screen.getByLabelText('Mode'), {
-      target: { value: 'unit-builder' },
-    });
+    // Mode is now a segmented control (radio button group), not a select
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     expect(useAttackConfigStore.getState().activeMode).toBe('unit-builder');
   });
@@ -31,9 +30,7 @@ describe('AttackerPanel', () => {
   it('renders upgrade slots section in unit-builder mode', () => {
     render(<AttackerPanel />);
 
-    fireEvent.change(screen.getByLabelText('Mode'), {
-      target: { value: 'unit-builder' },
-    });
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     expect(screen.getByText('Upgrade Slots')).toBeInTheDocument();
   });
@@ -41,9 +38,7 @@ describe('AttackerPanel', () => {
   it('toggles weapon enabled state in unit-builder mode', () => {
     render(<AttackerPanel />);
 
-    fireEvent.change(screen.getByLabelText('Mode'), {
-      target: { value: 'unit-builder' },
-    });
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     fireEvent.click(screen.getByRole('switch', { name: 'Enabled' }));
     expect(useAttackConfigStore.getState().weapons[0]?.enabled).toBe(false);
@@ -59,28 +54,31 @@ describe('AttackerPanel', () => {
     expect(useAttackConfigStore.getState().weapons[0]?.redDice).toBe(3);
   });
 
-  it('shows marksman strategy only when marksman is enabled', () => {
+  it('shows marksman strategy only when marksman is enabled', async () => {
     render(<AttackerPanel />);
 
     expect(screen.queryByLabelText('Marksman Strategy')).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('switch', { name: 'Marksman' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Marksman' }));
 
-    expect(screen.getByLabelText('Marksman Strategy')).toBeInTheDocument();
+    expect(await screen.findByLabelText('Marksman Strategy')).toBeInTheDocument();
   });
 
-  it("shows Jar'Kai dodge token input only when Jar'Kai Mastery is enabled", () => {
+  it("shows Jar'Kai dodge token input only when Jar'Kai Mastery is enabled", async () => {
     render(<AttackerPanel />);
 
     expect(screen.queryByText("Dodge Tokens (Jar'Kai)")).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('switch', { name: "Jar'Kai Mastery" }));
+    fireEvent.click(screen.getByRole('checkbox', { name: "Jar'Kai Mastery" }));
 
-    expect(screen.getByText("Dodge Tokens (Jar'Kai)")).toBeInTheDocument();
+    expect(await screen.findByText("Dodge Tokens (Jar'Kai)")).toBeInTheDocument();
   });
 
   it('updates selected faction and filters unit options', async () => {
     render(<AttackerPanel />);
+
+    // Need to be in unit-builder mode to see the Unit Preset section
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     const factionValue = getFactionOptions()[0]?.value as Faction;
     const expectedOptions = getAttackerPresets(factionValue, AttackType.Ranged).length + 1;
@@ -99,6 +97,9 @@ describe('AttackerPanel', () => {
   it('loads selected attacker preset from combobox', async () => {
     render(<AttackerPanel />);
 
+    // Need to be in unit-builder mode to see the Unit Preset section
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
+
     const preset = getAttackerPresets(null, AttackType.Ranged)[0];
     expect(preset).toBeDefined();
 
@@ -110,6 +111,9 @@ describe('AttackerPanel', () => {
 
   it('selecting Custom clears selected preset without resetting fields', async () => {
     render(<AttackerPanel />);
+
+    // Need to be in unit-builder mode to see the Unit Preset section
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     const preset = getAttackerPresets(null, AttackType.Ranged)[0];
     expect(preset).toBeDefined();
@@ -124,5 +128,18 @@ describe('AttackerPanel', () => {
 
     expect(useAttackConfigStore.getState().selectedPresetId).toBeNull();
     expect(useAttackConfigStore.getState().weapons[0]?.redDice).toBe(previousRedDice);
+  });
+
+  it('hides Unit Preset section in Custom Pool mode', () => {
+    render(<AttackerPanel />);
+
+    // Initially in custom mode, Unit Preset section should not be visible
+    expect(screen.queryByText('Unit Preset')).not.toBeInTheDocument();
+
+    // Switch to unit-builder mode
+    fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
+
+    // Now Unit Preset section should be visible
+    expect(screen.getByText('Unit Preset')).toBeInTheDocument();
   });
 });

@@ -2,6 +2,10 @@
 
 This document provides detailed ASCII wireframes for both operating modes of the Attacker Panel. Both modes write to the same `weapons: WeaponProfile[]` array in the Zustand store — the engine doesn't distinguish between them.
 
+> **Phase 7.1 changes:** Mode toggles, Attack Type, Attack Surge, Defense Die Color, Defense Surge, and Cover Type are rendered as **segmented controls** (inline button groups) instead of `<select>` dropdowns. The Unit Preset section (Faction + Unit dropdowns) is **hidden in Custom Pool mode** and only shown in Unit Builder mode. The Results Panel uses an imperative "Run Simulation" button instead of auto-debounced simulation.
+
+> **Phase 7.2 changes:** The Results Panel supports **up to 4 simultaneous result slots** for side-by-side comparison. Each click of Run/Add Simulation appends a new color-coded result. The wound chart shows grouped bars, the cumulative table adds columns, and stat detail switches via slot chip tabs. A "Reset All" button clears all results and form data with a confirmation guard.
+
 ---
 
 ## Mode Toggle
@@ -18,6 +22,7 @@ A segmented control at the very top of the Attacker Panel switches between modes
 - The toggle sets `store.activeMode` to `'custom'` or `'unit-builder'`
 - Switching modes does NOT reset the current configuration — the user can toggle back and forth
 - Both modes share the same underlying `weapons[]` state
+- **Custom Pool mode hides the Unit Preset section** (Faction + Unit dropdowns). Switching to Unit Builder reveals them. Store state persists across mode toggles.
 
 ---
 
@@ -31,16 +36,17 @@ Keywords are split into two sections:
 
 ```
 ┌──────────────────────────────────────┐
-│  ⚔️  Just Roll Crits   [Ranged ▼]   │
+│  ⚔️  Just Roll Crits                    │
+│  [Ranged] [Melee] [Overrun]            │
 ├──────────────────────────────────────┤
 │  ATTACKER                            │
-│  [Custom Pool] [Unit Builder]        │
+│  [■ Custom Pool] [Unit Builder]        │
 │                                      │
-│  ─── Dice Pool ──────────────────    │
+│  ─── Dice Pool ──────────────    │
 │  🔴 Red dice:      [0]  ◀ ─ ▶      │
 │  ⚫ Black dice:     [0]  ◀ ─ ▶      │
 │  ⚪ White dice:     [0]  ◀ ─ ▶      │
-│  Surge chart:   [None ▼]            │
+│  Surge chart:  [None] [c→a] [c→b]  │
 │                                      │
 │  ─── Tokens ─────────────────────    │
 │  Aim tokens:        [0]  ◀ ─ ▶      │
@@ -94,6 +100,8 @@ Keywords are split into two sections:
 | Black dice spinner | `store.weapons[0].blackDice` via `setWeaponDice(0, 'black', v)` |
 | White dice spinner | `store.weapons[0].whiteDice` via `setWeaponDice(0, 'white', v)` |
 | Surge chart select | `store.surgeChart` via `setField('surgeChart', v)` |
+
+> **Note:** No Unit Selection or Faction dropdown is shown in Custom Pool mode. These controls only appear in Unit Builder mode.
 | Pierce spinner     | `store.weapons[0].keywords.pierceX` via `setWeaponKeyword(0, 'pierceX', v)` |
 | Blast toggle       | `store.weapons[0].keywords.blast` via `setWeaponKeyword(0, 'blast', v)` |
 | Spray toggle       | `store.weapons[0].keywords.spray` via `setWeaponKeyword(0, 'spray', v)` |
@@ -115,10 +123,11 @@ For **single-miniature units** (heroes, vehicles, operatives), a simpler weapon 
 
 ```
 ┌──────────────────────────────────────┐
-│  ⚔️  Just Roll Crits   [Ranged ▼]   │
+│  ⚔️  Just Roll Crits                    │
+│  [Ranged] [Melee] [Overrun]            │
 ├──────────────────────────────────────┤
 │  ATTACKER                            │
-│  [Custom Pool] [Unit Builder]        │
+│  [Custom Pool] [■ Unit Builder]        │
 │                                      │
 │  ─── Unit Selection ─────────────    │
 │  Faction:    [Galactic Empire ▼]     │
@@ -290,6 +299,7 @@ The Defender Panel mirrors the Attacker Panel's two-mode design. A segmented con
 - The toggle sets `store.activeDefenderMode` to `'custom'` or `'unit-builder'`
 - Switching modes does NOT reset the current configuration
 - Both modes write to the same underlying flat `DefenderConfig` fields
+- **Custom Pool mode hides the Unit Preset section** (Faction + Unit dropdowns). Switching to Unit Builder reveals them. Store state persists across mode toggles.
 
 ---
 
@@ -300,18 +310,18 @@ The user manually configures all defense settings. All fields are editable.
 ```
 ┌──────────────────────────────────────┐
 │  DEFENDER                            │
-│  [Custom Pool] [Unit Builder]        │
+│  [■ Custom Pool] [Unit Builder]        │
 │                                      │
-│  ─── Defense ────────────────────    │
+│  ─── Defense ────────────────    │
 │  Disable defense dice:     □         │
 │  (Shows attack results before        │
 │   any defense is applied)            │
-│  Defense die: [White ▼]             │
-│  Surge chart: [None ▼]              │
+│  Defense die: [White] [Red]          │
+│  Surge chart: [None] [e→d]          │
 │  Minis in LOS:      [1]  ◀ ─ ▶      │
 │                                      │
-│  ─── Cover ──────────────────────    │
-│  Cover type:  [None ▼]              │
+│  ─── Cover ──────────────────    │
+│  Cover type: [None] [Light] [Heavy]  │
 │  Cover X:           [0]  ◀ ─ ▶      │
 │  Smoke tokens:      [0]  ◀ ─ ▶      │
 │  Suppressed:           □             │
@@ -455,32 +465,38 @@ On desktop (≥1024px), the three panels sit side by side. The center Results pa
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  ⚔️  Just Roll Crits                                       [Ranged ▼]      │
+│  ⚔️  Just Roll Crits                    [Ranged] [Melee] [Overrun]   │
 ├─────────────────────────┬──────────────────────┬─────────────────────────────┤
 │     ATTACKER            │      RESULTS         │       DEFENDER              │
 │  [Custom] [Unit Builder]│                      │  [Custom] [Unit Builder]    │
-│                         │   Mean: 3.21         │                             │
-│  (mode-specific         │   Median: 3          │  (mode-specific             │
-│   content — see         │   Mode: 3            │   content — see             │
-│   wireframes above)     │                      │   wireframes above)         │
+│                         │  [Add Simulation]    │                             │
+│  (mode-specific         │        [Reset All]   │  (mode-specific             │
+│   content — see         │                      │   content — see             │
+│   wireframes above)     │  ⚠ Config changed —  │   wireframes above)         │
+│                         │  results may be      │                             │
+│                         │  outdated.           │                             │
+│                         │                      │                             │
+│                         │  [● Sim 1 ×]         │                             │
+│                         │  [● Sim 2 ×]         │                             │
+│                         │                      │                             │
 │                         │   ┌──────────────┐   │                             │
-│                         │   │  ▌           │   │                             │
-│                         │   │  █▌          │   │                             │
-│                         │   │  ██          │   │                             │
-│                         │   │  ███▌        │   │                             │
-│                         │   │  █████       │   │                             │
-│                         │   │  ███▌        │   │                             │
-│                         │   │  ██          │   │                             │
-│                         │   │  █▌          │   │                             │
-│                         │   │  ▌           │   │                             │
+│                         │   │ ▌▌ █▌ ██ ███ │   │                             │
+│                         │   │ (grouped bars│   │                             │
+│                         │   │  per result) │   │                             │
 │                         │   └──────────────┘   │                             │
 │                         │   0 1 2 3 4 5 6 7    │                             │
 │                         │                      │                             │
-│                         │   P(≥1W): 94.2%      │                             │
-│                         │   P(≥2W): 78.1%      │                             │
-│                         │   P(≥3W): 51.3%      │                             │
-│                         │   P(≥4W): 24.7%      │                             │
-│                         │   P(≥5W):  8.1%      │                             │
+│                         │   Wounds│●Sim1│●Sim2  │                             │
+│                         │   ≥ 1   │94.2%│87.3%  │                             │
+│                         │   ≥ 2   │78.1%│64.5%  │                             │
+│                         │   ≥ 3   │51.3%│42.1%  │                             │
+│                         │                      │                             │
+│                         │   ── Sim 1 (viewed) ─│                             │
+│                         │   Mean: 3.21         │                             │
+│                         │   Median: 3          │                             │
+│                         │   Mode: 3            │                             │
+│                         │                      │                             │
+│                         │   10,000 sims · 42ms │                             │
 │                         │                      │                             │
 └─────────────────────────┴──────────────────────┴─────────────────────────────┘
 ```
@@ -489,11 +505,12 @@ On desktop (≥1024px), the three panels sit side by side. The center Results pa
 
 ## Mobile Layout (< 768px)
 
-On mobile, panels stack vertically in a single column. The mode toggle and all sections remain the same, just full-width.
+On mobile, panels stack vertically in a single column. The mode toggle and all sections remain the same, just full-width. The Results Panel shows the same multi-result comparison layout (slot chips, grouped bars, multi-column table, tabbed stats).
 
 ```
 ┌──────────────────────────────────────┐
-│  ⚔️  Just Roll Crits   [Ranged ▼]   │
+│  ⚔️  Just Roll Crits                    │
+│  [Ranged] [Melee] [Overrun]            │
 ├──────────────────────────────────────┤
 │  ATTACKER                            │
 │  [Custom Pool] [Unit Builder]        │
@@ -504,9 +521,166 @@ On mobile, panels stack vertically in a single column. The mode toggle and all s
 │  (full defender content)             │
 ├──────────────────────────────────────┤
 │  RESULTS                             │
-│  (stats + chart)                     │
+│  [Add Simulation]  [Reset All]       │
+│  [● Sim 1 ×] [● Sim 2 ×]           │
+│  (grouped chart + multi-col table)   │
+│  (tabbed stats via slot selector)    │
 └──────────────────────────────────────┘
 ```
+
+---
+
+## Results Panel — Multi-Result Comparison
+
+The Results Panel occupies the center column and supports up to 4 simultaneous result slots for side-by-side comparison.
+
+### Empty State (0 results)
+
+```
+┌──────────────────────────────────┐
+│           RESULTS                │
+│                                  │
+│   [ Run Simulation ]             │
+│          [Reset All]             │
+│                                  │
+│   🎲 No Results Yet              │
+│   Configure your attack and     │
+│   defense, then click Run       │
+│   Simulation to see results.    │
+│                                  │
+└──────────────────────────────────┘
+```
+
+### Single Result (1 slot)
+
+Chart and table render identically to pre-7.2 single-result design. The slot chip is shown so the user can rename or remove.
+
+```
+┌──────────────────────────────────┐
+│           RESULTS                │
+│                                  │
+│   [Add Simulation] [Reset All]   │
+│                                  │
+│   ⚠ Config changed — results    │
+│   may be outdated.               │
+│                                  │
+│   [● Sim 1  ×]                   │
+│                                  │
+│   ┌──────────────────────────┐   │
+│   │  ▌  █▌  ██  ███▌  █████ │   │
+│   │  (single bar per wound)  │   │
+│   └──────────────────────────┘   │
+│   0  1  2  3  4  5  6  7        │
+│                                  │
+│   Wounds │ ● Sim 1               │
+│   ≥ 1    │  94.2%                │
+│   ≥ 2    │  78.1%                │
+│   ≥ 3    │  51.3%                │
+│   ≥ 4    │  24.7%                │
+│   ≥ 5    │   8.1%                │
+│                                  │
+│   Mean: 3.21  Median: 3  Mode: 3│
+│   (secondary stats if applicable)│
+│   (efficiency if costs set)      │
+│                                  │
+│   10,000 sims · 42ms            │
+└──────────────────────────────────┘
+```
+
+### Multiple Results (2–4 slots)
+
+Chart shows grouped/side-by-side bars per wound count. Table has one column per result. Stats are for the viewed (selected) slot only.
+
+```
+┌──────────────────────────────────┐
+│           RESULTS                │
+│                                  │
+│   [Add Simulation] [Reset All]   │
+│                                  │
+│   [● Sim 1 ×] [● Sim 2 ×]      │
+│   [● Sim 3 ×]                   │
+│                                  │
+│   ┌──────────────────────────┐   │
+│   │ ▌▌▌ █▌█ ██▌ ████ █████ │   │
+│   │ (grouped bars: 3 colors)│   │
+│   └──────────────────────────┘   │
+│   0  1  2  3  4  5  6  7        │
+│   Tooltip: 3 wounds             │
+│     ● Sim 1: 24.7% (≥51.3%)    │
+│     ● Sim 2: 18.2% (≥42.1%)    │
+│     ● Sim 3: 21.0% (≥47.5%)    │
+│                                  │
+│   Wounds │●Sim1 │●Sim2 │●Sim3   │
+│   ≥ 1    │94.2% │87.3% │90.1%   │
+│   ≥ 2    │78.1% │64.5% │72.0%   │
+│   ≥ 3    │51.3% │42.1% │47.5%   │
+│   ≥ 4    │24.7% │19.8% │22.3%   │
+│   ≥ 5    │ 8.1% │ 5.2% │ 6.8%   │
+│                                  │
+│   ── Sim 1 (viewed) ──────────  │
+│   ┌────────┐┌────────┐┌────────┐│
+│   │ Mean   ││ Median ││ Mode   ││
+│   │ 3.21   ││  3     ││  3     ││
+│   └────────┘└────────┘└────────┘│
+│   (secondary stats for Sim 1)   │
+│   (efficiency for Sim 1)        │
+│                                  │
+│   10,000 sims · 42ms            │
+└──────────────────────────────────┘
+```
+
+### Max Slots (4 results, button disabled)
+
+```
+┌──────────────────────────────────┐
+│           RESULTS                │
+│                                  │
+│   [Add Simulation]  [Reset All]  │
+│    (disabled)                    │
+│   Remove a result to run another.│
+│                                  │
+│   [● Sim 1 ×] [● Sim 2 ×]      │
+│   [● Sim 3 ×] [● Sim 4 ×]      │
+│                                  │
+│   (grouped chart + table)        │
+│   (viewed slot stats)            │
+└──────────────────────────────────┘
+```
+
+### Slot Chip Detail
+
+```
+┌─────────────────────────────────────────────────┐
+│ [● Sim 1  ×] [● Sim 2  ×] [● Sim 3  ×]       │
+│  ▲             ▲                                │
+│  │             │                                │
+│  color dot     active chip has ring border      │
+│  (indigo/      matching its color               │
+│   emerald/                                      │
+│   amber/rose)  double-click label to rename     │
+│                                                 │
+│  × removes slot from comparison                 │
+└─────────────────────────────────────────────────┘
+```
+
+### Reset All Confirmation Guard
+
+```
+ Click 1:  [Reset All]  →  [ Confirm Reset? ]  (red, 2s timer)
+ Click 2:                   → executes resetAll()
+ No click within 2s:        → reverts to [Reset All]
+```
+
+### Color Palette
+
+| Slot | Color    | Hex (approx) | Usage                     |
+|------|----------|--------------|---------------------------|
+| 1st  | Indigo   | #6366f1      | Chart bar, chip dot, stat accent |
+| 2nd  | Emerald  | #10b981      | Chart bar, chip dot, stat accent |
+| 3rd  | Amber    | #f59e0b      | Chart bar, chip dot, stat accent |
+| 4th  | Rose     | #f43f5e      | Chart bar, chip dot, stat accent |
+
+Colors are assigned by creation order. When a slot is removed, its color frees up for the next new slot.
 
 ---
 
@@ -553,10 +727,10 @@ The defender side has no weapon array — all keywords are flat fields on the co
 | Keyword | Type | Custom Pool UI | Unit Builder UI |
 |---------|------|----------------|-----------------|
 | Disable defense dice | boolean | Toggle | Not shown (always false) |
-| Defense die color | enum | Select | Read-only (from preset) |
-| Defense surge chart | enum | Select | Read-only (from preset) |
+| Defense die color | enum | Segmented | Read-only (from preset) |
+| Defense surge chart | enum | Segmented | Read-only (from preset) |
 | Minis in LOS | numeric | Spinner | Spinner (editable) |
-| Cover type | enum | Select | Select (situational) |
+| Cover type | enum | Segmented | Segmented (situational) |
 | Cover X | numeric | Spinner | Spinner (editable) |
 | Smoke tokens | numeric | Spinner | Spinner (situational) |
 | Suppressed | boolean | Toggle | Toggle (situational) |

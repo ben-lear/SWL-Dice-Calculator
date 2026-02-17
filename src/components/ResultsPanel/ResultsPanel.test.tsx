@@ -6,7 +6,7 @@ import type { SimulationResult } from '../../engine/types';
 
 // Mock the useSimulation hook (we don't want actual worker interaction)
 vi.mock('../../hooks/useSimulation', () => ({
-  useSimulation: vi.fn(),
+  useSimulation: () => ({ runSimulation: vi.fn() }),
 }));
 
 // Mock Recharts to avoid canvas rendering issues in jsdom
