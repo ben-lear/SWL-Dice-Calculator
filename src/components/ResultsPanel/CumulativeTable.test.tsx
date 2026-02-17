@@ -4,19 +4,19 @@ import CumulativeTable from './CumulativeTable';
 import type { DistributionEntry } from '../../engine/types';
 
 const createMockDistribution = (): DistributionEntry[] => [
-  { wounds: 0, probability: 0.1, cumulative: 1.0 },
-  { wounds: 1, probability: 0.2, cumulative: 0.9 },
-  { wounds: 2, probability: 0.3, cumulative: 0.7 },
-  { wounds: 3, probability: 0.25, cumulative: 0.4 },
-  { wounds: 4, probability: 0.15, cumulative: 0.15 },
+  { wounds: 0, probability: 0.1, cumulative: 1.0, count: 0 },
+  { wounds: 1, probability: 0.2, cumulative: 0.9, count: 0 },
+  { wounds: 2, probability: 0.3, cumulative: 0.7, count: 0 },
+  { wounds: 3, probability: 0.25, cumulative: 0.4, count: 0 },
+  { wounds: 4, probability: 0.15, cumulative: 0.15, count: 0 },
 ];
 
 const createMockDistribution2 = (): DistributionEntry[] => [
-  { wounds: 0, probability: 0.15, cumulative: 1.0 },
-  { wounds: 1, probability: 0.25, cumulative: 0.85 },
-  { wounds: 2, probability: 0.35, cumulative: 0.6 },
-  { wounds: 3, probability: 0.2, cumulative: 0.25 },
-  { wounds: 4, probability: 0.05, cumulative: 0.05 },
+  { wounds: 0, probability: 0.15, cumulative: 1.0, count: 0 },
+  { wounds: 1, probability: 0.25, cumulative: 0.85, count: 0 },
+  { wounds: 2, probability: 0.35, cumulative: 0.6, count: 0 },
+  { wounds: 3, probability: 0.2, cumulative: 0.25, count: 0 },
+  { wounds: 4, probability: 0.05, cumulative: 0.05, count: 0 },
 ];
 
 describe('CumulativeTable', () => {
@@ -83,17 +83,17 @@ describe('CumulativeTable', () => {
 
   it('shows "—" for missing wound counts in a series', () => {
     const shortDistribution: DistributionEntry[] = [
-      { wounds: 0, probability: 0.5, cumulative: 1.0 },
-      { wounds: 1, probability: 0.5, cumulative: 0.5 },
+      { wounds: 0, probability: 0.5, cumulative: 1.0, count: 0 },
+      { wounds: 1, probability: 0.5, cumulative: 0.5, count: 0 },
       // Missing wounds 2-4
     ];
 
     const fullDistribution: DistributionEntry[] = [
-      { wounds: 0, probability: 0.1, cumulative: 1.0 },
-      { wounds: 1, probability: 0.2, cumulative: 0.9 },
-      { wounds: 2, probability: 0.3, cumulative: 0.7 },
-      { wounds: 3, probability: 0.25, cumulative: 0.4 },
-      { wounds: 4, probability: 0.15, cumulative: 0.15 },
+      { wounds: 0, probability: 0.1, cumulative: 1.0, count: 0 },
+      { wounds: 1, probability: 0.2, cumulative: 0.9, count: 0 },
+      { wounds: 2, probability: 0.3, cumulative: 0.7, count: 0 },
+      { wounds: 3, probability: 0.25, cumulative: 0.4, count: 0 },
+      { wounds: 4, probability: 0.15, cumulative: 0.15, count: 0 },
     ];
 
     const series = [
@@ -127,10 +127,10 @@ describe('CumulativeTable', () => {
 
   it('filters out rows below minimum cumulative threshold', () => {
     const distributionWithLowProbs: DistributionEntry[] = [
-      { wounds: 0, probability: 0.99, cumulative: 1.0 },
-      { wounds: 1, probability: 0.009, cumulative: 0.01 },
-      { wounds: 2, probability: 0.0009, cumulative: 0.001 },
-      { wounds: 3, probability: 0.0001, cumulative: 0.0001 }, // Below 0.0005 threshold
+      { wounds: 0, probability: 0.99, cumulative: 1.0, count: 0 },
+      { wounds: 1, probability: 0.009, cumulative: 0.01, count: 0 },
+      { wounds: 2, probability: 0.0009, cumulative: 0.001, count: 0 },
+      { wounds: 3, probability: 0.0001, cumulative: 0.0001, count: 0 }, // Below 0.0005 threshold
     ];
 
     const series = [
@@ -198,10 +198,10 @@ describe('CumulativeTable', () => {
   it('sorts wound counts in ascending order', () => {
     // Create distribution with unsorted wound counts
     const unsortedDistribution: DistributionEntry[] = [
-      { wounds: 3, probability: 0.2, cumulative: 0.4 },
-      { wounds: 1, probability: 0.3, cumulative: 0.9 },
-      { wounds: 0, probability: 0.1, cumulative: 1.0 },
-      { wounds: 2, probability: 0.3, cumulative: 0.6 },
+      { wounds: 3, probability: 0.2, cumulative: 0.4, count: 0 },
+      { wounds: 1, probability: 0.3, cumulative: 0.9, count: 0 },
+      { wounds: 0, probability: 0.1, cumulative: 1.0, count: 0 },
+      { wounds: 2, probability: 0.3, cumulative: 0.6, count: 0 },
     ];
 
     const series = [
@@ -231,9 +231,9 @@ describe('CumulativeTable', () => {
 
   it('formats percentages correctly', () => {
     const preciseDistribution: DistributionEntry[] = [
-      { wounds: 0, probability: 0.1, cumulative: 1.0 },
-      { wounds: 1, probability: 0.23456, cumulative: 0.7654321 },
-      { wounds: 2, probability: 0.53086, cumulative: 0.530864 },
+      { wounds: 0, probability: 0.1, cumulative: 1.0, count: 0 },
+      { wounds: 1, probability: 0.23456, cumulative: 0.7654321, count: 0 },
+      { wounds: 2, probability: 0.53086, cumulative: 0.530864, count: 0 },
     ];
 
     const series = [

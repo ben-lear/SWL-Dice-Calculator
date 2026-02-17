@@ -12,7 +12,7 @@ vi.mock('recharts', () => ({
   XAxis: ({ dataKey }: { dataKey: string }) => <div data-testid={`x-axis-${dataKey}`} />,
   YAxis: () => <div data-testid="y-axis" />,
   CartesianGrid: () => <div data-testid="cartesian-grid" />,
-  Tooltip: ({ content }: { content: React.ComponentType }) => <div data-testid="tooltip" />,
+  Tooltip: () => <div data-testid="tooltip" />,
   ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="responsive-container">{children}</div>
   ),
@@ -20,19 +20,19 @@ vi.mock('recharts', () => ({
 }));
 
 const createMockDistribution = (): DistributionEntry[] => [
-  { wounds: 0, probability: 0.1, cumulative: 1.0 },
-  { wounds: 1, probability: 0.2, cumulative: 0.9 },
-  { wounds: 2, probability: 0.3, cumulative: 0.7 },
-  { wounds: 3, probability: 0.25, cumulative: 0.4 },
-  { wounds: 4, probability: 0.15, cumulative: 0.15 },
+  { wounds: 0, probability: 0.1, cumulative: 1.0, count: 0 },
+  { wounds: 1, probability: 0.2, cumulative: 0.9, count: 0 },
+  { wounds: 2, probability: 0.3, cumulative: 0.7, count: 0 },
+  { wounds: 3, probability: 0.25, cumulative: 0.4, count: 0 },
+  { wounds: 4, probability: 0.15, cumulative: 0.15, count: 0 },
 ];
 
 const createMockDistribution2 = (): DistributionEntry[] => [
-  { wounds: 0, probability: 0.15, cumulative: 1.0 },
-  { wounds: 1, probability: 0.25, cumulative: 0.85 },
-  { wounds: 2, probability: 0.35, cumulative: 0.6 },
-  { wounds: 3, probability: 0.2, cumulative: 0.25 },
-  { wounds: 4, probability: 0.05, cumulative: 0.05 },
+  { wounds: 0, probability: 0.15, cumulative: 1.0, count: 0 },
+  { wounds: 1, probability: 0.25, cumulative: 0.85, count: 0 },
+  { wounds: 2, probability: 0.35, cumulative: 0.6, count: 0 },
+  { wounds: 3, probability: 0.2, cumulative: 0.25, count: 0 },
+  { wounds: 4, probability: 0.05, cumulative: 0.05, count: 0 },
 ];
 
 describe('WoundDistributionChart', () => {
@@ -95,17 +95,17 @@ describe('WoundDistributionChart', () => {
 
   it('handles series with different wound count ranges', () => {
     const shortDistribution: DistributionEntry[] = [
-      { wounds: 0, probability: 0.5, cumulative: 1.0 },
-      { wounds: 1, probability: 0.5, cumulative: 0.5 },
+      { wounds: 0, probability: 0.5, cumulative: 1.0, count: 0 },
+      { wounds: 1, probability: 0.5, cumulative: 0.5, count: 0 },
     ];
 
     const longDistribution: DistributionEntry[] = [
-      { wounds: 0, probability: 0.1, cumulative: 1.0 },
-      { wounds: 1, probability: 0.2, cumulative: 0.9 },
-      { wounds: 2, probability: 0.3, cumulative: 0.7 },
-      { wounds: 3, probability: 0.25, cumulative: 0.4 },
-      { wounds: 4, probability: 0.1, cumulative: 0.15 },
-      { wounds: 5, probability: 0.05, cumulative: 0.05 },
+      { wounds: 0, probability: 0.1, cumulative: 1.0, count: 0 },
+      { wounds: 1, probability: 0.2, cumulative: 0.9, count: 0 },
+      { wounds: 2, probability: 0.3, cumulative: 0.7, count: 0 },
+      { wounds: 3, probability: 0.25, cumulative: 0.4, count: 0 },
+      { wounds: 4, probability: 0.1, cumulative: 0.15, count: 0 },
+      { wounds: 5, probability: 0.05, cumulative: 0.05, count: 0 },
     ];
 
     const series = [

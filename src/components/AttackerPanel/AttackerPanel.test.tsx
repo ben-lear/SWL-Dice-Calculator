@@ -65,12 +65,16 @@ describe('AttackerPanel', () => {
   it('updates weapon dice in custom mode', () => {
     render(<AttackerPanel />);
 
-    // Dice labels now use icons; find the Red Dice spinner via its Increase button
+    // NumberSpinner uses onPointerDown (not onClick) for increment/decrement, so we
+    // must fire pointerDown + pointerUp to trigger startHold and then stop the hold timer.
     const increaseRedBtn = screen.getByRole('button', { name: 'Increase Red Dice' });
-    // Click Increase 3 times to set Red Dice to 3
-    fireEvent.click(increaseRedBtn);
-    fireEvent.click(increaseRedBtn);
-    fireEvent.click(increaseRedBtn);
+    // Press Increase 3 times to set Red Dice to 3
+    fireEvent.pointerDown(increaseRedBtn);
+    fireEvent.pointerUp(increaseRedBtn);
+    fireEvent.pointerDown(increaseRedBtn);
+    fireEvent.pointerUp(increaseRedBtn);
+    fireEvent.pointerDown(increaseRedBtn);
+    fireEvent.pointerUp(increaseRedBtn);
 
     expect(useAttackConfigStore.getState().weapons[0]?.redDice).toBe(3);
   });
