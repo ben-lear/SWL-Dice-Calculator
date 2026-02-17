@@ -1,5 +1,5 @@
 import Layout from './Layout';
-import { AttackerPanel, DefenderPanel } from './components';
+import { AttackerPanel, DefenderPanel, ResultsPanel } from './components';
 
 export default function App() {
   return (
@@ -9,8 +9,8 @@ export default function App() {
           <AttackerPanel />
         </div>
 
-        <div className="flex min-h-0 items-center justify-center rounded-lg border border-gray-800 bg-gray-900 p-8 text-gray-500 lg:mx-4 lg:overflow-y-auto">
-          <p className="text-sm italic">Results will appear here</p>
+        <div className="min-h-0 lg:overflow-y-auto lg:px-4">
+          <ResultsPanel />
         </div>
 
         <div className="min-h-0 lg:overflow-y-auto lg:pl-4">

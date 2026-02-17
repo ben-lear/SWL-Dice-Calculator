@@ -3,6 +3,9 @@ export { default as AttackerPanel } from './AttackerPanel';
 export { default as DefenderPanel } from './DefenderPanel';
 export { default as AttackTypeSelector } from './AttackTypeSelector';
 
+// Results Panel (Phase 7)
+export { ResultsPanel } from './ResultsPanel';
+
 // Shared components (Phase 4)
 export { default as NumberSpinner } from './shared/NumberSpinner';
 export { default as Toggle } from './shared/Toggle';

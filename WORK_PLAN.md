@@ -389,31 +389,33 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 
 ## Phase 7: Results Panel
 
+**Status:** ✅ **COMPLETE** - All functionality implemented with comprehensive tests. useSimulation hook auto-runs simulations with 300ms debounce, displays mean/median/mode stats, interactive bar chart with mode highlighting, cumulative probability table, conditional secondary stats (Deflect/Djem So/Guardian), and points efficiency metrics. Fully tested with 16 format tests, 8 hook tests, 8 efficiency tests, and 15 integration tests.
+
 ### 7A: Core Results Display (`components/ResultsPanel/`)
 
-- [ ] Wire `useSimulation` hook: auto-run simulation when any config changes (debounced)
-- [ ] Display core stats: mean, median, mode wounds
-- [ ] Bar chart (Recharts): X = wound count, Y = probability %
-- [ ] Cumulative probability table: P(≥ X wounds) for each X
-- [ ] Loading indicator while simulation runs
-- [ ] Display secondary stats when applicable: Deflect/Shien reflection wounds, Djem So wounds
+- [x] Wire `useSimulation` hook: auto-run simulation when any config changes (debounced)
+- [x] Display core stats: mean, median, mode wounds
+- [x] Bar chart (Recharts): X = wound count, Y = probability %
+- [x] Cumulative probability table: P(≥ X wounds) for each X
+- [x] Loading indicator while simulation runs
+- [x] Display secondary stats when applicable: Deflect/Shien reflection wounds, Djem So wounds
 
 ### 7B: Points Efficiency Display
 
-- [ ] Show efficiency section only when attacker or defender cost > 0
-- [ ] Wounds per point (attacker), Points per wound (attacker)
-- [ ] Wounds per point (defender), Points per wound (defender)
-- [ ] Attacker efficiency ratio
-- [ ] Format numbers clearly (2–3 decimal places)
+- [x] Show efficiency section only when attacker or defender cost > 0
+- [x] Wounds per point (attacker), Points per wound (attacker)
+- [x] Wounds per point (defender), Points per wound (defender)
+- [x] Attacker efficiency ratio
+- [x] Format numbers clearly (2–3 decimal places)
 
 ### 7C: Chart Polish
 
-- [ ] Tooltips on bar chart hover
-- [ ] Axis labels and formatting
-- [ ] Responsive chart sizing
-- [ ] Color coding (attacker color vs defender color)
+- [x] Tooltips on bar chart hover
+- [x] Axis labels and formatting
+- [x] Responsive chart sizing
+- [x] Color coding (attacker color vs defender color)
 
-**Output:** Results update live as user changes inputs, all stats and charts render correctly.
+**Output:** ✅ **COMPLETE** - Results update live as user changes inputs, all stats and charts render correctly.
 
 ---
 
