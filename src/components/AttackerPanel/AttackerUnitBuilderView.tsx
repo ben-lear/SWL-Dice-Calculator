@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { WeaponKeywords } from '../../engine/types';
+import type { DisplayWeaponKeywords } from '../../data/enrichment/keywordTypes';
 import { aggregateWeaponKeywords } from '../../engine/attackPool';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
 import { useWeaponKeywordDisabled } from '../../hooks/useKeywordDisabled';
@@ -16,8 +17,9 @@ import DiceIconDisplay from '../shared/DiceIconDisplay';
  * Converts a partial WeaponKeywords object into an array of short human-readable
  * labels, skipping keys that are zero/false.
  */
-function formatWeaponKeywords(keywords: Partial<WeaponKeywords>): string[] {
+function formatWeaponKeywords(keywords: Partial<WeaponKeywords & DisplayWeaponKeywords>): string[] {
   const labels: string[] = [];
+  // Engine keywords
   if (keywords.criticalX) labels.push(`Critical ${keywords.criticalX}`);
   if (keywords.lethalX)   labels.push(`Lethal ${keywords.lethalX}`);
   if (keywords.pierceX)   labels.push(`Pierce ${keywords.pierceX}`);
@@ -33,6 +35,22 @@ function formatWeaponKeywords(keywords: Partial<WeaponKeywords>): string[] {
   if (keywords.primitive)     labels.push('Primitive');
   if (keywords.spray)         labels.push('Spray');
   if (keywords.cumbersome)    labels.push('Cumbersome');
+  // Display weapon keywords
+  if (keywords.longshot)       labels.push('Long Shot');
+  if (keywords.scatter)        labels.push('Scatter');
+  if (keywords.exhaust)        labels.push('Exhaust');
+  if (keywords.expend)         labels.push('Expend');
+  if (keywords.immobilizeX)    labels.push(`Immobilize ${keywords.immobilizeX}`);
+  if (keywords.overrunX)       labels.push(`Overrun ${keywords.overrunX}`);
+  if (keywords.fixed)          labels.push(`Fixed: ${keywords.fixed}`);
+  if (keywords.areaWeapon)     labels.push('Area Weapon');
+  if (keywords.beamX)          labels.push(`Beam ${keywords.beamX}`);
+  if (keywords.poisonX)        labels.push(`Poison ${keywords.poisonX}`);
+  if (keywords.selfDestructX)  labels.push(`Self-Destruct ${keywords.selfDestructX}`);
+  if (keywords.towCable)       labels.push('Tow Cable');
+  if (keywords.versatile)      labels.push('Versatile');
+  if (keywords.armX)           labels.push(`Arm: ${keywords.armX}`);
+  if (keywords.detonateX)      labels.push(`Detonate: ${keywords.detonateX}`);
   return labels;
 }
 

@@ -5,6 +5,7 @@ import type {
   DefenseDieColor,
   WeaponKeywords,
 } from '../engine/types';
+import type { DisplayWeaponKeywords } from './enrichment/keywordTypes';
 import type { Faction } from './presets';
 
 // ============================================================================
@@ -267,8 +268,8 @@ export interface WeaponProfile {
   redDice: number;
   blackDice: number;
   whiteDice: number;
-  /** Weapon-specific keywords using the engine's typed WeaponKeywords */
-  keywords: Partial<WeaponKeywords>;
+  /** Weapon-specific keywords using the engine's typed WeaponKeywords + display weapon keywords */
+  keywords: Partial<WeaponKeywords & DisplayWeaponKeywords>;
   minRange?: number;
   maxRange?: number;
 }
@@ -306,7 +307,7 @@ export interface ResolvedUnit {
    * be in our typed interfaces yet, but enrichment data should use the
    * typed UnitKeywords interface.
    */
-  keywords: Record<string, number | boolean>;
+  keywords: Record<string, number | boolean | string>;
 
   /** Weapon profiles (from enrichment). Empty for un-enriched units. */
   weapons: WeaponProfile[];
@@ -344,7 +345,7 @@ export interface ResolvedUpgrade {
    * This uses a generic Record to accommodate flexible runtime keyword resolution,
    * but enrichment data should use the typed UpgradeKeywords interface.
    */
-  keywords: Record<string, number | boolean>;
+  keywords: Record<string, number | boolean | string>;
 
   /** Weapon profiles this upgrade provides (from enrichment). Empty array if none. */
   weapons: WeaponProfile[];
@@ -371,6 +372,17 @@ export interface ResolvedUpgrade {
 
   /** Upgrade slot type the unit must have in its upgrade bar for this upgrade to be equippable. Null = no requirement. */
   requiredUpgradeSlot: UpgradeSlot | null;
+
+  /**
+   * Surge chart overrides this upgrade grants.
+   * These modify surge conversion behavior, not keyword tagging.
+   * Null if the upgrade has no surge overrides.
+   */
+  surgeOverrides: {
+    surgeCrit?: boolean;
+    meleeSurgeCrit?: boolean;
+    meleeSurgeBlock?: boolean;
+  } | null;
 
   /** Whether this upgrade has been manually enriched with keyword/dice data */
   isEnriched: boolean;

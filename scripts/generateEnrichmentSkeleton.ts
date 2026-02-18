@@ -76,12 +76,14 @@ const ATTACKER_KEYWORD_MAP: Record<string, string | string[]> = {
   Duelist: ['duelistAttacker', 'duelistDefender'],
   'Makashi Mastery': 'makashiMastery',
   'Death from Above': 'deathFromAbove',
+  'Death From Above': 'deathFromAbove',
   'Hold the Line': 'holdTheLine',
 };
 
 const DEFENDER_KEYWORD_MAP: Record<string, string | string[]> = {
   Armor: 'armorX',
   'Armor [X]': 'armorX',
+  'Armor X': 'armorX',
   'Weak Point': 'weakPointX',
   'Danger Sense': 'dangerSenseX',
   'Uncanny Luck': 'uncannyLuckX',
@@ -91,6 +93,7 @@ const DEFENDER_KEYWORD_MAP: Record<string, string | string[]> = {
   'Immune: Pierce': 'immunePierce',
   'Immune: Melee Pierce': 'immuneMeleePierce',
   'Immune: Blast': 'immuneBlast',
+  'Immune: Melee': 'immuneMelee',
   Impervious: 'impervious',
   Block: 'block',
   Deflect: 'deflect',
@@ -106,10 +109,15 @@ const DEFENDER_KEYWORD_MAP: Record<string, string | string[]> = {
 
 const WEAPON_KEYWORD_MAP: Record<string, string | string[]> = {
   Pierce: 'pierceX',
+  'Pierce X': 'pierceX',
   Impact: 'impactX',
+  'Impact X': 'impactX',
   Critical: 'criticalX',
+  'Critical X': 'criticalX',
   Lethal: 'lethalX',
+  'Lethal X': 'lethalX',
   Ram: 'ramX',
+  'Ram X': 'ramX',
   Blast: 'blast',
   Suppressive: 'suppressive',
   'High Velocity': 'highVelocity',
@@ -123,10 +131,191 @@ const WEAPON_KEYWORD_MAP: Record<string, string | string[]> = {
   Primitive: 'primitive',
 };
 
+const DISPLAY_WEAPON_KEYWORD_MAP: Record<string, string> = {
+  'Long Shot': 'longshot',
+  Scatter: 'scatter',
+  'Immobilize X': 'immobilizeX',
+  'Overrun X': 'overrunX',
+  'Area Weapon': 'areaWeapon',
+  'Beam X': 'beamX',
+  'Poison X': 'poisonX',
+  'Self-Destruct X': 'selfDestructX',
+  'Tow Cable': 'towCable',
+  Versatile: 'versatile',
+  'Fixed: Front/Rear': 'fixed',
+  'Arm X: Charge Token Type': 'armX',
+  'Detonate X: (Charge Type)': 'detonateX',
+};
+
+const DISPLAY_UNIT_KEYWORD_MAP: Record<string, string> = {
+  // Boolean — with enrichment examples
+  Charge: 'charge',
+  Dauntless: 'dauntless',
+  Reconfigure: 'reconfigure',
+  Cycle: 'cycle',
+  Cunning: 'cunning',
+  'Allies of Convenience': 'alliesOfConvenience',
+  Exemplar: 'exemplar',
+  'Prepared Position': 'preparedPosition',
+  Indomitable: 'indomitable',
+  Spur: 'spur',
+  '\u27a6Quick Thinking': 'quickThinking',
+  Infiltrate: 'infiltrate',
+  Relentless: 'relentless',
+
+  // Numeric — with enrichment examples
+  'Tactical X': 'tacticalX',
+  Demoralize: 'demoralizeX',
+  Inspire: 'inspireX',
+  Target: 'targetX',
+  '\u27a6Spotter': 'spotterX',
+  '\u27a6Bolster': 'bolsterX',
+  Strategize: 'strategizeX',
+  Recharge: 'rechargeX',
+
+  // String — with enrichment examples
+  Aid: 'aid',
+  Direct: 'direct',
+
+  // Boolean — no enrichment examples
+  Nimble: 'nimble',
+  Gunslinger: 'gunslinger',
+  'Fire Support': 'fireSupport',
+  Barrage: 'barrage',
+  'Ataru Mastery': 'ataruMastery',
+  'Juyo Mastery': 'juyoMastery',
+  Steady: 'steady',
+  Disengage: 'disengage',
+  Scale: 'scale',
+  'Covert Ops': 'covertOps',
+  Incognito: 'incognito',
+  Loadout: 'loadout',
+  Sentinel: 'sentinel',
+  Stationary: 'stationary',
+  'Full Pivot': 'fullPivot',
+  'Climbing Vehicle': 'climbingVehicle',
+  'Expert Climber': 'expertClimber',
+  Unhindered: 'unhindered',
+  Plodding: 'plodding',
+  Grounded: 'grounded',
+  Reposition: 'reposition',
+  'Attack Run': 'attackRun',
+  Authoritative: 'authoritative',
+  Bounty: 'bounty',
+  Cache: 'cache',
+  '\u27a6Calculate Odds': 'calculateOdds',
+  Compel: 'compel',
+  Detachment: 'detachment',
+  Disgraced: 'disgraced',
+  Distract: 'distract',
+  'Divine Influence': 'divineInfluence',
+  Divulge: 'divulge',
+  'Faulty Equipment': 'faultyEquipment',
+  'Field Commander': 'fieldCommander',
+  Flawed: 'flawed',
+  Guidance: 'guidance',
+  'Heavy Weapon Team': 'heavyWeaponTeam',
+  Hunted: 'hunted',
+  "I'm Part of the Squad Too": 'imPartOfTheSquadToo',
+  Inconspicuous: 'inconspicuous',
+  Insecure: 'insecure',
+  Interrogate: 'interrogate',
+  'Latent Power': 'latentPower',
+  Leader: 'leader',
+  'Master Storyteller': 'masterStoryteller',
+  Mobile: 'mobile',
+  'My Mood is Based On Profit': 'myMoodIsBasedOnProfit',
+  Noncombatant: 'noncombatantKeyword',
+  'One Step Ahead': 'oneStepAhead',
+  Override: 'overrideKeyword',
+  Permanent: 'permanent',
+  Programmed: 'programmed',
+  '\u27a6Pulling the Strings': 'pullingTheStrings',
+  Reinforcements: 'reinforcements',
+  Restore: 'restore',
+  Ruthless: 'ruthless',
+  'Secret Mission': 'secretMission',
+  'Self-Preservation': 'selfPreservation',
+  Small: 'small',
+  'Smoke Tokens': 'smokeTokens',
+  Tempted: 'tempted',
+  Unconcerned: 'unconcerned',
+  Unstoppable: 'unstoppable',
+  'Weighed Down': 'weighedDown',
+  "We're Not Regs": 'wereNotRegs',
+  'Wheel Mode': 'wheelMode',
+  'Immune: Enemy Effects': 'immuneEnemyEffects',
+  'Immune: Range 1 Weapons': 'immuneRange1Weapons',
+
+  // Numeric — no enrichment examples
+  Agile: 'agileX',
+  Reliable: 'reliableX',
+  'Scout X': 'scoutX',
+  Jump: 'jumpX',
+  Speeder: 'speederX',
+  Enrage: 'enrageX',
+  Regenerate: 'regenerateX',
+  'Master of the Force': 'masterOfTheForceX',
+  Observe: 'observeX',
+  Contingencies: 'contingenciesX',
+  'Command Vehicle X': 'commandVehicleX',
+  Defend: 'defendX',
+  Disciplined: 'disciplinedX',
+  'Flexible Response X': 'flexibleResponseX',
+  Generator: 'generatorX',
+  Ready: 'readyX',
+  'Scouting Party': 'scoutingPartyX',
+  Smoke: 'smokeX',
+  '\u27a6Take Cover': 'takeCoverX',
+  Wound: 'woundX',
+  'Advanced Targeting: X': 'advancedTargetingX',
+  'Light Transport X: Open': 'lightTransportX',
+
+  // String/parameterized — no enrichment examples
+  'AI: Action': 'ai',
+  'AI: Attack': 'ai',
+  'AI: Attack, Move': 'ai',
+  'AI: Dodge, Move': 'ai',
+  'AI: Move': 'ai',
+  'Aid: Pyke Syndicate': 'aid',
+  'Associate: Unit Name': 'associate',
+  'Coordinate: Droid Trooper': 'coordinate',
+  'Coordinate: Emplacement Trooper': 'coordinate',
+  'Coordinate: Unit Name/Unit Type': 'coordinate',
+  'Coordinate: Vehicle': 'coordinate',
+  'Direct: ;r2 Clone Trooper Unit': 'direct',
+  'Direct: ;r2 Droid Trooper Unit': 'direct',
+  Entourage: 'entourage',
+  'Entourage: Imperial Death Troopers': 'entourage',
+  'Entourage: Imperial Royal Guards': 'entourage',
+  Equip: 'equip',
+  'Equip: Del Meeko, Gideon Hask': 'equip',
+  'Equip: Tristan Wren, Ursa Wren': 'equip',
+  'Hover: Air X': 'hover',
+  'Hover: Ground': 'hover',
+  'Independent: Token X/Action': 'independent',
+  'Mercenary: Faction': 'mercenary',
+  'Repair 1: Capacity 2': 'repair',
+  'Repair 2: Capacity 2': 'repair',
+  'Repair X: Capacity Y': 'repair',
+  Retinue: 'retinue',
+  'Retinue: Iden Versio': 'retinue',
+  'Retinue: Sabine Wren': 'retinue',
+  'Special Issue: Battle Force': 'specialIssue',
+  'Teamwork: Cassian Andor': 'teamwork',
+  'Teamwork: Han Solo': 'teamwork',
+  'Teamwork: Unit Name': 'teamwork',
+  Transport: 'transport',
+  'Transport X: Open': 'transport',
+  'Treat X: Capacity Y': 'treat',
+};
+
 const ALL_KEYWORD_MAP = {
   ...ATTACKER_KEYWORD_MAP,
   ...DEFENDER_KEYWORD_MAP,
   ...WEAPON_KEYWORD_MAP,
+  ...DISPLAY_WEAPON_KEYWORD_MAP,
+  ...DISPLAY_UNIT_KEYWORD_MAP,
 };
 
 function isMagnitudeField(fieldName: string): boolean {
@@ -136,6 +325,14 @@ function isMagnitudeField(fieldName: string): boolean {
 function toFieldNames(fieldValue: string | string[]): string[] {
   return Array.isArray(fieldValue) ? fieldValue : [fieldValue];
 }
+
+/** String-typed display keyword fields (parameterized keywords). */
+const STRING_KEYWORD_FIELDS = new Set<string>([
+  'fixed', 'armX', 'detonateX',
+  'coordinate', 'aid', 'direct', 'ai', 'entourage', 'equip', 'retinue',
+  'teamwork', 'associate', 'independent', 'mercenary', 'specialIssue',
+  'repair', 'treat', 'hover', 'transport',
+]);
 
 function mapKeywordIdsToFields(
   keywordIds: number[] | null | undefined,
@@ -153,7 +350,11 @@ function mapKeywordIdsToFields(
     if (!fieldValue) continue;
 
     for (const fieldName of toFieldNames(fieldValue)) {
-      mapped[fieldName] = isMagnitudeField(fieldName) ? '<need human>' : true;
+      if (STRING_KEYWORD_FIELDS.has(fieldName)) {
+        mapped[fieldName] = '<need human>';
+      } else {
+        mapped[fieldName] = isMagnitudeField(fieldName) ? '<need human>' : true;
+      }
     }
   }
 

@@ -6,7 +6,7 @@
 import type { ProcessedUnit, ResolvedUnit } from './types';
 import type { UnitEnrichment, EnrichmentWeaponProfile } from './enrichment/types';
 import { UNIT_ENRICHMENTS } from './enrichment/units';
-import { KEYWORD_MAP, ATTACKER_KEYWORD_FIELD_MAP, DEFENDER_KEYWORD_FIELD_MAP } from './keywordMap';
+import { KEYWORD_MAP, ATTACKER_KEYWORD_FIELD_MAP, DEFENDER_KEYWORD_FIELD_MAP, DISPLAY_KEYWORD_FIELD_MAP } from './keywordMap';
 
 import processedUnitsJson from './processed/units.json';
 
@@ -62,7 +62,7 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
   const isEnriched = enrichment !== undefined;
 
   // Resolve keywords: start with API-detected keywords, converting to field names
-  const keywords: Record<string, number | boolean> = {};
+  const keywords: Record<string, number | boolean | string> = {};
   
   for (const kwName of processed.keywordNames) {
     const meta = KEYWORD_MAP.get(kwName);
@@ -71,10 +71,11 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
         continue;
       }
 
-      // Try to map to attacker or defender field name
+      // Try to map to attacker, defender, or display field name
       const attackerField = ATTACKER_KEYWORD_FIELD_MAP[kwName];
       const defenderField = DEFENDER_KEYWORD_FIELD_MAP[kwName];
-      const fieldName = attackerField || defenderField;
+      const displayField = DISPLAY_KEYWORD_FIELD_MAP[kwName];
+      const fieldName = attackerField || defenderField || displayField;
       
       if (fieldName) {
         // Store under the field name, not the API keyword name

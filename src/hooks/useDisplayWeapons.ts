@@ -12,6 +12,7 @@ import type { WeaponProfile as DataLayerWeaponProfile } from '../data/types';
 import { isWeaponUsableForAttackType } from '../engine/weaponUtils';
 import { AttackType } from '../engine/types';
 import type { WeaponKeywords } from '../engine/types';
+import type { DisplayWeaponKeywords } from '../data/enrichment/keywordTypes';
 
 // ============================================================================
 // Types
@@ -43,7 +44,7 @@ export interface DisplayWeapon {
   /** Where this weapon comes from */
   source: WeaponSource;
   /** Weapon keywords (for tooltip/display) */
-  keywords: Partial<WeaponKeywords>;
+  keywords: Partial<WeaponKeywords & DisplayWeaponKeywords>;
 }
 
 export interface DisplayWeaponsResult {

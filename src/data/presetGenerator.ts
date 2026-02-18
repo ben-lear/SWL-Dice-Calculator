@@ -152,7 +152,7 @@ function generateAttackerPreset(
   copyKeywordsToProfile(unit.keywords, profile);
 
   // Copy weapon-level keywords to profile (weapon overrides unit)
-  copyKeywordsToProfile(weapon.keywords, profile);
+  copyKeywordsToProfile(weapon.keywords as Record<string, number | boolean | string>, profile);
 
   // Handle Duelist special case (field name is duelistAttacker on attacker side,
   // but enrichment might use either duelistAttacker or duelistDefender as this is
@@ -368,11 +368,15 @@ function generateDefenderPreset(unit: ResolvedUnit): DefenderPreset {
  * we can copy them directly without mapping.
  */
 function copyKeywordsToProfile(
-  keywords: Record<string, number | boolean>,
+  keywords: Record<string, number | boolean | string>,
   profile: Record<string, any>,
 ): void {
   for (const [fieldName, value] of Object.entries(keywords)) {
-    profile[fieldName] = value;
+    // Only copy engine-relevant keyword values (number/boolean) to engine profiles;
+    // skip string-valued display keywords which are not consumed by the engine.
+    if (typeof value === 'number' || typeof value === 'boolean') {
+      profile[fieldName] = value;
+    }
   }
 }
 

@@ -490,8 +490,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'armament-the-darksaber-maul': {
     keywords: {
-      surgeCrit: true,
       cunning: true
+    },
+    surgeOverrides: {
+      surgeCrit: true,
     },
     weapons: [
       {
@@ -843,6 +845,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'doctrine-platoon-commander': {
     keywords: {
       sharpshooterX: 1,
+    },
+    surgeOverrides: {
       meleeSurgeCrit: true,
       meleeSurgeBlock: true,
     },

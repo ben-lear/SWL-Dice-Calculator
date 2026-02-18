@@ -38,6 +38,11 @@ const WEAPON_KEYWORD_FIELDS = new Set<string>([
   'antiMaterielX', 'antiPersonnelX', 'cumbersome',
   'immuneDeflect', 'primitive',
   'sidearmMelee', 'sidearmRanged',
+  // Display weapon keywords
+  'longshot', 'scatter', 'exhaust', 'expend',
+  'immobilizeX', 'overrunX', 'fixed',
+  'areaWeapon', 'beamX', 'poisonX', 'selfDestructX',
+  'towCable', 'versatile', 'armX', 'detonateX',
 ]);
 
 // ============================================================================

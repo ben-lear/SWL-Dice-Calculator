@@ -10,7 +10,7 @@ import type {
   WeaponKeywords,
 } from '../../engine/types';
 import type { UpgradeSlot } from '../types';
-import type { UnitKeywords, UpgradeKeywords } from './keywordTypes';
+import type { DisplayWeaponKeywords, UnitKeywords, UpgradeKeywords } from './keywordTypes';
 
 /**
  * Weapon profile shape used by manual unit enrichment.
@@ -24,7 +24,7 @@ export interface EnrichmentWeaponProfile {
   redDice?: number | null;
   blackDice?: number | null;
   whiteDice?: number | null;
-  keywords?: Partial<WeaponKeywords>;
+  keywords?: Partial<WeaponKeywords & DisplayWeaponKeywords>;
   minRange?: number;
   maxRange?: number;
 }
@@ -159,6 +159,19 @@ export interface UpgradeEnrichment {
    * grenade upgrade (not one total across all grenades).
    */
   isGrenade?: boolean;
+
+  /**
+   * Surge chart overrides this upgrade grants.
+   * These are NOT game keywords — they modify surge conversion behavior
+   * (e.g., adding crit to the surge chart, or block on melee surge).
+   * Separated from keywords because they affect surge chart configuration,
+   * not keyword tagging.
+   */
+  surgeOverrides?: {
+    surgeCrit?: boolean;
+    meleeSurgeCrit?: boolean;
+    meleeSurgeBlock?: boolean;
+  };
 
   /**
    * Additional upgrade slot(s) this upgrade adds to the unit when equipped.

@@ -239,10 +239,10 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
     UPGRADE_ENRICHMENTS[processed.id];
   const isEnriched = enrichment !== undefined;
 
-  const normalizedKeywords: Record<string, number | boolean> = {};
+  const normalizedKeywords: Record<string, number | boolean | string> = {};
   if (enrichment?.keywords) {
     for (const [key, value] of Object.entries(enrichment.keywords)) {
-      if (typeof value === 'number' || typeof value === 'boolean') {
+      if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'string') {
         normalizedKeywords[key] = value;
       }
     }
@@ -272,6 +272,7 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
         ...(enrichment?.addsUpgradeSlot ?? []),
       ]),
     ] as UpgradeSlot[],
+    surgeOverrides: enrichment?.surgeOverrides ?? null,
     isEnriched,
     requiredUpgradeSlot: processed.requiredUpgradeSlot ?? null,
   };
