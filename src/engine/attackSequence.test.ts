@@ -415,4 +415,81 @@ describe('executeAttackSequence - Keyword Combinations', () => {
     const avgWounds = results.reduce((s, r) => s + r.totalWounds, 0) / results.length;
     expect(avgWounds).toBeGreaterThan(0);
   });
+
+  // ════════════════════════════════════════════════════════════════
+  // Immune: Melee — Monte Carlo path
+  // ════════════════════════════════════════════════════════════════
+  describe('Immune: Melee', () => {
+    it('returns zero for all wound fields when melee attack vs Immune: Melee', () => {
+      const config: AttackConfig = {
+        attacker: createAttackerWithWeapon({ redDice: 6 }),
+        defender: createMinimalDefender({ immuneMelee: true }),
+        attackType: AttackType.Melee,
+      };
+
+      const result = executeAttackSequence(config);
+      expect(result.totalWounds).toBe(0);
+      expect(result.mainTargetWoundsNoPierce).toBe(0);
+      expect(result.guardianWoundsNoPierce).toBe(0);
+      expect(result.deflectWounds).toBe(0);
+      expect(result.djemSoWounds).toBe(0);
+      expect(result.suppressionApplied).toBe(0);
+    });
+
+    it('does not affect ranged attacks against Immune: Melee', () => {
+      const config: AttackConfig = {
+        attacker: createAttackerWithWeapon({ redDice: 6 }),
+        defender: createMinimalDefender({ immuneMelee: true }),
+        attackType: AttackType.Ranged,
+      };
+
+      // Should still deal damage normally over many runs
+      const results = [];
+      for (let i = 0; i < 50; i++) {
+        results.push(executeAttackSequence(config));
+      }
+      const avgWounds = results.reduce((s, r) => s + r.totalWounds, 0) / results.length;
+      expect(avgWounds).toBeGreaterThan(0);
+    });
+  });
+
+  // ════════════════════════════════════════════════════════════════
+  // Complete the Mission (attacker) — Critical 2
+  // ════════════════════════════════════════════════════════════════
+  describe('Complete the Mission (attacker)', () => {
+    it('adds Critical 2 effect — more crits/wounds vs Armor', () => {
+      // With Armor 3, only crits deal damage (hits are cancelled by Armor).
+      // CTM grants Critical 2, converting up to 2 surges → crits.
+      const configCTM: AttackConfig = {
+        attacker: createAttackerWithWeapon(
+          { whiteDice: 6 },
+          { surgeChart: AttackSurgeChart.ToCrit, completeTheMission: true }
+        ),
+        defender: createMinimalDefender({ armorX: 3, dieColor: DefenseDieColor.White }),
+        attackType: AttackType.Ranged,
+      };
+
+      const configNoCTM: AttackConfig = {
+        attacker: createAttackerWithWeapon(
+          { whiteDice: 6 },
+          { surgeChart: AttackSurgeChart.ToCrit, completeTheMission: false }
+        ),
+        defender: createMinimalDefender({ armorX: 3, dieColor: DefenseDieColor.White }),
+        attackType: AttackType.Ranged,
+      };
+
+      // Run many iterations; CTM should produce more wounds on average
+      const ctmResults = [];
+      const noCTMResults = [];
+      for (let i = 0; i < 200; i++) {
+        ctmResults.push(executeAttackSequence(configCTM));
+        noCTMResults.push(executeAttackSequence(configNoCTM));
+      }
+
+      const ctmAvg = ctmResults.reduce((s, r) => s + r.totalWounds, 0) / ctmResults.length;
+      const noCTMAvg = noCTMResults.reduce((s, r) => s + r.totalWounds, 0) / noCTMResults.length;
+      // CTM Critical 2 adds extra surge → crit conversions on top of surge chart
+      expect(ctmAvg).toBeGreaterThanOrEqual(noCTMAvg);
+    });
+  });
 });

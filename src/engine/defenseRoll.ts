@@ -1,4 +1,4 @@
-import type { AttackConfig, RolledDefenseDie } from './types';
+import type { AttackConfig, RolledDefenseDie, AggregatedWeaponKeywords } from './types';
 import { rollDefenseDie } from './dice';
 import { DefenseDieColor, DefenseFace, AttackType, DefenseSurgeChart } from './types';
 
@@ -10,9 +10,9 @@ import { DefenseDieColor, DefenseFace, AttackType, DefenseSurgeChart } from './t
 export function rollGuardianDefense(
   guardianHits: number,
   config: AttackConfig,
-  poolHighVelocity: boolean
+  poolKeywords: AggregatedWeaponKeywords
 ): { guardianWoundsNoPierce: number; guardianBlocks: number; guardianDeflectWounds: number } {
-  const { defender, attacker } = config;
+  const { defender } = config;
 
   // ── Default die color if not specified ──
   const guardianDieColor = defender.guardianDieColor ?? DefenseDieColor.White;
@@ -44,7 +44,7 @@ export function rollGuardianDefense(
   // the attacker suffers 1 wound if at least 1 die has a surge result."
   // High Velocity completely disables Deflect (both conversion and wound reflection).
   let guardianDeflectWounds = 0;
-  if (defender.guardianDeflect && !poolHighVelocity && !attacker.immuneDeflect) {
+  if (defender.guardianDeflect && !poolKeywords.highVelocity && !poolKeywords.immuneDeflect) {
     const hasSurge = guardianResults.some(d => d.face === DefenseFace.Surge);
     if (hasSurge) {
       guardianDeflectWounds = 1; // Exactly 1, regardless of surge count
@@ -63,7 +63,7 @@ export function rollGuardianDefense(
   // High Velocity disables Deflect entirely, including surge conversion.
   if (
     defender.guardianDeflect &&
-    !poolHighVelocity &&
+    !poolKeywords.highVelocity &&
     config.attackType === AttackType.Ranged
   ) {
     guardianResults = guardianResults.map(d =>

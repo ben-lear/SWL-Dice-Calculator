@@ -8,8 +8,10 @@ import { AttackType } from './types';
  * This is the last step before defense dice are rolled.
  *
  * Operation order (CRITICAL):
+ * 0. Ion X — Reduce effective Shielded X (flip shield tokens)
  * 1. Ram X — Convert ANY results (blanks first, then hits) to crits (Melee/Overrun only)
  * 2. Impact X — Convert hits → crits (to bypass Armor)
+ * 2.5. Primitive — Convert all crits → hits (when defender has Armor)
  * 3. Armor X — Cancel hits (crits bypass)
  * 4. Shielded X — Cancel crits first, then hits (Ranged only)
  * 5. Backup — Cancel up to 2 hits (Ranged only)
@@ -26,6 +28,20 @@ export function modifyAttackDice(
   let { hits, crits, blanks } = attackResults;
   const { attacker, defender } = config;
   let lethalPierce = 0;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 0. Ion X — Reduce effective Shielded X by flipping shield tokens
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Per rulebook: At the start of the Modify Attack Dice step, before resolving
+  // other effects, the defending unit must flip 1 active Shield token per
+  // hit or crit result, to a maximum of X tokens flipped.
+  // This reduces the effective shield pool available in step 4.
+  let effectiveShieldedX = defender.shieldedX;
+  if (poolKeywords.ionX > 0 && effectiveShieldedX > 0 && config.attackType === AttackType.Ranged) {
+    const totalHitsCrits = hits + crits;
+    const shieldsFlipped = Math.min(effectiveShieldedX, totalHitsCrits, poolKeywords.ionX);
+    effectiveShieldedX -= shieldsFlipped;
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // 1. Ram X — Convert up to X results (any face) to crits (Melee/Overrun only)
@@ -68,6 +84,19 @@ export function modifyAttackDice(
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // 2.5. Primitive — Convert ALL crits → hits (when defender has Armor)
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Per rulebook: "When a unit attacks, if its Attack Pool has the Primitive
+  // keyword and the defending unit has the Armor X keyword, after resolving
+  // any instances of the Impact X keyword during the Modify Attack Dice step,
+  // the attacking unit must modify all crit results to hit results."
+  // This effectively neutralizes Impact X against Armor targets.
+  if (poolKeywords.primitive && defender.armorX > 0) {
+    hits += crits;
+    crits = 0;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // 3. Armor X — Cancel up to X hits (crits bypass Armor)
   // ═══════════════════════════════════════════════════════════════════════════
   // Per rulebook: "While a unit with Armor X is defending, cancel up to X hit
@@ -84,10 +113,10 @@ export function modifyAttackDice(
   // Ranged attacks only.
   // Priority: cancel crits first (most valuable to attacker), then hits.
   if (
-    defender.shieldedX > 0 &&
+    effectiveShieldedX > 0 &&
     config.attackType === AttackType.Ranged
   ) {
-    let shieldRemaining = defender.shieldedX;
+    let shieldRemaining = effectiveShieldedX;
 
     // Cancel crits first
     const critsCancelled = Math.min(crits, shieldRemaining);

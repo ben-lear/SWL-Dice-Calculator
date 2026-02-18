@@ -31,7 +31,6 @@ describe('useAttackerKeywordDisabled', () => {
     useAttackTypeStore.getState().setAttackType(AttackType.Melee);
     const { result } = renderHook(() => useAttackerKeywordDisabled());
     expect(result.current('sharpshooterX')).toBe(true);
-    expect(result.current('immuneDeflect')).toBe(true);
     expect(result.current('deathFromAbove')).toBe(true);
   });
 

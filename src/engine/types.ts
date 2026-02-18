@@ -110,6 +110,13 @@ export interface WeaponKeywords {
   // Aggregated: Boolean AND (all weapons must have it)
   highVelocity: boolean;
 
+  // Aggregated: Boolean OR (any weapon → pool has it)
+  immuneDeflect: boolean;
+  primitive: boolean;
+
+  // Aggregated: Summed across weapons in pool
+  ionX: number;
+
   // Per-weapon only (applied during pool formation, not aggregated)
   spray: boolean;
   antiMaterielX: number;
@@ -167,6 +174,13 @@ export interface AggregatedWeaponKeywords {
 
   // AND'd across weapons (all must have it)
   highVelocity: boolean;
+
+  // OR'd across weapons
+  immuneDeflect: boolean;
+  primitive: boolean;
+
+  // Summed across weapons
+  ionX: number;
 }
 
 // ============================================================================
@@ -199,9 +213,9 @@ export interface AttackerConfig {
   jarKaiMastery: boolean;
   duelistAttacker: boolean;
   makashiMastery: boolean;
-  immuneDeflect: boolean;
   deathFromAbove: boolean;
   holdTheLine: boolean;
+  completeTheMission: boolean;
 
   // Points
   unitCost: number;
@@ -237,6 +251,7 @@ export interface DefenderConfig {
   immunePierce: boolean;
   immuneMeleePierce: boolean;
   immuneBlast: boolean;
+  immuneMelee: boolean;
   impervious: boolean;
   dangerSenseX: number;
   uncannyLuckX: number;
@@ -252,6 +267,7 @@ export interface DefenderConfig {
   backup: boolean;
   holdTheLine: boolean;
   dugIn: boolean;  // Dug In upgrade: cover dice become red instead of white
+  completeTheMission: boolean;  // Complete the Mission: surge→block near allied Priority Mission Token
 
   // Guardian
   guardianX: number;

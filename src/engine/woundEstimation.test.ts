@@ -693,5 +693,210 @@ describe('woundEstimation', () => {
         expect(moreImpervious).not.toEqual(lessImpervious);
       });
     });
+
+    // ════════════════════════════════════════════════════════════════
+    // Immune: Melee
+    // ════════════════════════════════════════════════════════════════
+    describe('Immune: Melee', () => {
+      it('returns 0 wounds for melee attacks against Immune: Melee defender', () => {
+        const config = makeConfig(
+          {},
+          { immuneMelee: true, dieColor: DefenseDieColor.White },
+          AttackType.Melee
+        );
+        const pool = createMinimalPoolKeywords();
+        // Even with 6 hits, immuneMelee + melee → 0 wounds
+        expect(estimateExpectedWounds(6, 0, config, pool)).toBe(0);
+        expect(estimateExpectedWounds(3, 3, config, pool)).toBe(0);
+      });
+
+      it('does not affect ranged attacks against Immune: Melee defender', () => {
+        const config = makeConfig(
+          {},
+          { immuneMelee: true, dieColor: DefenseDieColor.White },
+          AttackType.Ranged
+        );
+        const pool = createMinimalPoolKeywords();
+        // Ranged attack should still deal damage normally
+        const result = estimateExpectedWounds(3, 0, config, pool);
+        expect(result).toBeGreaterThan(0);
+      });
+
+      it('does not affect overrun attacks against Immune: Melee defender', () => {
+        const config = makeConfig(
+          {},
+          { immuneMelee: true, dieColor: DefenseDieColor.White },
+          AttackType.Overrun
+        );
+        const pool = createMinimalPoolKeywords();
+        const result = estimateExpectedWounds(3, 0, config, pool);
+        expect(result).toBeGreaterThan(0);
+      });
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    // Complete the Mission (defender) — surge→block
+    // ════════════════════════════════════════════════════════════════
+    describe('Complete the Mission (defender surge→block)', () => {
+      it('converts defense surges to blocks when CTM is active', () => {
+        const configWithCTM = makeConfig(
+          {},
+          { completeTheMission: true, dieColor: DefenseDieColor.White },
+        );
+        const configWithout = makeConfig(
+          {},
+          { completeTheMission: false, dieColor: DefenseDieColor.White },
+        );
+        const pool = createMinimalPoolKeywords();
+        // White die: 1/6 block, 1/6 surge → with CTM surge→block = 2/6 effective block prob
+        const woundsWithCTM = estimateExpectedWounds(4, 0, configWithCTM, pool);
+        const woundsWithout = estimateExpectedWounds(4, 0, configWithout, pool);
+        // CTM should reduce expected wounds (more blocks)
+        expect(woundsWithCTM).toBeLessThan(woundsWithout);
+        // White die with surge→block: P(block) = 2/6
+        // Expected wounds = 4 - 4*(2/6) = 4 - 1.333 ≈ 2.667
+        expect(woundsWithCTM).toBeCloseTo(4 - 4 * (2 / 6), 5);
+      });
+
+      it('has no additional effect when surge chart already converts to block', () => {
+        const configBoth = makeConfig(
+          {},
+          {
+            completeTheMission: true,
+            surgeChart: DefenseSurgeChart.ToBlock,
+            dieColor: DefenseDieColor.White,
+          },
+        );
+        const configChartOnly = makeConfig(
+          {},
+          {
+            completeTheMission: false,
+            surgeChart: DefenseSurgeChart.ToBlock,
+            dieColor: DefenseDieColor.White,
+          },
+        );
+        const pool = createMinimalPoolKeywords();
+        const woundsBoth = estimateExpectedWounds(4, 0, configBoth, pool);
+        const woundsChartOnly = estimateExpectedWounds(4, 0, configChartOnly, pool);
+        // Both should be equal — surge chart already converts all surges
+        expect(woundsBoth).toBeCloseTo(woundsChartOnly, 5);
+      });
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    // Primitive — converts crits → hits when defender has Armor
+    // ════════════════════════════════════════════════════════════════
+    describe('Primitive', () => {
+      it('converts crits to hits vs Armor (reducing effective damage)', () => {
+        const config = makeConfig(
+          {},
+          { armorX: 2, dieColor: DefenseDieColor.White },
+        );
+        // Without Primitive: 3 crits bypass Armor completely
+        const poolNoPrimitive = createMinimalPoolKeywords();
+        const woundsNoPrimitive = estimateExpectedWounds(0, 3, config, poolNoPrimitive);
+
+        // With Primitive: 3 crits → 3 hits, then Armor 2 cancels 2 hits → 1 wound
+        const poolPrimitive = createMinimalPoolKeywords({ primitive: true });
+        const woundsPrimitive = estimateExpectedWounds(0, 3, config, poolPrimitive);
+
+        // Primitive should reduce wounds vs Armor (crits lose Armor bypass)
+        expect(woundsPrimitive).toBeLessThan(woundsNoPrimitive);
+        // All crits become hits: 3 hits - 2 armor = 1 effective hit (before defense dice)
+        // Without Primitive: 3 crits (all bypass armor)
+        expect(woundsNoPrimitive).toBeGreaterThan(woundsPrimitive);
+      });
+
+      it('has no effect when defender has no Armor', () => {
+        const config = makeConfig(
+          {},
+          { armorX: 0, dieColor: DefenseDieColor.White },
+        );
+        const pool = createMinimalPoolKeywords();
+        const poolPrimitive = createMinimalPoolKeywords({ primitive: true });
+
+        const woundsNormal = estimateExpectedWounds(2, 2, config, pool);
+        const woundsPrimitive = estimateExpectedWounds(2, 2, config, poolPrimitive);
+
+        // Without Armor, crits→hits is irrelevant (no armor to bypass anyway)
+        // But crits also bypass cover, so Primitive may still have some effect
+        // with cover. Without cover, no difference.
+        expect(woundsPrimitive).toBeCloseTo(woundsNormal, 5);
+      });
+
+      it('Primitive + Impact X: Impact is neutralized by Primitive vs Armor', () => {
+        const config = makeConfig(
+          {},
+          { armorX: 3, dieColor: DefenseDieColor.White },
+        );
+        // Per rules: Primitive runs AFTER Impact X, converting all crits→hits.
+        // This means Impact X cannot bypass Armor when Primitive is present.
+        const poolBoth = createMinimalPoolKeywords({ primitive: true, impactX: 2 });
+        const woundsBoth = estimateExpectedWounds(0, 4, config, poolBoth);
+
+        const poolPrimitiveOnly = createMinimalPoolKeywords({ primitive: true });
+        const woundsPrimitiveOnly = estimateExpectedWounds(0, 4, config, poolPrimitiveOnly);
+
+        // Impact is neutralized by Primitive — same result
+        expect(woundsBoth).toBeCloseTo(woundsPrimitiveOnly, 5);
+      });
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    // Ion X — reduces defender's Shielded X
+    // ════════════════════════════════════════════════════════════════
+    describe('Ion X', () => {
+      it('reduces effective Shielded X', () => {
+        const config = makeConfig(
+          {},
+          { shieldedX: 3, dieColor: DefenseDieColor.White },
+        );
+        // Without Ion: Shielded 3 cancels up to 3 crits/hits
+        const poolNoIon = createMinimalPoolKeywords();
+        const woundsNoIon = estimateExpectedWounds(2, 2, config, poolNoIon);
+
+        // With Ion 2: Shielded reduced from 3 to 1, so only 1 crit/hit cancelled
+        const poolIon = createMinimalPoolKeywords({ ionX: 2 });
+        const woundsIon = estimateExpectedWounds(2, 2, config, poolIon);
+
+        // Ion should increase wounds (less shielded protection)
+        expect(woundsIon).toBeGreaterThan(woundsNoIon);
+      });
+
+      it('has no effect when defender has no Shielded', () => {
+        const config = makeConfig(
+          {},
+          { shieldedX: 0, dieColor: DefenseDieColor.White },
+        );
+        const pool = createMinimalPoolKeywords();
+        const poolIon = createMinimalPoolKeywords({ ionX: 3 });
+
+        const woundsNormal = estimateExpectedWounds(3, 1, config, pool);
+        const woundsIon = estimateExpectedWounds(3, 1, config, poolIon);
+
+        // No Shielded → Ion X has nothing to reduce
+        expect(woundsIon).toBeCloseTo(woundsNormal, 5);
+      });
+
+      it('Ion X cannot reduce Shielded below 0', () => {
+        const config = makeConfig(
+          {},
+          { shieldedX: 2, dieColor: DefenseDieColor.White },
+        );
+        // Ion 5 vs Shielded 2 → effective Shielded = max(0, 2-5) = 0
+        const poolIon = createMinimalPoolKeywords({ ionX: 5 });
+        const woundsIon = estimateExpectedWounds(3, 1, config, poolIon);
+
+        // Same as having no Shielded at all
+        const configNoShield = makeConfig(
+          {},
+          { shieldedX: 0, dieColor: DefenseDieColor.White },
+        );
+        const poolNormal = createMinimalPoolKeywords();
+        const woundsNoShield = estimateExpectedWounds(3, 1, configNoShield, poolNormal);
+
+        expect(woundsIon).toBeCloseTo(woundsNoShield, 5);
+      });
+    });
   });
 });

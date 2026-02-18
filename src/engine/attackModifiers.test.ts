@@ -72,4 +72,81 @@ describe('attackModifiers', () => {
     // With enough iterations, melee should consistently do more damage
     expect(woundsMelee).toBeGreaterThan(woundsRanged);
   });
+
+  it('Primitive converts crits to hits vs Armor (simulation path)', () => {
+    // With Primitive, crits become hits → Armor cancels them
+    const configPrimitive: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        { redDice: 5, keywords: { primitive: true } },
+        { surgeChart: AttackSurgeChart.ToCrit }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+        armorX: 3,
+      }),
+      attackType: AttackType.Ranged,
+    };
+
+    const configNoPrimitive: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        { redDice: 5 },
+        { surgeChart: AttackSurgeChart.ToCrit }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+        armorX: 3,
+      }),
+      attackType: AttackType.Ranged,
+    };
+
+    const iterations = 200;
+    let woundsPrimitive = 0;
+    let woundsNoPrimitive = 0;
+
+    for (let i = 0; i < iterations; i++) {
+      woundsPrimitive += executeAttackSequence(configPrimitive).totalWounds;
+      woundsNoPrimitive += executeAttackSequence(configNoPrimitive).totalWounds;
+    }
+
+    // Without Primitive, crits bypass Armor → more wounds
+    expect(woundsNoPrimitive).toBeGreaterThan(woundsPrimitive);
+  });
+
+  it('Ion X reduces Shielded X effectiveness (simulation path)', () => {
+    const configIon: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        { redDice: 4, keywords: { ionX: 2 } },
+        { surgeChart: AttackSurgeChart.ToHit }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+        shieldedX: 3,
+      }),
+      attackType: AttackType.Ranged,
+    };
+
+    const configNoIon: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        { redDice: 4 },
+        { surgeChart: AttackSurgeChart.ToHit }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+        shieldedX: 3,
+      }),
+      attackType: AttackType.Ranged,
+    };
+
+    const iterations = 200;
+    let woundsIon = 0;
+    let woundsNoIon = 0;
+
+    for (let i = 0; i < iterations; i++) {
+      woundsIon += executeAttackSequence(configIon).totalWounds;
+      woundsNoIon += executeAttackSequence(configNoIon).totalWounds;
+    }
+
+    // Ion X reduces Shielded → more wounds get through
+    expect(woundsIon).toBeGreaterThan(woundsNoIon);
+  });
 });

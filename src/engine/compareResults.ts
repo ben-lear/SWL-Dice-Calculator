@@ -148,7 +148,7 @@ export function compareResults(
     defender.deflect &&
     !poolKeywords.highVelocity &&
     config.attackType === AttackType.Ranged &&
-    !attacker.immuneDeflect
+    !poolKeywords.immuneDeflect
   ) {
     if (surgeCountBeforeConversion > 0) {
       if (defender.shienMastery) {

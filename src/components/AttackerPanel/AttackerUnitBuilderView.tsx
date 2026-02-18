@@ -6,6 +6,7 @@ import {
 import { getUpgradesForSlot } from '../../data/upgradeResolver';
 import { UPGRADE_SLOT_LABELS, type UpgradeSlot } from '../../data/types';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
+import { useDisplayWeapons } from '../../hooks/useDisplayWeapons';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 import Select, { type SelectOption } from '../shared/Select';
@@ -26,6 +27,7 @@ const MARKSMAN_STRATEGY_OPTIONS: SegmentedControlOption<MarksmanStrategy>[] = [
 
 export default function AttackerUnitBuilderView() {
   const store = useAttackConfigStore();
+  const { weapons: displayWeapons, isSingleMini } = useDisplayWeapons();
 
   const slotRows = useMemo(
     () => store.upgradeBar.map((slot, index) => ({ slot, index })),
@@ -36,36 +38,57 @@ export default function AttackerUnitBuilderView() {
     <>
       <SectionHeader title="Weapons">
         <div className="space-y-2 text-sm text-gray-400">
-          {store.weapons.length === 0 ? (
+          {displayWeapons.length === 0 ? (
             <p>No weapons loaded. Select a preset to populate this list.</p>
           ) : (
-            store.weapons.map((weapon, index) => (
-              <div
-                key={`${weapon.name ?? 'weapon'}-${index}`}
-                className={`rounded border px-3 py-2 ${
-                  weapon.enabled === false
-                    ? 'border-gray-800 bg-gray-950/60 text-gray-500'
-                    : 'border-gray-700'
-                }`}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={weapon.enabled !== false}
-                      onChange={(e) => store.setWeaponEnabled(index, e.target.checked)}
-                      className="h-4 w-4 rounded border-gray-600 bg-gray-800 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+            displayWeapons.map((weapon) => {
+              const isActive = weapon.count > 0;
+              return (
+                <div
+                  key={weapon.name}
+                  className={`rounded border px-3 py-2 ${
+                    isActive
+                      ? 'border-gray-700'
+                      : 'border-gray-800 bg-gray-950/60 text-gray-500'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      {isSingleMini ? (
+                        <input
+                          type="checkbox"
+                          checked={isActive}
+                          onChange={(e) =>
+                            store.setWeaponMiniCount(
+                              weapon.name,
+                              e.target.checked ? 1 : 0,
+                            )
+                          }
+                          disabled={weapon.minCount > 0}
+                          className="h-4 w-4 rounded border-gray-600 bg-gray-800
+                                     text-blue-600 focus:ring-2 focus:ring-blue-500
+                                     focus:ring-offset-0"
+                        />
+                      ) : (
+                        <NumberSpinner
+                          value={weapon.count}
+                          onChange={(v) => store.setWeaponMiniCount(weapon.name, v)}
+                          min={weapon.minCount}
+                          max={weapon.maxCount}
+                          compact
+                        />
+                      )}
+                      <span>{weapon.name}</span>
+                    </div>
+                    <DiceIconDisplay
+                      redDice={weapon.redDice}
+                      blackDice={weapon.blackDice}
+                      whiteDice={weapon.whiteDice}
                     />
-                    <span>{weapon.name ?? `Weapon ${index + 1}`}</span>
                   </div>
-                  <DiceIconDisplay
-                    redDice={weapon.redDice}
-                    blackDice={weapon.blackDice}
-                    whiteDice={weapon.whiteDice}
-                  />
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       </SectionHeader>
@@ -199,11 +222,6 @@ export default function AttackerUnitBuilderView() {
               label="Makashi Mastery"
               value={store.makashiMastery}
               onChange={(value) => store.setField('makashiMastery', value)}
-            />
-            <Checkbox
-              label="Immune: Deflect"
-              value={store.immuneDeflect}
-              onChange={(value) => store.setField('immuneDeflect', value)}
             />
             <Checkbox
               label="Death From Above"

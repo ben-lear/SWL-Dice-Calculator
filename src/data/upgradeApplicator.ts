@@ -8,6 +8,7 @@ import { AttackType } from '../engine/types';
 import type { WeaponProfile } from '../engine/types';
 import type { WeaponProfile as DataLayerWeaponProfile } from './types';
 import { UpgradeSlot } from './types';
+import { isWeaponUsableForAttackType } from '../engine/weaponUtils';
 
 // ============================================================================
 // Types
@@ -24,33 +25,29 @@ interface ConfigWithCost {
 }
 
 // ============================================================================
+// Constants
+// ============================================================================
+
+/**
+ * Weapon keyword field names that should be applied to weapons rather than
+ * the unit config when encountered in upgrade keywords.
+ */
+const WEAPON_KEYWORD_FIELDS = new Set<string>([
+  'pierceX', 'impactX', 'criticalX', 'lethalX', 'ramX', 'ionX',
+  'blast', 'suppressive', 'highVelocity', 'spray',
+  'antiMaterielX', 'antiPersonnelX', 'cumbersome',
+  'immuneDeflect', 'primitive',
+  'sidearmMelee', 'sidearmRanged',
+]);
+
+// ============================================================================
 // Helper Functions
 // ============================================================================
 
 /**
- * Check if a weapon is usable for a given attack type.
- */
-function isWeaponUsableForAttackType(
-  weaponType: AttackType | undefined,
-  attackType: AttackType,
-): boolean {
-  if (weaponType === undefined) return true;
-  if (weaponType === attackType) return true;
-
-  if (
-    weaponType === AttackType.Hybrid &&
-    (attackType === AttackType.Ranged || attackType === AttackType.Melee)
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-/**
  * Convert a data-layer weapon profile to engine format with all keyword defaults.
  */
-function normalizeToEngineWeapon(
+export function normalizeToEngineWeapon(
   weapon: DataLayerWeaponProfile,
 ): WeaponProfile {
   return {
@@ -74,6 +71,9 @@ function normalizeToEngineWeapon(
       cumbersome: false,
       sidearmMelee: false,
       sidearmRanged: false,
+      immuneDeflect: false,
+      primitive: false,
+      ionX: 0,
       ...weapon.keywords,
     },
   };
@@ -200,6 +200,10 @@ function applyUpgrades<T extends ConfigWithCost>(
 
   let totalUpgradeCost = 0;
 
+  // Collect weapon keywords from upgrades that grant pool-level weapon keywords
+  // (e.g., Immune: Deflect, Suppressive). These are applied to all weapons after processing.
+  const pendingWeaponKeywords: Record<string, unknown> = {};
+
   for (const upgradeId of equippedUpgradeIds) {
     if (!upgradeId) continue;
 
@@ -210,13 +214,17 @@ function applyUpgrades<T extends ConfigWithCost>(
     totalUpgradeCost += upgrade.cost;
 
     // Apply keyword effects (only enriched combat upgrades have keywords)
-    // Keywords are already stored using typed field names that match config fields
+    // Keywords are stored using typed field names. Some may be weapon keywords
+    // (applied to all weapons in pool) vs unit keywords (applied to config).
     for (const [fieldName, kwValue] of Object.entries(upgrade.keywords)) {
-      if (typeof kwValue === 'boolean') {
-        // Boolean keywords: set to true
+      if (WEAPON_KEYWORD_FIELDS.has(fieldName)) {
+        // Weapon keywords: will be applied to all weapons after the loop
+        pendingWeaponKeywords[fieldName] = kwValue;
+      } else if (typeof kwValue === 'boolean') {
+        // Boolean unit keywords: set to true
         result[fieldName] = true;
       } else if (typeof kwValue === 'number') {
-        // Numeric keywords: add to existing value
+        // Numeric unit keywords: add to existing value
         const currentValue = (result[fieldName] as number) ?? 0;
         result[fieldName] = currentValue + kwValue;
       }
@@ -279,6 +287,17 @@ function applyUpgrades<T extends ConfigWithCost>(
     // keyword mapping. When a Dug In upgrade is equipped on the defender,
     // the dugIn flag is already set by the keyword above (dugIn: true).
     // The engine knows to roll red dice during cover when this flag is set.
+  }
+
+  // Apply pending weapon keywords to ALL weapons in the pool.
+  // This handles upgrades that grant pool-level weapon keywords
+  // (e.g., crew/pilot upgrades that add Immune: Deflect or Suppressive).
+  if (Object.keys(pendingWeaponKeywords).length > 0) {
+    for (const weapon of weapons) {
+      for (const [fieldName, kwValue] of Object.entries(pendingWeaponKeywords)) {
+        (weapon.keywords as unknown as Record<string, unknown>)[fieldName] = kwValue;
+      }
+    }
   }
 
   // Update weapons array and total cost

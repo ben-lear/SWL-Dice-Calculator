@@ -195,6 +195,7 @@ function processData() {
       // Extract upgrade bar from the unit's upgrade_types array (if exists)
       const upgradeBar: string[] = (u.upgrade_types ?? [])
         .filter((slotEntry: any) => slotEntry.revamp) // Only include Revamp-mode slots
+        .filter((slotEntry: any) => slotEntry.unlocked_by == null) // Exclude conditional slots (unlocked by another upgrade)
         .sort((a: any, b: any) => {
           // Sort by upgrade_type_fkey for consistent ordering based on priority
           const aType = rawUpgradeTypes.find((ut: any) => Number(ut.id) === a.upgrade_type_fkey);

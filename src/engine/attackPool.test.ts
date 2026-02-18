@@ -17,6 +17,9 @@ describe('aggregateWeaponKeywords', () => {
       blast: false,
       suppressive: false,
       highVelocity: false,
+      immuneDeflect: false,
+      primitive: false,
+      ionX: 0,
     });
   });
 

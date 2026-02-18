@@ -6,6 +6,7 @@ import {
   applyAttackerUpgrades,
   applyDefenderUpgrades,
 } from '../data/upgradeApplicator';
+import { rebuildWeaponsFromCounts } from '../utils/weaponCounts';
 
 /**
  * Read-only selector that merges all three input stores into the engine's
@@ -21,13 +22,23 @@ export function getFullConfig(): AttackConfig {
   const baseDefender = selectDefenderConfig(defenseState);
 
   // Apply equipped upgrades (adds cost + keywords + per-mini weapon assembly)
-  // Pass attackType and unitBaseWeapons for per-mini weapon selection
-  const attacker = applyAttackerUpgrades(
+  const attackerWithUpgrades = applyAttackerUpgrades(
     baseAttacker,
     attackState.equippedUpgradeIds,
-    attackTypeState.attackType,       // ← NEW: for weapon selection
-    attackState.unitBaseWeapons ?? [], // ← NEW: for sidearm fallback
+    attackTypeState.attackType,
+    attackState.unitBaseWeapons ?? [],
   );
+
+  // Apply weaponMiniCounts overrides (Unit Builder mode)
+  const attacker = {
+    ...attackerWithUpgrades,
+    weapons: rebuildWeaponsFromCounts(
+      attackerWithUpgrades.weapons,
+      attackState.weaponMiniCounts,
+      attackerWithUpgrades.weapons,
+    ),
+  };
+
   const defender = applyDefenderUpgrades(
     baseDefender,
     defenseState.equippedUpgradeIds,
@@ -52,19 +63,33 @@ export function useFullConfig(): AttackConfig {
   const unitBaseWeapons = useAttackConfigStore(
     (s) => s.unitBaseWeapons,
   );
+  const weaponMiniCounts = useAttackConfigStore(
+    (s) => s.weaponMiniCounts,
+  );
   const defenderConfig = useDefenseConfigStore(selectDefenderConfig);
   const defenderUpgradeIds = useDefenseConfigStore(
     (s) => s.equippedUpgradeIds,
   );
   const attackType = useAttackTypeStore((s) => s.attackType);
 
-  // Pass attackType and unitBaseWeapons for per-mini weapon assembly
-  const attacker = applyAttackerUpgrades(
+  // Apply equipped upgrades
+  const attackerWithUpgrades = applyAttackerUpgrades(
     attackerConfig,
     attackerUpgradeIds,
-    attackType,              // ← NEW
-    unitBaseWeapons ?? [],   // ← NEW
+    attackType,
+    unitBaseWeapons ?? [],
   );
+
+  // Apply weaponMiniCounts overrides (Unit Builder mode)
+  const attacker = {
+    ...attackerWithUpgrades,
+    weapons: rebuildWeaponsFromCounts(
+      attackerWithUpgrades.weapons,
+      weaponMiniCounts,
+      attackerWithUpgrades.weapons,
+    ),
+  };
+
   const defender = applyDefenderUpgrades(defenderConfig, defenderUpgradeIds);
 
   return {

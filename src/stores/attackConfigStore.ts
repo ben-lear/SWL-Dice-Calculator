@@ -41,9 +41,9 @@ export interface AttackConfigState {
   jarKaiMastery: boolean;
   duelistAttacker: boolean;
   makashiMastery: boolean;
-  immuneDeflect: boolean;
   deathFromAbove: boolean;
   holdTheLine: boolean;
+  completeTheMission: boolean;
 
   // ── Points ──
   unitCost: number;
@@ -80,6 +80,13 @@ export interface AttackConfigState {
   /** Parallel array to upgradeBar: ID of equipped upgrade in each slot, or null */
   equippedUpgradeIds: (string | null)[];
 
+  /**
+   * User overrides for how many miniatures use each weapon (by weapon name).
+   * Empty map = use defaults from applyAttackerUpgrades.
+   * Only meaningful in Unit Builder mode.
+   */
+  weaponMiniCounts: Record<string, number>;
+
   // ── Actions ──
   setField: <K extends keyof AttackConfigFields>(
     field: K,
@@ -92,6 +99,8 @@ export interface AttackConfigState {
   setWeaponEnabled: (weaponIndex: number, enabled: boolean) => void;
   addWeapon: (weapon?: Partial<WeaponProfile>) => void;
   removeWeapon: (weaponIndex: number) => void;
+  /** Set how many miniatures use a specific weapon (by name). */
+  setWeaponMiniCount: (weaponName: string, count: number) => void;
   
   setSelectedFaction: (faction: Faction | null) => void;
   setSelectedPresetId: (presetId: string | null) => void;
@@ -119,6 +128,7 @@ type AttackConfigFields = Omit<
   | 'setWeaponEnabled'
   | 'addWeapon'
   | 'removeWeapon'
+  | 'setWeaponMiniCount'
   | 'setSelectedFaction'
   | 'setSelectedPresetId'
   | 'setActiveMode'
@@ -133,6 +143,7 @@ type AttackConfigFields = Omit<
   | 'equippedUpgradeIds'
   | 'equipUpgrade'
   | 'unitApiId'
+  | 'weaponMiniCounts'
 >;
 
 // ============================================================================
@@ -161,6 +172,9 @@ function createEmptyWeapon(): WeaponProfile {
       cumbersome: false,
       sidearmMelee: false,
       sidearmRanged: false,
+      immuneDeflect: false,
+      primitive: false,
+      ionX: 0,
     },
   };
 }
@@ -191,9 +205,9 @@ const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
   jarKaiMastery: false,
   duelistAttacker: false,
   makashiMastery: false,
-  immuneDeflect: false,
   deathFromAbove: false,
   holdTheLine: false,
+  completeTheMission: false,
 
   // Points
   unitCost: 0,
@@ -219,6 +233,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   // Upgrade system
   upgradeBar: [],
   equippedUpgradeIds: [],
+  weaponMiniCounts: {},
 
   // Generic setter for any unit-level field
   setField: (field, value) =>
@@ -274,6 +289,14 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       return { weapons: state.weapons.filter((_, i) => i !== weaponIndex) };
     }),
 
+  setWeaponMiniCount: (weaponName, count) =>
+    set((state) => ({
+      weaponMiniCounts: {
+        ...state.weaponMiniCounts,
+        [weaponName]: count,
+      },
+    })),
+
   // Setter for faction dropdown (UI-only state)
   setSelectedFaction: (faction) =>
     set({ selectedFaction: faction }),
@@ -311,6 +334,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
         unitCost: baseCost,
         baseUnitCost: baseCost,  // Store base cost for upgrade calculations
+        weaponMiniCounts: {},     // Reset weapon mini count overrides on preset load
       };
     }),
 
@@ -335,6 +359,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       return {
         equippedUpgradeIds: newIds,
         unitCost: totalCost,
+        weaponMiniCounts: {},  // Reset overrides on upgrade change
       };
     }),
 
@@ -349,7 +374,8 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       unitBaseWeapons: [],
       upgradeBar: [],
       equippedUpgradeIds: [],
-      unitApiId: null,  // ← NEW: reset API ID
+      weaponMiniCounts: {},
+      unitApiId: null,
     })),
 }));
 
@@ -363,17 +389,19 @@ export function selectAttackerConfig(state: AttackConfigState) {
     selectedFaction,
     selectedPresetId,
     activeMode,
-    baseMiniatureCount,      // ← NEW: exclude from engine config
-    unitBaseWeapons,          // ← NEW: exclude (passed separately)
-    unitApiId,                // ← NEW: exclude (UI-only)
+    baseMiniatureCount,      // ← exclude from engine config
+    unitBaseWeapons,          // ← exclude (passed separately)
+    unitApiId,                // ← exclude (UI-only)
     upgradeBar,
     equippedUpgradeIds,
+    weaponMiniCounts,         // ← exclude (consumed separately by display hook/configSelectors)
     setField,
     setWeaponDice,
     setWeaponKeyword,
     setWeaponEnabled,
     addWeapon,
     removeWeapon,
+    setWeaponMiniCount,
     setSelectedFaction,
     setSelectedPresetId,
     setActiveMode,

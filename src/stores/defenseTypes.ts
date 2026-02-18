@@ -24,6 +24,7 @@ export interface DefenderPreset {
   immunePierce: boolean;
   immuneMeleePierce: boolean;
   immuneBlast: boolean;
+  immuneMelee: boolean;
   impervious: boolean;
   block: boolean;
   deflect: boolean;
@@ -36,6 +37,7 @@ export interface DefenderPreset {
   backup: boolean;
   holdTheLine: boolean;
   dugIn: boolean;
+  completeTheMission: boolean;
   
   // Guardian configuration (if applicable)
   guardianX: number;
@@ -68,6 +70,7 @@ export interface DefenderUpgrade {
     immunePierce?: boolean;
     immuneMeleePierce?: boolean;
     immuneBlast?: boolean;
+    immuneMelee?: boolean;
     impervious?: boolean;
     block?: boolean;
     deflect?: boolean;
@@ -80,5 +83,6 @@ export interface DefenderUpgrade {
     backup?: boolean;
     holdTheLine?: boolean;
     dugIn?: boolean;
+    completeTheMission?: boolean;
   };
 }

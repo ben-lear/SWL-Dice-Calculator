@@ -27,6 +27,9 @@ function determineDefenseSurgeConversion(
   // 1. Surge Chart
   if (defender.surgeChart === DefenseSurgeChart.ToBlock) return true;
 
+  // 1b. Complete the Mission (defender): grants surge→block near Priority Mission Token
+  if (defender.completeTheMission) return true;
+
   // 2. Deflect (Ranged only, disabled by HV)
   if (defender.deflect && !highVelocity && attackType === AttackType.Ranged) return true;
 
@@ -98,6 +101,13 @@ export function estimateExpectedWounds(
   const isMeleeOrOverrun = attackType === AttackType.Melee || attackType === AttackType.Overrun;
   const isMelee = attackType === AttackType.Melee;
   const isRanged = attackType === AttackType.Ranged;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Immune: Melee — attack is impossible, zero wounds
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (defender.immuneMelee && isMelee) {
+    return 0;
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // Step 5 — Apply Dodge and Cover (BEFORE Step 6 modifiers)
@@ -172,6 +182,16 @@ export function estimateExpectedWounds(
   // Step 6 — Modify Attack Dice
   // ═══════════════════════════════════════════════════════════════════════════
 
+  // ── 6.0: Ion X (reduce effective Shielded X by flipping shield tokens) ──
+  // Per rulebook: At the start of Modify Attack Dice, flip up to X active shield
+  // tokens for each hit or crit result, reducing shields available in step 6.4.
+  let effectiveShieldedX = defender.shieldedX;
+  if (poolKeywords.ionX > 0 && effectiveShieldedX > 0 && isRanged) {
+    const totalHitsCrits = effectiveHits + effectiveCrits;
+    const shieldsFlipped = Math.min(effectiveShieldedX, totalHitsCrits, poolKeywords.ionX);
+    effectiveShieldedX -= shieldsFlipped;
+  }
+
   // ── 6.1: Ram X (converts blanks→crits first, then hits→crits; melee/overrun only) ──
   // Note: This estimator doesn't track blanks, so we can only convert hits→crits.
   // Blanks→crits is a structural limitation of the function signature.
@@ -189,12 +209,20 @@ export function estimateExpectedWounds(
     effectiveCrits += hitsConverted;
   }
 
+  // ── 6.2.5: Primitive (converts all crits→hits when defender has Armor) ──
+  // Per rulebook: After resolving Impact X, if the pool has Primitive and the
+  // defender has Armor X, all crit results become hit results.
+  if (poolKeywords.primitive && defender.armorX > 0) {
+    effectiveHits += effectiveCrits;
+    effectiveCrits = 0;
+  }
+
   // ── 6.3: Armor X (cancels hits, crits bypass) ──
   effectiveHits = Math.max(0, effectiveHits - defender.armorX);
 
   // ── 6.4: Shielded X (cancels crits first, then hits; Ranged only) ──
-  if (defender.shieldedX > 0 && isRanged) {
-    let shieldRemaining = defender.shieldedX;
+  if (effectiveShieldedX > 0 && isRanged) {
+    let shieldRemaining = effectiveShieldedX;
     const critsCancelled = Math.min(effectiveCrits, shieldRemaining);
     effectiveCrits -= critsCancelled;
     shieldRemaining -= critsCancelled;

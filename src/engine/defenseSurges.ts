@@ -30,6 +30,14 @@ export function convertDefenseSurges(
     return workingResults; // All consumed
   }
 
+  // ── 1b. Complete the Mission (defender): surge→block ──
+  if (defender.completeTheMission) {
+    workingResults = workingResults.map(d =>
+      d.face === DefenseFace.Surge ? { ...d, face: DefenseFace.Block } : d
+    );
+    return workingResults; // All consumed
+  }
+
   // ── 2. Deflect (Ranged only) ──
   // High Velocity completely disables Deflect (both surge conversion AND wound reflection).
   // Immune: Deflect on attacker does NOT prevent surge conversion —

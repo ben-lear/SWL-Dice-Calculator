@@ -605,13 +605,14 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'grenades-impact-grenades': {
+    isGrenade: true,
     weapons: [
       {
         name: 'Impact Grenade',
         weaponType: AttackType.Hybrid,
         blackDice: 1,
         keywords: {
-          impactX: 4
+          impactX: 4,
         }
       }
     ]

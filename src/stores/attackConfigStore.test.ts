@@ -36,7 +36,6 @@ describe('attackConfigStore', () => {
     expect(state.marksman).toBe(false);
     expect(state.jediHunter).toBe(false);
     expect(state.jarKaiMastery).toBe(false);
-    expect(state.immuneDeflect).toBe(false);
   });
 
   it('initializes with default strategies', () => {
@@ -141,6 +140,9 @@ describe('attackConfigStore', () => {
           blast: false,
           suppressive: false,
           highVelocity: false,
+          immuneDeflect: false,
+          primitive: false,
+          ionX: 0,
           spray: false,
           antiMaterielX: 0,
           antiPersonnelX: 0,

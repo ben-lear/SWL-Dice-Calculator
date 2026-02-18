@@ -92,7 +92,7 @@ function createMockResult(
 const mockConfig: AttackConfig = {
   attackType: AttackType.Ranged,
   attacker: {
-    weapons: [{ redDice: 2, blackDice: 0, whiteDice: 0, keywords: { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, spray: false, antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false, sidearmMelee: false, sidearmRanged: false } }],
+    weapons: [{ redDice: 2, blackDice: 0, whiteDice: 0, keywords: { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, spray: false, antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false, sidearmMelee: false, sidearmRanged: false } }],
     surgeChart: AttackSurgeChart.None,
     aimTokens: 0,
     surgeTokens: 0,
@@ -108,9 +108,9 @@ const mockConfig: AttackConfig = {
     jarKaiMastery: false,
     duelistAttacker: false,
     makashiMastery: false,
-    immuneDeflect: false,
     deathFromAbove: false,
     holdTheLine: false,
+    completeTheMission: false,
     unitCost: 0,
   },
   defender: {
@@ -129,6 +129,7 @@ const mockConfig: AttackConfig = {
     immunePierce: false,
     immuneMeleePierce: false,
     immuneBlast: false,
+    immuneMelee: false,
     impervious: false,
     dangerSenseX: 0,
     uncannyLuckX: 0,
@@ -145,6 +146,7 @@ const mockConfig: AttackConfig = {
     holdTheLine: false,
     dugIn: false,
     guardianX: 0,
+    completeTheMission: false,
     unitCost: 0,
   },
 };

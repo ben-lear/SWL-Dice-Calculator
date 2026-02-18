@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 import AttackerPanel from './AttackerPanel';
@@ -37,29 +37,43 @@ describe('AttackerPanel', () => {
     expect(screen.getByText('Upgrade Slots')).toBeInTheDocument();
   });
 
-  it('toggles weapon enabled state in unit-builder mode', async () => {
+  it('toggles weapon enabled state in unit-builder mode', () => {
     render(<AttackerPanel />);
 
     fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
-    // Load a preset so weapons are populated
-    const preset = getAttackerPresets(null, AttackType.Ranged)[0];
-    expect(preset).toBeDefined();
-    const baseUnitName = preset.name.replace(/\s*\([^)]*\)$/, '');
-    const rankLabel = preset.rank.charAt(0).toUpperCase() + preset.rank.slice(1);
-    const displayName = `${baseUnitName} (${rankLabel})`;
+    // Directly load a single-mini unit with one ranged weapon into the store.
+    // This simulates what loadPreset does without needing a combobox interaction.
+    act(() => {
+      useAttackConfigStore.setState({
+        unitBaseWeapons: [
+          {
+            name: 'E-11 Blaster Rifle',
+            weaponType: AttackType.Ranged,
+            redDice: 0,
+            blackDice: 1,
+            whiteDice: 1,
+            keywords: {},
+          },
+        ],
+        baseMiniatureCount: 1,
+      });
+    });
 
-    await userEvent.click(screen.getByRole('combobox', { name: 'Unit' }));
-    await userEvent.click(screen.getByRole('option', { name: displayName }));
+    // Single-mini unit renders a checkbox per weapon. Find it via the weapon name.
+    expect(screen.getByText('E-11 Blaster Rifle')).toBeInTheDocument();
+    const weaponRow = screen.getByText('E-11 Blaster Rifle').closest('div[class*="rounded"]') as HTMLElement;
+    expect(weaponRow).not.toBeNull();
+    const weaponCheckbox = within(weaponRow).getByRole('checkbox');
 
-    // Weapon checkbox is rendered as a plain checkbox in unit-builder mode
-    const weaponCheckboxes = screen.getAllByRole('checkbox');
-    // Find the first checkbox inside the Weapons section (weapon enable toggle)
-    const weaponToggle = weaponCheckboxes[0];
-    expect(weaponToggle).toBeChecked();
+    // Weapon should be checked by default (count=1 for first base weapon of single-mini unit)
+    expect(weaponCheckbox).toBeChecked();
 
-    fireEvent.click(weaponToggle);
-    expect(useAttackConfigStore.getState().weapons[0]?.enabled).toBe(false);
+    // Uncheck the weapon
+    fireEvent.click(weaponCheckbox);
+
+    // Store should now reflect count=0 for this weapon
+    expect(useAttackConfigStore.getState().weaponMiniCounts['E-11 Blaster Rifle']).toBe(0);
   });
 
   it('updates weapon dice in custom mode', () => {

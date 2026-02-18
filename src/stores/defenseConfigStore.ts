@@ -44,6 +44,7 @@ export interface DefenseConfigState {
   immunePierce: boolean;
   immuneMeleePierce: boolean;
   immuneBlast: boolean;
+  immuneMelee: boolean;
   impervious: boolean;
   block: boolean;
   deflect: boolean;
@@ -56,6 +57,7 @@ export interface DefenseConfigState {
   backup: boolean;
   holdTheLine: boolean;
   dugIn: boolean;
+  completeTheMission: boolean;
 
   // ── Guardian Sub-config ──
   guardianX: number;
@@ -160,6 +162,7 @@ const DEFAULT_DEFENSE_CONFIG = {
   immunePierce: false,
   immuneMeleePierce: false,
   immuneBlast: false,
+  immuneMelee: false,
   impervious: false,
   block: false,
   deflect: false,
@@ -172,6 +175,7 @@ const DEFAULT_DEFENSE_CONFIG = {
   backup: false,
   holdTheLine: false,
   dugIn: false,
+  completeTheMission: false,
 
   // Guardian
   guardianX: 0,

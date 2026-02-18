@@ -87,9 +87,9 @@ export interface AttackerPresetProfile {
   jarKaiMastery?: boolean;
   duelistAttacker?: boolean;
   makashiMastery?: boolean;
-  immuneDeflect?: boolean;
   deathFromAbove?: boolean;
   holdTheLine?: boolean;
+  completeTheMission?: boolean;
 
   // Points
   unitCost?: number;
@@ -112,6 +112,7 @@ export interface DefenderPresetProfile {
   immunePierce?: boolean;
   immuneMeleePierce?: boolean;
   immuneBlast?: boolean;
+  immuneMelee?: boolean;
   impervious?: boolean;
   dangerSenseX?: number;
   uncannyLuckX?: number;
@@ -127,6 +128,7 @@ export interface DefenderPresetProfile {
   backup?: boolean;
   holdTheLine?: boolean;
   dugIn?: boolean;
+  completeTheMission?: boolean;
   coverX?: number;
 
   // Points

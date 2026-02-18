@@ -21,9 +21,9 @@ describe('surgeConversionUtils', () => {
     jarKaiMastery: false,
     duelistAttacker: false,
     makashiMastery: false,
-    immuneDeflect: false,
     deathFromAbove: false,
     holdTheLine: false,
+    completeTheMission: false,
     unitCost: 0,
     rerollStrategy: RerollStrategy.Conservative,
     ...overrides,
@@ -38,6 +38,9 @@ describe('surgeConversionUtils', () => {
     blast: false,
     suppressive: false,
     highVelocity: false,
+    immuneDeflect: false,
+    primitive: false,
+    ionX: 0,
     ...overrides,
   });
 

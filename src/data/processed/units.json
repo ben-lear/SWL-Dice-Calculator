@@ -115,11 +115,7 @@
     ],
     "upgradeBar": [
       "heavy-weapon",
-      "heavy-weapon",
       "personnel",
-      "training",
-      "comms",
-      "gear",
       "gear",
       "grenades",
       "imperial-march"
@@ -142,11 +138,7 @@
     ],
     "upgradeBar": [
       "heavy-weapon",
-      "heavy-weapon",
       "personnel",
-      "training",
-      "comms",
-      "gear",
       "gear",
       "grenades"
     ]
@@ -167,11 +159,7 @@
     ],
     "upgradeBar": [
       "heavy-weapon",
-      "heavy-weapon",
       "personnel",
-      "training",
-      "comms",
-      "gear",
       "gear",
       "grenades",
       "imperial-march"
@@ -297,11 +285,7 @@
     ],
     "upgradeBar": [
       "heavy-weapon",
-      "heavy-weapon",
       "personnel",
-      "training",
-      "comms",
-      "gear",
       "gear",
       "grenades"
     ]
@@ -399,7 +383,6 @@
       "Low Profile"
     ],
     "upgradeBar": [
-      "heavy-weapon",
       "heavy-weapon",
       "training",
       "comms",
@@ -549,7 +532,6 @@
       "Ready"
     ],
     "upgradeBar": [
-      "heavy-weapon",
       "heavy-weapon",
       "training",
       "comms",
@@ -703,12 +685,8 @@
     ],
     "upgradeBar": [
       "heavy-weapon",
-      "heavy-weapon",
       "personnel",
       "training",
-      "training",
-      "comms",
-      "gear",
       "gear",
       "grenades"
     ]
@@ -729,7 +707,6 @@
       "Coordinate: Droid Trooper"
     ],
     "upgradeBar": [
-      "heavy-weapon",
       "heavy-weapon",
       "personnel",
       "comms",
@@ -755,12 +732,8 @@
     ],
     "upgradeBar": [
       "heavy-weapon",
-      "heavy-weapon",
       "personnel",
       "training",
-      "training",
-      "comms",
-      "gear",
       "gear",
       "grenades"
     ]
@@ -1079,7 +1052,6 @@
     ],
     "upgradeBar": [
       "heavy-weapon",
-      "heavy-weapon",
       "personnel",
       "comms"
     ]
@@ -1216,7 +1188,6 @@
       "command",
       "training",
       "training",
-      "comms",
       "gear",
       "counterpart"
     ]
@@ -1568,7 +1539,6 @@
       "Reliable"
     ],
     "upgradeBar": [
-      "heavy-weapon",
       "heavy-weapon",
       "training",
       "training",
@@ -2463,8 +2433,7 @@
       "protocol",
       "training",
       "comms",
-      "gear",
-      "counterpart"
+      "gear"
     ]
   },
   {
@@ -2519,8 +2488,7 @@
       "protocol",
       "heavy-weapon",
       "heavy-weapon",
-      "personnel",
-      "comms"
+      "personnel"
     ]
   },
   {
@@ -2698,7 +2666,6 @@
       "heavy-weapon",
       "personnel",
       "personnel",
-      "training",
       "training"
     ]
   },
@@ -2747,7 +2714,6 @@
       "heavy-weapon",
       "personnel",
       "personnel",
-      "training",
       "training"
     ]
   },
@@ -2898,7 +2864,6 @@
       "Weighed Down"
     ],
     "upgradeBar": [
-      "heavy-weapon",
       "heavy-weapon",
       "personnel"
     ]
@@ -3165,10 +3130,7 @@
       "squad-leader",
       "heavy-weapon",
       "personnel",
-      "command",
       "training",
-      "training",
-      "gear",
       "gear",
       "grenades"
     ]
@@ -3220,7 +3182,6 @@
     "upgradeBar": [
       "heavy-weapon",
       "heavy-weapon",
-      "heavy-weapon",
       "training",
       "gear"
     ]
@@ -3247,7 +3208,6 @@
       "heavy-weapon",
       "personnel",
       "training",
-      "comms",
       "comms",
       "gear"
     ]
@@ -3327,7 +3287,6 @@
       "Sharpshooter"
     ],
     "upgradeBar": [
-      "heavy-weapon",
       "heavy-weapon",
       "training",
       "comms",
@@ -3690,10 +3649,6 @@
       "doctrine",
       "force",
       "force",
-      "force",
-      "force",
-      "command",
-      "training",
       "training",
       "training",
       "armament"
@@ -3718,9 +3673,6 @@
     "upgradeBar": [
       "doctrine",
       "force",
-      "force",
-      "force",
-      "training",
       "training",
       "armament"
     ]
@@ -3745,10 +3697,7 @@
       "protocol",
       "protocol",
       "protocol",
-      "protocol",
-      "protocol",
       "command",
-      "training",
       "comms",
       "gear",
       "armament"
@@ -3774,9 +3723,6 @@
       "doctrine",
       "protocol",
       "protocol",
-      "protocol",
-      "protocol",
-      "training",
       "comms",
       "gear",
       "armament",
@@ -3829,10 +3775,7 @@
       "squad-leader",
       "heavy-weapon",
       "personnel",
-      "command",
       "training",
-      "training",
-      "gear",
       "gear"
     ]
   },

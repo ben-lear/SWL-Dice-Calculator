@@ -30,6 +30,7 @@ export interface EnrichmentWeaponKeywords {
   criticalX?: EnrichmentNumericValue;
   lethalX?: EnrichmentNumericValue;
   ramX?: EnrichmentNumericValue;
+  ionX?: EnrichmentNumericValue;
   blast?: boolean;
   suppressive?: boolean;
   highVelocity?: boolean;
@@ -37,6 +38,8 @@ export interface EnrichmentWeaponKeywords {
   antiMaterielX?: EnrichmentNumericValue;
   antiPersonnelX?: EnrichmentNumericValue;
   cumbersome?: boolean;
+  immuneDeflect?: boolean;
+  primitive?: boolean;
 }
 
 // ============================================================================
@@ -61,9 +64,9 @@ export interface AttackerUnitKeywords {
   jarKaiMastery?: boolean;
   duelistAttacker?: boolean;
   makashiMastery?: boolean;
-  immuneDeflect?: boolean;
   deathFromAbove?: boolean;
   holdTheLine?: boolean;
+  completeTheMission?: boolean;
 }
 
 // ============================================================================
@@ -90,6 +93,7 @@ export interface DefenderUnitKeywords {
   immunePierce?: boolean;
   immuneMeleePierce?: boolean;
   immuneBlast?: boolean;
+  immuneMelee?: boolean;
   impervious?: boolean;
   block?: boolean;
   deflect?: boolean;
@@ -102,6 +106,7 @@ export interface DefenderUnitKeywords {
   backup?: boolean;
   holdTheLine?: boolean;
   dugIn?: boolean;
+  completeTheMission?: boolean;
 }
 
 // ============================================================================

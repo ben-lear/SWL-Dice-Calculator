@@ -281,6 +281,13 @@ export default function DefenderCustomPoolView() {
               tooltip="Blast has no effect against this unit."
             />
             <Checkbox
+              label="Immune: Melee"
+              value={store.immuneMelee}
+              onChange={(value) => store.setField('immuneMelee', value)}
+              disabled={isDisabled('immuneMelee')}
+              tooltip="Enemy units cannot engage this unit in melee. Melee attacks deal zero damage."
+            />
+            <Checkbox
               label="Duelist"
               value={store.duelistDefender}
               onChange={(value) => store.setField('duelistDefender', value)}
@@ -307,6 +314,12 @@ export default function DefenderCustomPoolView() {
               onChange={(value) => store.setField('dugIn', value)}
               disabled={isDisabled('dugIn')}
               tooltip="This unit's cover pool rolls red defense dice instead of white (higher chance to block with cover)."
+            />
+            <Checkbox
+              label="Complete the Mission"
+              value={store.completeTheMission}
+              onChange={(value) => store.setField('completeTheMission', value)}
+              tooltip="While near an allied Priority Mission Token, this unit gains surge→block on defense."
             />
           </div>
 

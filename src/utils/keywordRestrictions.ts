@@ -38,7 +38,6 @@ export const ATTACKER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
 
   // Ranged-only attacker unit keywords
   sharpshooterX: 'ranged',     // Reduces cover (cover is ranged-only concept)
-  immuneDeflect: 'ranged',     // Deflect is ranged-only
   deathFromAbove: 'ranged',    // Cover interaction (ranged context)
 
   // Melee-only attacker unit keywords
@@ -46,6 +45,7 @@ export const ATTACKER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
   makashiMastery: 'melee',     // Melee: reduce Pierce to disable Immune: Pierce
   jarKaiMastery: 'melee',      // Melee: spend attacker Dodge tokens for blank→hit, hit→crit
   holdTheLine: 'melee',        // While Engaged — attacker can only be engaged in Melee
+  completeTheMission: 'all',   // CTM: adds Critical 2 near Priority Mission Token
 };
 
 // ── Attacker Weapon-Level Keywords ──
@@ -68,6 +68,10 @@ export const WEAPON_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> = {
 
   // Ranged-only weapon keyword (AND-aggregated across weapons)
   highVelocity: 'ranged',      // Disables dodge/deflect (ranged-only interaction)
+
+  // Ranged-only weapon keywords
+  immuneDeflect: 'ranged',     // Deflect is ranged-only
+  ionX: 'ranged',              // Shield interaction (Ranged only)
 };
 
 // ── Defender Keywords ──
@@ -121,6 +125,8 @@ export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
   djemSoMastery: 'melee',      // Melee: attacker suffers wounds per blank
   duelistDefender: 'melee',    // Melee: Dodge → Immune: Pierce
   immuneMeleePierce: 'melee',  // Melee-only Immune: Pierce
+  immuneMelee: 'melee',        // Immune: Melee — attack is impossible in melee
+  completeTheMission: 'all',   // CTM: surge→block near Priority Mission Token
 };
 
 // ============================================================================

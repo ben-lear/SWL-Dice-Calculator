@@ -75,7 +75,6 @@ const ATTACKER_KEYWORD_MAP: Record<string, string | string[]> = {
   "Jar'Kai Mastery": 'jarKaiMastery',
   Duelist: ['duelistAttacker', 'duelistDefender'],
   'Makashi Mastery': 'makashiMastery',
-  'Immune: Deflect': 'immuneDeflect',
   'Death from Above': 'deathFromAbove',
   'Hold the Line': 'holdTheLine',
 };
@@ -118,6 +117,10 @@ const WEAPON_KEYWORD_MAP: Record<string, string | string[]> = {
   'Anti-Materiel': 'antiMaterielX',
   'Anti-Personnel': 'antiPersonnelX',
   Cumbersome: 'cumbersome',
+  'Immune: Deflect': 'immuneDeflect',
+  'Ion': 'ionX',
+  'Ion X': 'ionX',
+  Primitive: 'primitive',
 };
 
 const ALL_KEYWORD_MAP = {

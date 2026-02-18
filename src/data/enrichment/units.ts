@@ -288,7 +288,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
+      armorX: 1,
     },
     weapons: [
       {
@@ -413,7 +413,6 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'rebel-troopers': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
-    keywords: {},
     miniatureCount: 4,
     weapons: [
       {
@@ -436,7 +435,18 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'A280 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'mandalorian-resistance': {
@@ -446,7 +456,13 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'WESTAR-35 Blasters',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+      }
+    ],
   },
 
   'mandalorian-resistance-clan-wren': {
@@ -456,7 +472,13 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'WESTAR-35 Blasters',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+      }
+    ],
   },
 
   'rebel-commandos': {
@@ -465,9 +487,20 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 4,
     keywords: {
       lowProfile: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'A280 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'rebel-commandos-strike-team': {
@@ -476,18 +509,50 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 1,
     keywords: {
       lowProfile: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'A280 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'rebel-sleeper-cell-ready-to-strike': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 6,
-    keywords: {
-    },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Det Packs',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        keywords: {
+          impactX: 1
+        }
+      },
+      {
+        name: 'Blaster Pistols',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          suppressive: true,
+        }
+      },
+      {
+        name: 'Blaster Pistols',
+        weaponType: AttackType.Ranged,
+        blackDice: 2
+      },
+    ],
   },
 
   'wookiee-warriors-freedom-fighters': {
@@ -498,7 +563,19 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       duelistAttacker: true,
       duelistDefender: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Ryyk Blade',
+        weaponType: AttackType.Melee,
+        blackDice: 2
+      },
+      {
+        name: 'Kashyyyk Pistol',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        blackDice: 1,
+      }
+    ],
   },
 
   'wookiee-warriors-kashyyyk-resistance': {
@@ -506,25 +583,69 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+        blackDice: 1,
+      },
+      {
+        name: 'X1 Carbine',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+      }
+    ],
   },
 
   '1-4-fd-laser-cannon-team': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
-    keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'Blaster Pistols',
+        weaponType: AttackType.Ranged,
+        whiteDice: 4,
+      },
+      {
+        name: '1-4 FD Laser Cannon',
+        weaponType: AttackType.Ranged,
+        blackDice: 5,
+        keywords: {
+          impactX: 2
+        }
+      }
+    ],
   },
 
   'at-rt': {
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
+      armorX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Grappling Claws',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+        keywords: {
+          impactX: 1
+        }
+      },
+      {
+        name: 'A300 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+      }
+    ],
   },
 
   'tauntaun-riders': {
@@ -532,16 +653,31 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Stampede',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+        blackDice: 2,
+        keywords: {
+          ramX: 1,
+        }
+      },
+      {
+        name: 'Blaster Pistols',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+      }
+    ],
   },
 
   'a-a5-speeder-truck': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
+      armorX: 5,
     },
     weapons: [],
   },
@@ -550,208 +686,505 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
-      coverX: '<need human>',
+      armorX: 3,
+      coverX: 1,
       immuneBlast: true,
-      arsenalX: '<need human>',
+      immuneMelee: true,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Double Laser Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+        blackDice: 3,
+        keywords: {
+          impactX: 3
+        }
+      }
+    ],
   },
 
   'x-34-landspeeder': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      coverX: '<need human>',
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      coverX: 1,
+      armorX: 2,
+      arsenalX: 3,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2
+      }
+    ],
   },
 
   'darth-vader-dark-lord-of-the-sith': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Vader\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 6,
+        keywords: {
+          impactX: 3,
+          pierceX: 3
+        }
+      }
+    ],
   },
 
   'director-orson-krennic-architect-of-terror': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+      },
+      {
+        name: 'Krennic\'s Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+      }
+    ],
   },
 
   'general-veers-master-tactician': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Expertise',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'Veers\'s Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+      }
+    ],
   },
 
   'grand-admiral-thrawn-imperial-high-command': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       duelistAttacker: true,
       duelistDefender: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Chiss Martial Arts',
+        weaponType: AttackType.Melee,
+        redDice: 4
+      },
+      {
+        name: 'Thrawn\'s Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 3
+      }
+    ],
   },
 
   'grand-moff-tarkin-imperial-high-command': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Contempt',
+        weaponType: AttackType.Melee,
+        whiteDice: 1
+      }
+    ],
   },
 
   'iden-versio-inferno-squad-leader': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       marksman: true,
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Martial Arts',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Iden\'s DLT-20A Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          highVelocity: true,
+          pierceX: 1,
+        }
+      },
+      {
+        name: 'Iden\'s TL-50 Repeater',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 2,
+        blackDice: 1,
+        keywords: {
+          criticalX: 1,
+          impactX: 1
+        }
+      }
+    ],
   },
 
   'imperial-officer-ruthless-efficiency': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 2
+      }
+    ],
   },
 
   'moff-gideon-long-live-the-empire': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+      },
+      {
+        name: 'Gideon\'s Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 2,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'agent-kallus-hunter-of-spectres': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       immuneMeleePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'J-19 Bo-Rifle',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        blackDice: 3,
+        keywords: {
+          criticalX: 1,
+          lethalX: 1,
+        }
+      }
+    ],
   },
 
   'boba-fett-infamous-bounty-hunter': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
-      arsenalX: '<need human>',
+      sharpshooterX: 2,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Boot Spikes',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+      },
+      {
+        name: 'Integrated Rockets',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          impactX: 1,
+        }
+      },
+      {
+        name: 'EE-3 Carbine Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'bossk-trandoshan-terror': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Frenzy',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 2,
+        keywords: {
+          pierceX: 1
+        }
+      },
+      {
+        name: 'Mortar Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 4,
+        keywords: {
+          pierceX: 1,
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'darth-vader-the-emperor-s-apprentice': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
       jediHunter: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Vader\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 5,
+        keywords: {
+          impactX: 3,
+          pierceX: 3
+        }
+      },
+      {
+        name: 'Force Throw',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          blast: true,
+        }
+      }
+    ],
   },
 
   'fifth-brother-the-kill-is-mine': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       immunePierce: true,
       block: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Spinning Lightsaber',
+        weaponType: AttackType.Melee,
+        blackDice: 5,
+        keywords: {
+          impactX: 2,
+          pierceX: 1,
+          ramX: 2
+        }
+      },
+      {
+        name: 'Thrown Lightsaber',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        keywords: {
+          impactX: 2,
+          pierceX: 1
+        }
+      }
+    ],
   },
 
   'imperial-agent-bringing-order-to-the-galaxy': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 2
+      }
+    ],
   },
 
   'seventh-sister-compelled-to-inflict-pain': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       block: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Spinning Lightsaber',
+        weaponType: AttackType.Melee,
+        blackDice: 5,
+        keywords: {
+          impactX: 2,
+          pierceX: 1,
+        }
+      },
+      {
+        name: 'Thrown Lightsaber',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        keywords: {
+          impactX: 2,
+          pierceX: 1
+        }
+      }
+    ],
   },
 
   'df-90-mortar-trooper': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {
-    },
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'E-22 Blaster Rifle',
+        weaponType: AttackType.Hybrid,
+        blackDice: 1,
+      },
+      {
+        name: 'DF-90 Mortar',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          criticalX: 1,
+          suppressive: true,
+          cumbersome: true,
+        }
+      }
+    ],
   },
 
   'shoretroopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
-    keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'E-22 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'snowtroopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
-    keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        whiteDice: 1
+      },
+      {
+        name: 'E-11 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'stormtrooper-riot-squad': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
       holdTheLine: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Stun Baton',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+        keywords: {
+          suppressive: true,
+        }
+      },
+      {
+        name: 'E-11 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'stormtroopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
-      preciseX: '<need human>',
+      preciseX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        whiteDice: 1
+      },
+      {
+        name: 'E-11 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'stormtroopers-heavy-response-unit': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
     keywords: {
-      preciseX: '<need human>',
+      preciseX: 1,
     },
     weapons: [],
   },
@@ -783,200 +1216,471 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-probe-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    weapons: [
+      {
+        name: 'Light Blaster',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 2,
+        blackDice: 2
+      }
+    ],
   },
 
   'imperial-special-forces': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    miniatureCount: 4,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       marksman: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+      },
+      {
+        name: 'E-11 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'imperial-special-forces-inferno-squad': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       marksman: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Close Quarters Combat',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+      },
+      {
+        name: 'E-11 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+      }
+    ],
   },
 
   'scout-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'EC-17 Hold-Out Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+      }
+    ],
   },
 
   'scout-troopers-strike-team': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 4,
     keywords: {
+      sharpshooterX: 1,
       lowProfile: true,
-      sharpshooterX: '<need human>',
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'EC-17 Hold-Out Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+      }
+    ],
   },
 
   '74-z-speeder-bikes': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
     keywords: {
-      coverX: '<need human>',
+      coverX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'EC-17 Hold-Out Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+      },
+      {
+        name: 'Blaster Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          impactX: 1,
+        }
+      }
+    ],
   },
 
   'dewback-rider': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
+      armorX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Shock Prod & Claws',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+        whiteDice: 3,
+        keywords: {
+          criticalX: 2,
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'e-web-heavy-blaster-team': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {
-    },
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'Blaster Rifles',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+      },
+      {
+        name: 'E-Web Heavy Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 2,
+        whiteDice: 2,
+        keywords: {
+          impactX: 1,
+          cumbersome: true,
+        }
+      }
+    ],
   },
 
   'range-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
-      armorX: '<need human>',
+      armorX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Gription Boot Kick',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+      },
+      {
+        name: 'E-10R Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'at-st': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Fence-Cutting Blades',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+      },
+      {
+        name: 'MS-4 Twin Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 2,
+        whiteDice: 2,
+        keywords: {
+          impactX: 3,
+        }
+      }
+    ],
   },
 
   'imperial-dark-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
     keywords: {
-      armorX: '<need human>',
+      armorX: 3,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Crushing Punch',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        whiteDice: 1,
+      },
+      {
+        name: 'E-11D Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'laat-le-patrol-transport-galactic-empire': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
+      armorX: 5,
+      arsenalX: 2,
+      coverX: 1,
       immuneBlast: true,
-      coverX: '<need human>',
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      immuneMelee: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Twin Laser Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 2,
+        keywords: {
+          impactX: 1,
+        }
+      }
+    ],
   },
 
   'major-marquand-tempest-scout-2': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Grenade Launcher',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+        keywords: {
+          blast: true,
+        }
+      },
+      {
+        name: '88 Twin Light Blaster',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          impactX: 1,
+        }
+      },
+      {
+        name: 'MS-4 Twin Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 2,
+        whiteDice: 2,
+        keywords: {
+          impactX: 3,
+        }
+      }
+    ],
   },
 
   'tx-225-gavw-occupier-tank': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Twin Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        keywords: {
+          suppressive: true,
+        }
+      },
+      {
+        name: 'Quad Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 2,
+        keywords: {
+          impactX: 2,
+        }
+      }
+    ],
   },
 
   'ahsoka-tano-padawan-commander': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       shienMastery: true,
       deflect: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Ahsoka\'s Lightsabers',
+        weaponType: AttackType.Melee,
+        whiteDice: 3,
+        blackDice: 5,
+        keywords: {
+          impactX: 2,
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'anakin-skywalker-the-chosen-one': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       djemSoMastery: true,
       immunePierce: true,
       deflect: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Anakin\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 5,
+        keywords: {
+          impactX: 3,
+          pierceX: 3
+        }
+      }
+    ],
   },
 
   'chewbacca-hero-of-kashyyyk': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {
-      guardianX: '<need human>',
-    },
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Overwhelm',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+        keywords: {
+          lethalX: 1,
+        }
+      },
+      {
+        name: 'Chewbacca\'s Bowcaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 2,
+        keywords: {
+          criticalX: 1,
+          impactX: 1,
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'clone-captain-rex-honorable-soldier': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+      },
+      {
+        name: 'DC-17 Hand Blasters',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+      }
+    ],
   },
 
   'clone-commander-trained-for-leadership': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+      },
+      {
+        name: 'DC-15 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+      }
+    ],
   },
 
   'clone-commander-cody-leader-of-the-212th': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+      },
+      {
+        name: 'DC-15A Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 1,
+        blackDice: 1,
+        keywords: {
+          lethalX: 1,
+          impactX: 1,
+        }
+      }
+    ],
   },
 
   'jedi-knight-general-strong-in-the-force': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -985,50 +1689,110 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'obi-wan-kenobi-civilized-warrior': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      guardianX: '<need human>',
       immunePierce: true,
       soresuMastery: true,
       deflect: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Obi-Wan\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          criticalX: 2,
+          impactX: 2,
+          pierceX: 2,
+        }
+      }
+    ],
   },
 
   'wookiee-chieftain-clan-leader': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       duelistAttacker: true,
       duelistDefender: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Ancestral Weapon',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        whiteDice: 2,
+        blackDice: 2,
+      },
+      {
+        name: 'Chieftain\'s Bowcaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        keywords: {
+          impactX: 1,
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'yoda-grand-master-of-the-jedi-order': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       immunePierce: true,
       deflect: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Yoda\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+        keywords: {
+          impactX: 2,
+          pierceX: 2,
+        }
+      },
+      {
+        name: 'Force Wave',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        keywords: {
+          blast: true,
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'hondo-ohnaka-trustworthy-compatriot': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      uncannyLuckX: '<need human>',
-      arsenalX: '<need human>',
+      uncannyLuckX: 3,
+      arsenalX: 3,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Weequay\'s Cunning',
+        weaponType: AttackType.Hybrid,
+        blackDice: 3
+      },
+      {
+        name: 'Hondo\'s Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'jedi-knight-keeper-of-the-peace': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -1037,457 +1801,1022 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'padme-amidala-spirited-senator': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Martial Arts',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'Padme\'s Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 3
+      }
+    ],
   },
 
   'r2-d2-independent-astromech': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {
-    },
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    weapons: [
+      {
+        name: 'Electro-Shock',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 3
+      }
+    ],
   },
 
   'the-bad-batch-clone-force-99': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    miniatureCount: 0,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+      },
+      {
+        name: 'DC-17 Hand Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        blackDice: 1,
+      }
+    ],
   },
 
   'clone-trooper-infantry': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
-    keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'DC-15A Blaster Carbine',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'clone-trooper-marksmen': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
       marksman: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'DC-15A Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'weequay-pirates': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
     keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Vibroblade',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+      },
+      {
+        name: 'Weequay Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'arc-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'DC-17 Hand Blaster',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+      }
+    ],
   },
 
   'arc-troopers-strike-team': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    miniatureCount: 4,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'DC-17 Hand Blaster',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+      }
+    ],
   },
 
   'arf-troopers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'DC-15A Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'wookiee-warriors-kashyyyk-defenders': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+        blackDice: 1,
+      },
+      {
+        name: 'X1 Carbine',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+      }
+    ],
   },
 
   'wookiee-warriors-noble-fighters': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
     keywords: {
       duelistAttacker: true,
       duelistDefender: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Ryyk Blade',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'Kashyyyk Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'at-rt-republic': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
+      armorX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Grappling Claws',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+        keywords: {
+          impactX: 1,
+        }
+      },
+      {
+        name: 'Rocket Launcher',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 1,
+        keywords: {
+          criticalX: 1,
+          impactX: 1
+        }
+      }
+    ],
   },
 
   'barc-speeder': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      coverX: '<need human>',
-      arsenalX: '<need human>',
+      coverX: 1,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'DC-15A Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      },
+      {
+        name: 'Twin Blaster Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+      }
+    ],
   },
 
   'clone-commandos': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 1,
+      completeTheMission: true
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Gauntlet Vibroblade',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'DC-17M ICWS Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          suppressive: true
+        }
+      }
+    ],
   },
 
   'clone-commandos-ds-delta-squad': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 1,
+      completeTheMission: true
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Gauntlet Vibroblade',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'DC-17M ICWS Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          suppressive: true
+        }
+      }
+    ],
   },
 
   'raddaugh-gnasp-fluttercraft': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      coverX: '<need human>',
+      coverX: 2,
       immuneBlast: true,
+      immuneMelee: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Pilot\'s Kashyyyk Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'raddaugh-gnasp-fluttercraft-attack-craft': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      coverX: '<need human>',
+      coverX: 2,
       immuneBlast: true,
+      immuneMelee: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Pilot\'s Kashyyyk Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'infantry-support-platform': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
-      coverX: '<need human>',
+      armorX: 3,
+      coverX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'DC-15A Blaster Rifles',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+      }
+    ],
   },
 
   'laat-le-patrol-transport': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      coverX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
+      coverX: 1,
       immuneBlast: true,
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      immuneMelee: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Twin Laser Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 2,
+        keywords: {
+          impactX: 1,
+        }
+      }
+    ],
   },
 
   'saber-class-tank': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       outmaneuver: true,
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Heavy Laser Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          impactX: 2,
+          criticalX: 1
+        }
+      }
+    ],
   },
 
   'count-dooku-darth-tyranus': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       deflect: true,
       immunePierce: true,
       makashiMastery: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Dooku\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 5,
+        keywords: {
+          impactX: 2,
+          pierceX: 2,
+        }
+      },
+      {
+        name: 'Force Lightning',
+        weaponType: AttackType.Ranged,
+        blackDice: 6,
+        keywords: {
+          pierceX: 1,
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'general-grievous-sinister-cyborg': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       jediHunter: true,
       block: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Trophy Lightsabers',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        whiteDice: 2,
+        blackDice: 4,
+        keywords: {
+          impactX: 2,
+          pierceX: 2,
+          criticalX: 1,
+        }
+      },
+      {
+        name: 'DT-57 "Annihilator"',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          criticalX: 1,
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'general-grievous-wheel-bike-warlord': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
+      armorX: 1,
       immuneMeleePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Trophy Lightsabers',
+        weaponType: AttackType.Overrun,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 3,
+        keywords: {
+          impactX: 2,
+          pierceX: 1,
+          ramX: 1
+        }
+      },
+      {
+        name: 'Laser Cannon and Pistol',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 2,
+        redDice: 1,
+        keywords: {
+          impactX: 1,
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'kalani-super-tactical-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Expertise',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+      }
+    ],
   },
 
   'kraken-super-tactical-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Overwhelm',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+        keywords: {
+          lethalX: 1,
+        }
+      },
+      {
+        name: 'Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+        keywords: {
+          lethalX: 1,
+        }
+      }
+    ],
   },
 
   'poggle-the-lesser-public-leader-of-the-geonosians': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Staff of Command',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'Concealed Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+      }
+    ],
   },
 
   'super-tactical-command-droid-command-and-control-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Aggression Protocol',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+        blackDice: 2,
+      },
+      {
+        name: 'E-5 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+      }
+    ],
   },
 
   't-series-tactical-droid-programmed-for-strategy': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    weapons: [
+      {
+        name: 'Bludgeon',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+      },
+      {
+        name: 'Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+      }
+    ],
   },
 
   'asajj-ventress-separatist-assassin': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
       jarKaiMastery: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Asajj\'s Lightsabers',
+        weaponType: AttackType.Melee,
+        blackDice: 8
+      }
+    ],
   },
 
   'cad-bane-needs-no-introduction': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      dangerSenseX: '<need human>',
-      sharpshooterX: '<need human>',
+      dangerSenseX: 3,
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Martial Arts',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'LL-30 Blaster Pistols',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'maul-impatient-apprentice': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Maul\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+        whiteDice: 4,
+        keywords: {
+          impactX: 2,
+          pierceX: 2,
+        }
+      }
+    ],
   },
 
   'sun-fac-ruthless-lieutenant': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      coverX: '<need human>',
+      coverX: 1,
+      deathFromAbove: true
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Force Pike',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        blackDice: 1,
+        keywords: {
+          pierceX: 1,
+        }
+      },
+      {
+        name: 'Sonic Carbine',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        redDice: 1,
+        whiteDice: 1,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'super-tactical-command-droid-auxiliary-command-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Aggression Protocol',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+        blackDice: 2,
+      },
+      {
+        name: 'E-5 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+      }
+    ],
   },
 
   'b1-battle-droids': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    miniatureCount: 66,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    miniatureCount: 6,
+    weapons: [
+      {
+        name: 'Bludgeon',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+      },
+      {
+        name: 'E-5 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1
+      }
+    ],
   },
 
   'b2-super-battle-droids': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
-    keywords: {},
-    weapons: [],
+    weapons: [
+      {
+        name: 'Wrist Rockets',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        keywords: {
+          impactX: 1,
+        }
+      },
+      {
+        name: 'Arm Cannons',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2
+      }
+    ],
   },
 
   'geonosian-warriors-soldiers-of-the-hive': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
-    keywords: {},
-    weapons: [],
+    keywords: {
+      deathFromAbove: true,
+    },
+    weapons: [
+      {
+        name: 'Spears',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'Sonic Blasters',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1
+      }
+    ],
   },
 
   'bx-series-droid-commandos': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    miniatureCount: 4,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'Commando E-5 Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2
+      }
+    ],
   },
 
   'bx-series-droid-commandos-strike-team': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'Commando E-5 Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2
+      }
+    ],
   },
 
   'drk-1-sith-probe-droids': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
-    keywords: {
-    },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Electro-stun Blaster',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 2,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'ig-100-magnaguard': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
     keywords: {
-      guardianX: '<need human>',
       immuneMeleePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Electrostaff',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      },
+      {
+        name: 'Precision Laser Dart',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'ig-100-magnaguard-prototype-assassin-droids': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    miniatureCount: 4,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    miniatureCount: 3,
     keywords: {
       immuneMeleePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Electrostaff',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+        whiteDice: 1,
+      },
+      {
+        name: 'Precision Laser Dart',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'tsmeu-6-wheel-bikes': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 2,
     keywords: {
-      armorX: '<need human>',
+      armorX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Spiked Wheel',
+        weaponType: AttackType.Overrun,
+        blackDice: 3
+      },
+      {
+        name: 'Double Laser Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        keywords: {
+          impactX: 1,
+        }
+      }
+    ],
   },
 
   'droidekas': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
     keywords: {
-      shieldedX: '<need human>',
-      immuneDeflect: true,
+      shieldedX: 4,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Dual Blaster Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 2,
+        keywords: {
+          immuneDeflect: true,
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'dsd1-dwarf-spider-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
+      armorX: 3,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Wicked Kick',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1
+      }
+    ],
   },
 
   'lm-432-crab-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
+      armorX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Crab Claws',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          impactX: 2,
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'stap-riders': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 2,
     keywords: {
-      coverX: '<need human>',
+      coverX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Dual Blaster Cannons',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        keywords: {
+          criticalX: 1,
+        }
+      }
+    ],
   },
 
   'aat-battle-tank': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Anti-Personnel Lasers',
+        weaponType: AttackType.Ranged,
+        blackDice: 3
+      },
+      {
+        name: 'Artillery Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 4,
+        keywords: {
+          impactX: 2,
+          criticalX: 2,
+          highVelocity: true
+        }
+      }
+    ],
   },
 
   'aqua-droids': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
     keywords: {
       armorX: '<need human>',
@@ -1496,8 +2825,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'persuader-class-tank-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       armorX: '<need human>',
       arsenalX: '<need human>',
@@ -1506,246 +2835,600 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'persuader-class-tank-droid-prototype-tank-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 3,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Prototype Ion Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        keywords: {
+          impactX: 1,
+          ionX: 1
+        }
+      },
+      {
+        name: 'Heavy Blasters',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          criticalX: 1
+        }
+      }
+    ],
   },
 
   'black-sun-vigo': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Vigo\'s Double Blaster',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+        whiteDice: 2,
+      }
+    ],
   },
 
   'c-3p0-golden-god': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {},
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [],
   },
 
   'gar-saxon-militant-commando': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+      },
+      {
+        name: 'Gar\'s Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        redDice: 1,
+        whiteDice: 1,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'logray-superstitious-shaman': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Staff',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'pyke-syndicate-capo': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      dangerSenseX: '<need human>',
+      dangerSenseX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+      },
+      {
+        name: 'Capo\'s Long Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+      }
+    ],
   },
 
   'wicket-hero-of-bright-tree': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Spear',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        blackDice: 1,
+        keywords: {
+          pierceX: 1,
+        }
+      },
+      {
+        name: 'Sling',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        keywords: {
+          pierceX: 1,
+          primitive: true,
+        }
+      }
+    ],
   },
 
   'boba-fett-infamous-bounty-hunter-mercenaries': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
-      arsenalX: '<need human>',
+      sharpshooterX: 2,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Boot Spikes',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+      },
+      {
+        name: 'Integrated Rockets',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          impactX: 1,
+        }
+      },
+      {
+        name: 'EE-3 Carbine Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'boba-fett-daimyo-of-mos-espa': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
-      arsenalX: '<need human>',
+      sharpshooterX: 1,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Gaderffii Stick',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+        blackDice: 1
+      },
+      {
+        name: 'EE-3 Carbine Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'bossk-trandoshan-terror-mercenaries': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    keywords: {
-    },
-    weapons: [],
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    weapons: [
+      {
+        name: 'Frenzy',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 2,
+        keywords: {
+          pierceX: 1
+        }
+      },
+      {
+        name: 'Mortar Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 4,
+        keywords: {
+          pierceX: 1,
+          suppressive: true,
+        }
+      }
+    ],
   },
 
   'cad-bane-needs-no-introduction-mercenaries': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      dangerSenseX: '<need human>',
-      sharpshooterX: '<need human>',
+      dangerSenseX: 3,
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Martial Arts',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+      },
+      {
+        name: 'LL-30 Blaster Pistols',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ],
   },
 
   'din-djarin-the-mandalorian': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       impervious: true,
-      arsenalX: '<need human>',
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Vibroknife',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+        keywords: {
+          lethalX: 1,
+        }
+      },
+      {
+        name: 'IB-94 Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 1,
+        keywords: {
+          lethalX: 1,
+        }
+      }
+    ],
   },
 
   'ig-11-nurse-and-protect': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
       impervious: true,
-      armorX: '<need human>',
+      armorX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Overwhelm',
+        weaponType: AttackType.Melee,
+        redDice: 4
+      },
+      {
+        name: 'Modified Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 2,
+        keywords: {
+          pierceX: 1
+        }
+      },
+      {
+        name: 'Modified DLT-20A',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        whiteDice: 1
+      }
+    ],
   },
 
   'ig-88-notorious-assassin-droid': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
       impervious: true,
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 1,
+      arsenalX: 2
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Vibrocleaver',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        keywords: {
+          pierceX: 1,
+        }
+      },
+      {
+        name: 'Modified Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 2,
+        keywords: {
+          pierceX: 1
+        }
+      },
+      {
+        name: 'Modified DLT-20A',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        whiteDice: 1
+      }
+    ],
   },
 
   'maul-a-rival': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       deflect: true,
       immunePierce: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Maul\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+        whiteDice: 4,
+        keywords: {
+          impactX: 2,
+          pierceX: 2,
+        }
+      }
+    ],
   },
 
   'the-bad-batch-clone-force-99-mercenaries': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
+    miniatureCount: 0,
     keywords: {
       impervious: true,
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Combat Training',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+      },
+      {
+        name: 'DC-17 Hand Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        blackDice: 1,
+      }
+    ],
   },
 
   'black-sun-enforcers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
     keywords: {
-      preciseX: '<need human>',
+      preciseX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Close Quarters Combat',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+      },
+      {
+        name: 'Double Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        blackDice: 1
+      }
+    ],
   },
 
   'ewok-skirmishers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 6,
     keywords: {
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Spear',
+        weaponType: AttackType.Melee,
+        blackDice: 1,
+      }
+    ],
   },
 
   'pyke-syndicate-foot-soldiers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
     keywords: {
       outmaneuver: true,
-      dangerSenseX: '<need human>',
+      dangerSenseX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Stun Baton',
+        weaponType: AttackType.Melee,
+        whiteDice: 2,
+      },
+      {
+        name: 'P13 Long Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+      }
+    ],
   },
 
   'ewok-slingers': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 6,
     keywords: {
       lowProfile: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Stones',
+        weaponType: AttackType.Melee,
+        whiteDice: 1,
+      },
+      {
+        name: 'Slings',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        keywords: {
+          primitive: true
+        }
+      }
+    ],
   },
 
   'mandalorian-super-commandos': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
-    miniatureCount: 3,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    miniatureCount: 1,
     keywords: {
       impervious: true,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'WESTAR-35 Blasters',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+      },
+      {
+        name: 'Blaster Carbines',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+      }
+    ],
   },
 
   'swoop-bike-riders': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
     keywords: {
-      coverX: '<need human>',
+      coverX: 1,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Vibro-Ax',
+        weaponType: AttackType.Overrun,
+        redDice: 1,
+        whiteDice: 2
+      },
+      {
+        name: 'Heavy Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        redDice: 1
+      }
+    ],
   },
 
   'a-a5-speeder-truck-mercenaries': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
+      armorX: 5,
     },
     weapons: [],
   },
 
   'chewbacca-let-the-wookiee-win': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Grenade Launcher',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+        keywords: {
+          blast: true
+        }
+      },
+      {
+        name: '88 Twin Light Blaster',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        keywords: {
+          impactX: 1,
+        }
+      },
+      {
+        name: 'MS-4 Twin Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          impactX: 3,
+        }
+      }
+    ],
   },
 
   'wlo-5-speeder-tank': {
-    attackSurgeChart: undefined,
-    defenseSurgeChart: undefined,
+    attackSurgeChart: AttackSurgeChart.None,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Anti-Personnel Lasers',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        whiteDice: 2
+      },
+      {
+        name: 'Heavy Laser Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          impactX: 2,
+        }
+      }
+    ],
   }
 };

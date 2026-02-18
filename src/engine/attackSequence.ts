@@ -1,4 +1,5 @@
 import type { AttackConfig, AttackResult } from './types';
+import { AttackType } from './types';
 import {
   formAttackPool,
   upgradeDowgradeAttackDice,
@@ -22,11 +23,28 @@ import { compareResults } from './compareResults';
  * Each step is implemented in its own module for better organization and maintainability.
  */
 export function executeAttackSequence(config: AttackConfig): AttackResult {
+  // ── Immune: Melee — attack is impossible, return zero result ──
+  if (config.defender.immuneMelee && config.attackType === AttackType.Melee) {
+    return {
+      guardianWoundsNoPierce: 0,
+      mainTargetWoundsNoPierce: 0,
+      totalWounds: 0,
+      deflectWounds: 0,
+      djemSoWounds: 0,
+      suppressionApplied: 0,
+    };
+  }
+
   // Step 2 — Form Attack Pool (per-weapon Spray applied here)
   const poolAfterStep2 = formAttackPool(config);
 
   // Aggregate weapon keywords for pool-level usage
   const poolKeywords = aggregateWeaponKeywords(getWeaponsForAttackType(config));
+
+  // Complete the Mission (attacker): adds Critical 2 to the pool
+  if (config.attacker.completeTheMission) {
+    poolKeywords.criticalX += 2;
+  }
 
   // Step 4a — Upgrade/Downgrade Attack Dice
   const poolAfterStep4a = upgradeDowgradeAttackDice(poolAfterStep2, config);
@@ -60,7 +78,7 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
   let guardianBlocks = 0;
   let guardianDeflectWounds = 0;
   if (guardianHits > 0 && config.defender.guardianX > 0) {
-    const guardianResult = rollGuardianDefense(guardianHits, config, poolKeywords.highVelocity);
+    const guardianResult = rollGuardianDefense(guardianHits, config, poolKeywords);
     guardianWoundsNoPierce = guardianResult.guardianWoundsNoPierce;
     guardianBlocks = guardianResult.guardianBlocks;
     guardianDeflectWounds = guardianResult.guardianDeflectWounds;

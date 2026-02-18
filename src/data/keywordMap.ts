@@ -118,7 +118,6 @@ export const ATTACKER_KEYWORD_FIELD_MAP: Record<string, string> = {
   'Jar\'Kai Mastery': 'jarKaiMastery',
   'Duelist': 'duelistAttacker', // Special mapping for attacker side
   'Makashi Mastery': 'makashiMastery',
-  'Immune: Deflect': 'immuneDeflect',
   'Death from Above': 'deathFromAbove',
   'Hold the Line': 'holdTheLine',
 };

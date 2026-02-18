@@ -1,22 +1,6 @@
 import type { AttackConfig, WeaponProfile, AggregatedWeaponKeywords } from './types';
 import { AttackDieColor, AttackType } from './types';
-
-function isWeaponUsableForAttackType(
-  weaponType: AttackType | undefined,
-  attackType: AttackType,
-): boolean {
-  if (weaponType === undefined) return true;
-  if (weaponType === attackType) return true;
-
-  if (
-    weaponType === AttackType.Hybrid &&
-    (attackType === AttackType.Ranged || attackType === AttackType.Melee)
-  ) {
-    return true;
-  }
-
-  return false;
-}
+import { isWeaponUsableForAttackType } from './weaponUtils';
 
 export function getWeaponsForAttackType(config: AttackConfig): WeaponProfile[] {
   return config.attacker.weapons.filter((weapon) => {
@@ -58,9 +42,12 @@ export function aggregateWeaponKeywords(
       pierceX: 0,
       impactX: 0,
       ramX: 0,
+      ionX: 0,
       blast: false,
       suppressive: false,
       highVelocity: false,
+      immuneDeflect: false,
+      primitive: false,
     };
   }
 
@@ -69,9 +56,12 @@ export function aggregateWeaponKeywords(
   let pierceX = 0;
   let impactX = 0;
   let ramX = 0;
+  let ionX = 0;
   let blast = false;
   let suppressive = false;
   let highVelocity = true; // AND: start true, flip false if any weapon lacks it
+  let immuneDeflect = false;
+  let primitive = false;
 
   for (const weapon of weapons) {
     const kw = weapon.keywords;
@@ -80,9 +70,12 @@ export function aggregateWeaponKeywords(
     pierceX += kw.pierceX;
     impactX += kw.impactX;
     ramX += kw.ramX;
+    ionX += kw.ionX;
     blast = blast || kw.blast;
     suppressive = suppressive || kw.suppressive;
     highVelocity = highVelocity && kw.highVelocity;
+    immuneDeflect = immuneDeflect || kw.immuneDeflect;
+    primitive = primitive || kw.primitive;
   }
 
   return {
@@ -91,9 +84,12 @@ export function aggregateWeaponKeywords(
     pierceX,
     impactX,
     ramX,
+    ionX,
     blast,
     suppressive,
     highVelocity,
+    immuneDeflect,
+    primitive,
   };
 }
 

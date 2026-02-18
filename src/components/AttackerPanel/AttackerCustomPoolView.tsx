@@ -202,6 +202,32 @@ export default function AttackerCustomPoolView() {
               onChange={(value) => store.setWeaponKeyword(0, 'spray', value)}
               tooltip="This weapon's dice are added once per defending miniature in line of sight, multiplying its contribution to the attack pool."
             />
+            <Checkbox
+              label="Immune: Deflect"
+              value={weapon.keywords.immuneDeflect}
+              onChange={(value) => store.setWeaponKeyword(0, 'immuneDeflect', value)}
+              disabled={isWeaponDisabled('immuneDeflect')}
+              tooltip="This attack pool cannot suffer wounds from the Deflect keyword."
+            />
+            <Checkbox
+              label="Primitive"
+              value={weapon.keywords.primitive}
+              onChange={(value) => store.setWeaponKeyword(0, 'primitive', value)}
+              tooltip="When attacking a unit with Armor X, after resolving Impact X, all crit results become hit results."
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+            <NumberSpinner
+              label="Ion X"
+              value={weapon.keywords.ionX}
+              onChange={(value) => store.setWeaponKeyword(0, 'ionX', value)}
+              min={0}
+              max={99}
+              compact
+              disabled={isWeaponDisabled('ionX')}
+              tooltip="At the start of Modify Attack Dice, flip up to X of the defender's active Shield tokens per hit/crit result, reducing shields available."
+            />
           </div>
         </div>
       </SectionHeader>
@@ -274,13 +300,6 @@ export default function AttackerCustomPoolView() {
               tooltip="While making a melee attack, reduce your Pierce by 1 to disable the defender's Immune: Pierce, Immune: Melee Pierce, and Impervious."
             />
             <Checkbox
-              label="Immune: Deflect"
-              value={store.immuneDeflect}
-              onChange={(value) => store.setField('immuneDeflect', value)}
-              disabled={isDisabled('immuneDeflect')}
-              tooltip="This unit's attacks cannot be deflected back at the attacker by Deflect."
-            />
-            <Checkbox
               label="Death From Above"
               value={store.deathFromAbove}
               onChange={(value) => store.setField('deathFromAbove', value)}
@@ -293,6 +312,12 @@ export default function AttackerCustomPoolView() {
               onChange={(value) => store.setField('holdTheLine', value)}
               disabled={isDisabled('holdTheLine')}
               tooltip="While engaged in melee, your attack surge results convert to hits."
+            />
+            <Checkbox
+              label="Complete the Mission"
+              value={store.completeTheMission}
+              onChange={(value) => store.setField('completeTheMission', value)}
+              tooltip="While attacking near an allied Priority Mission Token, this unit's attack pool gains Critical 2."
             />
           </div>
 

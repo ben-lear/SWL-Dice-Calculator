@@ -55,6 +55,9 @@ export function applyDefenderUpgrades(
     if (effects.immuneBlast !== undefined) {
       result.immuneBlast = result.immuneBlast || effects.immuneBlast;
     }
+    if (effects.immuneMelee !== undefined) {
+      result.immuneMelee = result.immuneMelee || effects.immuneMelee;
+    }
     if (effects.impervious !== undefined) {
       result.impervious = result.impervious || effects.impervious;
     }
@@ -90,6 +93,9 @@ export function applyDefenderUpgrades(
     }
     if (effects.dugIn !== undefined) {
       result.dugIn = result.dugIn || effects.dugIn;
+    }
+    if (effects.completeTheMission !== undefined) {
+      result.completeTheMission = result.completeTheMission || effects.completeTheMission;
     }
 
     // Add upgrade cost to total unit cost

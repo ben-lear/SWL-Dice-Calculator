@@ -36,6 +36,9 @@ export function createMinimalWeaponKeywords(
     cumbersome: false,
     sidearmMelee: false,
     sidearmRanged: false,
+    immuneDeflect: false,
+    primitive: false,
+    ionX: 0,
     ...overrides,
   };
 }
@@ -95,9 +98,9 @@ export function createMinimalAttacker(
     jarKaiMastery: false,
     duelistAttacker: false,
     makashiMastery: false,
-    immuneDeflect: false,
     deathFromAbove: false,
     holdTheLine: false,
+    completeTheMission: false,
     unitCost: 0,
     ...overrides,
   };
@@ -138,6 +141,9 @@ export function createMinimalPoolKeywords(
     blast: false,
     suppressive: false,
     highVelocity: false,
+    immuneDeflect: false,
+    primitive: false,
+    ionX: 0,
     ...overrides,
   };
 }
@@ -164,6 +170,7 @@ export function createMinimalDefender(overrides: Partial<DefenderConfig> = {}): 
     immunePierce: false,
     immuneMeleePierce: false,
     immuneBlast: false,
+    immuneMelee: false,
     impervious: false,
     dangerSenseX: 0,
     uncannyLuckX: 0,
@@ -179,6 +186,7 @@ export function createMinimalDefender(overrides: Partial<DefenderConfig> = {}): 
     backup: false,
     holdTheLine: false,
     dugIn: false,
+    completeTheMission: false,
     guardianX: 0,
     unitCost: 0,
     ...overrides,
