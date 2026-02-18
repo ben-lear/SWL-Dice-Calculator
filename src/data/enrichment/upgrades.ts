@@ -906,7 +906,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'force-fear': {
-    keywords: {},
+    keywords: {
+      demoralizeX: 1
+    },
   },
 
   'force-force-barrier': {
@@ -938,6 +940,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'force-saber-throw': {
+    // TODO: add a weapon that is a ranged attack with all the keywords of a unit's melee weapon, but with half of the red dice (rounded up, pick the best dice -> 3R3W becomes 3R)
     keywords: {},
   },
 
@@ -954,14 +957,23 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-boba-s-flame-projector': {
-    keywords: {
-      blast: true,
-      spray: true,
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Boba\'s Flame Projector',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          spray: true,
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'gear-combat-armor': {
+    // TODO: transform white defense dice into red defense dice without surge (can be overridden by Platoon Leader)
     keywords: {},
   },
 
@@ -978,7 +990,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-din-s-jetpack': {
-    keywords: {},
+    keywords: {
+      jumpX: 2
+    },
   },
 
   'gear-electro-grappling-line': {
@@ -986,7 +1000,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-electrobinoculars': {
-    keywords: {},
+    keywords: {
+      spotterX: 1
+    },
   },
 
   'gear-emergency-stims': {
@@ -994,10 +1010,13 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-environmental-gear': {
-    keywords: {},
+    keywords: {
+      unhindered: true
+    },
   },
 
   'gear-expanded-databanks': {
+    // TODO: gain a protocol upgrade slot
     keywords: {},
   },
 
@@ -1006,33 +1025,45 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-grappling-hooks': {
-    keywords: {},
+    keywords: {
+      expertClimber: true,
+    },
   },
 
   'gear-katarn-pattern-armor': {
+    // TODO: special defensive effect
     keywords: {},
   },
 
   'gear-mandalorian-combat-shields': {
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 2,
     },
   },
 
   'gear-mobility-upgrade': {
-    keywords: {},
+    keywords: {
+      scale: true,
+      steady: true
+    },
   },
 
   'gear-portable-scanner': {
-    keywords: {},
+    keywords: {
+      takeCoverX: 1
+    },
   },
 
   'gear-prepared-supplies': {
-    keywords: {},
+    keywords: {
+      cacheDodgeX: 1
+    },
   },
 
   'gear-recon-intel': {
-    keywords: {},
+    keywords: {
+      scoutX: 1
+    },
   },
 
   'gear-sabine-s-combat-shield': {
@@ -1049,19 +1080,20 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'gear-seeker-droid': {
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 1,
+      rechargeX: 1,
     },
   },
 
   'gear-super-commando-combat-shields': {
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 2,
     },
   },
 
   'gear-targeting-scopes': {
     keywords: {
-      preciseX: '<need human>',
+      preciseX: 1,
     },
   },
 
@@ -1070,27 +1102,78 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'generator-barrage-generator': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Barrage Generator',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        maxRange: Infinity,
+        keywords: {
+          suppressive: true,
+          exhaust: true,
+        }
+      }
+    ]
   },
 
   'generator-overcharged-generator': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Overcharged Generator',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        maxRange: Infinity,
+        keywords: {
+          impactX: 1,
+          exhaust: true,
+        }
+      }
+    ]
   },
 
   'grenades-concussion-grenades': {
-    keywords: {
-      blast: true,
-    },
+    isGrenade: true,
+    weapons: [
+      {
+        name: 'Concussion Grenade',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+        }
+      }
+    ]
   },
 
   'grenades-emp-droid-poppers': {
-    keywords: {},
+    isGrenade: true,
+    weapons: [
+      {
+        name: 'EMP "Droid Poppers"',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        maxRange: 1,
+        keywords: {
+          ionX: 1,
+        }
+      }
+    ]
   },
 
   'grenades-fragmentation-grenades': {
-    keywords: {},
+    isGrenade: true,
+    surgeOverrides: {
+      surgeCrit: true,
+    },
+    weapons: [
+      {
+        name: 'Frag Grenade',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        maxRange: 1,
+      }
+    ]
   },
 
   'grenades-impact-grenades': {
@@ -1108,121 +1191,414 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'grenades-smoke-grenades': {
-    keywords: {},
+    keywords: {
+      smokeX: 1,
+      expend: true,
+    },
   },
 
   'grenades-sonic-imploders': {
-    keywords: {
-      suppressive: true,
-    },
+    isGrenade: true,
+    weapons: [
+      {
+        name: 'Sonic Imploder',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        maxRange: 1,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'grenades-thermal-detonator': {
-    keywords: {
-      blast: true,
-    },
+    isGrenade: true,
+    weapons: [
+      {
+        name: 'Thermal Detonator',
+        weaponType: AttackType.Hybrid,
+        redDice: 4,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          impactX: 4,
+          expend: true,
+        }
+      }
+    ]
   },
 
   'hardpoint-88i-twin-light-blaster': {
-    keywords: {},
+    weapons: [
+      {
+        name: '88i Twin Light Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+          impactX: 1,
+        }
+      }
+    ]
   },
 
   'hardpoint-ag-2g-quad-laser': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'AG-2G Quad Laser',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        maxRange: 3,
+        keywords: {
+          impactX: 2,
+        }
+      }
+    ]
   },
 
   'hardpoint-at-rt-flamethrower': {
-    keywords: {
-      blast: true,
-      spray: true,
-    },
+    weapons: [
+      {
+        name: 'Flamethrower',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          fixed: 'front',
+          spray: true
+        }
+      }
+    ]
   },
 
   'hardpoint-at-rt-laser-cannon': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Laser Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 2,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 3,
+          fixed: 'front',
+          spray: true
+        }
+      }
+    ]
   },
 
   'hardpoint-at-rt-rotary-blaster': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Rotary Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 5,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+        }
+      }
+    ]
   },
 
   'hardpoint-at-st-mortar-launcher': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'AT-ST Mortar Launcher',
+        weaponType: AttackType.Ranged,
+        whiteDice: 3,
+        minRange: 4,
+        maxRange: Infinity,
+        keywords: {
+          fixed: 'front',
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'hardpoint-ax-108-ground-buzzer': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Ax-108 "Ground Buzzer"',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        maxRange: 2,
+        keywords: {
+          fixed: 'rear',
+        }
+      }
+    ]
   },
 
   'hardpoint-beam-turret': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Beam Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        maxRange: 4,
+        keywords: {
+          beamX: 2
+        }
+      }
+    ]
   },
 
   'hardpoint-dw-3-concussion-grenade-launcher': {
-    keywords: {
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'DW-3 Grenade Launcher',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 2,
+        keywords: {
+          fixed: 'front',
+          blast: true,
+        }
+      }
+    ]
   },
 
   'hardpoint-heavy-laser-cannon': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Heavy Laser Cannon',
+        weaponType: AttackType.Ranged,
+        blackDice: 5,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+          impactX: 3,
+        }
+      }
+    ]
   },
 
   'hardpoint-heavy-laser-retrofit': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Heavy Laser Retrofit',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        maxRange: 4,
+        keywords: {
+          criticalX: 1,
+        }
+      }
+    ]
   },
 
   'hardpoint-m-45-ion-blaster': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'M-45 Ion Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        whiteDice: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 1,
+          ionX: 1,
+          fixed: 'front',
+          criticalX: 1
+        }
+      }
+    ]
   },
 
   'hardpoint-mark-ii-medium-blaster': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Mark II Medium Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+        }
+      }
+    ]
   },
 
   'hardpoint-mo-dk-power-harpoon': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Mo/Dk Power Harpoon',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        maxRange: 2,
+        keywords: {
+          impactX: 2,
+          fixed: 'rear',
+          towCable: true
+        }
+      }
+    ]
   },
 
   'hardpoint-nose-mounted-flamethrower': {
-    keywords: {
-      blast: true,
-      spray: true,
-    },
+    weapons: [
+      {
+        name: 'Flamethrower',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        whiteDice: 1,
+        maxRange: 1,
+        keywords: {
+          fixed: 'front',
+          blast: true,
+          spray: true
+        }
+      }
+    ]
   },
 
   'hardpoint-nose-mounted-ion-blaster': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Ion Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        whiteDice: 3,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          fixed: 'front',
+          criticalX: 1,
+          impactX: 2,
+          ionX: 1
+        }
+      }
+    ]
   },
 
   'hardpoint-nose-mounted-laser-cannon': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Laser Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 3,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+          criticalX: 1,
+        }
+      }
+    ]
   },
 
   'hardpoint-pintle-mounted-dlt-19': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'DLT-19 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 1,
+        }
+      }
+    ]
   },
 
   'hardpoint-pintle-mounted-rt-97c': {
-    keywords: {},
+        weapons: [
+      {
+        name: 'RT-97C Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 3,
+        maxRange: 4,
+      }
+    ]
   },
 
   'hardpoint-twin-beam-cannons': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Twin Beam Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 2,
+        maxRange: 4,
+        keywords: {
+          fixed: 'front',
+          beamX: 2
+        }
+      }
+    ]
   },
 
   'hardpoint-twin-blaster-cannons': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Blaster Cannons',
+        weaponType: AttackType.Ranged,
+        blackDice: 6,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+          criticalX: 2
+        }
+      }
+    ]
   },
 
   'hardpoint-twin-laser-turret': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Twin Laser Cannon',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        maxRange: 3,
+        keywords: {
+          criticalX: 1,
+        }
+      }
+    ]
   },
 
   'hardpoint-twin-missile-pods': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Missile Pods',
+        weaponType: AttackType.Ranged,
+        redDice: 4,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          fixed: 'front',
+          impactX: 2
+        }
+      }
+    ]
+  },
+
+  'hardpoint-twin-blaster-cannons-lm-432-crab-droid': {
+    weapons: [
+      {
+        name: 'Twin Blaster Cannons',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        redDice: 2,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+        }
+      }
+    ]
   },
 
   'heavy-weapon-agent-kallus': {
