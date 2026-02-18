@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1",
+    "name": "Commander",
+    "symbol": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609526948/rank_symbols/commander_kp6mc2.png",
+    "sort_priority": 1,
+    "footer_width": 30
+  },
+  {
+    "id": "2",
+    "name": "Corps",
+    "symbol": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609526948/rank_symbols/corps_lgy2gr.png",
+    "sort_priority": 3,
+    "footer_width": 20
+  },
+  {
+    "id": "5",
+    "name": "Heavy",
+    "symbol": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609526948/rank_symbols/heavy_ofcvqg.png",
+    "sort_priority": 6,
+    "footer_width": 28
+  },
+  {
+    "id": "6",
+    "name": "Operative",
+    "symbol": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609526948/rank_symbols/operative_h9imig.png",
+    "sort_priority": 2,
+    "footer_width": 18
+  },
+  {
+    "id": "3",
+    "name": "Special Forces",
+    "symbol": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609526948/rank_symbols/special-forces_auv7f4.png",
+    "sort_priority": 4,
+    "footer_width": 32
+  },
+  {
+    "id": "4",
+    "name": "Support",
+    "symbol": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609526948/rank_symbols/support_juexlo.png",
+    "sort_priority": 5,
+    "footer_width": 16
+  }
+]

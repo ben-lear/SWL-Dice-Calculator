@@ -107,6 +107,7 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
     defenseDieColor: processed.defenseDieColor,
     rank: processed.rank,
     unitType: processed.unitType,
+    affiliation: processed.affiliation ?? null,
 
     attackSurgeChart:
       enrichment?.attackSurgeChart ?? null,

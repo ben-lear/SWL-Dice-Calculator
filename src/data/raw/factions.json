@@ -1,0 +1,74 @@
+[
+  {
+    "id": "6",
+    "name": "Mercenary",
+    "alignment": "Dark",
+    "logo": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1649387675/faction%20symbols/merc_logo_small_xn87zu.png",
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "user_fkey": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "3",
+    "name": "Neutral",
+    "alignment": null,
+    "logo": null,
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "user_fkey": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "2",
+    "name": "Empire",
+    "alignment": "Dark",
+    "logo": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609095566/faction%20symbols/Empire_vqwzph.png",
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "user_fkey": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "1",
+    "name": "Rebel",
+    "alignment": "Light",
+    "logo": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609095566/faction%20symbols/Rebel_Logo_uzot6s.png",
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "user_fkey": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "4",
+    "name": "Galactic Republic",
+    "alignment": "Light",
+    "logo": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609095566/faction%20symbols/Galactic_fylqcz.png",
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "user_fkey": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "5",
+    "name": "Separatist Alliance",
+    "alignment": "Dark",
+    "logo": "https://res.cloudinary.com/tabletopadmiral/image/upload/v1609095566/faction%20symbols/Separatist_qjejwr.png",
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "user_fkey": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  }
+]

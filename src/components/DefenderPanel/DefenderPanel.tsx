@@ -58,7 +58,11 @@ export default function DefenderPanel() {
     }
     const preset = getDefenderPresetById(presetId);
     if (preset) {
-      store.loadPreset(preset.id, preset.profile, preset.upgradeBar, preset.unitApiId);
+      store.loadPreset(preset.id, preset.profile, preset.upgradeBar, preset.unitApiId, {
+        rank: preset.rank,
+        unitType: preset.unitType,
+        affiliation: preset.unitAffiliation,
+      });
     }
   };
 

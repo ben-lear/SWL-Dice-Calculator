@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getResolvedUpgradeById, getAllResolvedUpgrades } from '../upgradeResolver';
+import { getResolvedUpgradeById, getAllResolvedUpgrades, getUpgradesForSlot } from '../upgradeResolver';
 import { UPGRADE_ENRICHMENTS } from '../enrichment/upgrades';
 import { UpgradeSlot } from '../types';
 
@@ -336,6 +336,178 @@ describe('upgradeResolver', () => {
       // As long as we have MOSTLY unique IDs, the system works
       // Allow up to 5% duplication
       expect(uniqueIds.size).toBeGreaterThan(ids.length * 0.95);
+    });
+  });
+
+  describe('getUpgradesForSlot restriction filtering', () => {
+    // ── No context → all upgrades shown ──────────────────────────────────────
+
+    it('returns faction-restricted upgrades when no context provided', () => {
+      // 2-1B Medical Droid is rebel-alliance only; without context it should still appear
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Personnel);
+      const medDroid = upgrades.find(u => u.id === 'personnel-2-1b-medical-droid');
+      expect(medDroid).toBeDefined();
+    });
+
+    // ── Faction restrictions ──────────────────────────────────────────────────
+
+    it('includes faction-restricted upgrade when faction matches', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Personnel, { faction: 'rebel-alliance' });
+      const medDroid = upgrades.find(u => u.id === 'personnel-2-1b-medical-droid');
+      expect(medDroid).toBeDefined();
+    });
+
+    it('excludes faction-restricted upgrade when faction does not match', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Personnel, { faction: 'galactic-empire' });
+      const medDroid = upgrades.find(u => u.id === 'personnel-2-1b-medical-droid');
+      expect(medDroid).toBeUndefined();
+    });
+
+    // ── Rank restrictions ─────────────────────────────────────────────────────
+
+    it('includes rank-restricted upgrade when rank matches', () => {
+      // 2-1B Medical Droid has rankRestrictions: ['corps']
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Personnel, {
+        faction: 'rebel-alliance',
+        rank: 'corps',
+      });
+      const medDroid = upgrades.find(u => u.id === 'personnel-2-1b-medical-droid');
+      expect(medDroid).toBeDefined();
+    });
+
+    it('excludes rank-restricted upgrade when rank does not match', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Personnel, {
+        faction: 'rebel-alliance',
+        rank: 'commander',
+      });
+      const medDroid = upgrades.find(u => u.id === 'personnel-2-1b-medical-droid');
+      expect(medDroid).toBeUndefined();
+    });
+
+    // ── Unit type restrictions ────────────────────────────────────────────────
+
+    it('includes unit-type-restricted upgrade when unit type matches', () => {
+      // Attack Protocols has unitTypeRestrictions: ['repulsor-vehicle', 'ground-vehicle']
+      const vehicleUpgrades = getUpgradesForSlot(UpgradeSlot.Protocol, {
+        unitType: 'ground-vehicle',
+      });
+      const attackProto = vehicleUpgrades.find(u => u.id === 'protocol-attack-protocols');
+      expect(attackProto).toBeDefined();
+    });
+
+    it('excludes unit-type-restricted upgrade when unit type does not match', () => {
+      const trooperUpgrades = getUpgradesForSlot(UpgradeSlot.Protocol, {
+        unitType: 'trooper',
+      });
+      const attackProto = trooperUpgrades.find(u => u.id === 'protocol-attack-protocols');
+      expect(attackProto).toBeUndefined();
+    });
+
+    // ── Unit-specific restrictions ────────────────────────────────────────────
+
+    it('includes unit-restricted upgrade when unit API ID matches', () => {
+      // 88i Twin Light Blaster has unitRestrictions: [9]
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Hardpoint, { unitApiId: 9 });
+      const blaster = upgrades.find(u => u.id === 'hardpoint-88i-twin-light-blaster');
+      expect(blaster).toBeDefined();
+    });
+
+    it('excludes unit-restricted upgrade when unit API ID does not match', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Hardpoint, { unitApiId: 999 });
+      const blaster = upgrades.find(u => u.id === 'hardpoint-88i-twin-light-blaster');
+      expect(blaster).toBeUndefined();
+    });
+
+    // ── Units disallowed exclusion ────────────────────────────────────────────
+
+    it('excludes upgrade when unit is on the disallowed list', () => {
+      // Command Control Array has unitsDisallowedOn: [31844, 31845]
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Comms, { unitApiId: 31844 });
+      const cmdArray = upgrades.find(u => u.id === 'comms-command-control-array');
+      expect(cmdArray).toBeUndefined();
+    });
+
+    it('includes upgrade when unit is NOT on the disallowed list', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Comms, { unitApiId: 999 });
+      const cmdArray = upgrades.find(u => u.id === 'comms-command-control-array');
+      expect(cmdArray).toBeDefined();
+    });
+
+    // ── Alignment restrictions ────────────────────────────────────────────────
+
+    it('includes Dark-aligned upgrade for Galactic Empire unit', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Force, { faction: 'galactic-empire' });
+      const forceChoke = upgrades.find(u => u.id === 'force-force-choke');
+      expect(forceChoke).toBeDefined();
+    });
+
+    it('excludes Dark-aligned upgrade for Rebel Alliance unit', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Force, { faction: 'rebel-alliance' });
+      const forceChoke = upgrades.find(u => u.id === 'force-force-choke');
+      expect(forceChoke).toBeUndefined();
+    });
+
+    it('excludes Dark-aligned upgrade for Mercenary unit (no alignment)', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Force, { faction: 'mercenaries' });
+      const forceChoke = upgrades.find(u => u.id === 'force-force-choke');
+      expect(forceChoke).toBeUndefined();
+    });
+
+    it('includes Light-aligned upgrade for Republic unit', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Force, { faction: 'republic' });
+      const forceHope = upgrades.find(u => u.name === 'Hope');
+      expect(forceHope).toBeDefined();
+    });
+
+    // ── Affiliation restrictions ──────────────────────────────────────────────
+
+    it('includes affiliation-restricted upgrade when affiliation matches', () => {
+      // Call to Arms has affiliationRestrictions: ['ewoks']
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Training, { affiliation: 'ewoks' });
+      const callToArms = upgrades.find(u => u.id === 'training-call-to-arms');
+      expect(callToArms).toBeDefined();
+    });
+
+    it('excludes affiliation-restricted upgrade when unit has no affiliation', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Training, { affiliation: null });
+      const callToArms = upgrades.find(u => u.id === 'training-call-to-arms');
+      expect(callToArms).toBeUndefined();
+    });
+
+    it('excludes affiliation-restricted upgrade when unit has wrong affiliation', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Training, { affiliation: 'raiders' });
+      const callToArms = upgrades.find(u => u.id === 'training-call-to-arms');
+      expect(callToArms).toBeUndefined();
+    });
+
+    // ── No restrictions → always pass ────────────────────────────────────────
+
+    it('unrestricted upgrades appear for any unit context', () => {
+      // Upgrades with all empty restriction arrays should appear for any context
+      const allUpgrades = getAllResolvedUpgrades();
+      const unrestricted = allUpgrades.filter(
+        u =>
+          u.factionRestrictions.length === 0 &&
+          u.rankRestrictions.length === 0 &&
+          u.unitTypeRestrictions.length === 0 &&
+          u.unitRestrictions.length === 0 &&
+          u.affiliationRestrictions.length === 0 &&
+          u.alignmentRestriction === null &&
+          u.unitsDisallowedOn.length === 0,
+      );
+
+      if (unrestricted.length === 0) return; // Skip if no truly unrestricted upgrades
+
+      const sample = unrestricted[0];
+      const upgrades = getUpgradesForSlot(sample.upgradeSlot, {
+        faction: 'galactic-empire',
+        rank: 'corps',
+        unitType: 'trooper',
+        unitApiId: 99999,
+        affiliation: null,
+      });
+      const found = upgrades.find(u => u.id === sample.id);
+      expect(found).toBeDefined();
     });
   });
 });

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Trooper",
+    "id": "1"
+  },
+  {
+    "name": "Repulsor Vehicle",
+    "id": "2"
+  },
+  {
+    "name": "Ground Vehicle",
+    "id": "3"
+  },
+  {
+    "name": "Emplacement Trooper",
+    "id": "4"
+  },
+  {
+    "name": "Clone Trooper",
+    "id": "5"
+  },
+  {
+    "name": "Droid Trooper",
+    "id": "6"
+  },
+  {
+    "name": "Creature Trooper",
+    "id": "7"
+  },
+  {
+    "name": "Wookiee Trooper",
+    "id": "8"
+  }
+]

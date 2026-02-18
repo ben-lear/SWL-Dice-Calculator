@@ -11,14 +11,33 @@ import { UPGRADE_ENRICHMENTS } from './enrichment/upgrades';
 import processedUpgradesJson from './processed/upgrades.json';
 
 // ============================================================================
+// Internal Types
+// ============================================================================
+
+interface UnitContext {
+  unitApiId?: number;
+  faction?: string | null;
+  rank?: string | null;
+  unitType?: string | null;
+  affiliation?: string | null;
+}
+
+const FACTION_ALIGNMENT: Record<string, 'Light' | 'Dark'> = {
+  'rebel-alliance': 'Light',
+  'republic': 'Light',
+  'galactic-empire': 'Dark',
+  'separatist-alliance': 'Dark',
+  // Mercenaries: no entry → blocked by any alignment restriction
+};
+
+// ============================================================================
 // Resolve All Upgrades
 // ============================================================================
 
 let _cachedUpgrades: ResolvedUpgrade[] | null = null;
 
-type ProcessedUpgradeJson = Omit<ProcessedUpgrade, 'apiId' | 'restrictedToUnitApiId'> & {
+type ProcessedUpgradeJson = Omit<ProcessedUpgrade, 'apiId'> & {
   apiId: number | string;
-  restrictedToUnitApiId: number | string | null;
 };
 
 function normalizeProcessedUpgrade(
@@ -27,10 +46,6 @@ function normalizeProcessedUpgrade(
   return {
     ...upgrade,
     apiId: typeof upgrade.apiId === 'string' ? Number(upgrade.apiId) : upgrade.apiId,
-    restrictedToUnitApiId:
-      typeof upgrade.restrictedToUnitApiId === 'string'
-        ? Number(upgrade.restrictedToUnitApiId)
-        : upgrade.restrictedToUnitApiId,
   };
 }
 
@@ -71,16 +86,16 @@ const SLOT_ALIAS_NAME_FILTER: Partial<Record<UpgradeSlot, string>> = {
 
 /**
  * Get all upgrades available for a specific slot type.
- * Optionally filtered by unit restriction.
+ * Optionally filtered by unit context (faction, rank, unit type, unit ID, affiliation).
  *
  * @param slot - The upgrade slot to filter by
- * @param unitApiId - If provided, returns only generic upgrades + upgrades
- *                    restricted to this specific unit. If omitted, returns
- *                    all upgrades for the slot (including restricted ones).
+ * @param context - If provided, restricts results to upgrades eligible for this unit context.
+ *                  When context is absent (no unit selected), inclusion restrictions are
+ *                  silently skipped so the full list appears.
  */
 export function getUpgradesForSlot(
   slot: UpgradeSlot,
-  unitApiId?: number,
+  context?: UnitContext,
 ): ResolvedUpgrade[] {
   const aliasSlot = SLOT_ALIASES[slot];
   const aliasNameFilter = SLOT_ALIAS_NAME_FILTER[slot];
@@ -94,10 +109,47 @@ export function getUpgradesForSlot(
 
     if (!matchesDirectSlot && !matchesAliasSlot) return false;
 
-    if (unitApiId !== undefined && u.restrictedToUnitApiId !== null) {
-      // Restricted upgrade: only include if it matches this unit
-      return u.restrictedToUnitApiId === unitApiId;
+    // Without a context, inclusion restrictions pass silently
+    if (!context) return true;
+
+    const { unitApiId, faction, rank, unitType, affiliation } = context;
+
+    // 1. Exclusion: unit must not be on the disallowed list (only when unitApiId known)
+    if (unitApiId !== undefined && u.unitsDisallowedOn.length > 0) {
+      if (u.unitsDisallowedOn.includes(unitApiId)) return false;
     }
+
+    // 2. Faction restriction
+    if (faction && u.factionRestrictions.length > 0) {
+      if (!u.factionRestrictions.includes(faction)) return false;
+    }
+
+    // 3. Rank restriction
+    if (rank && u.rankRestrictions.length > 0) {
+      if (!u.rankRestrictions.includes(rank)) return false;
+    }
+
+    // 4. Unit type restriction
+    if (unitType && u.unitTypeRestrictions.length > 0) {
+      if (!u.unitTypeRestrictions.includes(unitType)) return false;
+    }
+
+    // 5. Specific unit restriction
+    if (unitApiId !== undefined && u.unitRestrictions.length > 0) {
+      if (!u.unitRestrictions.includes(unitApiId)) return false;
+    }
+
+    // 6. Affiliation restriction
+    if (u.affiliationRestrictions.length > 0) {
+      if (!affiliation || !u.affiliationRestrictions.includes(affiliation)) return false;
+    }
+
+    // 7. Alignment restriction
+    if (u.alignmentRestriction !== null && faction) {
+      const unitAlignment = FACTION_ALIGNMENT[faction] ?? null;
+      if (unitAlignment !== u.alignmentRestriction) return false;
+    }
+
     return true;
   });
 }
@@ -188,7 +240,13 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
     name: processed.name,
     cost: processed.cost,
     upgradeSlot: processed.upgradeSlot as UpgradeSlot,
-    restrictedToUnitApiId: processed.restrictedToUnitApiId,
+    factionRestrictions: processed.factionRestrictions,
+    rankRestrictions: processed.rankRestrictions,
+    unitTypeRestrictions: processed.unitTypeRestrictions,
+    unitRestrictions: processed.unitRestrictions,
+    affiliationRestrictions: processed.affiliationRestrictions,
+    alignmentRestriction: processed.alignmentRestriction,
+    unitsDisallowedOn: processed.unitsDisallowedOn,
     keywords: normalizedKeywords,
     weapons: normalizeEnrichmentWeapons(enrichment?.weapons),
     addsMiniature: resolveAddsMiniature(enrichment, processed.upgradeSlot as UpgradeSlot),

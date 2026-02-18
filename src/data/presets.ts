@@ -7,7 +7,7 @@ import type {
   RerollStrategy,
   WeaponProfile,
 } from '../engine/types';
-import type { UpgradeSlot, UnitRank } from './types';
+import type { UpgradeSlot, UnitRank, UnitType } from './types';
 import type { WeaponProfile as DataLayerWeaponProfile } from './types';
 
 // ============================================================================
@@ -152,6 +152,8 @@ export interface AttackerPreset {
   title: string | null;     // e.g., "Hero of the Rebellion" — for disambiguation
   attackType: AttackType;
   rank: UnitRank;           // Unit rank for display in dropdowns
+  unitType: UnitType;       // Unit type for upgrade filtering
+  unitAffiliation: string | null; // Mercenary affiliation for upgrade filtering
   profile: AttackerPresetProfile;
   upgradeBar: UpgradeSlot[];  // Available upgrade slots
   unitApiId: number;          // API ID used for upgrade slot filtering
@@ -163,6 +165,8 @@ export interface DefenderPreset {
   name: string;             // e.g., "Stormtroopers"
   title: string | null;     // e.g., "Hero of the Rebellion" — for disambiguation
   rank: UnitRank;           // Unit rank for display in dropdowns
+  unitType: UnitType;       // Unit type for upgrade filtering
+  unitAffiliation: string | null; // Mercenary affiliation for upgrade filtering
   profile: DefenderPresetProfile;
   upgradeBar: UpgradeSlot[];  // Available upgrade slots
   unitApiId: number;          // API ID used for upgrade slot filtering

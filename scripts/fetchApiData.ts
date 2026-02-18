@@ -18,6 +18,10 @@ const ENDPOINTS: { name: string; path: string }[] = [
   { name: 'keywords', path: '/keywords' },
   { name: 'upgrades', path: '/upgrades' },
   { name: 'upgrade-types', path: '/upgrade-types' },
+  { name: 'factions', path: '/factions' },
+  { name: 'affiliations', path: '/affiliations' },
+  { name: 'unit-types', path: '/unit-types' },
+  { name: 'ranks', path: '/ranks' },
 ];
 
 async function fetchAndSave() {

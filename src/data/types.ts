@@ -205,6 +205,8 @@ export interface ProcessedUnit {
   defenseDieColor: DefenseDieColor;
   rank: UnitRank;
   unitType: UnitType;
+  /** Mercenary affiliation slug, or null for non-mercenary units */
+  affiliation: string | null;
   /** Keyword names resolved from keyword_ids */
   keywordNames: string[];
   /** Upgrade bar derived from API upgrade_types field */
@@ -219,8 +221,20 @@ export interface ProcessedUpgrade {
   name: string;
   cost: number;
   upgradeSlot: UpgradeSlot;
-  /** API ID of unit this upgrade is restricted to, or null for generic */
-  restrictedToUnitApiId: number | null;
+  /** Faction slugs this upgrade is limited to. Empty = any faction. */
+  factionRestrictions: string[];
+  /** Rank slugs this upgrade is limited to. Empty = any rank. */
+  rankRestrictions: string[];
+  /** Unit type slugs this upgrade is limited to. Empty = any unit type. */
+  unitTypeRestrictions: string[];
+  /** API IDs of the specific units this upgrade is limited to. Empty = any unit. */
+  unitRestrictions: number[];
+  /** Affiliation slugs this upgrade is limited to. Empty = any affiliation. */
+  affiliationRestrictions: string[];
+  /** Force alignment required, or null if unrestricted. */
+  alignmentRestriction: 'Light' | 'Dark' | null;
+  /** API IDs of units this upgrade must NOT appear on. */
+  unitsDisallowedOn: number[];
   /** Keyword names resolved from keyword_ids */
   keywordNames: string[];
 }
@@ -269,6 +283,8 @@ export interface ResolvedUnit {
   defenseDieColor: DefenseDieColor;
   rank: UnitRank;
   unitType: UnitType;
+  /** Mercenary affiliation slug, or null for non-mercenary units */
+  affiliation: string | null;
 
   /** Attack surge chart fallback from unit enrichment (null if unspecified) */
   attackSurgeChart: AttackSurgeChart | null;
@@ -304,7 +320,20 @@ export interface ResolvedUpgrade {
   name: string;
   cost: number;
   upgradeSlot: UpgradeSlot;
-  restrictedToUnitApiId: number | null;
+  /** Faction slugs this upgrade is limited to. Empty = any faction. */
+  factionRestrictions: string[];
+  /** Rank slugs this upgrade is limited to. Empty = any rank. */
+  rankRestrictions: string[];
+  /** Unit type slugs this upgrade is limited to. Empty = any unit type. */
+  unitTypeRestrictions: string[];
+  /** API IDs of the specific units this upgrade is limited to. Empty = any unit. */
+  unitRestrictions: number[];
+  /** Affiliation slugs this upgrade is limited to. Empty = any affiliation. */
+  affiliationRestrictions: string[];
+  /** Force alignment required, or null if unrestricted. */
+  alignmentRestriction: 'Light' | 'Dark' | null;
+  /** API IDs of units this upgrade must NOT appear on. */
+  unitsDisallowedOn: number[];
   /** 
    * Keywords this upgrade grants (from enrichment). Empty for un-enriched upgrades.
    * 

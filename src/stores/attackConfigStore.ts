@@ -7,7 +7,7 @@ import {
   WeaponKeywords,
 } from '../engine/types';
 import type { Faction, AttackerPresetProfile } from '../data/presets';
-import type { UpgradeSlot, WeaponProfile as DataLayerWeaponProfile } from '../data/types';
+import type { UpgradeSlot, UnitRank, UnitType, WeaponProfile as DataLayerWeaponProfile } from '../data/types';
 import { getResolvedUpgradeById } from '../data/upgradeResolver';
 
 // ============================================================================
@@ -56,6 +56,12 @@ export interface AttackConfigState {
 
   /** API ID of the selected unit. Used for filtering upgrade dropdowns. UI-only. */
   unitApiId: number | null;
+  /** Unit rank for upgrade filtering. UI-only. */
+  selectedUnitRank: UnitRank | null;
+  /** Unit type for upgrade filtering. UI-only. */
+  selectedUnitType: UnitType | null;
+  /** Mercenary affiliation slug for upgrade filtering. UI-only. */
+  selectedUnitAffiliation: string | null;
 
   /**
    * Base miniature count for the selected unit (before upgrades).
@@ -110,7 +116,8 @@ export interface AttackConfigState {
     presetId: string,
     profile: AttackerPresetProfile,
     upgradeBar?: UpgradeSlot[],
-    unitApiId?: number
+    unitApiId?: number,
+    unitMeta?: { rank: UnitRank; unitType: UnitType; affiliation: string | null }
   ) => void;
   /** Equip an upgrade in a specific slot (by index in upgradeBar) */
   equipUpgrade: (slotIndex: number, upgradeId: string | null) => void;
@@ -145,6 +152,9 @@ type AttackConfigFields = Omit<
   | 'equippedUpgradeIds'
   | 'equipUpgrade'
   | 'unitApiId'
+  | 'selectedUnitRank'
+  | 'selectedUnitType'
+  | 'selectedUnitAffiliation'
   | 'weaponMiniCounts'
 >;
 
@@ -231,6 +241,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   baseMiniatureCount: 1,    // ← NEW: default for Custom Pool
   unitBaseWeapons: [],      // ← NEW: empty in Custom Pool mode
   unitApiId: null,          // ← NEW: API ID for upgrade filtering
+  selectedUnitRank: null,
+  selectedUnitType: null,
+  selectedUnitAffiliation: null,
 
   // Upgrade system
   upgradeBar: [],
@@ -325,10 +338,13 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       equippedUpgradeIds: [],
       weaponMiniCounts: {},
       unitApiId: null,
+      selectedUnitRank: null,
+      selectedUnitType: null,
+      selectedUnitAffiliation: null,
     })),
 
   // Load a preset: reset to defaults, then apply preset overrides
-  loadPreset: (presetId, profile, upgradeBar = [], unitApiId) =>
+  loadPreset: (presetId, profile, upgradeBar = [], unitApiId, unitMeta) =>
     set(() => {
       const emptyWeapon = createEmptyWeapon();
       const normalizedWeapons = profile.weapons?.map((weapon) => ({
@@ -350,6 +366,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         upgradeBar: upgradeBar ?? [],
         equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),
         unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
+        selectedUnitRank: unitMeta?.rank ?? null,
+        selectedUnitType: unitMeta?.unitType ?? null,
+        selectedUnitAffiliation: unitMeta?.affiliation ?? null,
         unitCost: baseCost,
         baseUnitCost: baseCost,  // Store base cost for upgrade calculations
         weaponMiniCounts: {},     // Reset weapon mini count overrides on preset load
@@ -394,6 +413,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       equippedUpgradeIds: [],
       weaponMiniCounts: {},
       unitApiId: null,
+      selectedUnitRank: null,
+      selectedUnitType: null,
+      selectedUnitAffiliation: null,
     })),
 }));
 
@@ -410,6 +432,9 @@ export function selectAttackerConfig(state: AttackConfigState) {
     baseMiniatureCount,      // ← exclude from engine config
     unitBaseWeapons,          // ← exclude (passed separately)
     unitApiId,                // ← exclude (UI-only)
+    selectedUnitRank,
+    selectedUnitType,
+    selectedUnitAffiliation,
     upgradeBar,
     equippedUpgradeIds,
     weaponMiniCounts,         // ← exclude (consumed separately by display hook/configSelectors)

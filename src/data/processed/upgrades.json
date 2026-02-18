@@ -5,7 +5,17 @@
     "name": "2-1B Medical Droid",
     "cost": 20,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Treat X: Capacity Y",
       "Noncombatant",
@@ -18,7 +28,15 @@
     "name": "327th Star Corps Elite Armor Pilots",
     "cost": 8,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 2108,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      2108
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -27,7 +45,17 @@
     "name": "88i Twin Light Blaster",
     "cost": 10,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 9,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      9
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X",
       "Fixed: Front/Rear"
@@ -39,7 +67,18 @@
     "name": "A-180",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 29928,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      29928,
+      27
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X",
       "Reconfigure"
@@ -51,7 +90,18 @@
     "name": "A-180",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 29928,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      29928,
+      27
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X",
       "Reconfigure"
@@ -63,7 +113,18 @@
     "name": "A280, Rifle Config",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 57,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      57,
+      29930
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Long Shot",
       "Reconfigure",
@@ -78,7 +139,18 @@
     "name": "A280, Rifle Config",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 57,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      57,
+      29930
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Long Shot",
       "Reconfigure",
@@ -93,7 +165,17 @@
     "name": "A-300",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 28,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      28
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Reconfigure"
     ]
@@ -104,7 +186,17 @@
     "name": "A-300",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 28,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      28
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Reconfigure"
     ]
@@ -115,7 +207,17 @@
     "name": "A-300 Rifle Gunner",
     "cost": 1,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 32,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -124,7 +226,17 @@
     "name": "Aayla Secura",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 53,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      53
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Inspire",
       "Field Commander"
@@ -136,7 +248,15 @@
     "name": "Academy Trained",
     "cost": 10,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31668,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Exemplar",
       "Inspire",
@@ -149,7 +269,16 @@
     "name": "AG-2G Quad Laser",
     "cost": 20,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 772,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      772,
+      4919
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -160,7 +289,18 @@
     "name": "Agent Kallus",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [
+      "corps",
+      "special-forces"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -169,7 +309,15 @@
     "name": "Ahsoka Tano, Jedi Padawan",
     "cost": 35,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader",
       "Sidearm: Melee/Ranged",
@@ -187,7 +335,13 @@
     "name": "Anger",
     "cost": 3,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": "Dark",
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -196,7 +350,15 @@
     "name": "ARF Trooper Duo",
     "cost": 26,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 28861,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      28861
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
     ]
@@ -207,7 +369,13 @@
     "name": "Armor-Piercing Shells",
     "cost": 10,
     "upgradeSlot": "ordnance",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cycle",
       "Fixed: Front/Rear",
@@ -220,7 +388,13 @@
     "name": "Ascension Cables",
     "cost": 4,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Scale"
     ]
@@ -231,7 +405,15 @@
     "name": "Astromech",
     "cost": 5,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 25968,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25968
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Noncombatant"
     ]
@@ -242,7 +424,17 @@
     "name": "Astromech Droid",
     "cost": 8,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Repair X: Capacity Y",
       "Noncombatant",
@@ -255,7 +447,16 @@
     "name": "AT-RT Flamethrower",
     "cost": 15,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 1,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1,
+      70
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Fixed: Front/Rear",
@@ -268,7 +469,16 @@
     "name": "AT-RT Laser Cannon",
     "cost": 10,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 1,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1,
+      70
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X",
       "Fixed: Front/Rear"
@@ -280,7 +490,16 @@
     "name": "AT-RT Rotary Blaster",
     "cost": 20,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 1,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1,
+      70
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
     ]
@@ -291,7 +510,17 @@
     "name": "AT-ST Mortar Launcher",
     "cost": 5,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 9,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      9
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear",
       "Suppressive"
@@ -303,7 +532,19 @@
     "name": "Attack Protocols",
     "cost": 8,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle",
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      31844,
+      31845
+    ],
     "keywordNames": [
       "AI: Action",
       "Precise"
@@ -315,7 +556,17 @@
     "name": "Ax-108 Ground Buzzer",
     "cost": 10,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 10,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      10
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
     ]
@@ -326,7 +577,16 @@
     "name": "Axe Ewok",
     "cost": 15,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 16377,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      16377,
+      15784
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X",
       "Impact X"
@@ -338,7 +598,17 @@
     "name": "B1 Battle Droid",
     "cost": 4,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -347,7 +617,15 @@
     "name": "B1 Battle Droid Squad",
     "cost": 38,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -358,7 +636,17 @@
     "name": "B1 Security Droid",
     "cost": 6,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -367,7 +655,17 @@
     "name": "B2-ACM Battle Droid",
     "cost": 24,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 52,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      52
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -376,7 +674,17 @@
     "name": "B2-HA Battle Droid",
     "cost": 32,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 52,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      52
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Cycle",
@@ -389,7 +697,17 @@
     "name": "B2 Super Battle Droid",
     "cost": 18,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 52,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      52
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -398,7 +716,15 @@
     "name": "B2 Super Battle Droid Squad",
     "cost": 77,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 52,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      52
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -409,7 +735,16 @@
     "name": "Backworld Medic",
     "cost": 12,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 772,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      772,
+      4919
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -418,7 +753,17 @@
     "name": "BARC Ion Gunner",
     "cost": 25,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 44,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      44
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear",
       "Impact X",
@@ -431,7 +776,17 @@
     "name": "BARC RPS-6 Gunner",
     "cost": 18,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 44,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      44
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -442,7 +797,17 @@
     "name": "BARC Twin Laser Gunner",
     "cost": 15,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 44,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      44
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
     ]
@@ -453,7 +818,17 @@
     "name": "Baron Rudor",
     "cost": 8,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Marksman"
     ]
@@ -464,7 +839,13 @@
     "name": "Barrage Generator",
     "cost": 3,
     "upgradeSlot": "generator",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
     ]
@@ -475,7 +856,18 @@
     "name": "Battle Shield Wookiee",
     "cost": 26,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 24,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      24,
+      1527,
+      1529,
+      1563
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Armor X"
     ]
@@ -486,7 +878,17 @@
     "name": "Beam Turret",
     "cost": 15,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 53,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      53
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Beam X"
     ]
@@ -497,7 +899,17 @@
     "name": "Beskad Duelist",
     "cost": 24,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 71,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      71
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Duelist"
     ]
@@ -508,7 +920,15 @@
     "name": "Beskar Spear",
     "cost": 15,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 6179,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6179
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Duelist"
     ]
@@ -519,7 +939,17 @@
     "name": "Bistan",
     "cost": 33,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 28,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      28
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Impact X",
@@ -532,7 +962,15 @@
     "name": "Black Sun Crew",
     "cost": 5,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 32592,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32592
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -541,7 +979,15 @@
     "name": "Black Sun Enforcer",
     "cost": 11,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 4417,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4417
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
     ]
@@ -552,7 +998,15 @@
     "name": "Black Sun Vigo",
     "cost": 20,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 4417,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4417
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Independent: Token X/Action",
       "Leader"
@@ -564,7 +1018,16 @@
     "name": "Boba's Flame Projector",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 6176,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6176,
+      5000
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Spray",
@@ -577,7 +1040,15 @@
     "name": "Boil",
     "cost": 20,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader",
       "Guardian",
@@ -590,7 +1061,15 @@
     "name": "\"Bounty\" Programming",
     "cost": 5,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 6178,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6178
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Bounty",
       "AI: Action",
@@ -604,7 +1083,18 @@
     "name": "Bowcaster Wookiee",
     "cost": 31,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 24,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      24,
+      1527,
+      1529,
+      1563
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X",
       "Pierce X"
@@ -616,7 +1106,13 @@
     "name": "Bunker Buster Shells",
     "cost": 12,
     "upgradeSlot": "ordnance",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Cycle",
@@ -630,7 +1126,13 @@
     "name": "Burst of Speed",
     "cost": 10,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -639,7 +1141,19 @@
     "name": "BX Deflector Shields",
     "cost": 18,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 63,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      63,
+      64,
+      25982
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Shielded",
       "Recharge"
@@ -651,7 +1165,19 @@
     "name": "BX-Series Droid Sniper",
     "cost": 40,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 63,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      63,
+      64,
+      25982
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immune: Deflect",
       "Lethal X"
@@ -663,7 +1189,19 @@
     "name": "BX Vibroswords",
     "cost": 6,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 63,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      63,
+      64,
+      25982
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge"
     ]
@@ -674,7 +1212,16 @@
     "name": "C-3PO",
     "cost": 15,
     "upgradeSlot": "programming",
-    "restrictedToUnitApiId": 55,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      55,
+      56
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Distract",
       "➦Calculate Odds"
@@ -686,7 +1233,17 @@
     "name": "Call to Arms",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [
+      "ewoks"
+    ],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge"
     ]
@@ -697,7 +1254,17 @@
     "name": "Cassian Andor",
     "cost": 25,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -706,7 +1273,13 @@
     "name": "Clairvoyance",
     "cost": 10,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -715,7 +1288,13 @@
     "name": "Clone Captain",
     "cost": 22,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader",
       "Outmaneuver",
@@ -728,7 +1307,17 @@
     "name": "Clone Captain Rex",
     "cost": 38,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -737,7 +1326,13 @@
     "name": "Clone Commander",
     "cost": 22,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader",
       "Inspire",
@@ -750,7 +1345,15 @@
     "name": "Clone Commander Fox",
     "cost": 10,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 771,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      771
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
     ]
@@ -761,7 +1364,17 @@
     "name": "Clone Comms Technician",
     "cost": 30,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -770,7 +1383,17 @@
     "name": "Clone Engineer",
     "cost": 17,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Repair X: Capacity Y",
       "Restore"
@@ -782,7 +1405,15 @@
     "name": "Clone Marksman",
     "cost": 14,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 32248,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32248
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -791,7 +1422,15 @@
     "name": "Clone Medic",
     "cost": 17,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Treat X: Capacity Y",
       "Restore"
@@ -803,7 +1442,17 @@
     "name": "Clone Shock Trooper Pilot",
     "cost": 4,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [
+      "heavy"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -812,7 +1461,16 @@
     "name": "Clone Specialist",
     "cost": 17,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 25964,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25964,
+      32248
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -821,7 +1479,15 @@
     "name": "Clone Trooper Infantry",
     "cost": 13,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 25964,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25964
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -830,7 +1496,15 @@
     "name": "Clone Trooper Infantry Squad",
     "cost": 56,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 25964,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25964
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -841,7 +1515,15 @@
     "name": "Clone Trooper Marksmen Squad",
     "cost": 53,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 32248,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32248
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -852,7 +1534,17 @@
     "name": "CM-0/93 Trooper",
     "cost": 26,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 36,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      36
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -863,7 +1555,16 @@
     "name": "Combat Armor",
     "cost": 15,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 31669,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669,
+      31670
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -872,7 +1573,16 @@
     "name": "Combat Armor",
     "cost": 15,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -881,7 +1591,16 @@
     "name": "Command and Control Uplink",
     "cost": 8,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -890,7 +1609,19 @@
     "name": "Command Control Array",
     "cost": 2,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle",
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      31844,
+      31845
+    ],
     "keywordNames": [
       "Coordinate: Unit Name/Unit Type"
     ]
@@ -901,7 +1632,13 @@
     "name": "Comms Jammer",
     "cost": 5,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -910,7 +1647,13 @@
     "name": "Concussion Grenades",
     "cost": 3,
     "upgradeSlot": "grenades",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast"
     ]
@@ -921,7 +1664,17 @@
     "name": "CR-24 Flame Rifle",
     "cost": 10,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 40,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      40
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Spray"
@@ -933,7 +1686,16 @@
     "name": "Crosshair",
     "cost": 0,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 23655,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23655,
+      25086
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "High Velocity",
@@ -947,7 +1709,16 @@
     "name": "Crosshair",
     "cost": 0,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 23655,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23655,
+      25086
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "High Velocity",
@@ -961,7 +1732,19 @@
     "name": "DC-15x ARC Trooper",
     "cost": 37,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 61,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      61,
+      62,
+      25980
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immune: Deflect",
       "Lethal X"
@@ -973,7 +1756,16 @@
     "name": "DC-17m ICWS Config",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 23656,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23656,
+      24084
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Lethal X",
       "High Velocity",
@@ -988,7 +1780,16 @@
     "name": "Defend in Depth",
     "cost": 10,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Aid",
       "Prepared Position",
@@ -1001,7 +1802,19 @@
     "name": "Defense Protocols",
     "cost": 8,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle",
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      31844,
+      31845
+    ],
     "keywordNames": [
       "AI: Action"
     ]
@@ -1012,7 +1825,20 @@
     "name": "Del Meeko",
     "cost": 35,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 78,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      78,
+      79
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Repair X: Capacity Y",
       "High Velocity",
@@ -1026,7 +1852,19 @@
     "name": "DH-447 Sniper",
     "cost": 38,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 13,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      13,
+      14,
+      25979
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "High Velocity",
       "Pierce X"
@@ -1038,7 +1876,15 @@
     "name": "Din's Amban Rifle",
     "cost": 10,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 6179,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6179
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immobilize X",
       "Suppressive"
@@ -1050,7 +1896,15 @@
     "name": "Din's Flame Projector",
     "cost": 8,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 6179,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6179
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Spray",
@@ -1063,7 +1917,15 @@
     "name": "Din's Jetpack",
     "cost": 15,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 6179,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6179
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Jump"
     ]
@@ -1074,7 +1936,19 @@
     "name": "Dioxis Mine Saboteur",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 63,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      63,
+      64,
+      25982
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Detonate X: (Charge Type)",
       "Blast",
@@ -1087,7 +1961,17 @@
     "name": "DLT-19D Trooper",
     "cost": 30,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 30,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      30
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -1098,7 +1982,18 @@
     "name": "DLT-19 Stormtrooper",
     "cost": 20,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -1109,7 +2004,19 @@
     "name": "DLT-19x Sniper",
     "cost": 38,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 17,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      17,
+      26,
+      25981
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "High Velocity",
       "Pierce X"
@@ -1121,7 +2028,15 @@
     "name": "DLT-20A Range Trooper",
     "cost": 25,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 23657,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23657
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -1132,7 +2047,17 @@
     "name": "DLT-20A Trooper",
     "cost": 26,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -1143,7 +2068,13 @@
     "name": "Door Gunners",
     "cost": 12,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1152,7 +2083,16 @@
     "name": "Double-Bladed Lightsaber",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge",
       "Tactical X",
@@ -1165,7 +2105,15 @@
     "name": "DP-23 Clone Trooper",
     "cost": 22,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25964,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25964
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
     ]
@@ -1176,7 +2124,17 @@
     "name": "DT-F16",
     "cost": 15,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 30,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      30
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Compel",
       "Leader"
@@ -1188,7 +2146,13 @@
     "name": "Duck and Cover",
     "cost": 2,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1197,7 +2161,16 @@
     "name": "Dug In",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 31669,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669,
+      31670
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1206,7 +2179,17 @@
     "name": "Dug In",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 36,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      36,
+      39,
+      32248
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1215,7 +2198,16 @@
     "name": "Dug In",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1224,7 +2216,15 @@
     "name": "Dug In",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1233,7 +2233,17 @@
     "name": "DW-3 Concussion Grenade Launcher",
     "cost": 8,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 9,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      9
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear",
       "Blast"
@@ -1245,7 +2255,17 @@
     "name": "E-11D",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 30,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      30
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Reconfigure",
       "Suppressive",
@@ -1258,7 +2278,17 @@
     "name": "E-11D",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 30,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      30
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Reconfigure",
       "Suppressive",
@@ -1271,7 +2301,17 @@
     "name": "E-5C B1 Battle Droid",
     "cost": 16,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1280,7 +2320,17 @@
     "name": "E-5s B1 Battle Droid",
     "cost": 18,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -1291,7 +2341,17 @@
     "name": "E-60R B1 Battle Droid",
     "cost": 18,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cumbersome",
       "Impact X"
@@ -1303,7 +2363,15 @@
     "name": "Echo, ARC Marksman",
     "cost": 52,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader",
       "Reliable",
@@ -1318,7 +2386,15 @@
     "name": "Echo, Clone Force 99",
     "cost": 0,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25086,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25086
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Reliable"
     ]
@@ -1329,7 +2405,13 @@
     "name": "Electrobinoculars",
     "cost": 8,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "➦Spotter"
     ]
@@ -1340,7 +2422,16 @@
     "name": "Electro Gauntlets",
     "cost": 10,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 59,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      59,
+      5001
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immobilize X",
       "Suppressive"
@@ -1352,7 +2443,17 @@
     "name": "Electro Grappling Line",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 33,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      33
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1361,7 +2462,16 @@
     "name": "Electrostaff",
     "cost": 10,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge",
       "Immune: Melee Pierce",
@@ -1374,7 +2484,17 @@
     "name": "Electrostaff Guard",
     "cost": 21,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 21,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      21
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immune: Pierce",
       "Sidearm: Melee/Ranged"
@@ -1386,7 +2506,18 @@
     "name": "Electro-whip MagnaGuard",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 1809,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1809,
+      19077
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immobilize X",
       "Versatile"
@@ -1398,7 +2529,15 @@
     "name": "Electro-Whip Soldier",
     "cost": 10,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4215,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4215
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immobilize X",
       "Suppressive"
@@ -1410,7 +2549,13 @@
     "name": "Emergency Stims",
     "cost": 8,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1419,7 +2564,13 @@
     "name": "Emergency Transponder",
     "cost": 4,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1428,7 +2579,13 @@
     "name": "EMP \"Droid Poppers\"",
     "cost": 3,
     "upgradeSlot": "grenades",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Ion X"
     ]
@@ -1439,7 +2596,13 @@
     "name": "Endurance",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1448,7 +2611,19 @@
     "name": "Engagement Protocols",
     "cost": 3,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle",
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      31844,
+      31845
+    ],
     "keywordNames": [
       "AI: Action"
     ]
@@ -1459,7 +2634,16 @@
     "name": "Enhanced Combat Subroutines",
     "cost": 5,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Sharpshooter",
       "Lethal X"
@@ -1471,7 +2655,13 @@
     "name": "Environmental Gear",
     "cost": 2,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Unhindered"
     ]
@@ -1482,7 +2672,18 @@
     "name": "EV-series Medical Droid",
     "cost": 14,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      6180,
+      23657
+    ],
     "keywordNames": [
       "Treat X: Capacity Y",
       "Noncombatant",
@@ -1495,7 +2696,15 @@
     "name": "Ewok Skirmisher Squad",
     "cost": 28,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 15784,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      15784
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -1506,7 +2715,15 @@
     "name": "Ewok Slinger Squad",
     "cost": 23,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 16377,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      16377
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -1517,7 +2734,16 @@
     "name": "Ewok Trapper",
     "cost": 10,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 16377,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      16377,
+      15784
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1526,7 +2752,16 @@
     "name": "Expanded Databanks",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1535,7 +2770,13 @@
     "name": "Extra Supplies",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1544,7 +2785,13 @@
     "name": "Fear",
     "cost": 3,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": "Dark",
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize"
     ]
@@ -1555,7 +2802,17 @@
     "name": "First Sergeant Arbmab",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Tactical X"
     ]
@@ -1566,7 +2823,13 @@
     "name": "Fives",
     "cost": 40,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader",
       "Charge",
@@ -1579,7 +2842,17 @@
     "name": "Flametrooper",
     "cost": 20,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 7,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      7
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Spray"
@@ -1591,7 +2864,17 @@
     "name": "Fleet Trooper",
     "cost": 7,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 12,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      12
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1600,7 +2883,15 @@
     "name": "Fleet Trooper Squad",
     "cost": 45,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 12,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      12
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -1611,7 +2902,13 @@
     "name": "Force Barrier",
     "cost": 10,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1620,7 +2917,13 @@
     "name": "Force Choke",
     "cost": 10,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": "Dark",
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1629,7 +2932,13 @@
     "name": "Force Guidance",
     "cost": 5,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1638,7 +2947,15 @@
     "name": "Force Pike Warrior",
     "cost": 15,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 19103,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      19103
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Overrun X",
       "Suppressive"
@@ -1650,7 +2967,13 @@
     "name": "Force Push",
     "cost": 40,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1659,7 +2982,13 @@
     "name": "Force Reflexes",
     "cost": 5,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1668,7 +2997,17 @@
     "name": "Forest Dwellers",
     "cost": 3,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [
+      "ewoks"
+    ],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Scout X"
     ]
@@ -1679,7 +3018,13 @@
     "name": "Fragmentation Grenades",
     "cost": 5,
     "upgradeSlot": "grenades",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1688,7 +3033,19 @@
     "name": "Frenzied Gunner",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "mercenaries"
+    ],
+    "rankRestrictions": [
+      "heavy"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [
+      "raiders"
+    ],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1697,7 +3054,15 @@
     "name": "Frontline Commander",
     "cost": 8,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31669,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Dauntless",
       "Aid",
@@ -1712,7 +3077,18 @@
     "name": "FX-9 Medical Droid",
     "cost": 22,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      6180,
+      23657
+    ],
     "keywordNames": [
       "Treat X: Capacity Y",
       "Noncombatant",
@@ -1725,7 +3101,17 @@
     "name": "Gang Boss",
     "cost": 10,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "heavy"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [
+      "raiders"
+    ],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1734,7 +3120,15 @@
     "name": "General of the Republic",
     "cost": 5,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "➦Bolster",
       "Direct",
@@ -1747,7 +3141,17 @@
     "name": "General Weiss",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Arsenal X",
       "Field Commander"
@@ -1759,7 +3163,15 @@
     "name": "Geonosian Warrior",
     "cost": 11,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 19103,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      19103
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1768,7 +3180,15 @@
     "name": "Geonosian Warrior Squad",
     "cost": 51,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 19103,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      19103
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -1779,7 +3199,20 @@
     "name": "Gideon Hask",
     "cost": 29,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 78,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      78,
+      79
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Coordinate: Unit Name/Unit Type"
     ]
@@ -1790,7 +3223,16 @@
     "name": "Gnasp Bombardier",
     "cost": 20,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 1984,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1984,
+      19078
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immune: Deflect",
       "Overrun X",
@@ -1803,7 +3245,16 @@
     "name": "Gnasp Gunner",
     "cost": 15,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 1984,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1984,
+      19078
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear",
       "Impact X",
@@ -1816,7 +3267,17 @@
     "name": "Governor Pryce",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [
+      "heavy"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
     ]
@@ -1827,7 +3288,13 @@
     "name": "Grappling Hooks",
     "cost": 2,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Expert Climber"
     ]
@@ -1838,7 +3305,18 @@
     "name": "Grogu",
     "cost": 17,
     "upgradeSlot": "programming",
-    "restrictedToUnitApiId": 6178,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6178,
+      6179
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Hunted",
       "Latent Power",
@@ -1851,7 +3329,13 @@
     "name": "Hacked Comms Unit",
     "cost": 5,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1860,7 +3344,15 @@
     "name": "Heavy Aqua Droid",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 28382,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      28382
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -1871,7 +3363,16 @@
     "name": "Heavy Arm Cannon",
     "cost": 20,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
     ]
@@ -1882,7 +3383,16 @@
     "name": "Heavy Blaster Pistol",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Sharpshooter",
       "Target"
@@ -1894,7 +3404,16 @@
     "name": "Heavy Blaster Pistol",
     "cost": 8,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31669,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669,
+      31670
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Arsenal X"
     ]
@@ -1905,7 +3424,15 @@
     "name": "Heavy Laser Cannon",
     "cost": 10,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 25966,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25966
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X",
       "Fixed: Front/Rear"
@@ -1917,7 +3444,16 @@
     "name": "Heavy Laser Retrofit",
     "cost": 12,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 772,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      772,
+      4919
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -1928,7 +3464,15 @@
     "name": "Herbal Medicine",
     "cost": 10,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 16687,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      16687
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -1937,7 +3481,18 @@
     "name": "HH-12 Stormtrooper",
     "cost": 22,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cumbersome",
       "Impact X"
@@ -1949,7 +3504,13 @@
     "name": "High-Energy Shells",
     "cost": 8,
     "upgradeSlot": "ordnance",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Cycle",
@@ -1963,7 +3524,13 @@
     "name": "Hope",
     "cost": 3,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": "Light",
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Inspire"
     ]
@@ -1974,7 +3541,17 @@
     "name": "Hotshot Pilot",
     "cost": 8,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Sharpshooter"
     ]
@@ -1985,7 +3562,15 @@
     "name": "Hound & Grizzer",
     "cost": 8,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 771,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      771
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Observe"
     ]
@@ -1996,7 +3581,13 @@
     "name": "HQ Uplink",
     "cost": 10,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2005,7 +3596,17 @@
     "name": "Iden's DLT-20A Rifle",
     "cost": 15,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 58,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      58
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "High Velocity",
       "Pierce X"
@@ -2017,7 +3618,17 @@
     "name": "Iden's ID10 Seeker Droid",
     "cost": 15,
     "upgradeSlot": "programming",
-    "restrictedToUnitApiId": 58,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      58
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Recharge",
       "Shielded",
@@ -2030,7 +3641,17 @@
     "name": "Iden's TL-50 Repeater",
     "cost": 15,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 58,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      58
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Impact X"
@@ -2042,7 +3663,18 @@
     "name": "IG-100 MagnaGuard",
     "cost": 22,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 1809,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1809,
+      19077
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2051,7 +3683,13 @@
     "name": "Impact Grenades",
     "cost": 3,
     "upgradeSlot": "grenades",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -2062,7 +3700,18 @@
     "name": "Imperial Comms Technician",
     "cost": 10,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      6180,
+      23657
+    ],
     "keywordNames": []
   },
   {
@@ -2071,7 +3720,15 @@
     "name": "Imperial Dark Trooper",
     "cost": 32,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 6180,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6180
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2080,7 +3737,17 @@
     "name": "Imperial Hammers Elite Armor Pilot",
     "cost": 10,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2089,7 +3756,16 @@
     "name": "Imperial March",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 30,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      30,
+      17
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2098,7 +3774,17 @@
     "name": "Imperial March",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2107,7 +3793,18 @@
     "name": "Imperial Officer",
     "cost": 17,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      6180,
+      23657
+    ],
     "keywordNames": [
       "Inspire",
       "Leader"
@@ -2119,7 +3816,17 @@
     "name": "Imperial Tie Pilot",
     "cost": 8,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2128,7 +3835,13 @@
     "name": "Improvised Orders",
     "cost": 5,
     "upgradeSlot": "command",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2137,7 +3850,16 @@
     "name": "Inquisitorius Training",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 19108,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      19108,
+      19109
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize"
     ]
@@ -2148,7 +3870,16 @@
     "name": "Insatiable Curiosity",
     "cost": 8,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 16377,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      16377,
+      15784
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2157,7 +3888,13 @@
     "name": "Inspiring Presence",
     "cost": 5,
     "upgradeSlot": "command",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2166,7 +3903,13 @@
     "name": "Into the Fray",
     "cost": 4,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2175,7 +3918,18 @@
     "name": "J-19 Bo-rifle",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 81,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      81,
+      29931
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Lethal X",
       "Reconfigure",
@@ -2189,7 +3943,18 @@
     "name": "J-19 Bo-rifle",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 81,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      81,
+      29931
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Lethal X",
       "Reconfigure",
@@ -2203,7 +3968,16 @@
     "name": "Jedi Consular",
     "cost": 8,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Steady"
     ]
@@ -2214,7 +3988,16 @@
     "name": "Jedi Guardian",
     "cost": 10,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge",
       "Lethal X"
@@ -2226,7 +4009,15 @@
     "name": "Jedi Guardian",
     "cost": 22,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "special-forces"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge",
       "Leader",
@@ -2239,7 +4030,13 @@
     "name": "Jedi Mind Trick",
     "cost": 5,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": "Light",
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2248,7 +4045,16 @@
     "name": "Jedi Negotiator",
     "cost": 5,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Spray",
@@ -2261,7 +4067,16 @@
     "name": "Jedi Training, Force Adept",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Jump"
     ]
@@ -2272,7 +4087,16 @@
     "name": "Jedi Training, Master Duelist",
     "cost": 8,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Outmaneuver",
       "Block",
@@ -2286,7 +4110,16 @@
     "name": "Jedi Training, Peacekeeping Mission",
     "cost": 8,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Prepared Position",
       "Reliable",
@@ -2299,7 +4132,16 @@
     "name": "Jedi Training, Tactical Acumen",
     "cost": 8,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Guidance"
     ]
@@ -2310,7 +4152,18 @@
     "name": "Jetpack Rockets",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 71,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      71,
+      72
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Impact X"
@@ -2322,7 +4175,20 @@
     "name": "Jyn's SE-14 Blaster",
     "cost": 10,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 29928,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      29928,
+      27,
+      68,
+      29932
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Precise",
       "Suppressive"
@@ -2334,7 +4200,16 @@
     "name": "Katarn Pattern Armor",
     "cost": 0,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 23656,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23656,
+      24084
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2343,7 +4218,17 @@
     "name": "Kraken",
     "cost": 30,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 19077,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      19077
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      19103
+    ],
     "keywordNames": []
   },
   {
@@ -2352,7 +4237,19 @@
     "name": "Kraken",
     "cost": 30,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      19103
+    ],
     "keywordNames": []
   },
   {
@@ -2361,7 +4258,15 @@
     "name": "KX-Series Security Droids",
     "cost": 30,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25967,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25967
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -2372,7 +4277,13 @@
     "name": "Lead by Example",
     "cost": 8,
     "upgradeSlot": "command",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Inspire"
     ]
@@ -2383,7 +4294,16 @@
     "name": "Lightsaber",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Block",
       "Critical X",
@@ -2397,7 +4317,16 @@
     "name": "Limiter Override",
     "cost": 5,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2406,7 +4335,20 @@
     "name": "Linked Targeting Array",
     "cost": 5,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper",
+      "repulsor-vehicle",
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      31844,
+      31845
+    ],
     "keywordNames": [
       "Target"
     ]
@@ -2417,7 +4359,17 @@
     "name": "Lok Durd",
     "cost": 9,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 54,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      54
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
     ]
@@ -2428,7 +4380,18 @@
     "name": "Long Gun Wookiee",
     "cost": 26,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 24,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      24,
+      1527,
+      1529,
+      1563
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
     ]
@@ -2439,7 +4402,17 @@
     "name": "Looted E-5 Blaster",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 60,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      60
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
     ]
@@ -2450,7 +4423,17 @@
     "name": "M-45 Ion Blaster",
     "cost": 28,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 32,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Fixed: Front/Rear",
@@ -2464,7 +4447,15 @@
     "name": "Mag-Det Enforcer",
     "cost": 16,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4417,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4417
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Impact X"
@@ -2476,7 +4467,16 @@
     "name": "Mandalorian Combat Shields",
     "cost": 10,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 72,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      72,
+      71
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Shielded"
     ]
@@ -2487,7 +4487,15 @@
     "name": "Mandalorian Super Commando",
     "cost": 24,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4767,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4767
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
     ]
@@ -2498,7 +4506,17 @@
     "name": "Mark II Medium Blaster",
     "cost": 21,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 32,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
     ]
@@ -2509,7 +4527,15 @@
     "name": "Mertalizer Dark Trooper",
     "cost": 36,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 6180,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6180
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
     ]
@@ -2520,7 +4546,13 @@
     "name": "Mission Objective",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2529,7 +4561,16 @@
     "name": "Mobility Upgrade",
     "cost": 8,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Scale",
       "Steady"
@@ -2541,7 +4582,17 @@
     "name": "Mo/Dk Power Harpoon",
     "cost": 0,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 10,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      10
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X",
       "Fixed: Front/Rear",
@@ -2554,7 +4605,16 @@
     "name": "Mortar Clone Trooper",
     "cost": 20,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25964,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25964,
+      32248
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Suppressive",
@@ -2567,7 +4627,17 @@
     "name": "MPL-57 Barrage Trooper",
     "cost": 22,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 12,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      12
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Impact X"
@@ -2579,7 +4649,17 @@
     "name": "MPL-57 Ion Trooper",
     "cost": 27,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Impact X",
@@ -2592,7 +4672,17 @@
     "name": "\"Nanny\" Programming",
     "cost": 0,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 6178,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6178
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "AI: Dodge, Move"
     ]
@@ -2603,7 +4693,15 @@
     "name": "Nose-Mounted Flamethrower",
     "cost": 15,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 2019,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      2019
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Fixed: Front/Rear",
@@ -2616,7 +4714,15 @@
     "name": "Nose-Mounted Ion Blaster",
     "cost": 30,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 2019,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      2019
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cycle",
       "Fixed: Front/Rear",
@@ -2630,7 +4736,15 @@
     "name": "Nose-Mounted Laser Cannon",
     "cost": 15,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 2019,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      2019
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Fixed: Front/Rear"
@@ -2642,7 +4756,13 @@
     "name": "Offensive/Defensive Stance",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2651,7 +4771,13 @@
     "name": "Offensive/Defensive Stance",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2660,7 +4786,13 @@
     "name": "Offensive Push",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Tactical X"
     ]
@@ -2671,7 +4803,15 @@
     "name": "Omega",
     "cost": 10,
     "upgradeSlot": "programming",
-    "restrictedToUnitApiId": 25086,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25086
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "I'm Part of the Squad Too"
     ]
@@ -2682,7 +4822,19 @@
     "name": "Onboard Comms Channel",
     "cost": 10,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle",
+      "ground-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      31844,
+      31845
+    ],
     "keywordNames": []
   },
   {
@@ -2691,7 +4843,13 @@
     "name": "On the Hunt",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2700,7 +4858,15 @@
     "name": "Onward to Victory",
     "cost": 10,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 16687,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      16687
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2709,7 +4875,17 @@
     "name": "OOM-Series Battle Droid",
     "cost": 8,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Coordinate: Unit Name/Unit Type",
       "Leader"
@@ -2721,7 +4897,17 @@
     "name": "OOM-Series Droid Pilot",
     "cost": 7,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 54,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      54
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Coordinate: Droid Trooper"
     ]
@@ -2732,7 +4918,16 @@
     "name": "Optimized Task Flow",
     "cost": 8,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Direct"
     ]
@@ -2743,7 +4938,17 @@
     "name": "Outer Rim Speeder Jockey",
     "cost": 10,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cover"
     ]
@@ -2754,7 +4959,13 @@
     "name": "Overcharged Generator",
     "cost": 3,
     "upgradeSlot": "generator",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -2765,7 +4976,16 @@
     "name": "Overclock",
     "cost": 5,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2774,7 +4994,13 @@
     "name": "Overwatch",
     "cost": 4,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Sentinel"
     ]
@@ -2785,7 +5011,15 @@
     "name": "P13-M Disruptor Soldier",
     "cost": 24,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4215,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4215
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -2796,7 +5030,17 @@
     "name": "Pao",
     "cost": 20,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 28,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      28
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Inspire",
       "Leader"
@@ -2808,7 +5052,17 @@
     "name": "Pintle-Mounted DLT-19",
     "cost": 18,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 31,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -2819,7 +5073,17 @@
     "name": "Pintle-Mounted RT-97C",
     "cost": 14,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 31,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2828,7 +5092,15 @@
     "name": "Pirate Captain",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 32592,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32592
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2837,7 +5109,18 @@
     "name": "PK-series Worker Droid",
     "cost": 12,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      6180,
+      23657
+    ],
     "keywordNames": [
       "Repair X: Capacity Y",
       "Noncombatant",
@@ -2850,7 +5133,15 @@
     "name": "Platoon Commander",
     "cost": 8,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Sharpshooter",
       "Retinue"
@@ -2862,7 +5153,17 @@
     "name": "Plo Koon",
     "cost": 9,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 53,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      53
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Agile"
     ]
@@ -2873,7 +5174,13 @@
     "name": "Portable Scanner",
     "cost": 6,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "➦Take Cover"
     ]
@@ -2884,7 +5191,13 @@
     "name": "Prepared Supplies",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
     ]
@@ -2895,7 +5208,15 @@
     "name": "Programmed Loyalty",
     "cost": 5,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 6180,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6180
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Retinue"
     ]
@@ -2906,7 +5227,13 @@
     "name": "Protector",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2915,7 +5242,19 @@
     "name": "Proton Charge Saboteur",
     "cost": 20,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 13,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      13,
+      14,
+      25979
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Detonate X: (Charge Type)",
       "Blast",
@@ -2928,7 +5267,15 @@
     "name": "Proven Tactician",
     "cost": 10,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31669,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Reinforcements",
       "➦Quick Thinking",
@@ -2941,7 +5288,15 @@
     "name": "Pyke Syndicate Capo",
     "cost": 18,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 4215,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4215
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Independent: Token X/Action",
       "Leader"
@@ -2953,7 +5308,15 @@
     "name": "Pyke Syndicate Crew",
     "cost": 5,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 32592,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32592
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -2962,7 +5325,15 @@
     "name": "Pyke Syndicate Foot Soldier",
     "cost": 9,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 4215,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4215
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
     ]
@@ -2973,7 +5344,18 @@
     "name": "R4 Astromech",
     "cost": 9,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      6180,
+      23657
+    ],
     "keywordNames": [
       "Repair 1: Capacity 2",
       "Noncombatant",
@@ -2986,7 +5368,17 @@
     "name": "Radiation Cannon B1 Battle Droid",
     "cost": 16,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 38,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      38
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Poison X"
     ]
@@ -2997,7 +5389,17 @@
     "name": "Raiding Party Leader",
     "cost": 10,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "mercenaries"
+    ],
+    "rankRestrictions": [
+      "heavy"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Allies of Convenience",
       "Field Commander",
@@ -3010,7 +5412,15 @@
     "name": "Range Trooper",
     "cost": 15,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 23657,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23657
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3019,7 +5429,17 @@
     "name": "Rebel Comms Technician",
     "cost": 9,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3028,7 +5448,15 @@
     "name": "Rebel Marksman",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25968,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25968
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3037,7 +5465,17 @@
     "name": "Rebel Officer",
     "cost": 16,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Inspire",
       "Leader"
@@ -3049,7 +5487,17 @@
     "name": "Rebel Trooper",
     "cost": 7,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3058,7 +5506,17 @@
     "name": "Rebel Trooper Captain",
     "cost": 9,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader"
     ]
@@ -3069,7 +5527,17 @@
     "name": "Rebel Trooper Specialist",
     "cost": 8,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3078,7 +5546,15 @@
     "name": "Rebel Trooper Squad",
     "cost": 40,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -3089,7 +5565,17 @@
     "name": "Rebel Veteran",
     "cost": 9,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 36,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      36
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3098,7 +5584,15 @@
     "name": "Rebel Veteran Squad",
     "cost": 63,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 36,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      36
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -3109,7 +5603,13 @@
     "name": "Recon Intel",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Scout X"
     ]
@@ -3120,7 +5620,15 @@
     "name": "Reluctant Hero",
     "cost": 10,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31670,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31670
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Infiltrate",
@@ -3133,7 +5641,16 @@
     "name": "Repeating Blaster",
     "cost": 25,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31669,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669,
+      31670
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Precise"
     ]
@@ -3144,7 +5661,15 @@
     "name": "Rook Kast",
     "cost": 35,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4767,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4767
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Retinue",
       "Leader"
@@ -3156,7 +5681,15 @@
     "name": "RPS-6 ARF Trooper",
     "cost": 24,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 28861,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      28861
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cumbersome",
       "Impact X"
@@ -3168,7 +5701,16 @@
     "name": "RPS-6 Clone Trooper",
     "cost": 23,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25964,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25964,
+      32248
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cumbersome",
       "Impact X"
@@ -3180,7 +5722,18 @@
     "name": "RPS-6 MagnaGuard",
     "cost": 40,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 1809,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      1809,
+      19077
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Impact X"
@@ -3192,7 +5745,17 @@
     "name": "RPS-6 Rocket Gunner",
     "cost": 21,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 32,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -3203,7 +5766,17 @@
     "name": "RT-97C Blaster Rifle",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 40,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      40
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3212,7 +5785,18 @@
     "name": "RT-97C Stormtrooper",
     "cost": 22,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3221,7 +5805,17 @@
     "name": "Ryder Azadi",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3230,7 +5824,13 @@
     "name": "Saber Throw",
     "cost": 5,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3239,7 +5839,17 @@
     "name": "Sabine's Combat Shield",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 33,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      33
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Shielded",
       "Recharge"
@@ -3251,7 +5861,15 @@
     "name": "Saxon's Combat Shield",
     "cost": 10,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 4891,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4891
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Shielded",
       "Recharge"
@@ -3263,7 +5881,15 @@
     "name": "Saxon's Galar-90 Rifle",
     "cost": 15,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 4891,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4891
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "High Velocity",
       "Lethal X",
@@ -3276,7 +5902,15 @@
     "name": "Saxon's Jetpack Rockets",
     "cost": 10,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 4891,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4891
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Cycle",
@@ -3289,7 +5923,15 @@
     "name": "Saxon's ZX Flame Projector",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 4891,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4891
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Spray",
@@ -3302,7 +5944,15 @@
     "name": "Scatter Gun Enforcer",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4417,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4417
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
     ]
@@ -3313,7 +5963,17 @@
     "name": "Scatter Gun Trooper",
     "cost": 22,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 12,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      12
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
     ]
@@ -3324,7 +5984,15 @@
     "name": "Secret Ingredients",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": 16687,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      16687
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3333,7 +6001,16 @@
     "name": "Seek and Destroy",
     "cost": 5,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize",
       "Marksman",
@@ -3346,7 +6023,16 @@
     "name": "Seeker Droid",
     "cost": 8,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Recharge",
       "Shielded",
@@ -3359,7 +6045,16 @@
     "name": "Seize the Initiative",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "commander",
+      "operative"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3368,7 +6063,17 @@
     "name": "Shoretrooper",
     "cost": 10,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 39,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      39
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3377,7 +6082,15 @@
     "name": "Shoretrooper Squad",
     "cost": 70,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 39,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      39
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -3388,7 +6101,17 @@
     "name": "Shriv Suurgav",
     "cost": 10,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [
+      "heavy"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
     ]
@@ -3399,7 +6122,13 @@
     "name": "Situational Awareness",
     "cost": 4,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Outmaneuver"
     ]
@@ -3410,7 +6139,16 @@
     "name": "Sliced Comms",
     "cost": 8,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3419,7 +6157,15 @@
     "name": "SM-9 Frag Launcher",
     "cost": 45,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 6180,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6180
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Cycle",
@@ -3432,7 +6178,13 @@
     "name": "Smoke Grenades",
     "cost": 3,
     "upgradeSlot": "grenades",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3441,7 +6193,17 @@
     "name": "Snowtrooper",
     "cost": 8,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 7,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      7
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3450,7 +6212,15 @@
     "name": "Snowtrooper Squad",
     "cost": 46,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 7,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      7
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -3461,7 +6231,15 @@
     "name": "Sonic Cannon Warrior",
     "cost": 25,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 19103,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      19103
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Scatter",
       "Impact X"
@@ -3473,7 +6251,19 @@
     "name": "Sonic Charge Saboteur",
     "cost": 23,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 17,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      17,
+      26,
+      25981
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Impact X",
@@ -3486,7 +6276,13 @@
     "name": "Sonic Imploders",
     "cost": 3,
     "upgradeSlot": "grenades",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
     ]
@@ -3497,7 +6293,13 @@
     "name": "Spotter Uplink",
     "cost": 3,
     "upgradeSlot": "comms",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3506,7 +6308,18 @@
     "name": "Stormtrooper",
     "cost": 8,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3515,7 +6328,18 @@
     "name": "Stormtrooper Captain",
     "cost": 10,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader"
     ]
@@ -3526,7 +6350,15 @@
     "name": "Stormtrooper Marksman",
     "cost": 30,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25967,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25967
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3535,7 +6367,18 @@
     "name": "Stormtrooper Specialist",
     "cost": 9,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3544,7 +6387,16 @@
     "name": "Stormtrooper Squad",
     "cost": 46,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
     ]
@@ -3555,7 +6407,16 @@
     "name": "Strategic Programming",
     "cost": 8,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Strategize"
     ]
@@ -3566,7 +6427,13 @@
     "name": "Strict Orders",
     "cost": 5,
     "upgradeSlot": "command",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3575,7 +6442,13 @@
     "name": "Strike and Fade",
     "cost": 5,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3584,7 +6457,15 @@
     "name": "Strike Team Leader",
     "cost": 8,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "operative"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3593,7 +6474,16 @@
     "name": "Stun Baton",
     "cost": 8,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize"
     ]
@@ -3604,7 +6494,15 @@
     "name": "Super Commando Combat Shields",
     "cost": 10,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 4767,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4767
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Shielded"
     ]
@@ -3615,7 +6513,15 @@
     "name": "Super Commando Gunslinger",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4767,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4767
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Lethal X"
     ]
@@ -3626,7 +6532,15 @@
     "name": "Super Commando Jetpack Rockets",
     "cost": 8,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 4767,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4767
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Critical X",
@@ -3639,7 +6553,15 @@
     "name": "Super Commando Marksman",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 4767,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4767
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Precise"
     ]
@@ -3650,7 +6572,17 @@
     "name": "SX-21 Trooper",
     "cost": 13,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
     ]
@@ -3661,7 +6593,15 @@
     "name": "T-21A Range Trooper",
     "cost": 28,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 23657,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23657
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
     ]
@@ -3672,7 +6612,17 @@
     "name": "T-21 Blaster Rifle",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 40,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      40
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -3683,7 +6633,17 @@
     "name": "T-21B Shoretrooper",
     "cost": 32,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 39,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      39
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -3694,7 +6654,18 @@
     "name": "T-21 Special Forces Trooper",
     "cost": 27,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 78,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      78,
+      79
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -3705,7 +6676,18 @@
     "name": "T-21 Stormtrooper",
     "cost": 20,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 5,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      5,
+      5880
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -3716,7 +6698,17 @@
     "name": "T-7 Ion Snowtrooper",
     "cost": 24,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 7,
+    "factionRestrictions": [
+      "galactic-empire"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      7
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X",
       "Impact X",
@@ -3729,7 +6721,16 @@
     "name": "Targeting Relay",
     "cost": 5,
     "upgradeSlot": "protocol",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3738,7 +6739,13 @@
     "name": "Targeting Scopes",
     "cost": 4,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Precise"
     ]
@@ -3749,7 +6756,16 @@
     "name": "Tech",
     "cost": 0,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 23655,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23655,
+      25086
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache",
       "Tactical X"
@@ -3761,7 +6777,13 @@
     "name": "Tenacity",
     "cost": 6,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3770,7 +6792,13 @@
     "name": "Terror",
     "cost": 6,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": "Dark",
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3779,7 +6807,17 @@
     "name": "The Darksaber",
     "cost": 15,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 33,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      33
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Dauntless",
       "Immune: Pierce",
@@ -3793,7 +6831,15 @@
     "name": "The Darksaber",
     "cost": 15,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 11258,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      11258
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize",
       "Immune: Pierce",
@@ -3807,7 +6853,15 @@
     "name": "The Darksaber (Maul)",
     "cost": 10,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 4551,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      4551
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Cunning",
       "Sidearm: Melee/Ranged",
@@ -3821,7 +6875,16 @@
     "name": "Thermal Detonator",
     "cost": 3,
     "upgradeSlot": "grenades",
-    "restrictedToUnitApiId": 31670,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31670,
+      31669
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast",
       "Impact X"
@@ -3833,7 +6896,16 @@
     "name": "Tip of the Spear",
     "cost": 8,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Aid",
       "Direct",
@@ -3846,7 +6918,13 @@
     "name": "Tranquility",
     "cost": 10,
     "upgradeSlot": "force",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": "Light",
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3855,7 +6933,18 @@
     "name": "Tristan Wren",
     "cost": 34,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 71,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      71,
+      72
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Lethal X",
       "Suppressive"
@@ -3867,7 +6956,13 @@
     "name": "Trusted Agent",
     "cost": 5,
     "upgradeSlot": "command",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3876,7 +6971,17 @@
     "name": "T-series Tactical Droid",
     "cost": 18,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "AI: Attack",
       "Reliable",
@@ -3890,7 +6995,17 @@
     "name": "T-Series Tactical Droid Pilot",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": 54,
+    "factionRestrictions": [
+      "separatist-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      54
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
     ]
@@ -3901,7 +7016,15 @@
     "name": "Turbo-Charge",
     "cost": 5,
     "upgradeSlot": "gear",
-    "restrictedToUnitApiId": 32232,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32232
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3910,7 +7033,15 @@
     "name": "Twin Beam Cannons",
     "cost": 30,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 2108,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      2108
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Beam X",
       "Fixed: Front/Rear"
@@ -3922,7 +7053,15 @@
     "name": "Twin Blaster Cannons",
     "cost": 25,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 2108,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      2108
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Gunslinger",
       "Critical X",
@@ -3935,7 +7074,15 @@
     "name": "Twin Blaster Cannons",
     "cost": 5,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 25966,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25966
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
     ]
@@ -3946,7 +7093,17 @@
     "name": "Twin Laser Turret",
     "cost": 14,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 53,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      53
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -3957,7 +7114,16 @@
     "name": "Twin Lightsabers",
     "cost": 0,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31842,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "High Velocity",
       "Impact X",
@@ -3970,7 +7136,15 @@
     "name": "Twin Missile Pods",
     "cost": 25,
     "upgradeSlot": "hardpoint",
-    "restrictedToUnitApiId": 2108,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      2108
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Gunslinger",
       "Fixed: Front/Rear",
@@ -3983,7 +7157,16 @@
     "name": "Tyrannical Taskmaster",
     "cost": 8,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31844,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31844,
+      31845
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -3992,7 +7175,13 @@
     "name": "Underworld Connections",
     "cost": 5,
     "upgradeSlot": "command",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Allies of Convenience"
     ]
@@ -4003,7 +7192,16 @@
     "name": "Unorthodox Tactician",
     "cost": 16,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 772,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      772,
+      4919
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4012,7 +7210,16 @@
     "name": "Unseen Saboteur",
     "cost": 5,
     "upgradeSlot": "doctrine",
-    "restrictedToUnitApiId": 31670,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31670,
+      31669
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Prepared Position",
       "Low Profile"
@@ -4024,7 +7231,17 @@
     "name": "Unstable Astromech",
     "cost": 6,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 772,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      772,
+      32,
+      4919
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4033,7 +7250,13 @@
     "name": "Up Close and Personal",
     "cost": 8,
     "upgradeSlot": "training",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4042,7 +7265,18 @@
     "name": "Ursa Wren",
     "cost": 34,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 71,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      71,
+      72
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Dauntless",
       "Leader",
@@ -4055,7 +7289,17 @@
     "name": "Veteran Clone Pilot",
     "cost": 7,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "republic"
+    ],
+    "rankRestrictions": [
+      "heavy"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4064,7 +7308,16 @@
     "name": "Vibro Axe",
     "cost": 8,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31669,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669,
+      31670
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge"
     ]
@@ -4075,7 +7328,13 @@
     "name": "Vigilance",
     "cost": 12,
     "upgradeSlot": "command",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4084,7 +7343,18 @@
     "name": "Viper Recon Droid",
     "cost": 6,
     "upgradeSlot": "personnel",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "trooper"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [
+      6180,
+      23657
+    ],
     "keywordNames": [
       "Observe",
       "Sidearm: Melee/Ranged"
@@ -4096,7 +7366,15 @@
     "name": "Waxer",
     "cost": 20,
     "upgradeSlot": "squad-leader",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [],
+    "rankRestrictions": [
+      "corps"
+    ],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader",
       "Disciplined",
@@ -4109,7 +7387,17 @@
     "name": "Wedge Antilles",
     "cost": 5,
     "upgradeSlot": "pilot",
-    "restrictedToUnitApiId": null,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [
+      "repulsor-vehicle"
+    ],
+    "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
     ]
@@ -4120,7 +7408,15 @@
     "name": "Weequay Crew",
     "cost": 0,
     "upgradeSlot": "crew",
-    "restrictedToUnitApiId": 32592,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32592
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4129,7 +7425,16 @@
     "name": "Wrecker",
     "cost": 0,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 23655,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23655,
+      25086
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4138,7 +7443,15 @@
     "name": "XS-IV Assault Cannon",
     "cost": 55,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 6180,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6180
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
     ]
@@ -4149,7 +7462,15 @@
     "name": "Z-6 Clone Trooper",
     "cost": 22,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 25964,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      25964
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   },
   {
@@ -4158,7 +7479,16 @@
     "name": "Z-6 Riot Baton",
     "cost": 5,
     "upgradeSlot": "armament",
-    "restrictedToUnitApiId": 31667,
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31667,
+      31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": [
       "Immune: Melee Pierce"
     ]
@@ -4169,7 +7499,17 @@
     "name": "Z-6 Trooper",
     "cost": 20,
     "upgradeSlot": "heavy-weapon",
-    "restrictedToUnitApiId": 6,
+    "factionRestrictions": [
+      "rebel-alliance"
+    ],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      6
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
     "keywordNames": []
   }
 ]

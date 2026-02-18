@@ -47,7 +47,13 @@ export default function AttackerUnitBuilderView() {
           )}
 
           {slotRows.map(({ slot, index }) => {
-            const upgrades = getUpgradesForSlot(slot as UpgradeSlot, store.unitApiId ?? undefined);
+            const upgrades = getUpgradesForSlot(slot as UpgradeSlot, {
+              unitApiId:   store.unitApiId ?? undefined,
+              faction:     store.selectedFaction ?? undefined,
+              rank:        store.selectedUnitRank ?? undefined,
+              unitType:    store.selectedUnitType ?? undefined,
+              affiliation: store.selectedUnitAffiliation,
+            });
             // Deduplicate: keep first occurrence of each upgrade ID
             const uniqueUpgrades = upgrades.filter(
               (u, i, arr) => arr.findIndex(x => x.id === u.id) === i

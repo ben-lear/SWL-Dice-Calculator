@@ -47,6 +47,13 @@ const UNIT_TYPE_MAP: Record<number, string> = {
   7: 'repulsor-vehicle', // Creature vehicles (tauntauns, dewbacks)
 };
 
+// Built dynamically from /api/affiliations data below.
+// Keyed by API affiliation id, values are slugified name strings.
+// ID 7 (Ewoks) is absent from the API response and is hardcoded here.
+const AFFILIATION_MAP_FALLBACK: Record<number, string> = {
+  7: 'ewoks', // API endpoint omits this entry; hardcoded from observed unit/upgrade data
+};
+
 /**
  * Maps API upgrade_type_fkey integers to UpgradeSlot string values.
  * Built dynamically from /api/upgrade-types data, with fallback hardcoded
@@ -79,6 +86,12 @@ const UPGRADE_TYPE_MAP: Record<number, string> = {
   23: 'dug-in',
   24: 'doctrine',
 };
+
+// ── Helper functions ────────────────────────────────────────────────────────
+
+function isNumber(x: unknown): x is number {
+  return typeof x === 'number';
+}
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -154,6 +167,13 @@ function processData() {
   const allRawUpgrades = JSON.parse(readFileSync(join(RAW_DIR, 'upgrades.json'), 'utf-8'));
   const rawUpgradeTypesData = JSON.parse(readFileSync(join(RAW_DIR, 'upgrade-types.json'), 'utf-8'));
   const rawUpgradeTypes = rawUpgradeTypesData.value || rawUpgradeTypesData; // Handle wrapped response
+
+  // 1b. Build AFFILIATION_MAP from raw affiliations data
+  const rawAffiliations = JSON.parse(readFileSync(join(RAW_DIR, 'affiliations.json'), 'utf-8'));
+  const AFFILIATION_MAP: Record<number, string> = { ...AFFILIATION_MAP_FALLBACK };
+  for (const aff of rawAffiliations) {
+    AFFILIATION_MAP[Number(aff.id)] = slugify(aff.name);
+  }
 
   // Ignore legacy entries explicitly marked as non-revamp.
   // Keep entries where revamp is true or missing.
@@ -240,6 +260,7 @@ function processData() {
         defenseDieColor: u.red_defense ? 'red' : 'white',
         rank,
         unitType,
+        affiliation: AFFILIATION_MAP[u.affiliation_fkey] ?? null,
         keywordNames,
         upgradeBar,
       };
@@ -257,6 +278,18 @@ function processData() {
 
       const keywordNames = mapKeywordIdsToNames(getRawKeywordIds(up), keywordIdToName);
 
+      // Helper: map IDs through a lookup table, warn on unmapped values
+      function compact(ids: (number | null | undefined)[], map: Record<number, string>): string[] {
+        return ids
+          .filter(isNumber)
+          .map((id) => {
+            const val = map[id];
+            if (!val) console.warn(`  Unknown id=${id} in map for upgrade "${up.name}"`);
+            return val;
+          })
+          .filter((v): v is string => Boolean(v));
+      }
+
       return {
         apiId: up.id,
         // Upgrade IDs intentionally use slot + name only.
@@ -267,7 +300,13 @@ function processData() {
         name: up.name,
         cost: resolveCost(up),
         upgradeSlot,
-        restrictedToUnitApiId: up.unit_fkey ?? null,
+        factionRestrictions:    compact([up.faction_fkey], FACTION_MAP),
+        rankRestrictions:       compact([up.rank_fkey, up.rank_fkey2], RANK_MAP),
+        unitTypeRestrictions:   unique(compact([up.unit_type_fkey, up.unit_type_fkey2, up.unit_type_fkey3], UNIT_TYPE_MAP)),
+        unitRestrictions:       [up.unit_fkey, up.unit_fkey2, up.unit_fkey3, up.unit_fkey4].filter(isNumber),
+        affiliationRestrictions: compact([up.affiliation_fkey], AFFILIATION_MAP),
+        alignmentRestriction:   (up.alignment as 'Light' | 'Dark' | null) ?? null,
+        unitsDisallowedOn:      up.units_disallowed_on ?? [],
         keywordNames,
       };
     })

@@ -1,0 +1,84 @@
+[
+  {
+    "id": "3",
+    "name": "Raiders",
+    "factions": null,
+    "user_fkey": null,
+    "logo": null,
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "4",
+    "name": "Rogues",
+    "factions": null,
+    "user_fkey": null,
+    "logo": null,
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "6",
+    "name": "Bright Tree",
+    "factions": [
+      1
+    ],
+    "user_fkey": null,
+    "logo": null,
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "2",
+    "name": "The Black Sun",
+    "factions": [
+      2,
+      5
+    ],
+    "user_fkey": null,
+    "logo": null,
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "5",
+    "name": "Maul Loyalists",
+    "factions": null,
+    "user_fkey": null,
+    "logo": null,
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  },
+  {
+    "id": "1",
+    "name": "The Pyke Syndicate",
+    "factions": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "user_fkey": null,
+    "logo": null,
+    "top_left_icon_image_url": null,
+    "background_image_url": null,
+    "color": null,
+    "removed_by_creator": null,
+    "image_in_aws": true
+  }
+]
