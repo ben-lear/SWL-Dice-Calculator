@@ -73,12 +73,6 @@ describe('useWeaponKeywordDisabled', () => {
     useAttackTypeStore.getState().reset();
   });
 
-  it('disables ranged-only weapon keywords for Melee', () => {
-    useAttackTypeStore.getState().setAttackType(AttackType.Melee);
-    const { result } = renderHook(() => useWeaponKeywordDisabled());
-    expect(result.current('highVelocity')).toBe(true);
-  });
-
   it('keeps unrestricted weapon keywords enabled for any type', () => {
     useAttackTypeStore.getState().setAttackType(AttackType.Melee);
     const { result } = renderHook(() => useWeaponKeywordDisabled());
@@ -87,7 +81,20 @@ describe('useWeaponKeywordDisabled', () => {
     expect(result.current('criticalX')).toBe(false);
   });
 
-  it('enables highVelocity for Ranged', () => {
+  it('enables highVelocity for Ranged (unrestricted per rulebook)', () => {
+    useAttackTypeStore.getState().setAttackType(AttackType.Ranged);
+    const { result } = renderHook(() => useWeaponKeywordDisabled());
+    expect(result.current('highVelocity')).toBe(false);
+  });
+
+  it('enables highVelocity for Melee (unrestricted per rulebook)', () => {
+    useAttackTypeStore.getState().setAttackType(AttackType.Melee);
+    const { result } = renderHook(() => useWeaponKeywordDisabled());
+    expect(result.current('highVelocity')).toBe(false);
+  });
+
+  it('enables highVelocity for Overrun (unrestricted per rulebook)', () => {
+    useAttackTypeStore.getState().setAttackType(AttackType.Overrun);
     const { result } = renderHook(() => useWeaponKeywordDisabled());
     expect(result.current('highVelocity')).toBe(false);
   });

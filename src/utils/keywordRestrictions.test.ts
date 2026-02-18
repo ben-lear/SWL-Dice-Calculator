@@ -104,8 +104,8 @@ describe('ATTACKER_KEYWORD_RESTRICTIONS', () => {
 });
 
 describe('WEAPON_KEYWORD_RESTRICTIONS', () => {
-  it('highVelocity is ranged-only', () => {
-    expect(WEAPON_KEYWORD_RESTRICTIONS['highVelocity']).toBe('ranged');
+  it('highVelocity is unrestricted (no attack type restriction per rulebook)', () => {
+    expect(WEAPON_KEYWORD_RESTRICTIONS['highVelocity']).toBe('all');
   });
 
   it('pierceX is unrestricted', () => {

@@ -66,8 +66,8 @@ export const WEAPON_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> = {
   antiPersonnelX: 'all',
   cumbersome: 'all',
 
-  // Ranged-only weapon keyword (AND-aggregated across weapons)
-  highVelocity: 'ranged',      // Disables dodge/deflect (ranged-only interaction)
+  // Unrestricted weapon keyword (AND-aggregated across weapons)
+  highVelocity: 'all',         // Disables dodge token spending; no attack type restriction per rulebook
 
   // Ranged-only weapon keywords
   immuneDeflect: 'ranged',     // Deflect is ranged-only
