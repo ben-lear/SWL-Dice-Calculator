@@ -36,6 +36,45 @@ export default function AttackerUnitBuilderView() {
 
   return (
     <>
+      <SectionHeader title="Upgrade Slots">
+        <div className="space-y-3">
+          {store.selectedPresetId === null && (
+            <p className="text-sm text-gray-500">Select a unit preset to enable upgrade slots.</p>
+          )}
+
+          {slotRows.length === 0 && store.selectedPresetId !== null && (
+            <p className="text-sm text-gray-500">This unit has no upgrade slots.</p>
+          )}
+
+          {slotRows.map(({ slot, index }) => {
+            const upgrades = getUpgradesForSlot(slot as UpgradeSlot, store.unitApiId ?? undefined);
+            // Deduplicate: keep first occurrence of each upgrade ID
+            const uniqueUpgrades = upgrades.filter(
+              (u, i, arr) => arr.findIndex(x => x.id === u.id) === i
+            );
+            const selectedValue = store.equippedUpgradeIds[index] ?? '';
+            const options: SelectOption<string>[] = [
+              { value: '', label: 'None' },
+              ...uniqueUpgrades.map((upgrade) => ({
+                value: upgrade.id,
+                label: `${upgrade.name} (${upgrade.cost})`,
+              })),
+            ];
+
+            return (
+              <Select
+                key={`${slot}-${index}`}
+                label={UPGRADE_SLOT_LABELS[slot as UpgradeSlot]}
+                value={selectedValue}
+                onChange={(value) => store.equipUpgrade(index, value === '' ? null : value)}
+                options={options}
+                disabled={store.selectedPresetId === null}
+              />
+            );
+          })}
+        </div>
+      </SectionHeader>
+
       <SectionHeader title="Weapons">
         <div className="space-y-2 text-sm text-gray-400">
           {displayWeapons.length === 0 ? (
@@ -90,45 +129,6 @@ export default function AttackerUnitBuilderView() {
               );
             })
           )}
-        </div>
-      </SectionHeader>
-
-      <SectionHeader title="Upgrade Slots">
-        <div className="space-y-3">
-          {store.selectedPresetId === null && (
-            <p className="text-sm text-gray-500">Select a unit preset to enable upgrade slots.</p>
-          )}
-
-          {slotRows.length === 0 && store.selectedPresetId !== null && (
-            <p className="text-sm text-gray-500">This unit has no upgrade slots.</p>
-          )}
-
-          {slotRows.map(({ slot, index }) => {
-            const upgrades = getUpgradesForSlot(slot as UpgradeSlot, store.unitApiId ?? undefined);
-            // Deduplicate: keep first occurrence of each upgrade ID
-            const uniqueUpgrades = upgrades.filter(
-              (u, i, arr) => arr.findIndex(x => x.id === u.id) === i
-            );
-            const selectedValue = store.equippedUpgradeIds[index] ?? '';
-            const options: SelectOption<string>[] = [
-              { value: '', label: 'None' },
-              ...uniqueUpgrades.map((upgrade) => ({
-                value: upgrade.id,
-                label: `${upgrade.name} (${upgrade.cost})`,
-              })),
-            ];
-
-            return (
-              <Select
-                key={`${slot}-${index}`}
-                label={UPGRADE_SLOT_LABELS[slot as UpgradeSlot]}
-                value={selectedValue}
-                onChange={(value) => store.equipUpgrade(index, value === '' ? null : value)}
-                options={options}
-                disabled={store.selectedPresetId === null}
-              />
-            );
-          })}
         </div>
       </SectionHeader>
 

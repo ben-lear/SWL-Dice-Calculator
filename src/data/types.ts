@@ -196,6 +196,8 @@ export interface ProcessedUnit {
   /** Slugified ID: e.g. "luke-skywalker-jedi-knight" (or "luke-skywalker-galactic-empire" if disambiguation is required) */
   id: string;
   name: string;
+  /** Unit subtitle (e.g. "Hero of the Rebellion", "Jedi Knight") — used for disambiguation when multiple units share a name */
+  title?: string | null;
   faction: Faction;
   cost: number;
   health: number;
@@ -258,6 +260,8 @@ export interface ResolvedUnit {
   id: string;
   apiId: number;
   name: string;
+  /** Unit subtitle (e.g. "Hero of the Rebellion", "Jedi Knight") — used for disambiguation in dropdowns */
+  title: string | null;
   faction: Faction;
   cost: number;
   health: number;

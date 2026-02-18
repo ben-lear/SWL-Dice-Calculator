@@ -232,6 +232,7 @@ function processData() {
         apiId: u.id,
         id: uniqueId,
         name: u.name,
+        title: u.title ?? null,
         faction,
         cost: resolveCost(u),
         health: u.health ?? 1,

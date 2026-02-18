@@ -105,6 +105,7 @@ export interface AttackConfigState {
   setSelectedFaction: (faction: Faction | null) => void;
   setSelectedPresetId: (presetId: string | null) => void;
   setActiveMode: (mode: 'custom' | 'unit-builder') => void;
+  clearUnit: () => void;
   loadPreset: (
     presetId: string,
     profile: AttackerPresetProfile,
@@ -132,6 +133,7 @@ type AttackConfigFields = Omit<
   | 'setSelectedFaction'
   | 'setSelectedPresetId'
   | 'setActiveMode'
+  | 'clearUnit'
   | 'loadPreset'
   | 'reset'
   | 'selectedFaction'
@@ -309,6 +311,22 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   setActiveMode: (mode) =>
     set({ activeMode: mode }),
 
+  // Clear all unit-related state, preserving faction, mode and reroll settings
+  clearUnit: () =>
+    set((state) => ({
+      ...DEFAULT_ATTACK_CONFIG,
+      selectedFaction: state.selectedFaction,
+      activeMode: state.activeMode,
+      rerollStrategy: state.rerollStrategy,
+      selectedPresetId: null,
+      baseMiniatureCount: 1,
+      unitBaseWeapons: [],
+      upgradeBar: [],
+      equippedUpgradeIds: [],
+      weaponMiniCounts: {},
+      unitApiId: null,
+    })),
+
   // Load a preset: reset to defaults, then apply preset overrides
   loadPreset: (presetId, profile, upgradeBar = [], unitApiId) =>
     set(() => {
@@ -408,6 +426,7 @@ export function selectAttackerConfig(state: AttackConfigState) {
     loadPreset,
     reset,
     equipUpgrade,
+    clearUnit,
     ...config
   } = state;
 

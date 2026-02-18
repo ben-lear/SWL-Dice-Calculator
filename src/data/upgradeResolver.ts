@@ -53,6 +53,23 @@ export function getResolvedUpgradeById(
 }
 
 /**
+ * Some unit slots accept upgrade cards categorised under a different slot type.
+ * Key = slot on the unit card, Value = upgrade card slot type to also search.
+ * Name-based filtering ensures exclusive slots only get the right card.
+ */
+const SLOT_ALIASES: Partial<Record<UpgradeSlot, UpgradeSlot>> = {
+  [UpgradeSlot.ImperialMarch]: UpgradeSlot.Training,
+};
+
+/**
+ * For aliased slots, the upgrade name must match the slot name (title-cased).
+ * Used to prevent all Training upgrades from appearing in the Imperial March slot.
+ */
+const SLOT_ALIAS_NAME_FILTER: Partial<Record<UpgradeSlot, string>> = {
+  [UpgradeSlot.ImperialMarch]: 'Imperial March',
+};
+
+/**
  * Get all upgrades available for a specific slot type.
  * Optionally filtered by unit restriction.
  *
@@ -65,8 +82,18 @@ export function getUpgradesForSlot(
   slot: UpgradeSlot,
   unitApiId?: number,
 ): ResolvedUpgrade[] {
+  const aliasSlot = SLOT_ALIASES[slot];
+  const aliasNameFilter = SLOT_ALIAS_NAME_FILTER[slot];
+
   return getAllResolvedUpgrades().filter((u) => {
-    if (u.upgradeSlot !== slot) return false;
+    const matchesDirectSlot = u.upgradeSlot === slot;
+    const matchesAliasSlot =
+      aliasSlot !== undefined &&
+      u.upgradeSlot === aliasSlot &&
+      (aliasNameFilter === undefined || u.name === aliasNameFilter);
+
+    if (!matchesDirectSlot && !matchesAliasSlot) return false;
+
     if (unitApiId !== undefined && u.restrictedToUnitApiId !== null) {
       // Restricted upgrade: only include if it matches this unit
       return u.restrictedToUnitApiId === unitApiId;

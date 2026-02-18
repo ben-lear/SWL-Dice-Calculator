@@ -127,8 +127,23 @@ function generateAttackerPreset(
     },
   };
 
+  // Convert all unit weapons to data-layer format for unitBaseWeapons
+  // This ensures useDisplayWeapons can populate the weapon list for single-mini units
+  const unitBaseWeapons = unit.weapons.map((w) => ({
+    name: w.name,
+    weaponType: w.weaponType,
+    redDice: w.redDice,
+    blackDice: w.blackDice,
+    whiteDice: w.whiteDice,
+    keywords: w.keywords,
+    minRange: w.minRange,
+    maxRange: w.maxRange,
+  }));
+
   const profile: Record<string, any> = {
     weapons: [engineWeapon],
+    baseMiniatureCount: unit.figures,
+    unitBaseWeapons: unitBaseWeapons,
     surgeChart: unit.attackSurgeChart ?? AttackSurgeChart.None,
     unitCost: unit.cost,
   };
@@ -150,6 +165,7 @@ function generateAttackerPreset(
     id: `${unit.id}-${slugifyWeapon(weapon.name)}`,
     faction: unit.faction as Faction,
     name: `${unit.name} (${weapon.name})`,
+    title: unit.title ?? null,
     attackType: weapon.weaponType,
     rank: unit.rank,
     profile,
@@ -236,6 +252,7 @@ function generateMultiMiniAttackerPreset(unit: ResolvedUnit): AttackerPreset {
     id: unit.id,
     faction: unit.faction as Faction,
     name: `${unit.name} (${defaultWeapon.name})`,
+    title: unit.title ?? null,
     attackType: defaultAttackType,
     rank: unit.rank,
     profile,
@@ -288,6 +305,7 @@ function generateSkeletonAttackerPreset(
     id: `${unit.id}-base`,
     faction: unit.faction as Faction,
     name: `${unit.name} (no weapon data)`,
+    title: unit.title ?? null,
     attackType: AttackType.Ranged,
     rank: unit.rank,
     profile,
@@ -324,6 +342,7 @@ function generateDefenderPreset(unit: ResolvedUnit): DefenderPreset {
     id: unit.id,
     faction: unit.faction as Faction,
     name: unit.name,
+    title: unit.title ?? null,
     rank: unit.rank,
     profile,
     upgradeBar: unit.upgradeBar,

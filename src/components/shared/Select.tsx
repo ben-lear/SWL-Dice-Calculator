@@ -50,7 +50,7 @@ export default function Select<T extends string = string>({
         value={value}
         onChange={(e) => onChange(e.target.value as T)}
         disabled={disabled}
-        className="h-8 rounded border border-gray-700 bg-gray-800 px-2 text-sm text-gray-100 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:cursor-not-allowed disabled:text-gray-500"
+        className="h-8 w-44 min-w-0 rounded border border-gray-700 bg-gray-800 px-2 text-sm text-gray-100 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:cursor-not-allowed disabled:text-gray-500"
       >
         {options.map((option, index) => (
           <option key={`${option.value}-${index}`} value={option.value}>

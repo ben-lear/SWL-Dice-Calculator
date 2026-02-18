@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
-import { AttackType, RerollStrategy } from '../../engine/types';
+import { RerollStrategy } from '../../engine/types';
 import { getAttackerPresetById, getAttackerPresets, getFactionOptions } from '../../data/presetHelpers';
-import type { Faction } from '../../data/presets';
+import type { AttackerPreset, Faction } from '../../data/presets';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
-import { useAttackTypeStore } from '../../stores/attackTypeStore';
 import SearchableCombobox, { type ComboboxOption } from '../shared/SearchableCombobox';
 import Select, { type SelectOption } from '../shared/Select';
 import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
@@ -21,16 +20,8 @@ const REROLL_STRATEGY_OPTIONS: SegmentedControlOption<RerollStrategy>[] = [
   { value: RerollStrategy.CritFishing, label: 'Crit Fishing' },
 ];
 
-const ATTACK_TYPE_TO_PRESET_TYPE: Record<AttackType, AttackType> = {
-  [AttackType.Ranged]: AttackType.Ranged,
-  [AttackType.Melee]: AttackType.Melee,
-  [AttackType.Hybrid]: AttackType.Ranged,
-  [AttackType.Overrun]: AttackType.Overrun,
-};
-
 export default function AttackerPanel() {
   const store = useAttackConfigStore();
-  const attackType = useAttackTypeStore((state) => state.attackType);
 
   const factionOptions: SelectOption<string>[] = useMemo(
     () => [
@@ -41,41 +32,47 @@ export default function AttackerPanel() {
   );
 
   const unitOptions: ComboboxOption[] = useMemo(() => {
-    const filtered = getAttackerPresets(
-      store.selectedFaction,
-      ATTACK_TYPE_TO_PRESET_TYPE[attackType],
-    );
+    // 10.1D: No attack type filter in Unit Builder mode — show all units regardless of attack type.
+    // The weapon display layer (useDisplayWeapons) handles per-weapon attack type filtering.
+    const filtered = getAttackerPresets(store.selectedFaction);
 
-    // Extract unique units (by base unit name, ignoring weapon suffix)
-    const uniqueUnits = new Map<string, { value: string; label: string }>();
+    // Deduplicate by unitApiId (one entry per unit, regardless of how many weapon presets exist)
+    const uniqueUnits = new Map<string, AttackerPreset>();
     for (const preset of filtered) {
-      // Extract the unit name without the weapon suffix (e.g., "Darth Vader (Lightsaber)" → "Darth Vader")
-      const baseUnitName = preset.name.replace(/\s*\([^)]*\)$/, '');
       const unitKey = `${preset.unitApiId}`;
-      
       if (!uniqueUnits.has(unitKey)) {
-        // Capitalize rank for display
-        const rankLabel = preset.rank.charAt(0).toUpperCase() + preset.rank.slice(1);
-        uniqueUnits.set(unitKey, {
-          value: preset.id,
-          label: `${baseUnitName} (${rankLabel})`,
-        });
+        uniqueUnits.set(unitKey, preset);
       }
     }
 
-    return Array.from(uniqueUnits.values());
-  }, [attackType, store.selectedFaction]);
+    // 10.1C: Detect name+rank collisions that require subtitle disambiguation
+    const nameRankCounts = new Map<string, number>();
+    for (const preset of uniqueUnits.values()) {
+      const baseUnitName = preset.name.replace(/\s*\([^)]*\)$/, '');
+      const key = `${baseUnitName}|${preset.rank}`;
+      nameRankCounts.set(key, (nameRankCounts.get(key) ?? 0) + 1);
+    }
+
+    return Array.from(uniqueUnits.values()).map((preset) => {
+      const baseUnitName = preset.name.replace(/\s*\([^)]*\)$/, '');
+      const rankLabel = preset.rank.charAt(0).toUpperCase() + preset.rank.slice(1);
+      const key = `${baseUnitName}|${preset.rank}`;
+      const needsSubtitle = (nameRankCounts.get(key) ?? 0) > 1 && preset.title;
+      const label = needsSubtitle
+        ? `${baseUnitName}, ${preset.title} (${rankLabel})`
+        : `${baseUnitName} (${rankLabel})`;
+      return { value: preset.id, label };
+    });
+  }, [store.selectedFaction]);
 
   const handlePresetChange = (presetId: string) => {
     if (!presetId || presetId === '') {
-      // Clear selection
-      store.setSelectedPresetId(null);
+      // 10.1B: Full unit clear instead of just clearing the ID
+      store.clearUnit();
       return;
     }
-    const preset = getAttackerPresetById(
-      presetId,
-      ATTACK_TYPE_TO_PRESET_TYPE[attackType],
-    );
+    // 10.1D: Don't filter by attack type — load the preset regardless of current attack type
+    const preset = getAttackerPresetById(presetId);
 
     if (preset) {
       store.loadPreset(preset.id, preset.profile, preset.upgradeBar, preset.unitApiId);
@@ -109,9 +106,14 @@ export default function AttackerPanel() {
               <Select
                 label="Faction"
                 value={store.selectedFaction ?? ''}
-                onChange={(value) =>
-                  store.setSelectedFaction(value === '' ? null : (value as Faction))
-                }
+                onChange={(value) => {
+                  const newFaction = value === '' ? null : (value as Faction);
+                  if (newFaction !== store.selectedFaction) {
+                    // 10.1B: Clear stale unit state when faction changes
+                    store.clearUnit();
+                  }
+                  store.setSelectedFaction(newFaction);
+                }}
                 options={factionOptions}
               />
               <SearchableCombobox

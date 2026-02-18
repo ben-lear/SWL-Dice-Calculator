@@ -95,6 +95,7 @@ export interface DefenseConfigState {
   setSelectedFaction: (faction: Faction | null) => void;
   setSelectedPresetId: (presetId: string | null) => void;
   setActiveMode: (mode: 'custom' | 'unit-builder') => void;
+  clearUnit: () => void;
   loadPreset: (
     presetId: string,
     profile: DefenderPresetProfile,
@@ -116,6 +117,7 @@ type DefenseConfigFields = Omit<
   | 'setSelectedFaction'
   | 'setSelectedPresetId'
   | 'setActiveMode'
+  | 'clearUnit'
   | 'loadPreset'
   | 'reset'
   | 'selectedFaction'
@@ -227,6 +229,18 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   setActiveMode: (mode) =>
     set({ activeMode: mode }),
 
+  // Clear all unit-related state, preserving faction and mode
+  clearUnit: () =>
+    set((state) => ({
+      ...DEFAULT_DEFENSE_CONFIG,
+      selectedFaction: state.selectedFaction,
+      activeMode: state.activeMode,
+      selectedPresetId: null,
+      upgradeBar: [],
+      equippedUpgradeIds: [],
+      unitApiId: null,
+    })),
+
   // Load a preset: reset to defaults, then apply preset overrides
   loadPreset: (presetId, profile, upgradeBar = [], unitApiId) =>
     set(() => {
@@ -308,6 +322,7 @@ export function selectDefenderConfig(state: DefenseConfigState): DefenderConfig 
     loadPreset,
     reset,
     equipUpgrade,
+    clearUnit,
     ...config
   } = state;
   return config;

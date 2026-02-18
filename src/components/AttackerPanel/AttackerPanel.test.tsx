@@ -122,7 +122,8 @@ describe('AttackerPanel', () => {
     fireEvent.click(screen.getByRole('radio', { name: 'Unit Builder' }));
 
     const factionValue = getFactionOptions()[0]?.value as Faction;
-    const filteredPresets = getAttackerPresets(factionValue, AttackType.Ranged);
+    // 10.1D: Unit Builder shows ALL units for the faction (no attack type filter)
+    const filteredPresets = getAttackerPresets(factionValue);
     // Count unique units by unitApiId (matching component logic)
     const uniqueUnitIds = new Set(filteredPresets.map(p => p.unitApiId));
     const expectedOptions = uniqueUnitIds.size;

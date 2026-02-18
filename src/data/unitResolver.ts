@@ -99,6 +99,7 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
     id: processed.id,
     apiId: processed.apiId,
     name: processed.name,
+    title: processed.title ?? null,
     faction: processed.faction,
     cost: processed.cost,
     health: processed.health,

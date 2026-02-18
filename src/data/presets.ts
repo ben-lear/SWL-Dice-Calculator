@@ -149,6 +149,7 @@ export interface AttackerPreset {
   id: string;
   faction: Faction;
   name: string;             // e.g., "Darth Vader (Lightsaber)"
+  title: string | null;     // e.g., "Hero of the Rebellion" — for disambiguation
   attackType: AttackType;
   rank: UnitRank;           // Unit rank for display in dropdowns
   profile: AttackerPresetProfile;
@@ -160,6 +161,7 @@ export interface DefenderPreset {
   id: string;
   faction: Faction;
   name: string;             // e.g., "Stormtroopers"
+  title: string | null;     // e.g., "Hero of the Rebellion" — for disambiguation
   rank: UnitRank;           // Unit rank for display in dropdowns
   profile: DefenderPresetProfile;
   upgradeBar: UpgradeSlot[];  // Available upgrade slots

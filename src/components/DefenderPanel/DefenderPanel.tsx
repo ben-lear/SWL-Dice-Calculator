@@ -31,20 +31,29 @@ export default function DefenderPanel() {
 
   const unitOptions: ComboboxOption[] = useMemo(() => {
     const presets = getDefenderPresets(store.selectedFaction);
+
+    // 10.1C: Detect name+rank collisions that require subtitle disambiguation
+    const nameRankCounts = new Map<string, number>();
+    for (const preset of presets) {
+      const key = `${preset.name}|${preset.rank}`;
+      nameRankCounts.set(key, (nameRankCounts.get(key) ?? 0) + 1);
+    }
+
     return presets.map((preset) => {
-      // Capitalize rank for display
       const rankLabel = preset.rank.charAt(0).toUpperCase() + preset.rank.slice(1);
-      return {
-        value: preset.id,
-        label: `${preset.name} (${rankLabel})`,
-      };
+      const key = `${preset.name}|${preset.rank}`;
+      const needsSubtitle = (nameRankCounts.get(key) ?? 0) > 1 && preset.title;
+      const label = needsSubtitle
+        ? `${preset.name}, ${preset.title} (${rankLabel})`
+        : `${preset.name} (${rankLabel})`;
+      return { value: preset.id, label };
     });
   }, [store.selectedFaction]);
 
   const handlePresetChange = (presetId: string) => {
     if (!presetId || presetId === '') {
-      // Clear selection
-      store.setSelectedPresetId(null);
+      // 10.1B: Full unit clear instead of just clearing the ID
+      store.clearUnit();
       return;
     }
     const preset = getDefenderPresetById(presetId);
@@ -73,9 +82,14 @@ export default function DefenderPanel() {
               <Select
                 label="Faction"
                 value={store.selectedFaction ?? ''}
-                onChange={(value) =>
-                  store.setSelectedFaction(value === '' ? null : (value as Faction))
-                }
+                onChange={(value) => {
+                  const newFaction = value === '' ? null : (value as Faction);
+                  if (newFaction !== store.selectedFaction) {
+                    // 10.1B: Clear stale unit state when faction changes
+                    store.clearUnit();
+                  }
+                  store.setSelectedFaction(newFaction);
+                }}
                 options={factionOptions}
               />
               <SearchableCombobox
