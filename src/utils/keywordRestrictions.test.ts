@@ -54,6 +54,19 @@ describe('isFieldActiveForAttackType', () => {
     expect(isFieldActiveForAttackType('ranged-melee', AttackType.Overrun)).toBe(false);
   });
 
+  // ── 'melee-overrun' restriction ──
+  it('enables melee-overrun keywords for Melee attacks', () => {
+    expect(isFieldActiveForAttackType('melee-overrun', AttackType.Melee)).toBe(true);
+  });
+
+  it('enables melee-overrun keywords for Overrun attacks', () => {
+    expect(isFieldActiveForAttackType('melee-overrun', AttackType.Overrun)).toBe(true);
+  });
+
+  it('disables melee-overrun keywords for Ranged attacks', () => {
+    expect(isFieldActiveForAttackType('melee-overrun', AttackType.Ranged)).toBe(false);
+  });
+
   it('enables unrestricted keywords for Overrun', () => {
     expect(isFieldActiveForAttackType('all', AttackType.Overrun)).toBe(true);
   });
@@ -63,6 +76,7 @@ describe('isFieldActiveForAttackType', () => {
     expect(isFieldActiveForAttackType('ranged', AttackType.Hybrid)).toBe(true);
     expect(isFieldActiveForAttackType('melee', AttackType.Hybrid)).toBe(true);
     expect(isFieldActiveForAttackType('ranged-melee', AttackType.Hybrid)).toBe(true);
+    expect(isFieldActiveForAttackType('melee-overrun', AttackType.Hybrid)).toBe(true);
     expect(isFieldActiveForAttackType('all', AttackType.Hybrid)).toBe(true);
   });
 });
@@ -100,6 +114,10 @@ describe('WEAPON_KEYWORD_RESTRICTIONS', () => {
 
   it('blast is unrestricted', () => {
     expect(WEAPON_KEYWORD_RESTRICTIONS['blast']).toBe('all');
+  });
+
+  it('ramX is melee-overrun (only applies during Melee/Overrun attacks)', () => {
+    expect(WEAPON_KEYWORD_RESTRICTIONS['ramX']).toBe('melee-overrun');
   });
 });
 

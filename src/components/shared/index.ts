@@ -18,3 +18,12 @@ export type { SearchableComboboxProps, ComboboxOption } from './SearchableCombob
 
 export { default as SectionHeader } from './SectionHeader';
 export type { SectionHeaderProps } from './SectionHeader';
+
+export { default as UpgradeSlotsSection } from './UpgradeSlotsSection';
+export type { UpgradeSlotsSectionProps } from './UpgradeSlotsSection';
+
+export { default as UnitPresetSection } from './UnitPresetSection';
+export type { UnitPresetSectionProps } from './UnitPresetSection';
+
+export { default as PanelShell, MODE_OPTIONS } from './PanelShell';
+export type { PanelShellProps } from './PanelShell';

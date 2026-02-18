@@ -38,49 +38,56 @@ const COVER_OPTIONS: SegmentedControlOption<CoverType>[] = [
   { value: CoverType.Heavy, label: 'Heavy' },
 ];
 
-export default function DefenderCustomPoolView() {
+interface DefenderCustomPoolViewProps {
+  /** When true, the Defense section is rendered elsewhere and hidden here. */
+  hideDefense?: boolean;
+}
+
+export default function DefenderCustomPoolView({ hideDefense = false }: DefenderCustomPoolViewProps) {
   const store = useDefenseConfigStore();
   const isDisabled = useDefenderKeywordDisabled();
 
   return (
     <>
-      <SectionHeader title="Defense">
-        <div className="space-y-3">
-          <SegmentedControl
-            label="Defense Die"
-            value={store.disableDefenseDice ? 'none' : store.dieColor}
-            onChange={(value: DefenseDieOption) => {
-              if (value === 'none') {
-                store.setField('disableDefenseDice', true);
-              } else {
-                store.setField('disableDefenseDice', false);
-                store.setField('dieColor', value);
-              }
-            }}
-            options={DEFENSE_DIE_OPTIONS}
-            tooltip="The color of defense die rolled for this unit. Red dice have a higher block chance than white."
-          />
-
-          {!store.disableDefenseDice && (
+      {!hideDefense && (
+        <SectionHeader title="Defense">
+          <div className="space-y-3">
             <SegmentedControl
-              label="Surge Chart"
-              value={store.surgeChart}
-              onChange={(value) => store.setField('surgeChart', value)}
-              options={DEFENSE_SURGE_OPTIONS}
-              tooltip="Whether defense surge results convert to blocks."
+              label="Defense Die"
+              value={store.disableDefenseDice ? 'none' : store.dieColor}
+              onChange={(value: DefenseDieOption) => {
+                if (value === 'none') {
+                  store.setField('disableDefenseDice', true);
+                } else {
+                  store.setField('disableDefenseDice', false);
+                  store.setField('dieColor', value);
+                }
+              }}
+              options={DEFENSE_DIE_OPTIONS}
+              tooltip="The color of defense die rolled for this unit. Red dice have a higher block chance than white."
             />
-          )}
 
-          <NumberSpinner
-            label="Minis in LOS"
-            value={store.minisInLOS}
-            onChange={(value) => store.setField('minisInLOS', value)}
-            min={1}
-            max={99}
-            tooltip="Number of defending miniatures in line of sight — used to multiply the dice of Spray weapons."
-          />
-        </div>
-      </SectionHeader>
+            {!store.disableDefenseDice && (
+              <SegmentedControl
+                label="Surge Chart"
+                value={store.surgeChart}
+                onChange={(value) => store.setField('surgeChart', value)}
+                options={DEFENSE_SURGE_OPTIONS}
+                tooltip="Whether defense surge results convert to blocks."
+              />
+            )}
+
+            <NumberSpinner
+              label="Minis in LOS"
+              value={store.minisInLOS}
+              onChange={(value) => store.setField('minisInLOS', value)}
+              min={1}
+              max={99}
+              tooltip="Number of defending miniatures in line of sight — used to multiply the dice of Spray weapons."
+            />
+          </div>
+        </SectionHeader>
+      )}
 
       <SectionHeader title="Cover">
         <div className="space-y-3">

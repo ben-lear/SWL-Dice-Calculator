@@ -6,22 +6,17 @@ import {
 } from '../../data/presetHelpers';
 import type { Faction } from '../../data/presets';
 import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
-import SearchableCombobox, { type ComboboxOption } from '../shared/SearchableCombobox';
-import SectionHeader from '../shared/SectionHeader';
-import Select, { type SelectOption } from '../shared/Select';
-import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
+import SegmentedControl from '../shared/SegmentedControl';
+import UnitPresetSection from '../shared/UnitPresetSection';
+import PanelShell, { MODE_OPTIONS } from '../shared/PanelShell';
 import DefenderCustomPoolView from './DefenderCustomPoolView';
+import DefenderDefenseSection from './DefenderDefenseSection';
 import DefenderUnitBuilderView from './DefenderUnitBuilderView';
-
-const MODE_OPTIONS: SegmentedControlOption<'custom' | 'unit-builder'>[] = [
-  { value: 'custom', label: 'Custom Pool' },
-  { value: 'unit-builder', label: 'Unit Builder' },
-];
 
 export default function DefenderPanel() {
   const store = useDefenseConfigStore();
 
-  const factionOptions: SelectOption<string>[] = useMemo(
+  const factionOptions = useMemo(
     () => [
       { value: '', label: 'All Factions' },
       ...getFactionOptions().map((faction) => ({ value: faction.value, label: faction.label })),
@@ -29,7 +24,7 @@ export default function DefenderPanel() {
     [],
   );
 
-  const unitOptions: ComboboxOption[] = useMemo(() => {
+  const unitOptions = useMemo(() => {
     const presets = getDefenderPresets(store.selectedFaction);
 
     // 10.1C: Detect name+rank collisions that require subtitle disambiguation
@@ -50,6 +45,15 @@ export default function DefenderPanel() {
     });
   }, [store.selectedFaction]);
 
+  const handleFactionChange = (value: string) => {
+    const newFaction = value === '' ? null : (value as Faction);
+    if (newFaction !== store.selectedFaction) {
+      // 10.1B: Clear stale unit state when faction changes
+      store.clearUnit();
+    }
+    store.setSelectedFaction(newFaction);
+  };
+
   const handlePresetChange = (presetId: string) => {
     if (!presetId || presetId === '') {
       // 10.1B: Full unit clear instead of just clearing the ID
@@ -67,12 +71,7 @@ export default function DefenderPanel() {
   };
 
   return (
-    <div className="flex flex-col overflow-y-auto rounded-lg border border-gray-800 bg-gray-900 lg:max-h-[calc(100vh-5rem)]" >
-      <div className="sticky top-0 z-10 border-b border-gray-800 bg-gray-900 px-4 py-3">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-gray-300">Defender</h2>
-      </div>
-
-      <div className="space-y-4 px-4 py-4">
+    <PanelShell title="Defender">
         <SegmentedControl
           label="Mode"
           value={store.activeMode}
@@ -81,35 +80,23 @@ export default function DefenderPanel() {
         />
 
         {store.activeMode === 'unit-builder' && (
-          <SectionHeader title="Unit Preset">
-            <div className="space-y-3">
-              <Select
-                label="Faction"
-                value={store.selectedFaction ?? ''}
-                onChange={(value) => {
-                  const newFaction = value === '' ? null : (value as Faction);
-                  if (newFaction !== store.selectedFaction) {
-                    // 10.1B: Clear stale unit state when faction changes
-                    store.clearUnit();
-                  }
-                  store.setSelectedFaction(newFaction);
-                }}
-                options={factionOptions}
-              />
-              <SearchableCombobox
-                label="Unit"
-                value={store.selectedPresetId ?? ''}
-                onChange={handlePresetChange}
-                options={unitOptions}
-                placeholder="Search units..."
-              />
-            </div>
-          </SectionHeader>
+          <UnitPresetSection
+            faction={store.selectedFaction ?? ''}
+            onFactionChange={handleFactionChange}
+            factionOptions={factionOptions}
+            unitValue={store.selectedPresetId ?? ''}
+            onUnitChange={handlePresetChange}
+            unitOptions={unitOptions}
+          />
         )}
 
-        {store.activeMode === 'unit-builder' && <DefenderUnitBuilderView />}
-        <DefenderCustomPoolView />
-      </div>
-    </div>
+        {store.activeMode === 'unit-builder' && (
+          <>
+            <DefenderDefenseSection />
+            <DefenderUnitBuilderView />
+          </>
+        )}
+        <DefenderCustomPoolView hideDefense={store.activeMode === 'unit-builder'} />
+    </PanelShell>
   );
 }

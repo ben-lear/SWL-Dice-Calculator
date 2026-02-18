@@ -16,7 +16,11 @@ export function applyDodgeAndCover(
   // ── Count results ──
   let hits = results.filter(r => r.face === AttackFace.Hit).length;
   let crits = results.filter(r => r.face === AttackFace.Critical).length;
-  const blanks = results.filter(r => r.face === AttackFace.Blank).length;
+  // Unconverted surges are functionally blanks for downstream steps (e.g. Ram X).
+  // attackSurges.ts leaves unconverted surges as AttackFace.Surge, so count both.
+  const blanks = results.filter(
+    r => r.face === AttackFace.Blank || r.face === AttackFace.Surge
+  ).length;
 
   // ── Step 5a-d: Cover ──
   const coverValue = determineCoverValue(config, poolKeywords.blast);

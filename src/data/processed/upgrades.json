@@ -20,7 +20,9 @@
       "Treat X: Capacity Y",
       "Noncombatant",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "960",
@@ -37,7 +39,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "22",
@@ -59,7 +63,9 @@
     "keywordNames": [
       "Impact X",
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "69",
@@ -82,7 +88,9 @@
     "keywordNames": [
       "Pierce X",
       "Reconfigure"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "59",
@@ -105,7 +113,9 @@
     "keywordNames": [
       "Pierce X",
       "Reconfigure"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "142",
@@ -131,7 +141,9 @@
       "Pierce X",
       "Cumbersome",
       "High Velocity"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "165",
@@ -157,7 +169,9 @@
       "Pierce X",
       "Cumbersome",
       "High Velocity"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "73",
@@ -178,7 +192,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Reconfigure"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "60",
@@ -199,7 +215,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Reconfigure"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "80",
@@ -218,7 +236,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "119",
@@ -240,7 +260,9 @@
     "keywordNames": [
       "Inspire",
       "Field Commander"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20268",
@@ -261,7 +283,9 @@
       "Exemplar",
       "Inspire",
       "Strategize"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "206",
@@ -281,7 +305,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20801",
@@ -301,7 +327,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "heavy-weapon"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "18909",
@@ -327,7 +357,9 @@
       "Critical X",
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "45",
@@ -342,7 +374,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": "Dark",
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "18476",
@@ -361,7 +395,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "147",
@@ -380,7 +416,9 @@
       "Cycle",
       "Fixed: Front/Rear",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "173",
@@ -397,7 +435,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Scale"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16581",
@@ -416,7 +456,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Noncombatant"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "63",
@@ -439,7 +481,9 @@
       "Repair X: Capacity Y",
       "Noncombatant",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20",
@@ -461,7 +505,9 @@
       "Blast",
       "Fixed: Front/Rear",
       "Spray"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "3",
@@ -482,7 +528,9 @@
     "keywordNames": [
       "Impact X",
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "4",
@@ -502,7 +550,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "23",
@@ -524,7 +574,9 @@
     "keywordNames": [
       "Fixed: Front/Rear",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "947",
@@ -548,7 +600,9 @@
     "keywordNames": [
       "AI: Action",
       "Precise"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "27",
@@ -569,7 +623,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9398",
@@ -590,7 +646,9 @@
     "keywordNames": [
       "Pierce X",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "94",
@@ -609,7 +667,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16573",
@@ -628,7 +688,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "125",
@@ -647,7 +709,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "141",
@@ -666,7 +730,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "148",
@@ -689,7 +755,9 @@
       "Blast",
       "Cycle",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "118",
@@ -708,7 +776,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16563",
@@ -727,7 +797,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "212",
@@ -745,7 +817,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "112",
@@ -768,7 +842,9 @@
       "Fixed: Front/Rear",
       "Impact X",
       "Ion X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "113",
@@ -789,7 +865,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "100",
@@ -810,7 +888,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "205",
@@ -831,7 +911,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Marksman"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "40",
@@ -848,7 +930,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "413",
@@ -870,7 +954,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Armor X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "145",
@@ -891,7 +977,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Beam X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "175",
@@ -912,7 +1000,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Duelist"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "4413",
@@ -931,7 +1021,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Duelist"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "74",
@@ -954,7 +1046,9 @@
       "Critical X",
       "Impact X",
       "Ion X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "21341",
@@ -971,7 +1065,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2566",
@@ -990,7 +1086,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2567",
@@ -1010,7 +1108,9 @@
     "keywordNames": [
       "Independent: Token X/Action",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "5569",
@@ -1032,7 +1132,9 @@
       "Blast",
       "Spray",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16554",
@@ -1053,7 +1155,9 @@
       "Leader",
       "Guardian",
       "Scout X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "4441",
@@ -1075,7 +1179,9 @@
       "AI: Action",
       "Pierce X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "51",
@@ -1098,7 +1204,9 @@
     "keywordNames": [
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "152",
@@ -1118,7 +1226,9 @@
       "Cycle",
       "Fixed: Front/Rear",
       "Scatter"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "626",
@@ -1133,7 +1243,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "160",
@@ -1157,7 +1269,9 @@
     "keywordNames": [
       "Shielded",
       "Recharge"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "159",
@@ -1181,7 +1295,9 @@
     "keywordNames": [
       "Immune: Deflect",
       "Lethal X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "161",
@@ -1204,7 +1320,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "131",
@@ -1225,7 +1343,9 @@
     "keywordNames": [
       "Distract",
       "➦Calculate Odds"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9399",
@@ -1246,7 +1366,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20800",
@@ -1265,7 +1387,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "heavy-weapon"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19833",
@@ -1280,7 +1406,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16556",
@@ -1299,7 +1427,9 @@
       "Leader",
       "Outmaneuver",
       "Defend"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20802",
@@ -1318,7 +1448,12 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "command",
+      "training"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16555",
@@ -1337,7 +1472,9 @@
       "Leader",
       "Inspire",
       "Reliable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "200",
@@ -1356,7 +1493,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "194",
@@ -1375,7 +1514,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "195",
@@ -1397,7 +1538,9 @@
     "keywordNames": [
       "Repair X: Capacity Y",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20770",
@@ -1414,7 +1557,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19065",
@@ -1434,7 +1579,9 @@
     "keywordNames": [
       "Treat X: Capacity Y",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "202",
@@ -1453,7 +1600,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16567",
@@ -1471,7 +1620,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "gear"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16559",
@@ -1488,7 +1641,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16571",
@@ -1507,7 +1662,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20718",
@@ -1526,7 +1683,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "98",
@@ -1547,7 +1706,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20282",
@@ -1565,7 +1726,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20272",
@@ -1583,7 +1746,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20274",
@@ -1601,7 +1766,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "169",
@@ -1624,7 +1791,9 @@
     ],
     "keywordNames": [
       "Coordinate: Unit Name/Unit Type"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "1",
@@ -1639,7 +1808,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "6",
@@ -1656,7 +1827,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Blast"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "115",
@@ -1678,7 +1851,9 @@
     "keywordNames": [
       "Blast",
       "Spray"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15989",
@@ -1701,7 +1876,9 @@
       "High Velocity",
       "Pierce X",
       "Precise"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15009",
@@ -1724,7 +1901,9 @@
       "High Velocity",
       "Pierce X",
       "Precise"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "158",
@@ -1748,7 +1927,9 @@
     "keywordNames": [
       "Immune: Deflect",
       "Lethal X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15114",
@@ -1772,7 +1953,9 @@
       "Reconfigure",
       "Impact X",
       "Scatter"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20270",
@@ -1794,7 +1977,9 @@
       "Aid",
       "Prepared Position",
       "➦Spotter"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "961",
@@ -1817,7 +2002,9 @@
     ],
     "keywordNames": [
       "AI: Action"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "170",
@@ -1844,7 +2031,9 @@
       "High Velocity",
       "Lethal X",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "47",
@@ -1868,7 +2057,9 @@
     "keywordNames": [
       "High Velocity",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "3650",
@@ -1888,7 +2079,9 @@
     "keywordNames": [
       "Immobilize X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "3667",
@@ -1909,7 +2102,9 @@
       "Blast",
       "Spray",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19062",
@@ -1928,7 +2123,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Jump"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "174",
@@ -1953,7 +2150,9 @@
       "Detonate X: (Charge Type)",
       "Blast",
       "Poison X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "84",
@@ -1974,7 +2173,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "7",
@@ -1996,7 +2197,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "52",
@@ -2020,7 +2223,9 @@
     "keywordNames": [
       "High Velocity",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15010",
@@ -2039,7 +2244,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "123",
@@ -2060,7 +2267,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19835",
@@ -2075,7 +2284,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20434",
@@ -2097,7 +2308,9 @@
       "Charge",
       "Tactical X",
       "Ram X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16572",
@@ -2116,7 +2329,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "77",
@@ -2138,7 +2353,9 @@
     "keywordNames": [
       "Compel",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "33",
@@ -2153,7 +2370,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20319",
@@ -2171,7 +2390,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19897",
@@ -2190,7 +2411,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20697",
@@ -2208,7 +2431,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19830",
@@ -2225,7 +2450,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "24",
@@ -2247,7 +2474,9 @@
     "keywordNames": [
       "Fixed: Front/Rear",
       "Blast"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "86",
@@ -2270,7 +2499,9 @@
       "Reconfigure",
       "Suppressive",
       "Blast"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "85",
@@ -2293,7 +2524,9 @@
       "Reconfigure",
       "Suppressive",
       "Blast"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "105",
@@ -2312,7 +2545,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "126",
@@ -2333,7 +2568,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "106",
@@ -2355,7 +2592,9 @@
     "keywordNames": [
       "Cumbersome",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16569",
@@ -2378,7 +2617,9 @@
       "Critical X",
       "Lethal X",
       "Immune: Deflect"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19063",
@@ -2397,7 +2638,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Reliable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "101",
@@ -2414,7 +2657,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "➦Spotter"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "155",
@@ -2435,7 +2680,9 @@
     "keywordNames": [
       "Immobilize X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "97",
@@ -2454,7 +2701,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20461",
@@ -2476,7 +2725,9 @@
       "Charge",
       "Immune: Melee Pierce",
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "46",
@@ -2498,7 +2749,9 @@
     "keywordNames": [
       "Immune: Pierce",
       "Sidearm: Melee/Ranged"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "885",
@@ -2521,7 +2774,9 @@
     "keywordNames": [
       "Immobilize X",
       "Versatile"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2426",
@@ -2541,7 +2796,9 @@
     "keywordNames": [
       "Immobilize X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "43",
@@ -2556,7 +2813,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2713",
@@ -2571,7 +2830,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "162",
@@ -2588,7 +2849,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Ion X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "70",
@@ -2603,7 +2866,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "962",
@@ -2626,7 +2891,9 @@
     ],
     "keywordNames": [
       "AI: Action"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20457",
@@ -2647,7 +2914,9 @@
     "keywordNames": [
       "Sharpshooter",
       "Lethal X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "37",
@@ -2664,7 +2933,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Unhindered"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "189",
@@ -2688,7 +2959,9 @@
       "Treat X: Capacity Y",
       "Noncombatant",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16564",
@@ -2707,7 +2980,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16575",
@@ -2726,7 +3001,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9402",
@@ -2744,7 +3021,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "training"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20458",
@@ -2762,7 +3043,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "protocol"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19832",
@@ -2777,7 +3062,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "111",
@@ -2794,7 +3081,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "87",
@@ -2815,7 +3104,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Tactical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16552",
@@ -2834,7 +3125,9 @@
       "Leader",
       "Charge",
       "Coordinate: Unit Name/Unit Type"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "36",
@@ -2856,7 +3149,9 @@
     "keywordNames": [
       "Blast",
       "Spray"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "35",
@@ -2875,7 +3170,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16558",
@@ -2894,7 +3191,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "184",
@@ -2909,7 +3208,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "8",
@@ -2924,7 +3225,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": "Dark",
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "102",
@@ -2939,7 +3242,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "11865",
@@ -2959,7 +3264,9 @@
     "keywordNames": [
       "Overrun X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9",
@@ -2974,7 +3281,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "10",
@@ -2989,7 +3298,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9317",
@@ -3010,7 +3321,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Scout X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "57",
@@ -3025,7 +3338,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2799",
@@ -3046,7 +3361,9 @@
     ],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20278",
@@ -3069,7 +3386,9 @@
       "Indomitable",
       "Spur",
       "Tactical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "66",
@@ -3093,7 +3412,9 @@
       "Treat X: Capacity Y",
       "Noncombatant",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "21339",
@@ -3112,7 +3433,9 @@
     ],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20428",
@@ -3133,7 +3456,11 @@
       "➦Bolster",
       "Direct",
       "Inspire"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "command"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "25",
@@ -3155,7 +3482,9 @@
     "keywordNames": [
       "Arsenal X",
       "Field Commander"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "11864",
@@ -3172,7 +3501,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16561",
@@ -3191,7 +3522,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "171",
@@ -3215,7 +3548,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Coordinate: Unit Name/Unit Type"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "932",
@@ -3237,7 +3572,9 @@
       "Immune: Deflect",
       "Overrun X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "919",
@@ -3259,7 +3596,9 @@
       "Fixed: Front/Rear",
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "199",
@@ -3280,7 +3619,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "18",
@@ -3297,7 +3638,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Expert Climber"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "3649",
@@ -3321,7 +3664,9 @@
       "Hunted",
       "Latent Power",
       "Small"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "918",
@@ -3336,7 +3681,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "18179",
@@ -3355,7 +3702,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20460",
@@ -3375,7 +3724,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20275",
@@ -3396,7 +3747,9 @@
     "keywordNames": [
       "Sharpshooter",
       "Target"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20284",
@@ -3416,7 +3769,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Arsenal X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16580",
@@ -3436,7 +3791,9 @@
     "keywordNames": [
       "Impact X",
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "197",
@@ -3456,7 +3813,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9625",
@@ -3473,7 +3832,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19",
@@ -3496,7 +3857,9 @@
     "keywordNames": [
       "Cumbersome",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "153",
@@ -3516,7 +3879,9 @@
       "Cycle",
       "High Velocity",
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "107",
@@ -3533,7 +3898,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Inspire"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "207",
@@ -3554,7 +3921,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Sharpshooter"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "203",
@@ -3573,7 +3942,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Observe"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "41",
@@ -3588,7 +3959,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "143",
@@ -3610,7 +3983,9 @@
     "keywordNames": [
       "High Velocity",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "167",
@@ -3633,7 +4008,11 @@
       "Recharge",
       "Shielded",
       "Small"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "comms"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "168",
@@ -3655,7 +4034,9 @@
     "keywordNames": [
       "Critical X",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "883",
@@ -3675,7 +4056,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "30",
@@ -3692,7 +4075,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "67",
@@ -3712,7 +4097,11 @@
       6180,
       23657
     ],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "comms"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "6321",
@@ -3729,7 +4118,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "83",
@@ -3748,7 +4139,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19896",
@@ -3766,7 +4159,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19828",
@@ -3785,7 +4180,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "50",
@@ -3808,7 +4205,9 @@
     "keywordNames": [
       "Inspire",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "204",
@@ -3827,7 +4226,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "44",
@@ -3842,7 +4243,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "11867",
@@ -3862,7 +4265,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9400",
@@ -3880,7 +4285,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "188",
@@ -3895,7 +4302,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "628",
@@ -3910,7 +4319,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "186",
@@ -3935,7 +4346,9 @@
       "Reconfigure",
       "Charge",
       "Immune: Pierce"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "187",
@@ -3960,7 +4373,9 @@
       "Reconfigure",
       "Charge",
       "Immune: Pierce"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20429",
@@ -3980,7 +4395,11 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Steady"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "force"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20431",
@@ -4001,7 +4420,9 @@
     "keywordNames": [
       "Charge",
       "Lethal X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "18478",
@@ -4022,7 +4443,9 @@
       "Charge",
       "Leader",
       "Sidearm: Melee/Ranged"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "32",
@@ -4037,7 +4460,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": "Light",
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20430",
@@ -4059,7 +4484,11 @@
       "Blast",
       "Spray",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "training"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20438",
@@ -4079,7 +4508,11 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Jump"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "force"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20435",
@@ -4102,7 +4535,9 @@
       "Block",
       "Critical X",
       "Jump"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20436",
@@ -4124,7 +4559,9 @@
       "Prepared Position",
       "Reliable",
       "Sentinel"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20437",
@@ -4144,7 +4581,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Guidance"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "176",
@@ -4167,7 +4606,9 @@
     "keywordNames": [
       "Blast",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "166",
@@ -4192,7 +4633,9 @@
     "keywordNames": [
       "Precise",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15012",
@@ -4210,7 +4653,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20841",
@@ -4229,7 +4674,9 @@
     "unitsDisallowedOn": [
       19103
     ],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20803",
@@ -4250,7 +4697,11 @@
     "unitsDisallowedOn": [
       19103
     ],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "heavy-weapon"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16579",
@@ -4269,7 +4720,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2697",
@@ -4286,7 +4739,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Inspire"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20432",
@@ -4309,7 +4764,9 @@
       "Critical X",
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20454",
@@ -4327,7 +4784,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "99",
@@ -4351,7 +4810,9 @@
     ],
     "keywordNames": [
       "Target"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "149",
@@ -4372,7 +4833,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "618",
@@ -4394,7 +4857,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "156",
@@ -4415,7 +4880,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "92",
@@ -4439,7 +4906,9 @@
       "Fixed: Front/Rear",
       "Impact X",
       "Ion X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2568",
@@ -4459,7 +4928,9 @@
     "keywordNames": [
       "Blast",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19064",
@@ -4479,7 +4950,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Shielded"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2716",
@@ -4498,7 +4971,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "91",
@@ -4519,7 +4994,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "6320",
@@ -4538,7 +5015,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19826",
@@ -4553,7 +5032,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20459",
@@ -4574,7 +5055,9 @@
     "keywordNames": [
       "Scale",
       "Steady"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "28",
@@ -4597,7 +5080,9 @@
       "Impact X",
       "Fixed: Front/Rear",
       "Tow Cable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16568",
@@ -4619,7 +5104,9 @@
       "Critical X",
       "Suppressive",
       "Cumbersome"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "39",
@@ -4641,7 +5128,9 @@
     "keywordNames": [
       "Blast",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "11",
@@ -4664,7 +5153,9 @@
       "Critical X",
       "Impact X",
       "Ion X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "3648",
@@ -4685,7 +5176,11 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "AI: Dodge, Move"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "counterpart"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "948",
@@ -4706,7 +5201,9 @@
       "Blast",
       "Fixed: Front/Rear",
       "Spray"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "949",
@@ -4728,7 +5225,9 @@
       "Fixed: Front/Rear",
       "Ion X",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "950",
@@ -4748,7 +5247,9 @@
     "keywordNames": [
       "Critical X",
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "183",
@@ -4763,7 +5264,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": "force"
   },
   {
     "apiId": "179",
@@ -4778,7 +5281,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": "force"
   },
   {
     "apiId": "129",
@@ -4795,7 +5300,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Tactical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15628",
@@ -4814,7 +5321,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "I'm Part of the Squad Too"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "201",
@@ -4835,7 +5344,9 @@
       31844,
       31845
     ],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19061",
@@ -4850,7 +5361,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9626",
@@ -4867,7 +5380,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "136",
@@ -4889,7 +5404,9 @@
     "keywordNames": [
       "Coordinate: Unit Name/Unit Type",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "154",
@@ -4910,7 +5427,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Coordinate: Droid Trooper"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20455",
@@ -4930,7 +5449,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Direct"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "82",
@@ -4951,7 +5472,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Cover"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "42",
@@ -4968,7 +5491,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20452",
@@ -4986,7 +5511,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "72",
@@ -5003,7 +5530,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Sentinel"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2425",
@@ -5022,7 +5551,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "75",
@@ -5044,7 +5575,9 @@
     "keywordNames": [
       "Inspire",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "88",
@@ -5065,7 +5598,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "89",
@@ -5084,7 +5619,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "21342",
@@ -5101,7 +5638,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "190",
@@ -5125,7 +5664,9 @@
       "Repair X: Capacity Y",
       "Noncombatant",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20271",
@@ -5145,7 +5686,9 @@
     "keywordNames": [
       "Sharpshooter",
       "Retinue"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "150",
@@ -5166,7 +5709,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Agile"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "180",
@@ -5183,7 +5728,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "➦Take Cover"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2609",
@@ -5200,7 +5747,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "6322",
@@ -5219,7 +5768,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Retinue"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "627",
@@ -5234,7 +5785,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "48",
@@ -5259,7 +5812,9 @@
       "Detonate X: (Charge Type)",
       "Blast",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20280",
@@ -5280,7 +5835,9 @@
       "Reinforcements",
       "➦Quick Thinking",
       "Exemplar"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2428",
@@ -5300,7 +5857,9 @@
     "keywordNames": [
       "Independent: Token X/Action",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "21338",
@@ -5317,7 +5876,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2427",
@@ -5336,7 +5897,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Cache"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "68",
@@ -5360,7 +5923,9 @@
       "Repair 1: Capacity 2",
       "Noncombatant",
       "Restore"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "137",
@@ -5381,7 +5946,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Poison X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2800",
@@ -5404,7 +5971,9 @@
       "Allies of Convenience",
       "Field Commander",
       "Demoralize"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15014",
@@ -5421,7 +5990,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "55",
@@ -5440,7 +6011,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "comms"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16576",
@@ -5457,7 +6032,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "49",
@@ -5479,7 +6056,9 @@
     "keywordNames": [
       "Inspire",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "12",
@@ -5498,7 +6077,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "132",
@@ -5519,7 +6100,11 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "training"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "133",
@@ -5538,7 +6123,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "gear"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16562",
@@ -5557,7 +6146,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "76",
@@ -5576,7 +6167,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16574",
@@ -5595,7 +6188,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "58",
@@ -5612,7 +6207,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Scout X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20281",
@@ -5633,7 +6230,9 @@
       "Critical X",
       "Infiltrate",
       "Relentless"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20283",
@@ -5653,7 +6252,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Precise"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2718",
@@ -5673,7 +6274,9 @@
     "keywordNames": [
       "Retinue",
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "18477",
@@ -5693,7 +6296,9 @@
     "keywordNames": [
       "Cumbersome",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16560",
@@ -5714,7 +6319,9 @@
     "keywordNames": [
       "Cumbersome",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "884",
@@ -5737,7 +6344,9 @@
     "keywordNames": [
       "Critical X",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "81",
@@ -5758,7 +6367,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "116",
@@ -5777,7 +6388,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "121",
@@ -5797,7 +6410,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "90",
@@ -5816,7 +6431,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "13",
@@ -5831,7 +6448,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "79",
@@ -5853,7 +6472,9 @@
     "keywordNames": [
       "Shielded",
       "Recharge"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "3006",
@@ -5873,7 +6494,9 @@
     "keywordNames": [
       "Shielded",
       "Recharge"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2773",
@@ -5894,7 +6517,9 @@
       "High Velocity",
       "Lethal X",
       "Long Shot"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2774",
@@ -5915,7 +6540,9 @@
       "Blast",
       "Cycle",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2775",
@@ -5936,7 +6563,9 @@
       "Blast",
       "Spray",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2565",
@@ -5955,7 +6584,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "31",
@@ -5976,7 +6607,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "9624",
@@ -5993,7 +6626,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20450",
@@ -6015,7 +6650,11 @@
       "Demoralize",
       "Marksman",
       "Target"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "training"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20273",
@@ -6037,7 +6676,9 @@
       "Recharge",
       "Shielded",
       "Observe"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "185",
@@ -6055,7 +6696,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "95",
@@ -6074,7 +6717,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16570",
@@ -6093,7 +6738,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "198",
@@ -6114,7 +6761,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "172",
@@ -6131,7 +6780,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Outmaneuver"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20451",
@@ -6149,7 +6800,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "6319",
@@ -6170,7 +6823,9 @@
       "Blast",
       "Cycle",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "103",
@@ -6185,7 +6840,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "34",
@@ -6204,7 +6861,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16565",
@@ -6223,7 +6882,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "11866",
@@ -6243,7 +6904,9 @@
     "keywordNames": [
       "Scatter",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "53",
@@ -6268,7 +6931,9 @@
       "Blast",
       "Impact X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2610",
@@ -6285,7 +6950,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19834",
@@ -6300,7 +6967,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "14",
@@ -6320,7 +6989,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "134",
@@ -6342,7 +7013,11 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Leader"
-    ]
+    ],
+    "addsUpgradeSlot": [
+      "training"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16577",
@@ -6359,7 +7034,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "135",
@@ -6379,7 +7056,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "gear"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16566",
@@ -6399,7 +7080,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Indomitable"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20456",
@@ -6419,7 +7102,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Strategize"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "62",
@@ -6434,7 +7119,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19824",
@@ -6449,7 +7136,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19825",
@@ -6466,7 +7155,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20276",
@@ -6486,7 +7177,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Demoralize"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2714",
@@ -6505,7 +7198,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Shielded"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2719",
@@ -6524,7 +7219,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Lethal X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2715",
@@ -6545,7 +7242,9 @@
       "Blast",
       "Critical X",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2717",
@@ -6564,7 +7263,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Precise"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "124",
@@ -6585,7 +7286,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15015",
@@ -6604,7 +7307,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "96",
@@ -6625,7 +7330,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "114",
@@ -6646,7 +7353,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "182",
@@ -6668,7 +7377,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "122",
@@ -6690,7 +7401,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "21",
@@ -6713,7 +7426,9 @@
       "Critical X",
       "Impact X",
       "Ion X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20453",
@@ -6731,7 +7446,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15",
@@ -6748,7 +7465,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Precise"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15988",
@@ -6769,7 +7488,9 @@
     "keywordNames": [
       "Cache",
       "Tactical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "54",
@@ -6784,7 +7505,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19829",
@@ -6799,7 +7522,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": "Dark",
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "71",
@@ -6823,7 +7548,9 @@
       "Immune: Pierce",
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "6132",
@@ -6845,7 +7572,9 @@
       "Immune: Pierce",
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2632",
@@ -6867,7 +7596,9 @@
       "Sidearm: Melee/Ranged",
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20314",
@@ -6888,7 +7619,9 @@
     "keywordNames": [
       "Blast",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20269",
@@ -6910,7 +7643,9 @@
       "Aid",
       "Direct",
       "Tactical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19831",
@@ -6925,7 +7660,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": "Light",
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "177",
@@ -6948,7 +7685,9 @@
     "keywordNames": [
       "Lethal X",
       "Suppressive"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "19827",
@@ -6963,7 +7702,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "181",
@@ -6987,7 +7728,9 @@
       "Reliable",
       "Leader",
       "Sidearm: Melee/Ranged"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "120",
@@ -7008,7 +7751,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20709",
@@ -7025,7 +7770,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "963",
@@ -7045,7 +7792,9 @@
     "keywordNames": [
       "Beam X",
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "964",
@@ -7066,7 +7815,9 @@
       "Gunslinger",
       "Critical X",
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16578",
@@ -7085,7 +7836,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Fixed: Front/Rear"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "151",
@@ -7106,7 +7859,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20433",
@@ -7128,7 +7883,9 @@
       "High Velocity",
       "Impact X",
       "Pierce X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "965",
@@ -7149,7 +7906,9 @@
       "Gunslinger",
       "Fixed: Front/Rear",
       "Impact X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20449",
@@ -7167,7 +7926,11 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [
+      "protocol"
+    ],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2429",
@@ -7184,7 +7947,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Allies of Convenience"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "210",
@@ -7202,7 +7967,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20279",
@@ -7223,7 +7990,9 @@
     "keywordNames": [
       "Prepared Position",
       "Low Profile"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "209",
@@ -7242,7 +8011,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "2631",
@@ -7257,7 +8028,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "178",
@@ -7281,7 +8054,9 @@
       "Dauntless",
       "Leader",
       "Long Shot"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "146",
@@ -7300,7 +8075,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20285",
@@ -7320,7 +8097,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Charge"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "191",
@@ -7335,7 +8114,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "192",
@@ -7358,7 +8139,9 @@
     "keywordNames": [
       "Observe",
       "Sidearm: Melee/Ranged"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16553",
@@ -7379,7 +8162,9 @@
       "Leader",
       "Disciplined",
       "Scout X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "29",
@@ -7400,7 +8185,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Field Commander"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "21340",
@@ -7417,7 +8204,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "15986",
@@ -7435,7 +8224,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "6318",
@@ -7454,7 +8245,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Critical X"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16557",
@@ -7471,7 +8264,9 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "20277",
@@ -7491,7 +8286,9 @@
     "unitsDisallowedOn": [],
     "keywordNames": [
       "Immune: Melee Pierce"
-    ]
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   },
   {
     "apiId": "16",
@@ -7510,6 +8307,8 @@
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
-    "keywordNames": []
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
   }
 ]

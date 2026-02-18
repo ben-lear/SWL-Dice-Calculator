@@ -73,6 +73,48 @@ describe('attackModifiers', () => {
     expect(woundsMelee).toBeGreaterThan(woundsRanged);
   });
 
+  it('Ram X converts blanks to crits before spending budget on hits (Melee)', () => {
+    // White dice have many blanks. Using a white-die weapon with Ram 1 vs Armor:
+    // Without Ram, a blank contributes 0 wounds. With Ram, blank → crit bypasses Armor.
+    // This test verifies the blank→crit path fires in the simulation engine.
+    const configWithRam: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        // White dice: ~5/8 chance of blank, so lots of blanks to convert
+        { whiteDice: 5, keywords: { ramX: 3 } },
+        { surgeChart: AttackSurgeChart.None }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+        armorX: 2, // Armor blocks hits — crits (from blank→crit via Ram) bypass it
+      }),
+      attackType: AttackType.Melee,
+    };
+
+    const configNoRam: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        { whiteDice: 5 },
+        { surgeChart: AttackSurgeChart.None }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+        armorX: 2,
+      }),
+      attackType: AttackType.Melee,
+    };
+
+    const iterations = 500;
+    let woundsRam = 0;
+    let woundsNoRam = 0;
+
+    for (let i = 0; i < iterations; i++) {
+      woundsRam += executeAttackSequence(configWithRam).totalWounds;
+      woundsNoRam += executeAttackSequence(configNoRam).totalWounds;
+    }
+
+    // Ram converts blanks → crits that bypass Armor → significantly more wounds
+    expect(woundsRam).toBeGreaterThan(woundsNoRam);
+  });
+
   it('Primitive converts crits to hits vs Armor (simulation path)', () => {
     // With Primitive, crits become hits → Armor cancels them
     const configPrimitive: AttackConfig = {

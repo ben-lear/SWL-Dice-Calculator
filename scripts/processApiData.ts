@@ -198,6 +198,23 @@ function processData() {
     upgradeTypeIdToSlug.set(Number(ut.id), slug);
   }
 
+  // 2c. Build unlocked_by → upgrade slot map
+  // Key = upgrade API ID that unlocks this slot, value = set of slot slugs it unlocks
+  const unlockedByMap = new Map<number, Set<string>>();
+  for (const u of rawUnits) {
+    for (const slotEntry of (u.upgrade_types ?? [])) {
+      if (!slotEntry.revamp) continue;
+      if (slotEntry.unlocked_by == null) continue;
+      const slug = upgradeTypeIdToSlug.get(slotEntry.upgrade_type_fkey);
+      if (!slug) continue;
+      const unlockerApiId = Number(slotEntry.unlocked_by);
+      if (!unlockedByMap.has(unlockerApiId)) {
+        unlockedByMap.set(unlockerApiId, new Set<string>());
+      }
+      unlockedByMap.get(unlockerApiId)!.add(slug);
+    }
+  }
+
   // 3. Process units
   const usedUnitIds = new Set<string>();
 
@@ -308,6 +325,10 @@ function processData() {
         alignmentRestriction:   (up.alignment as 'Light' | 'Dark' | null) ?? null,
         unitsDisallowedOn:      up.units_disallowed_on ?? [],
         keywordNames,
+        addsUpgradeSlot: Array.from(unlockedByMap.get(Number(up.id)) ?? []),
+        requiredUpgradeSlot: up.required_upgrade_type != null
+          ? (upgradeTypeIdToSlug.get(Number(up.required_upgrade_type)) ?? null)
+          : null,
       };
     })
     .filter(Boolean);

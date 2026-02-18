@@ -237,6 +237,10 @@ export interface ProcessedUpgrade {
   unitsDisallowedOn: number[];
   /** Keyword names resolved from keyword_ids */
   keywordNames: string[];
+  /** Additional upgrade slot(s) this upgrade adds to the unit when equipped. Empty array if none. */
+  addsUpgradeSlot: UpgradeSlot[];
+  /** Upgrade slot type the unit must have in its upgrade bar for this upgrade to be equippable. Null = no requirement. */
+  requiredUpgradeSlot: UpgradeSlot | null;
 }
 
 export interface ProcessedKeyword {
@@ -364,6 +368,9 @@ export interface ResolvedUpgrade {
 
   /** Additional upgrade slot(s) this upgrade adds to the unit when equipped. Empty array if none. */
   addsUpgradeSlot: UpgradeSlot[];
+
+  /** Upgrade slot type the unit must have in its upgrade bar for this upgrade to be equippable. Null = no requirement. */
+  requiredUpgradeSlot: UpgradeSlot | null;
 
   /** Whether this upgrade has been manually enriched with keyword/dice data */
   isEnriched: boolean;

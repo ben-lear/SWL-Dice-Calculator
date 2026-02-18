@@ -1,0 +1,52 @@
+import { useAttackConfigStore } from '../../stores/attackConfigStore';
+import NumberSpinner from '../shared/NumberSpinner';
+import SectionHeader from '../shared/SectionHeader';
+
+export default function AttackerTokensSection() {
+  const store = useAttackConfigStore();
+
+  return (
+    <SectionHeader title="Tokens">
+      <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+        <NumberSpinner
+          label="Aim"
+          value={store.aimTokens}
+          onChange={(value) => store.setField('aimTokens', value)}
+          min={0}
+          max={99}
+          compact
+          tooltip="Spend aim tokens to reroll attack dice. Each token lets you reroll up to 2 dice."
+        />
+        <NumberSpinner
+          label="Surge"
+          value={store.surgeTokens}
+          onChange={(value) => store.setField('surgeTokens', value)}
+          min={0}
+          max={99}
+          compact
+          tooltip="Spend surge tokens to convert attack surge results to hits."
+        />
+        <NumberSpinner
+          label="Observation"
+          value={store.observationTokens}
+          onChange={(value) => store.setField('observationTokens', value)}
+          min={0}
+          max={99}
+          compact
+          tooltip="Spend observation tokens on the defending unit to reroll 1 attack die per token spent."
+        />
+        {store.jarKaiMastery && (
+          <NumberSpinner
+            label="Dodge"
+            value={store.dodgeTokensAttacker}
+            onChange={(value) => store.setField('dodgeTokensAttacker', value)}
+            min={0}
+            max={99}
+            compact
+            tooltip="Spend dodge tokens to upgrade results in melee: blank → hit (1 token), hit → crit (1 token), or blank → crit (2 tokens)."
+          />
+        )}
+      </div>
+    </SectionHeader>
+  );
+}

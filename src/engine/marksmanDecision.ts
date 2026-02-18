@@ -6,7 +6,7 @@ import type {
   AggregatedWeaponKeywords,
 } from './types';
 import { AttackDieColor, AttackFace, MarksmanStrategy, AttackType, AttackSurgeChart } from './types';
-import { calculateAvailableSurgeConversions } from './surgeConversionUtils';
+import { calculateAvailableSurgeConversions, calculateSurgeConversionsByType } from './surgeConversionUtils';
 import { estimateExpectedWounds } from './woundEstimation';
 
 interface RerollEV {
@@ -191,17 +191,53 @@ function estimateWoundImprovement(
   deltaCrits: number,
   additionalPierce: number = 0
 ): number {
-  // Count current successes
-  const currentHits = results.filter(r => r.face === AttackFace.Hit).length;
-  const currentCrits = results.filter(r => r.face === AttackFace.Critical).length;
+  // Count raw rolled faces
+  const rolledHits = results.filter(r => r.face === AttackFace.Hit).length;
+  const rolledCrits = results.filter(r => r.face === AttackFace.Critical).length;
+  const trueBlanks = results.filter(r => r.face === AttackFace.Blank).length;
+  const totalSurges = results.filter(r => r.face === AttackFace.Surge).length;
+
+  // Fold pending surge conversions into hits/crits.
+  // (This runs before convertAttackSurges in the sequence, so surges are still raw.)
+  const { critConversions, hitConversions } = calculateSurgeConversionsByType(
+    config.attacker, poolKeywords, config.attackType
+  );
+  const surgesToCrits = critConversions === Infinity
+    ? totalSurges
+    : Math.min(totalSurges, critConversions);
+  const surgesToHits = hitConversions === Infinity
+    ? Math.max(0, totalSurges - surgesToCrits)
+    : Math.min(Math.max(0, totalSurges - surgesToCrits), hitConversions);
+
+  const currentHits = rolledHits + surgesToHits;
+  const currentCrits = rolledCrits + surgesToCrits;
+
+  // Only *excess* surges (those that cannot be converted) are effectively blanks for Ram X.
+  const availableConversions = calculateAvailableSurgeConversions(
+    config.attacker, poolKeywords, config.attackType
+  );
+  const excessSurges = availableConversions === Infinity
+    ? 0
+    : Math.max(0, totalSurges - availableConversions);
+  const currentBlanks = trueBlanks + excessSurges;
+
+  // Derive newBlanks: each net new success (deltaHits + deltaCrits > 0) consumed a blank.
+  // Examples:
+  //   blank→hit  (deltaHits=+1, deltaCrits=0):  sum=+1 → newBlanks = currentBlanks - 1
+  //   hit→crit   (deltaHits=-1, deltaCrits=+1): sum= 0 → newBlanks = currentBlanks (no blank used)
+  //   reroll EV  (deltaHits=expectedH, deltaCrits=expectedC): sum reduced proportionally
+  const netNewSuccesses = Math.max(0, deltaHits + deltaCrits);
+  const newBlanks = Math.max(0, currentBlanks - netNewSuccesses);
 
   // Calculate new totals
   const newHits = currentHits + deltaHits;
   const newCrits = currentCrits + deltaCrits;
 
-  // Calculate expected wounds with and without deltas using shared helper
-  const expectedWounds = estimateExpectedWounds(newHits, newCrits, config, poolKeywords, additionalPierce);
-  const baselineWounds = estimateExpectedWounds(currentHits, currentCrits, config, poolKeywords, additionalPierce);
+  // Calculate expected wounds with and without deltas using shared helper.
+  // The new state uses newBlanks (a blank was consumed to produce the extra success);
+  // the baseline uses currentBlanks (same blank pool, no conversion yet).
+  const expectedWounds = estimateExpectedWounds(newHits, newCrits, config, poolKeywords, additionalPierce, newBlanks);
+  const baselineWounds = estimateExpectedWounds(currentHits, currentCrits, config, poolKeywords, additionalPierce, currentBlanks);
 
   // Return net improvement
   return expectedWounds - baselineWounds;

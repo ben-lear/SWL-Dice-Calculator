@@ -8,6 +8,7 @@ import {
 import type { UpgradeSlot, UnitRank, UnitType } from '../data/types';
 import type { Faction, DefenderPresetProfile } from '../data/presets';
 import { getResolvedUpgradeById } from '../data/upgradeResolver';
+import { recomputeEffectiveUpgradeBar } from './upgradeBarHelpers';
 
 // ============================================================================
 // State Interface
@@ -90,6 +91,8 @@ export interface DefenseConfigState {
   upgradeBar: UpgradeSlot[];
   /** Parallel array to upgradeBar: ID of equipped upgrade in each slot, or null */
   equippedUpgradeIds: (string | null)[];
+  /** Effective upgrade bar: base bar + dynamic slots from equipped upgrades with addsUpgradeSlot */
+  effectiveUpgradeBar: UpgradeSlot[];
 
   // ── Actions ──
   // ── Actions ──
@@ -132,6 +135,7 @@ type DefenseConfigFields = Omit<
   | 'activeMode'
   | 'upgradeBar'
   | 'equippedUpgradeIds'
+  | 'effectiveUpgradeBar'
   | 'equipUpgrade'
   | 'unitApiId'
   | 'selectedUnitRank'
@@ -222,6 +226,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   // Upgrade system
   upgradeBar: [],
   equippedUpgradeIds: [],
+  effectiveUpgradeBar: [],
 
   // Generic setter for any field
   setField: (field, value) =>
@@ -251,6 +256,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       selectedPresetId: null,
       upgradeBar: [],
       equippedUpgradeIds: [],
+      effectiveUpgradeBar: [],
       unitApiId: null,
       selectedUnitRank: null,
       selectedUnitType: null,
@@ -268,6 +274,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
         selectedPresetId: presetId,
         upgradeBar: upgradeBar ?? [],
         equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),
+        effectiveUpgradeBar: upgradeBar ?? [],
         unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
         selectedUnitRank: unitMeta?.rank ?? null,
         selectedUnitType: unitMeta?.unitType ?? null,
@@ -288,23 +295,26 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   // Equip an upgrade in a specific slot (by index in upgradeBar)
   equipUpgrade: (slotIndex, upgradeId) =>
     set((state) => {
-      if (slotIndex < 0 || slotIndex >= state.equippedUpgradeIds.length) return state;
+      const maxLen = state.effectiveUpgradeBar.length;
+      if (slotIndex < 0 || slotIndex >= maxLen) return state;
+
       const newIds = [...state.equippedUpgradeIds];
+      while (newIds.length < maxLen) newIds.push(null);
       newIds[slotIndex] = upgradeId;
 
-      // Calculate total cost: base cost + sum of all equipped upgrade costs
+      const result = recomputeEffectiveUpgradeBar(state.upgradeBar, newIds);
+
       let totalCost = state.baseUnitCost;
-      for (const id of newIds) {
+      for (const id of result.equippedUpgradeIds) {
         if (id !== null) {
           const upgrade = getResolvedUpgradeById(id);
-          if (upgrade) {
-            totalCost += upgrade.cost;
-          }
+          if (upgrade) totalCost += upgrade.cost;
         }
       }
 
       return {
-        equippedUpgradeIds: newIds,
+        equippedUpgradeIds: result.equippedUpgradeIds,
+        effectiveUpgradeBar: result.effectiveUpgradeBar,
         unitCost: totalCost,
       };
     }),
@@ -318,6 +328,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       activeMode: 'custom',
       upgradeBar: [],
       equippedUpgradeIds: [],
+      effectiveUpgradeBar: [],
       unitApiId: null,  // ← NEW: reset API ID
       selectedUnitRank: null,
       selectedUnitType: null,
@@ -340,6 +351,7 @@ export function selectDefenderConfig(state: DefenseConfigState): DefenderConfig 
     selectedUnitAffiliation,
     upgradeBar,
     equippedUpgradeIds,
+    effectiveUpgradeBar,
     setField,
     setSelectedFaction,
     setSelectedPresetId,

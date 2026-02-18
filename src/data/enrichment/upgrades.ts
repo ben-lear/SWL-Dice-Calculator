@@ -20,9 +20,33 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'armament-a280-rifle-config': {
     keywords: {
-      cumbersome: true,
-      highVelocity: true,
+      reconfigure: true,
     },
+    weapons: [
+      {
+        name: 'A280 Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        maxRange: Infinity,
+        keywords: {
+          highVelocity: true,
+          cumbersome: true,
+          pierceX: 1
+        }
+      },
+      {
+        name: 'A280 Pistol',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 1,
+        maxRange: 2,
+        keywords: {
+          longshot: true,
+          pierceX: 1
+        }
+      }
+    ]
   },
 
   'armament-beskar-spear': {
@@ -30,49 +54,131 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
       duelistAttacker: true,
       duelistDefender: true,
     },
+    weapons: [
+      {
+        name: 'Beskar Spear',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        blackDice: 1,
+      }
+    ]
   },
 
   'armament-bx-deflector-shields': {
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 2,
+      rechargeX: 2,
     },
   },
 
   'armament-bx-vibroswords': {
-    keywords: {},
+    keywords: {
+      charge: true,
+    },
+    weapons: [
+      {
+        name: 'Vibroswords',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        whiteDice: 1,
+      }
+    ]
   },
 
   'armament-cr-24-flame-rifle': {
-    keywords: {
-      blast: true,
-      spray: true,
-    },
+    weapons: [
+      {
+        name: 'CR-24 Flame Rifle',
+        weaponType: AttackType.Hybrid,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          spray: true,
+        }
+      }
+    ]
   },
 
   'armament-dc-17m-icws-config': {
     keywords: {
-      highVelocity: true,
+      reconfigure: true,
     },
+    weapons: [
+      {
+        name: 'DC-17m ICWS Launcher',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 2,
+        keywords: {
+          impactX: 1,
+          scatter: true,
+          exhaust: true
+        }
+      },
+      {
+        name: 'DC-17m IDWS Sniper',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        minRange: 3,
+        maxRange: 4,
+        keywords: {
+          highVelocity: true,
+          lethalX: 1,
+          exhaust: true
+        }
+      }
+    ]
   },
 
   'armament-din-s-amban-rifle': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Din\'s Amban Rifle',
+        weaponType: AttackType.Melee,
+        blackDice: 3,
+        keywords: {
+          immobilizeX: 2,
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'armament-double-bladed-lightsaber': {
-    keywords: {},
+    keywords: {
+      charge: true,
+      tacticalX: 1
+    },
+    weapons: [
+      {
+        name: 'Double-Bladed Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        whiteDice: 3,
+        blackDice: 2,
+        keywords: {
+          ramX: 1,
+          impactX: 2,
+          pierceX: 1
+        }
+      }
+    ]
   },
 
   'armament-e-11d': {
+    keywords: {
+      reconfigure: true,
+    },
     weapons: [
       {
         name: 'E-11D Focused Fire',
         weaponType: AttackType.Ranged,
         blackDice: 1,
         keywords: {
-          suppressive: true
+          suppressive: true,
+          exhaust: true
         }
       },
       {
@@ -80,34 +186,77 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 1,
         keywords: {
-          blast: true
+          blast: true,
+          exhaust: true
         }
       }
     ]
   },
 
   'armament-electro-gauntlets': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Electro Gauntlets',
+        weaponType: AttackType.Melee,
+        redDice: 4,
+        keywords: {
+          suppressive: true,
+          immobilizeX: 3,
+          exhaust: true
+        }
+      }
+    ]
   },
 
   'armament-electrostaff': {
     keywords: {
       immuneMeleePierce: true,
+      charge: true
     },
+    weapons: [
+      {
+        name: 'Electrostaff',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          criticalX: 1
+        }
+      }
+    ]
   },
 
   'armament-heavy-arm-cannon': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Heavy Arm Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 3,
+        keywords: {
+          suppressive: true,
+        },
+      }
+    ]
   },
 
   'armament-heavy-blaster-pistol': {
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
+      tacticalX: 1,
     },
+    weapons: [
+      {
+        name: 'Heavy Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        keywords: {
+          lethalX: 1,
+          highVelocity: true,
+        }
+      }
+    ]
   },
 
   'armament-iden-s-dlt-20a-rifle': {
@@ -127,22 +276,55 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'armament-jetpack-rockets': {
-    keywords: {
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'Jetpack Rockets',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        minRange: 3,
+        maxRange: 4,
+        keywords: {
+          blast: true,
+          impactX: 1,
+          expend: true
+        }
+      }
+    ]
   },
 
   'armament-jyn-s-se-14-blaster': {
-    keywords: {
-      preciseX: '<need human>',
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Jyn\'s SE-14 Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 5,
+        maxRange: 2,
+        keywords: {
+          suppressive: true,
+          pierceX: 1,
+        }
+      }
+    ]
   },
 
   'armament-lightsaber': {
     keywords: {
       block: true,
     },
+    weapons: [
+      {
+        name: 'Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        whiteDice: 3,
+        blackDice: 1,
+        keywords: {
+          criticalX: 1,
+          impactX: 2,
+          pierceX: 1,
+        }
+      }
+    ]
   },
 
   'armament-looted-e-5-blaster': {
@@ -151,72 +333,247 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'armament-repeating-blaster': {
     keywords: {
-      preciseX: '<need human>',
+      preciseX: 2,
     },
+    weapons: [
+      {
+        name: 'Repeating Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 3,
+        blackDice: 2,
+        maxRange: 3,
+        keywords: {
+          criticalX: 1,
+          impactX: 1,
+          longshot: true,
+        }
+      }
+    ]
   },
 
   'armament-rt-97c-blaster-rifle': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'RT-97c Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 3,
+        maxRange: 4,
+      }
+    ]
   },
 
   'armament-saxon-s-galar-90-rifle': {
-    keywords: {
-      highVelocity: true,
-    },
+
+    weapons: [
+      {
+        name: 'Galar-90 Sniper Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        maxRange: 4,
+        keywords: {
+          longshot: true,
+          highVelocity: true,
+          lethalX: 1,
+        }
+      }
+    ]
   },
 
   'armament-saxon-s-jetpack-rockets': {
     keywords: {
-      blast: true,
+      cycle: true,
     },
+    weapons: [
+      {
+        name: 'Jetpack Rockets',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+        minRange: 2,
+        maxRange: 3,
+        keywords: {
+          blast: true,
+          impactX: 2,
+          exhaust: true
+        }
+      }
+    ]
   },
 
   'armament-saxon-s-zx-flame-projector': {
-    keywords: {
-      blast: true,
-      spray: true,
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'ZX Flame Projector',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 1,
+        blackDice: 1,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          spray: true,
+          suppressive: true,
+          expend: true
+        }
+      }
+    ]
   },
 
   'armament-stun-baton': {
-    keywords: {},
+    keywords: {
+      demoralizeX: 1
+    },
+    weapons: [
+      {
+        name: 'Stun Baton',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        blackDice: 5,
+        keywords: {
+          immobilizeX: 1,
+        }
+      }
+    ]
   },
 
   'armament-super-commando-jetpack-rockets': {
-    keywords: {
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'Jetpack Rockets',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        minRange: 3,
+        maxRange: 4,
+        keywords: {
+          blast: true,
+          criticalX: 1,
+          impactX: 1,
+          expend: true
+        }
+      }
+    ]
   },
 
   'armament-t-21-blaster-rifle': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'T-21 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 4,
+        maxRange: 4,
+        keywords: {
+          criticalX: 2,
+        }
+      }
+    ]
   },
 
   'armament-the-darksaber': {
     keywords: {
-      immunePierce: true,
+      dauntless: true,
+      immuneMeleePierce: true
     },
+    weapons: [
+      {
+        name: 'The Darksaber',
+        weaponType: AttackType.Melee,
+        blackDice: 5,
+        keywords: {
+          impactX: 1,
+          pierceX: 1
+        }
+      }
+    ]
   },
 
   'armament-the-darksaber-maul': {
-    keywords: {},
+    keywords: {
+      surgeCrit: true,
+      cunning: true
+    },
+    weapons: [
+      {
+        name: 'The Darksaber (Maul)',
+        weaponType: AttackType.Melee,
+        blackDice: 6,
+        keywords: {
+          impactX: 2,
+          pierceX: 2
+        }
+      }
+    ]
   },
 
-  'armament-twin-lightsabers': {
+  'armament-the-darksaber-moff-gideon': {
     keywords: {
-      highVelocity: true,
+      demoralizeX: 1,
+      immuneMeleePierce: true
     },
+    weapons: [
+      {
+        name: 'The Darksaber (Moff Gideon)',
+        weaponType: AttackType.Melee,
+        blackDice: 5,
+        keywords: {
+          impactX: 1,
+          pierceX: 1
+        }
+      }
+    ]
+  },
+
+
+  'armament-twin-lightsabers': {
+    weapons: [
+      {
+        name: 'Twin Lightsabers',
+        weaponType: AttackType.Melee,
+        blackDice: 4,
+        whiteDice: 4,
+        keywords: {
+          highVelocity: true,
+          impactX: 2,
+          pierceX: 1
+        }
+      }
+    ]
   },
 
   'armament-vibro-axe': {
-    keywords: {},
+    keywords: {
+      charge: true
+    },
+    weapons: [
+      {
+        name: 'Vibro Axe',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        blackDice: 3,
+        keywords: {
+          impactX: 1,
+          lethalX: 1,
+        }
+      }
+    ]
   },
 
   'armament-z-6-riot-baton': {
     keywords: {
       immuneMeleePierce: true,
     },
+    weapons: [
+      {
+        name: 'Z-6 Riot Baton',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        blackDice: 2,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'command-improvised-orders': {
@@ -228,7 +585,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'command-lead-by-example': {
-    keywords: {},
+    keywords: {
+      inspireX: 2
+    },
   },
 
   'command-strict-orders': {
@@ -240,7 +599,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'command-underworld-connections': {
-    keywords: {},
+    keywords: {
+      alliesOfConvenience: true,
+    },
   },
 
   'command-vigilance': {
@@ -268,11 +629,15 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'comms-linked-targeting-array': {
-    keywords: {},
+    keywords: {
+      targetX: 1
+    },
   },
 
   'comms-onboard-comms-channel': {
-    keywords: {},
+    keywords: {
+      coordinate: 'trooper'
+    },
   },
 
   'comms-spotter-uplink': {
@@ -280,7 +645,14 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'crew-a-300-rifle-gunner': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'A-300 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        maxRange: 3,
+      }
+    ]
   },
 
   'crew-backworld-medic': {
@@ -288,15 +660,52 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'crew-barc-ion-gunner': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Ion Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        maxRange: 3,
+        keywords: {
+          criticalX: 1,
+          fixed: 'front, rear',
+          impactX: 1,
+          ionX: 1
+        }
+      }
+    ]
   },
 
   'crew-barc-rps-6-gunner': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'RPS-6 Rocket Launcher',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        redDice: 1,
+        blackDice: 1,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 2
+        }
+      }
+    ]
   },
 
   'crew-barc-twin-laser-gunner': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Twin Laser Cannon',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 2,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front, rear',
+        }
+      }
+    ]
   },
 
   'crew-black-sun-crew': {
@@ -304,18 +713,49 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'crew-door-gunners': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Mounted Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 2,
+        maxRange: 2,
+        keywords: {
+          fixed: 'sides'
+        }
+      }
+    ]
   },
 
   'crew-gnasp-bombardier': {
-    keywords: {
-      immuneDeflect: true,
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Thermal Detonators',
+        weaponType: AttackType.Overrun,
+        whiteDice: 2,
+        redDice: 2,
+        keywords: {
+          overrunX: 2,
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'crew-gnasp-gunner': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Heavy Bowcaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        redDice: 2,
+        keywords: {
+          fixed: 'rear',
+          impactX: 1,
+          pierceX: 1,
+        }
+      }
+    ]
   },
 
   'crew-pyke-syndicate-crew': {
@@ -323,7 +763,20 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'crew-rps-6-rocket-gunner': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'RPS-6 Rocket Launcher',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        redDice: 1,
+        blackDice: 1,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 2
+        }
+      }
+    ]
   },
 
   'crew-unorthodox-tactician': {
@@ -339,19 +792,36 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'doctrine-academy-trained': {
-    keywords: {},
+    keywords: {
+      exemplar: true,
+      inspireX: 1,
+      strategizeX: 1
+    },
   },
 
   'doctrine-defend-in-depth': {
-    keywords: {},
+    keywords: {
+      aid: 'emplacement trooper unit',
+      preparedPosition: true,
+      spotterX: 1,
+    },
   },
 
   'doctrine-frontline-commander': {
-    keywords: {},
+    keywords: {
+      aid: 'rebel trooper unit',
+      indomitable: true,
+      spur: true,
+      tacticalX: 1
+    },
   },
 
   'doctrine-general-of-the-republic': {
-    keywords: {},
+    keywords: {
+      bolsterX: 2,
+      direct: 'clone trooper',
+      inspireX: 1,
+    },
   },
 
   'doctrine-jedi-consular': {
@@ -372,26 +842,40 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'doctrine-platoon-commander': {
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
+      meleeSurgeCrit: true,
+      meleeSurgeBlock: true,
     },
   },
 
   'doctrine-proven-tactician': {
-    keywords: {},
+    keywords: {
+      quickThinking: true,
+      exemplar: true,
+    },
   },
 
   'doctrine-reluctant-hero': {
-    keywords: {},
+    keywords: {
+      infiltrate: true,
+      relentless: true,
+    },
   },
 
   'doctrine-seek-and-destroy': {
     keywords: {
+      demoralizeX: 1,
       marksman: true,
+      targetX: 1,
     },
   },
 
   'doctrine-tip-of-the-spear': {
-    keywords: {},
+    keywords: {
+      aid: 'imperial trooper unit',
+      direct: 'corps trooper unit',
+      tacticalX: 1,
+    },
   },
 
   'doctrine-tyrannical-taskmaster': {
@@ -401,6 +885,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'doctrine-unseen-saboteur': {
     keywords: {
       lowProfile: true,
+      preparedPosition: true,
     },
   },
 

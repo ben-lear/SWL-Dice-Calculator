@@ -9,6 +9,7 @@ import {
 import type { Faction, AttackerPresetProfile } from '../data/presets';
 import type { UpgradeSlot, UnitRank, UnitType, WeaponProfile as DataLayerWeaponProfile } from '../data/types';
 import { getResolvedUpgradeById } from '../data/upgradeResolver';
+import { recomputeEffectiveUpgradeBar } from './upgradeBarHelpers';
 
 // ============================================================================
 // State Interface
@@ -85,6 +86,8 @@ export interface AttackConfigState {
   upgradeBar: UpgradeSlot[];
   /** Parallel array to upgradeBar: ID of equipped upgrade in each slot, or null */
   equippedUpgradeIds: (string | null)[];
+  /** Effective upgrade bar: base bar + dynamic slots from equipped upgrades with addsUpgradeSlot */
+  effectiveUpgradeBar: UpgradeSlot[];
 
   /**
    * User overrides for how many miniatures use each weapon (by weapon name).
@@ -92,6 +95,14 @@ export interface AttackConfigState {
    * Only meaningful in Unit Builder mode.
    */
   weaponMiniCounts: Record<string, number>;
+
+  /**
+   * User-specified keyword overrides for unit builder mode.
+   * Values here are the desired FINAL totals, and are merged on top of the
+   * aggregated weapon keywords (taking the higher value for numerics, OR for booleans).
+   * Reset whenever a new preset is loaded or the unit is cleared.
+   */
+  builderKeywordOverrides: Partial<WeaponKeywords>;
 
   // ── Actions ──
   setField: <K extends keyof AttackConfigFields>(
@@ -107,6 +118,8 @@ export interface AttackConfigState {
   removeWeapon: (weaponIndex: number) => void;
   /** Set how many miniatures use a specific weapon (by name). */
   setWeaponMiniCount: (weaponName: string, count: number) => void;
+  /** Override a weapon keyword value in unit builder mode. */
+  setBuilderKeywordOverride: (key: keyof WeaponKeywords, value: number | boolean) => void;
   
   setSelectedFaction: (faction: Faction | null) => void;
   setSelectedPresetId: (presetId: string | null) => void;
@@ -150,12 +163,15 @@ type AttackConfigFields = Omit<
   | 'unitBaseWeapons'
   | 'upgradeBar'
   | 'equippedUpgradeIds'
+  | 'effectiveUpgradeBar'
   | 'equipUpgrade'
   | 'unitApiId'
   | 'selectedUnitRank'
   | 'selectedUnitType'
   | 'selectedUnitAffiliation'
   | 'weaponMiniCounts'
+  | 'builderKeywordOverrides'
+  | 'setBuilderKeywordOverride'
 >;
 
 // ============================================================================
@@ -248,7 +264,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   // Upgrade system
   upgradeBar: [],
   equippedUpgradeIds: [],
+  effectiveUpgradeBar: [],
   weaponMiniCounts: {},
+  builderKeywordOverrides: {},
 
   // Generic setter for any unit-level field
   setField: (field, value) =>
@@ -312,6 +330,11 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       },
     })),
 
+  setBuilderKeywordOverride: (key, value) =>
+    set((state) => ({
+      builderKeywordOverrides: { ...state.builderKeywordOverrides, [key]: value },
+    })),
+
   // Setter for faction dropdown (UI-only state)
   setSelectedFaction: (faction) =>
     set({ selectedFaction: faction }),
@@ -336,7 +359,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       unitBaseWeapons: [],
       upgradeBar: [],
       equippedUpgradeIds: [],
+      effectiveUpgradeBar: [],
       weaponMiniCounts: {},
+      builderKeywordOverrides: {},
       unitApiId: null,
       selectedUnitRank: null,
       selectedUnitType: null,
@@ -365,6 +390,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         selectedPresetId: presetId,
         upgradeBar: upgradeBar ?? [],
         equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),
+        effectiveUpgradeBar: upgradeBar ?? [],
         unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
         selectedUnitRank: unitMeta?.rank ?? null,
         selectedUnitType: unitMeta?.unitType ?? null,
@@ -372,29 +398,33 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         unitCost: baseCost,
         baseUnitCost: baseCost,  // Store base cost for upgrade calculations
         weaponMiniCounts: {},     // Reset weapon mini count overrides on preset load
+        builderKeywordOverrides: {},  // Reset keyword overrides on preset load
       };
     }),
 
   // Equip an upgrade in a specific slot (by index in upgradeBar)
   equipUpgrade: (slotIndex, upgradeId) =>
     set((state) => {
-      if (slotIndex < 0 || slotIndex >= state.equippedUpgradeIds.length) return state;
+      const maxLen = state.effectiveUpgradeBar.length;
+      if (slotIndex < 0 || slotIndex >= maxLen) return state;
+
       const newIds = [...state.equippedUpgradeIds];
+      while (newIds.length < maxLen) newIds.push(null);
       newIds[slotIndex] = upgradeId;
 
-      // Calculate total cost: base cost + sum of all equipped upgrade costs
+      const result = recomputeEffectiveUpgradeBar(state.upgradeBar, newIds);
+
       let totalCost = state.baseUnitCost;
-      for (const id of newIds) {
+      for (const id of result.equippedUpgradeIds) {
         if (id !== null) {
           const upgrade = getResolvedUpgradeById(id);
-          if (upgrade) {
-            totalCost += upgrade.cost;
-          }
+          if (upgrade) totalCost += upgrade.cost;
         }
       }
 
       return {
-        equippedUpgradeIds: newIds,
+        equippedUpgradeIds: result.equippedUpgradeIds,
+        effectiveUpgradeBar: result.effectiveUpgradeBar,
         unitCost: totalCost,
         weaponMiniCounts: {},  // Reset overrides on upgrade change
       };
@@ -411,7 +441,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       unitBaseWeapons: [],
       upgradeBar: [],
       equippedUpgradeIds: [],
+      effectiveUpgradeBar: [],
       weaponMiniCounts: {},
+      builderKeywordOverrides: {},
       unitApiId: null,
       selectedUnitRank: null,
       selectedUnitType: null,
@@ -438,6 +470,7 @@ export function selectAttackerConfig(state: AttackConfigState) {
     upgradeBar,
     equippedUpgradeIds,
     weaponMiniCounts,         // ← exclude (consumed separately by display hook/configSelectors)
+    builderKeywordOverrides,  // ← exclude from engine config (applied as delta weapon below)
     setField,
     setWeaponDice,
     setWeaponKeyword,
@@ -445,6 +478,7 @@ export function selectAttackerConfig(state: AttackConfigState) {
     addWeapon,
     removeWeapon,
     setWeaponMiniCount,
+    setBuilderKeywordOverride,
     setSelectedFaction,
     setSelectedPresetId,
     setActiveMode,
@@ -456,8 +490,12 @@ export function selectAttackerConfig(state: AttackConfigState) {
   } = state;
 
   const enabledWeapons = config.weapons.filter((weapon) => weapon.enabled !== false);
+
   return {
     ...config,
+    // builderKeywordOverrides are excluded here; they are applied as a delta
+    // weapon in configSelectors.ts AFTER rebuildWeaponsFromCounts, where the
+    // truly-active weapon list (post upgrade + mini count override) is known.
     weapons: enabledWeapons.length > 0 ? enabledWeapons : [createEmptyWeapon()],
   };
 }

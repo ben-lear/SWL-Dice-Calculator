@@ -20,6 +20,8 @@ interface UnitContext {
   rank?: string | null;
   unitType?: string | null;
   affiliation?: string | null;
+  /** Effective upgrade bar (base + dynamic slots) used for requiredUpgradeSlot checks */
+  effectiveUpgradeBar?: UpgradeSlot[];
 }
 
 const FACTION_ALIGNMENT: Record<string, 'Light' | 'Dark'> = {
@@ -38,6 +40,8 @@ let _cachedUpgrades: ResolvedUpgrade[] | null = null;
 
 type ProcessedUpgradeJson = Omit<ProcessedUpgrade, 'apiId'> & {
   apiId: number | string;
+  addsUpgradeSlot?: string[];
+  requiredUpgradeSlot?: string | null;
 };
 
 function normalizeProcessedUpgrade(
@@ -46,6 +50,8 @@ function normalizeProcessedUpgrade(
   return {
     ...upgrade,
     apiId: typeof upgrade.apiId === 'string' ? Number(upgrade.apiId) : upgrade.apiId,
+    addsUpgradeSlot: (upgrade.addsUpgradeSlot ?? []) as UpgradeSlot[],
+    requiredUpgradeSlot: (upgrade.requiredUpgradeSlot ?? null) as UpgradeSlot | null,
   };
 }
 
@@ -150,6 +156,14 @@ export function getUpgradesForSlot(
       if (unitAlignment !== u.alignmentRestriction) return false;
     }
 
+    // 8. Required upgrade slot — unit must have the required slot in its effective upgrade bar
+    if (u.requiredUpgradeSlot !== null) {
+      const availableSlots = context.effectiveUpgradeBar;
+      if (availableSlots && !availableSlots.includes(u.requiredUpgradeSlot)) {
+        return false;
+      }
+    }
+
     return true;
   });
 }
@@ -252,7 +266,13 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
     addsMiniature: resolveAddsMiniature(enrichment, processed.upgradeSlot as UpgradeSlot),
     noncombatant: enrichment?.noncombatant ?? false,
     isGrenade: enrichment?.isGrenade ?? false,
-    addsUpgradeSlot: enrichment?.addsUpgradeSlot ?? [],
+    addsUpgradeSlot: [
+      ...new Set([
+        ...(processed.addsUpgradeSlot ?? []),
+        ...(enrichment?.addsUpgradeSlot ?? []),
+      ]),
+    ] as UpgradeSlot[],
     isEnriched,
+    requiredUpgradeSlot: processed.requiredUpgradeSlot ?? null,
   };
 }

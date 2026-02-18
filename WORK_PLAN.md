@@ -325,15 +325,15 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 ### 5.6F: Store Changes
 
 - [x] Add `baseMiniatureCount` and `unitBaseWeapons` to `attackConfigStore` (set by `loadPreset`, excluded from engine config selector)
-- [ ] Add `effectiveUpgradeBar` (base bar + dynamic slots from equipped upgrades) — **DEFERRED** to future work
-- [ ] `recomputeEffectiveUpgradeBar()` helper — recalculates when upgrades change; cascading unequip for removed dynamic slots — **DEFERRED** to future work
+- [x] Add `effectiveUpgradeBar` (base bar + dynamic slots from equipped upgrades) — **Completed Phase 12**
+- [x] `recomputeEffectiveUpgradeBar()` helper — recalculates when upgrades change; cascading unequip for removed dynamic slots — **Completed Phase 12**
 
 ### 5.6G: UI Components
 
 - [ ] `WeaponAssignmentPanel` — per-miniature weapon assignment rows for multi-mini units
 - [ ] `PoolSummary` — aggregated dice + stacked keywords display
 - [ ] Custom Pool mode mini count indicator
-- [ ] Dynamic upgrade slot dropdowns — reactively render upgrade dropdowns from `effectiveUpgradeBar`
+- [x] Dynamic upgrade slot dropdowns — reactively render upgrade dropdowns from `effectiveUpgradeBar` — **Completed Phase 12**
 
 ### 5.6H: Tests
 
@@ -341,14 +341,14 @@ Extend the data model, engine integration, and UI to correctly handle multi-mini
 - [x] Upgrade applicator tests: heavy weapon add, squad leader add, personnel add, noncombatant, grenade dedup, per-mini sidearm behavior, all-upgrade-weapons selection (`data/__tests__/upgradeApplicator.test.ts` — 23 tests, all passing)
 - [x] Preset generator tests: multi-mini expansion, single-mini unchanged, mode-aware weapon derivation (`data/__tests__/presetGenerator.test.ts` — 15 tests, all passing)
 - [x] Data layer tests: miniatureCount override, upgrade resolver weapons/flags, implicit `addsMiniature` defaults (`data/__tests__/unitResolver.test.ts` + `upgradeResolver.test.ts` — 35 tests, all passing)
-- [ ] Store tests: `effectiveUpgradeBar` recomputation, cascading unequip on dynamic slot removal — **DEFERRED** (no effectiveUpgradeBar implementation)
+- [x] Store tests: `effectiveUpgradeBar` recomputation, cascading unequip on dynamic slot removal — **Completed Phase 12** (`stores/__tests__/upgradeBarHelpers.test.ts`)
 
 ### Manual Task: Enrichment Data Population (Human-Owned)
 
 - [ ] Add `miniatureCount` to units with bad/missing API data (Death Troopers, Bad Batch, etc.)
 - [ ] Add base weapon profiles for key corps units (Stormtroopers, Rebel Troopers, B1s, Clones, etc.)
 - [ ] Add `addsMiniature`, `noncombatant`, `isGrenade`, and weapon data to personnel/heavy weapon/grenade upgrade enrichments
-- [ ] Add `addsUpgradeSlot` to upgrades that grant additional slots (Agent Kallus, Stormtrooper Captain, etc.)
+- [x] Add `addsUpgradeSlot` to upgrades that grant additional slots (Agent Kallus, Stormtrooper Captain, etc.) — **Auto-derived from raw data in Phase 12** (`processApiData.ts`)
 - [ ] Note: this population step is manual and not an implementation sub-step for Copilot automation
 
 **Output:** ✅ **MOSTLY COMPLETE** - Multi-miniature units produce correct attack pools with per-miniature weapon contributions. Heavy weapons, personnel, squad leaders, grenades, noncombatant, per-mini sidearm behavior, all-upgrade-weapons selection, and per-mini ownership rules are fully implemented and tested. Core engine and data layer complete. Dynamic upgrade slots (`effectiveUpgradeBar`/`recomputeEffectiveUpgradeBar`) and UI components (5.6G) deferred to future work. All 73 new tests passing. Fixes 5 pre-existing type errors (Death Troopers enrichment + 4 upgrade enrichments). **Remaining:** UI implementation (WeaponAssignmentPanel, PoolSummary, mini count indicator) and dynamic upgrade bar logic.
@@ -666,3 +666,19 @@ Four bugs found via automated Playwright QA testing. Engine math verified correc
 
 **Implementation order:** A first (quick CSS), then B+C together (single changeset), then D (cosmetic).
 **Files:** ~11-14 files changed, 0 engine changes.
+---
+
+## Phase 12: Dynamic Upgrade Slots & Slot Requirements
+
+**Status:** ✅ **COMPLETE** — Dynamic upgrade slots and slot requirements fully implemented.
+
+**Detailed plan:** [`plans/phase12-dynamic-upgrade-slots.md`](plans/phase12-dynamic-upgrade-slots.md)
+
+- [x] **Data pipeline** — `processApiData.ts` builds `unlocked_by` → slot map; emits `addsUpgradeSlot` and `requiredUpgradeSlot` on processed upgrades
+- [x] **Type updates** — `addsUpgradeSlot` and `requiredUpgradeSlot` added to `ProcessedUpgrade`; `requiredUpgradeSlot` added to `ResolvedUpgrade`
+- [x] **Resolver updates** — `resolveUpgrade` merges processed + enrichment `addsUpgradeSlot`; passes through `requiredUpgradeSlot`; `getUpgradesForSlot` filters by `requiredUpgradeSlot` against `effectiveUpgradeBar`; `UnitContext` extended with `effectiveUpgradeBar`
+- [x] **Processed data regenerated** — 378 upgrades with correct `addsUpgradeSlot` (21 upgrades with non-empty) and `requiredUpgradeSlot` (2 Offensive/Defensive Stance variants requiring Force slot)
+- [x] **`recomputeEffectiveUpgradeBar()` helper** — pure function in `stores/upgradeBarHelpers.ts`; handles cascading unequip, multi-slot upgrades, and ID carry-over
+- [x] **Store updates** — both `attackConfigStore` and `defenseConfigStore` have `effectiveUpgradeBar` state; `loadPreset` initializes it; `equipUpgrade` calls `recomputeEffectiveUpgradeBar` and updates state
+- [x] **UI updates** — both `AttackerUnitBuilderView` and `DefenderUnitBuilderView` use `effectiveUpgradeBar` and pass it to `getUpgradesForSlot`; dynamic slots marked with `*` suffix in label
+- [x] **Tests** — 9 `upgradeBarHelpers` tests + 13 new `upgradeResolver` tests covering `addsUpgradeSlot`, `requiredUpgradeSlot`, and `effectiveUpgradeBar` filtering; all 776 tests passing

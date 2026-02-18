@@ -1,62 +1,21 @@
-import { useMemo } from 'react';
-import { getUpgradesForSlot } from '../../data/upgradeResolver';
-import { UPGRADE_SLOT_LABELS, type UpgradeSlot } from '../../data/types';
 import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
-import SectionHeader from '../shared/SectionHeader';
-import Select, { type SelectOption } from '../shared/Select';
+import UpgradeSlotsSection from '../shared/UpgradeSlotsSection';
 
 export default function DefenderUnitBuilderView() {
   const store = useDefenseConfigStore();
 
-  const slotRows = useMemo(
-    () => store.upgradeBar.map((slot, index) => ({ slot, index })),
-    [store.upgradeBar],
-  );
-
   return (
-    <SectionHeader title="Upgrade Slots">
-      <div className="space-y-3">
-        {store.selectedPresetId === null && (
-          <p className="text-sm text-gray-500">Select a unit preset to enable upgrade slots.</p>
-        )}
-
-        {slotRows.length === 0 && store.selectedPresetId !== null && (
-          <p className="text-sm text-gray-500">This unit has no upgrade slots.</p>
-        )}
-
-        {slotRows.map(({ slot, index }) => {
-          const upgrades = getUpgradesForSlot(slot as UpgradeSlot, {
-            unitApiId:   store.unitApiId ?? undefined,
-            faction:     store.selectedFaction ?? undefined,
-            rank:        store.selectedUnitRank ?? undefined,
-            unitType:    store.selectedUnitType ?? undefined,
-            affiliation: store.selectedUnitAffiliation,
-          });
-          // Deduplicate: keep first occurrence of each upgrade ID
-          const uniqueUpgrades = upgrades.filter(
-            (u, i, arr) => arr.findIndex(x => x.id === u.id) === i
-          );
-          const selectedValue = store.equippedUpgradeIds[index] ?? '';
-          const options: SelectOption<string>[] = [
-            { value: '', label: 'None' },
-            ...uniqueUpgrades.map((upgrade) => ({
-              value: upgrade.id,
-              label: `${upgrade.name} (${upgrade.cost})`,
-            })),
-          ];
-
-          return (
-            <Select
-              key={`${slot}-${index}`}
-              label={UPGRADE_SLOT_LABELS[slot as UpgradeSlot]}
-              value={selectedValue}
-              onChange={(value) => store.equipUpgrade(index, value === '' ? null : value)}
-              options={options}
-              disabled={store.selectedPresetId === null}
-            />
-          );
-        })}
-      </div>
-    </SectionHeader>
+    <UpgradeSlotsSection
+      selectedPresetId={store.selectedPresetId}
+      effectiveUpgradeBar={store.effectiveUpgradeBar}
+      upgradeBar={store.upgradeBar}
+      equippedUpgradeIds={store.equippedUpgradeIds}
+      equipUpgrade={store.equipUpgrade}
+      unitApiId={store.unitApiId ?? undefined}
+      selectedFaction={store.selectedFaction}
+      selectedUnitRank={store.selectedUnitRank}
+      selectedUnitType={store.selectedUnitType}
+      selectedUnitAffiliation={store.selectedUnitAffiliation}
+    />
   );
 }

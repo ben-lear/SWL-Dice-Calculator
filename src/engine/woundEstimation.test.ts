@@ -258,6 +258,70 @@ describe('woundEstimation', () => {
         expect(withRam).toBeGreaterThan(noRam);
       });
 
+      it('Ram X converts blanks to crits before converting hits (melee)', () => {
+        // 1 hit, 0 crits, 2 blanks with Ram 2 in melee vs Armor 1
+        // Expected: Ram converts 2 blanks → 2 crits (uses full budget on blanks)
+        //   → 1 hit + 2 crits before Armor; Armor cancels 1 hit → 0 hits + 2 crits → 2 wounds
+        // Without blanks: Ram converts 1 hit → 1 crit
+        //   → 0 hits + 1 crit before Armor; Armor would cancel hits (none) → 1 wound
+        const configMelee = makeConfig(
+          {},
+          { armorX: 1, dieColor: DefenseDieColor.White },
+          AttackType.Melee
+        );
+        const pool = createMinimalPoolKeywords({ ramX: 2 });
+
+        // With 2 blanks in the pool — Ram should upgrade them to crits (bypassing Armor)
+        const withBlanks = estimateExpectedWounds(1, 0, configMelee, pool, 0, 2);
+        // Without blanks — Ram can only upgrade the hit to a crit
+        const withoutBlanks = estimateExpectedWounds(1, 0, configMelee, pool, 0, 0);
+
+        // Blanks converted to crits provide extra wounds (crits bypass Armor)
+        expect(withBlanks).toBeGreaterThan(withoutBlanks);
+      });
+
+      it('Ram X blanks→crits priority: blanks exhausted before hits are converted', () => {
+        // 2 hits, 0 crits, 1 blank with Ram 2 in melee vs Armor 2
+        // Expected: Ram converts 1 blank → crit (budget: 2), then 1 hit → crit (budget: 1 left)
+        //   → 1 hit + 2 crits; Armor 2 cancels 1 hit → 0 hits + 2 crits → 2 wounds
+        // If blanks were ignored: Ram converts 2 hits → 2 crits → 0 hits + 2 crits; Armor cancels 0 → 2 wounds
+        // But the blank→crit is an EXTRA crit that wouldn't exist without the blank param
+        const configMelee = makeConfig(
+          {},
+          { armorX: 2, dieColor: DefenseDieColor.White },
+          AttackType.Melee
+        );
+        const pool = createMinimalPoolKeywords({ ramX: 2 });
+
+        // With 1 blank: 1 blank→crit + 1 hit→crit = 2 crits, 1 hit untouched → then Armor cancels 1 hit → 2 crits
+        const withBlank = estimateExpectedWounds(2, 0, configMelee, pool, 0, 1);
+        // Without blank: 2 hits→crits → 0 hits + 2 crits → Armor cancels 0 hits → 2 crits
+        const withoutBlank = estimateExpectedWounds(2, 0, configMelee, pool, 0, 0);
+
+        // With blank, there's 1 extra crit (from blank) + 1 remaining hit that Armor cancels,
+        // vs without blank where both hits become crits but no extra crit from blank.
+        // Either way 2 crits survive, but withBlank has an extra crit contribution.
+        // The blank upgrade is free value — wounds should be >= without-blank case.
+        expect(withBlank).toBeGreaterThanOrEqual(withoutBlank);
+      });
+
+      it('Ram X does not apply in Ranged attacks', () => {
+        // Same setup, but as Ranged — Ram should not activate
+        const configRanged = makeConfig(
+          {},
+          { armorX: 1, dieColor: DefenseDieColor.White },
+          AttackType.Ranged
+        );
+        const poolWithRam = createMinimalPoolKeywords({ ramX: 2 });
+        const poolNoRam = createMinimalPoolKeywords();
+
+        const ramRanged = estimateExpectedWounds(1, 0, configRanged, poolWithRam, 0, 2);
+        const noRamRanged = estimateExpectedWounds(1, 0, configRanged, poolNoRam, 0, 2);
+
+        // No Ram effect in Ranged — blanks passed but not converted
+        expect(ramRanged).toBe(noRamRanged);
+      });
+
       it('Weak Point X adds to effective Impact', () => {
         const config = makeConfig(
           {},

@@ -1,85 +1,111 @@
 import { useMemo } from 'react';
-import {
-  AttackSurgeChart,
-  MarksmanStrategy,
-} from '../../engine/types';
-import { getUpgradesForSlot } from '../../data/upgradeResolver';
-import { UPGRADE_SLOT_LABELS, type UpgradeSlot } from '../../data/types';
+import type { WeaponKeywords } from '../../engine/types';
+import { aggregateWeaponKeywords } from '../../engine/attackPool';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
+import { useWeaponKeywordDisabled } from '../../hooks/useKeywordDisabled';
+import WeaponKeywordsSection from './WeaponKeywordsSection';
 import { useDisplayWeapons } from '../../hooks/useDisplayWeapons';
+import AttackerTokensSection from './AttackerTokensSection';
+import AttackerUnitKeywordsSection from './AttackerUnitKeywordsSection';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
-import Select, { type SelectOption } from '../shared/Select';
-import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
-import Checkbox from '../shared/Checkbox';
+import UpgradeSlotsSection from '../shared/UpgradeSlotsSection';
 import DiceIconDisplay from '../shared/DiceIconDisplay';
 
-const ATTACK_SURGE_OPTIONS: SegmentedControlOption<AttackSurgeChart>[] = [
-  { value: AttackSurgeChart.None, label: 'None' },
-  { value: AttackSurgeChart.ToHit, label: 'Hit' },
-  { value: AttackSurgeChart.ToCrit, label: 'Crit' },
-];
+/**
+ * Converts a partial WeaponKeywords object into an array of short human-readable
+ * labels, skipping keys that are zero/false.
+ */
+function formatWeaponKeywords(keywords: Partial<WeaponKeywords>): string[] {
+  const labels: string[] = [];
+  if (keywords.criticalX) labels.push(`Critical ${keywords.criticalX}`);
+  if (keywords.lethalX)   labels.push(`Lethal ${keywords.lethalX}`);
+  if (keywords.pierceX)   labels.push(`Pierce ${keywords.pierceX}`);
+  if (keywords.impactX)   labels.push(`Impact ${keywords.impactX}`);
+  if (keywords.ramX)      labels.push(`Ram ${keywords.ramX}`);
+  if (keywords.ionX)      labels.push(`Ion ${keywords.ionX}`);
+  if (keywords.antiMaterielX)  labels.push(`Anti-Mat ${keywords.antiMaterielX}`);
+  if (keywords.antiPersonnelX) labels.push(`Anti-Per ${keywords.antiPersonnelX}`);
+  if (keywords.blast)         labels.push('Blast');
+  if (keywords.suppressive)   labels.push('Suppressive');
+  if (keywords.highVelocity)  labels.push('High Velocity');
+  if (keywords.immuneDeflect) labels.push('Immune: Deflect');
+  if (keywords.primitive)     labels.push('Primitive');
+  if (keywords.spray)         labels.push('Spray');
+  if (keywords.cumbersome)    labels.push('Cumbersome');
+  return labels;
+}
 
-const MARKSMAN_STRATEGY_OPTIONS: SegmentedControlOption<MarksmanStrategy>[] = [
-  { value: MarksmanStrategy.Deterministic, label: 'Deterministic' },
-  { value: MarksmanStrategy.Averages, label: 'Averages' },
-];
+// Default keywords used to fill in missing fields from displayWeapon.keywords
+const EMPTY_KEYWORDS: WeaponKeywords = {
+  criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, ionX: 0,
+  blast: false, suppressive: false, highVelocity: false, spray: false,
+  antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false,
+  sidearmMelee: false, sidearmRanged: false, immuneDeflect: false, primitive: false,
+};
 
 export default function AttackerUnitBuilderView() {
   const store = useAttackConfigStore();
   const { weapons: displayWeapons, isSingleMini } = useDisplayWeapons();
+  const isWeaponDisabled = useWeaponKeywordDisabled();
 
-  const slotRows = useMemo(
-    () => store.upgradeBar.map((slot, index) => ({ slot, index })),
-    [store.upgradeBar],
-  );
+  // Aggregate keywords only from ACTIVE display weapons (count > 0).
+  // This means toggling weapons in the Weapons section correctly updates
+  // the keyword display.
+  const aggregatedKeywords = useMemo(() => {
+    const activeProfiles = displayWeapons
+      .filter((dw) => dw.count > 0)
+      .map((dw) => ({
+        enabled: true as const,
+        redDice: 0,
+        blackDice: 0,
+        whiteDice: 0,
+        keywords: { ...EMPTY_KEYWORDS, ...dw.keywords },
+      }));
+    return aggregateWeaponKeywords(activeProfiles);
+  }, [displayWeapons]);
+
+  // Merge aggregated weapon keywords with user overrides for display and editing.
+  // Numeric: take the higher of aggregated vs override (weapons set the floor).
+  // Boolean OR: either aggregated or override is sufficient.
+  // Per-weapon fields (spray, cumbersome, etc.): come from overrides only.
+  const mergedKeywords = useMemo((): Partial<WeaponKeywords> => {
+    const ov = store.builderKeywordOverrides;
+    return {
+      criticalX: Math.max(aggregatedKeywords.criticalX, (ov.criticalX ?? 0)),
+      lethalX:   Math.max(aggregatedKeywords.lethalX,   (ov.lethalX   ?? 0)),
+      pierceX:   Math.max(aggregatedKeywords.pierceX,   (ov.pierceX   ?? 0)),
+      impactX:   Math.max(aggregatedKeywords.impactX,   (ov.impactX   ?? 0)),
+      ramX:      Math.max(aggregatedKeywords.ramX,      (ov.ramX      ?? 0)),
+      ionX:      Math.max(aggregatedKeywords.ionX,      (ov.ionX      ?? 0)),
+      blast:         aggregatedKeywords.blast         || (ov.blast         ?? false),
+      suppressive:   aggregatedKeywords.suppressive   || (ov.suppressive   ?? false),
+      highVelocity:  aggregatedKeywords.highVelocity  || (ov.highVelocity  ?? false),
+      immuneDeflect: aggregatedKeywords.immuneDeflect || (ov.immuneDeflect ?? false),
+      primitive:     aggregatedKeywords.primitive     || (ov.primitive     ?? false),
+      spray:          ov.spray          ?? false,
+      cumbersome:     ov.cumbersome     ?? false,
+      antiMaterielX:  ov.antiMaterielX  ?? 0,
+      antiPersonnelX: ov.antiPersonnelX ?? 0,
+      sidearmMelee:   ov.sidearmMelee   ?? false,
+      sidearmRanged:  ov.sidearmRanged  ?? false,
+    };
+  }, [aggregatedKeywords, store.builderKeywordOverrides]);
 
   return (
     <>
-      <SectionHeader title="Upgrade Slots">
-        <div className="space-y-3">
-          {store.selectedPresetId === null && (
-            <p className="text-sm text-gray-500">Select a unit preset to enable upgrade slots.</p>
-          )}
-
-          {slotRows.length === 0 && store.selectedPresetId !== null && (
-            <p className="text-sm text-gray-500">This unit has no upgrade slots.</p>
-          )}
-
-          {slotRows.map(({ slot, index }) => {
-            const upgrades = getUpgradesForSlot(slot as UpgradeSlot, {
-              unitApiId:   store.unitApiId ?? undefined,
-              faction:     store.selectedFaction ?? undefined,
-              rank:        store.selectedUnitRank ?? undefined,
-              unitType:    store.selectedUnitType ?? undefined,
-              affiliation: store.selectedUnitAffiliation,
-            });
-            // Deduplicate: keep first occurrence of each upgrade ID
-            const uniqueUpgrades = upgrades.filter(
-              (u, i, arr) => arr.findIndex(x => x.id === u.id) === i
-            );
-            const selectedValue = store.equippedUpgradeIds[index] ?? '';
-            const options: SelectOption<string>[] = [
-              { value: '', label: 'None' },
-              ...uniqueUpgrades.map((upgrade) => ({
-                value: upgrade.id,
-                label: `${upgrade.name} (${upgrade.cost})`,
-              })),
-            ];
-
-            return (
-              <Select
-                key={`${slot}-${index}`}
-                label={UPGRADE_SLOT_LABELS[slot as UpgradeSlot]}
-                value={selectedValue}
-                onChange={(value) => store.equipUpgrade(index, value === '' ? null : value)}
-                options={options}
-                disabled={store.selectedPresetId === null}
-              />
-            );
-          })}
-        </div>
-      </SectionHeader>
+      <UpgradeSlotsSection
+        selectedPresetId={store.selectedPresetId}
+        effectiveUpgradeBar={store.effectiveUpgradeBar}
+        upgradeBar={store.upgradeBar}
+        equippedUpgradeIds={store.equippedUpgradeIds}
+        equipUpgrade={store.equipUpgrade}
+        unitApiId={store.unitApiId ?? undefined}
+        selectedFaction={store.selectedFaction}
+        selectedUnitRank={store.selectedUnitRank}
+        selectedUnitType={store.selectedUnitType}
+        selectedUnitAffiliation={store.selectedUnitAffiliation}
+      />
 
       <SectionHeader title="Weapons">
         <div className="space-y-2 text-sm text-gray-400">
@@ -131,6 +157,21 @@ export default function AttackerUnitBuilderView() {
                       whiteDice={weapon.whiteDice}
                     />
                   </div>
+                  {(() => {
+                    const kwLabels = formatWeaponKeywords(weapon.keywords);
+                    return kwLabels.length > 0 ? (
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        {kwLabels.map((label) => (
+                          <span
+                            key={label}
+                            className="rounded bg-gray-700 px-1.5 py-0.5 text-xs text-gray-300"
+                          >
+                            {label}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null;
+                  })()}
                 </div>
               );
             })
@@ -138,127 +179,17 @@ export default function AttackerUnitBuilderView() {
         </div>
       </SectionHeader>
 
-      <SectionHeader title="Tokens">
-        <div className="space-y-3">
-          <NumberSpinner
-            label="Aim Tokens"
-            value={store.aimTokens}
-            onChange={(value) => store.setField('aimTokens', value)}
-            min={0}
-            max={5}
-          />
-          <NumberSpinner
-            label="Surge Tokens"
-            value={store.surgeTokens}
-            onChange={(value) => store.setField('surgeTokens', value)}
-            min={0}
-            max={5}
-          />
-          <NumberSpinner
-            label="Observation Tokens"
-            value={store.observationTokens}
-            onChange={(value) => store.setField('observationTokens', value)}
-            min={0}
-            max={5}
-          />
-          {store.jarKaiMastery && (
-            <NumberSpinner
-              label="Dodge Tokens (Jar'Kai)"
-              value={store.dodgeTokensAttacker}
-              onChange={(value) => store.setField('dodgeTokensAttacker', value)}
-              min={0}
-              max={5}
-            />
-          )}
-        </div>
+      <SectionHeader title="Weapon Keywords">
+        <WeaponKeywordsSection
+          keywords={mergedKeywords}
+          onKeywordChange={(key, value) => store.setBuilderKeywordOverride(key, value)}
+          isKeywordDisabled={isWeaponDisabled}
+        />
       </SectionHeader>
 
-      <SectionHeader title="Unit Keywords">
-        <div className="space-y-3">
-          <SegmentedControl
-            label="Attack Surge"
-            value={store.surgeChart}
-            onChange={(value) => store.setField('surgeChart', value)}
-            options={ATTACK_SURGE_OPTIONS}
-          />
-          <NumberSpinner
-            label="Precise X"
-            value={store.preciseX}
-            onChange={(value) => store.setField('preciseX', value)}
-            min={0}
-            max={3}
-          />
-          <NumberSpinner
-            label="Sharpshooter X"
-            value={store.sharpshooterX}
-            onChange={(value) => store.setField('sharpshooterX', value)}
-            min={0}
-            max={3}
-          />
-          <NumberSpinner
-            label="Arsenal X"
-            value={store.arsenalX}
-            onChange={(value) => store.setField('arsenalX', value)}
-            min={0}
-            max={4}
-          />
+      <AttackerTokensSection />
 
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-            <Checkbox
-              label="Marksman"
-              value={store.marksman}
-              onChange={(value) => store.setField('marksman', value)}
-            />
-            <Checkbox
-              label="Jedi Hunter"
-              value={store.jediHunter}
-              onChange={(value) => store.setField('jediHunter', value)}
-            />
-            <Checkbox
-              label="Jar'Kai Mastery"
-              value={store.jarKaiMastery}
-              onChange={(value) => store.setField('jarKaiMastery', value)}
-            />
-            <Checkbox
-              label="Duelist"
-              value={store.duelistAttacker}
-              onChange={(value) => store.setField('duelistAttacker', value)}
-            />
-            <Checkbox
-              label="Makashi Mastery"
-              value={store.makashiMastery}
-              onChange={(value) => store.setField('makashiMastery', value)}
-            />
-            <Checkbox
-              label="Death From Above"
-              value={store.deathFromAbove}
-              onChange={(value) => store.setField('deathFromAbove', value)}
-            />
-            <Checkbox
-              label="Hold the Line"
-              value={store.holdTheLine}
-              onChange={(value) => store.setField('holdTheLine', value)}
-            />
-          </div>
-
-          {store.marksman && (
-            <SegmentedControl
-              label="Marksman Strategy"
-              value={store.marksmanStrategy}
-              onChange={(value) => store.setField('marksmanStrategy', value)}
-              options={MARKSMAN_STRATEGY_OPTIONS}
-            />
-          )}
-
-          <NumberSpinner
-            label="Unit Cost"
-            value={store.unitCost}
-            onChange={(value) => store.setField('unitCost', value)}
-            min={0}
-            max={999}
-          />
-        </div>
-      </SectionHeader>
+      <AttackerUnitKeywordsSection />
     </>
   );
 }

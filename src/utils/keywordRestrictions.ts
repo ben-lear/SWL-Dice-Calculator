@@ -16,7 +16,7 @@ import { AttackType } from '../engine/types';
  * Note: AttackType.Hybrid exists in the enum but is not user-selectable
  * in the UI — it is treated as unrestricted (all keywords enabled).
  */
-export type KeywordRestriction = 'all' | 'ranged' | 'melee' | 'ranged-melee';
+export type KeywordRestriction = 'all' | 'ranged' | 'melee' | 'ranged-melee' | 'melee-overrun';
 
 // ── Attacker Unit-Level Keywords ──
 // These are fields on AttackConfigStore (set via store.setField()).
@@ -58,7 +58,7 @@ export const WEAPON_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> = {
   lethalX: 'all',
   pierceX: 'all',
   impactX: 'all',
-  ramX: 'all',
+  ramX: 'melee-overrun',     // Ram X only applies during Melee/Overrun attacks (per rulebook)
   blast: 'all',
   suppressive: 'all',
   spray: 'all',
@@ -157,6 +157,8 @@ export function isFieldActiveForAttackType(
       return attackType === AttackType.Melee;
     case 'ranged-melee':
       return attackType === AttackType.Ranged || attackType === AttackType.Melee;
+    case 'melee-overrun':
+      return attackType === AttackType.Melee || attackType === AttackType.Overrun;
     default:
       return true;
   }

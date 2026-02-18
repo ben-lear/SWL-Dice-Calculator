@@ -60,7 +60,7 @@ function determineDefenseSurgeConversion(
  *
  * Step 6 — Modify Attack Dice:
  *   6.1  Ram X (blanks→crits first, then hits→crits; melee/overrun only)
- *        Note: blanks not tracked by this estimator — only hits→crits modeled.
+ *        Blanks are tracked via the optional `blanks` parameter.
  *   6.2  Impact X + Weak Point X (hits→crits vs Armor)
  *   6.3  Armor X (cancels hits, not crits)
  *   6.4  Shielded X (cancels crits first, then hits; Ranged only)
@@ -85,6 +85,7 @@ function determineDefenseSurgeConversion(
  * @param config - Attack configuration with attacker and defender
  * @param poolKeywords - Aggregated weapon keywords
  * @param additionalPierce - Extra Pierce beyond poolKeywords.pierceX (e.g., Lethal X, Duelist)
+ * @param blanks - Number of blank die results remaining (used by Ram X for blank→crit conversion)
  * @returns Expected number of wounds
  */
 export function estimateExpectedWounds(
@@ -92,7 +93,8 @@ export function estimateExpectedWounds(
   crits: number,
   config: AttackConfig,
   poolKeywords: AggregatedWeaponKeywords,
-  additionalPierce: number = 0
+  additionalPierce: number = 0,
+  blanks: number = 0
 ): number {
   const { attacker, defender, attackType } = config;
   let effectiveHits = hits;
@@ -193,12 +195,22 @@ export function estimateExpectedWounds(
   }
 
   // ── 6.1: Ram X (converts blanks→crits first, then hits→crits; melee/overrun only) ──
-  // Note: This estimator doesn't track blanks, so we can only convert hits→crits.
-  // Blanks→crits is a structural limitation of the function signature.
+  // Per rulebook: convert up to X blank results to crits first (free value — blanks
+  // would contribute nothing otherwise), then convert up to X remaining hits to crits.
   if (poolKeywords.ramX > 0 && isMeleeOrOverrun) {
-    const hitsConverted = Math.min(effectiveHits, poolKeywords.ramX);
-    effectiveHits -= hitsConverted;
-    effectiveCrits += hitsConverted;
+    let ramRemaining = poolKeywords.ramX;
+
+    // Convert blanks → crits first (net addition; blanks are not counted in hits/crits)
+    const blanksConverted = Math.min(blanks, ramRemaining);
+    effectiveCrits += blanksConverted;
+    ramRemaining -= blanksConverted;
+
+    // Convert hits → crits with remaining Ram budget
+    if (ramRemaining > 0) {
+      const hitsConverted = Math.min(effectiveHits, ramRemaining);
+      effectiveHits -= hitsConverted;
+      effectiveCrits += hitsConverted;
+    }
   }
 
   // ── 6.2: Impact X + Weak Point X (converts hits→crits vs Armor) ──

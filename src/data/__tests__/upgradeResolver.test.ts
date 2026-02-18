@@ -220,17 +220,24 @@ describe('upgradeResolver', () => {
   });
 
   describe('addsUpgradeSlot resolution', () => {
-    it('addsUpgradeSlot defaults to empty array', () => {
+    it('addsUpgradeSlot is always an array', () => {
       const upgrades = getAllResolvedUpgrades();
-      
+
       for (const upgrade of upgrades) {
         expect(Array.isArray(upgrade.addsUpgradeSlot)).toBe(true);
-        
+      }
+    });
+
+    it('addsUpgradeSlot includes enrichment slots when enrichment specifies them', () => {
+      const upgrades = getAllResolvedUpgrades();
+
+      for (const upgrade of upgrades) {
         const enrichment = UPGRADE_ENRICHMENTS[upgrade.id];
         if (enrichment?.addsUpgradeSlot !== undefined) {
-          expect(upgrade.addsUpgradeSlot).toEqual(enrichment.addsUpgradeSlot);
-        } else {
-          expect(upgrade.addsUpgradeSlot).toEqual([]);
+          // All enrichment slots must appear in resolved addsUpgradeSlot
+          for (const slot of enrichment.addsUpgradeSlot) {
+            expect(upgrade.addsUpgradeSlot).toContain(slot);
+          }
         }
       }
     });
@@ -508,6 +515,100 @@ describe('upgradeResolver', () => {
       });
       const found = upgrades.find(u => u.id === sample.id);
       expect(found).toBeDefined();
+    });
+  });
+
+  // ── Phase 12: addsUpgradeSlot & requiredUpgradeSlot ─────────────────────
+
+  describe('addsUpgradeSlot', () => {
+    it('Agent Kallus has addsUpgradeSlot: [heavy-weapon]', () => {
+      const allUpgrades = getAllResolvedUpgrades();
+      const kallus = allUpgrades.find(u => u.apiId === 20801);
+      expect(kallus).toBeDefined();
+      expect(kallus!.addsUpgradeSlot).toContain(UpgradeSlot.HeavyWeapon);
+    });
+
+    it('Clone Captain Rex has addsUpgradeSlot containing command and training', () => {
+      const allUpgrades = getAllResolvedUpgrades();
+      const rex = allUpgrades.find(u => u.apiId === 20802);
+      expect(rex).toBeDefined();
+      expect(rex!.addsUpgradeSlot).toContain(UpgradeSlot.Command);
+      expect(rex!.addsUpgradeSlot).toContain(UpgradeSlot.Training);
+    });
+
+    it('Stormtrooper Captain has addsUpgradeSlot: [training]', () => {
+      const allUpgrades = getAllResolvedUpgrades();
+      const stCaptain = allUpgrades.find(u => u.apiId === 134);
+      expect(stCaptain).toBeDefined();
+      expect(stCaptain!.addsUpgradeSlot).toContain(UpgradeSlot.Training);
+    });
+
+    it('upgrades without conditional slots have empty addsUpgradeSlot', () => {
+      const allUpgrades = getAllResolvedUpgrades();
+      // Pick a well-known upgrade that does not add slots (e.g., a generic gear upgrade)
+      const genericUpgrades = allUpgrades.filter(
+        u => u.addsUpgradeSlot.length === 0,
+      );
+      expect(genericUpgrades.length).toBeGreaterThan(0);
+      for (const u of genericUpgrades) {
+        expect(Array.isArray(u.addsUpgradeSlot)).toBe(true);
+        expect(u.addsUpgradeSlot.length).toBe(0);
+      }
+    });
+  });
+
+  describe('requiredUpgradeSlot', () => {
+    it('Offensive/Defensive Stance has requiredUpgradeSlot: force', () => {
+      const allUpgrades = getAllResolvedUpgrades();
+      const odsUpgrades = allUpgrades.filter(
+        u => u.apiId === 179 || u.apiId === 183,
+      );
+      expect(odsUpgrades.length).toBeGreaterThan(0);
+      for (const u of odsUpgrades) {
+        expect(u.requiredUpgradeSlot).toBe(UpgradeSlot.Force);
+      }
+    });
+
+    it('most upgrades have requiredUpgradeSlot: null', () => {
+      const allUpgrades = getAllResolvedUpgrades();
+      const withReq = allUpgrades.filter(u => u.requiredUpgradeSlot !== null);
+      // Only the 2 Offensive/Defensive Stance variants require a slot
+      expect(withReq.length).toBe(2);
+    });
+  });
+
+  describe('getUpgradesForSlot — requiredUpgradeSlot filtering', () => {
+    it('excludes upgrades with requiredUpgradeSlot when slot is absent from effectiveUpgradeBar', () => {
+      // Offensive/Defensive Stance requires a Force slot.
+      // Use a training slot context without a Force slot.
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Training, {
+        effectiveUpgradeBar: [UpgradeSlot.Training],
+      });
+      const ods = upgrades.filter(u => u.apiId === 179 || u.apiId === 183);
+      expect(ods.length).toBe(0);
+    });
+
+    it('includes upgrades with requiredUpgradeSlot when slot IS in effectiveUpgradeBar', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Training, {
+        effectiveUpgradeBar: [UpgradeSlot.Training, UpgradeSlot.Force],
+      });
+      const ods = upgrades.filter(u => u.apiId === 179 || u.apiId === 183);
+      expect(ods.length).toBeGreaterThan(0);
+    });
+
+    it('skips requiredUpgradeSlot check when effectiveUpgradeBar is not provided', () => {
+      // Without effectiveUpgradeBar in context, all training upgrades including ODS should appear
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Training, {
+        // No effectiveUpgradeBar
+      });
+      const ods = upgrades.filter(u => u.apiId === 179 || u.apiId === 183);
+      expect(ods.length).toBeGreaterThan(0);
+    });
+
+    it('skips requiredUpgradeSlot check when context is absent entirely', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Training);
+      const ods = upgrades.filter(u => u.apiId === 179 || u.apiId === 183);
+      expect(ods.length).toBeGreaterThan(0);
     });
   });
 });
