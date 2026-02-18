@@ -447,8 +447,14 @@ for (const unitId of sortedUnitIds) {
 }
 
 // Multiple raw upgrades can share the same processed upgrade id (slot+name).
-// This is intentional: they represent the same card scoped to different unit
-// mappings. Merge them into one enrichment entry by unioning keyword fields.
+// This is intentional for *benign* duplicates: they represent the same physical
+// card scoped to different unit mappings and have identical cost, keywords, and
+// addsUpgradeSlot. Merge them into one enrichment entry by unioning keyword fields.
+//
+// Note: *True* collisions (different costs, keywords, or mechanics) are
+// disambiguated upstream in processApiData.ts by appending a unit-name suffix to
+// each conflicting entry's ID. By the time this generator runs, every collision
+// group it encounters is guaranteed to be benign.
 const mergedUpgradeKeywords = new Map<string, Record<string, true | '<need human>'>>();
 
 for (const processedUpgrade of processedUpgrades) {

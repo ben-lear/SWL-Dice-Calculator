@@ -241,7 +241,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     ]
   },
 
-  'armament-heavy-blaster-pistol': {
+  // Imperial Agent / Imperial Officer variant (Sharpshooter 1, Target 1, cost 5)
+  'armament-heavy-blaster-pistol-imperial-agent': {
     keywords: {
       sharpshooterX: 1,
       tacticalX: 1,
@@ -254,6 +255,25 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         keywords: {
           lethalX: 1,
           highVelocity: true,
+        }
+      }
+    ]
+  },
+
+  // Rebel Officer / Rebel Agent variant (Arsenal X, cost 8)
+  'armament-heavy-blaster-pistol-rebel-officer': {
+    keywords: {
+      arsenalX: 2,
+    },
+    weapons: [
+      {
+        name: 'Heavy Blaster Pistol',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        maxRange: 2,
+        keywords: {
+          lethalX: 1,
         }
       }
     ]
@@ -470,7 +490,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     ]
   },
 
-  'armament-the-darksaber': {
+  // Sabine Wren variant (Dauntless, cost 15)
+  'armament-the-darksaber-sabine-wren': {
     keywords: {
       dauntless: true,
       immuneMeleePierce: true
@@ -1541,7 +1562,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     ]
   },
 
-  'hardpoint-twin-blaster-cannons': {
+  // Infantry Support Platform variant (Gunslinger, Critical 2, cost 25)
+  'hardpoint-twin-blaster-cannons-infantry-support-platform': {
     weapons: [
       {
         name: 'Blaster Cannons',
@@ -1806,7 +1828,13 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {},
   },
 
-  'heavy-weapon-kraken': {
+  // IG-100 MagnaGuard variant (no keywords, cost 30)
+  'heavy-weapon-kraken-ig-100-magnaguard': {
+    keywords: {},
+  },
+
+  // Separatist corps generic variant (addsUpgradeSlot: heavy-weapon, cost 30)
+  'heavy-weapon-kraken-separatist-alliance-corps': {
     keywords: {},
   },
 

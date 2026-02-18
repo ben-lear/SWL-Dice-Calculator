@@ -333,6 +333,87 @@ function processData() {
     })
     .filter(Boolean);
 
+  // 4b. Collision detection and disambiguation (second pass on upgrade IDs).
+  //
+  // Intentional deduplication: entries that represent the same physical upgrade
+  // card scoped to different unit restrictions are allowed to share an ID ("benign
+  // duplicates"). These have identical cost, keywordNames, and addsUpgradeSlot.
+  //
+  // True collisions (different mechanics) must be disambiguated by appending a
+  // suffix derived from the first unitRestrictions entry's unit name, or falling
+  // back to faction+rank restrictions, or finally the raw apiId.
+  //
+  // This pass only touches true collisions; benign duplicates are left collapsed.
+
+  // Build apiId → unit name lookup from processedUnits (already resolved above).
+  // Use Number() to normalize: raw JSON may produce string IDs which must align
+  // with the numeric unit_fkey values stored in unitRestrictions.
+  const unitApiIdToName = new Map<number, string>();
+  for (const unit of processedUnits as Array<{ apiId: number | string; name: string }>) {
+    unitApiIdToName.set(Number(unit.apiId), unit.name);
+  }
+
+  // Group processed upgrade entries by their current (base) ID.
+  type UpgradeEntry = {
+    apiId: number;
+    id: string;
+    cost: number;
+    keywordNames: string[];
+    addsUpgradeSlot: string[];
+    unitRestrictions: number[];
+    factionRestrictions: string[];
+    rankRestrictions: string[];
+    [key: string]: unknown;
+  };
+
+  const upgradesByBaseId = new Map<string, UpgradeEntry[]>();
+  for (const up of processedUpgrades as UpgradeEntry[]) {
+    if (!upgradesByBaseId.has(up.id)) {
+      upgradesByBaseId.set(up.id, []);
+    }
+    upgradesByBaseId.get(up.id)!.push(up);
+  }
+
+  for (const [baseId, group] of upgradesByBaseId) {
+    if (group.length <= 1) continue;
+
+    // A collision is "benign" when all entries have identical cost, keywordNames
+    // (as sorted set), and addsUpgradeSlot (as sorted set). These represent the
+    // same physical card repeated for different unit/restriction mappings.
+    const first = group[0];
+    const sortedStr = (arr: string[]) => JSON.stringify([...arr].sort());
+    const isBenign = group.every(
+      (up) =>
+        up.cost === first.cost &&
+        sortedStr(up.keywordNames) === sortedStr(first.keywordNames) &&
+        sortedStr(up.addsUpgradeSlot) === sortedStr(first.addsUpgradeSlot),
+    );
+
+    if (isBenign) continue;
+
+    // True collision: each entry gets a disambiguating suffix.
+    console.warn(
+      `⚠ True ID collision for "${baseId}" (${group.length} entries) — disambiguating...`,
+    );
+    for (const up of group) {
+      let suffix: string;
+      if (up.unitRestrictions.length > 0) {
+        // Prefer the first unit restriction's human name.
+        const unitName = unitApiIdToName.get(up.unitRestrictions[0]);
+        suffix = unitName ? slugify(unitName) : String(up.apiId);
+      } else if (up.factionRestrictions.length > 0 || up.rankRestrictions.length > 0) {
+        // Fall back to faction + rank (already-slugified strings from FACTION_MAP / RANK_MAP).
+        const parts = [...up.factionRestrictions, ...up.rankRestrictions];
+        suffix = parts.join('-');
+      } else {
+        // Last resort.
+        suffix = String(up.apiId);
+      }
+      up.id = `${baseId}-${suffix}`;
+      console.log(`  apiId ${up.apiId} → "${up.id}"`);
+    }
+  }
+
   // 5. Write output
   writeFileSync(
     join(OUT_DIR, 'units.json'),

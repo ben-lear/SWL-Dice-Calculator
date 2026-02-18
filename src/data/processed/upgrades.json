@@ -3730,7 +3730,7 @@
   },
   {
     "apiId": "20275",
-    "id": "armament-heavy-blaster-pistol",
+    "id": "armament-heavy-blaster-pistol-imperial-agent",
     "name": "Heavy Blaster Pistol",
     "cost": 5,
     "upgradeSlot": "armament",
@@ -3753,7 +3753,7 @@
   },
   {
     "apiId": "20284",
-    "id": "armament-heavy-blaster-pistol",
+    "id": "armament-heavy-blaster-pistol-rebel-officer",
     "name": "Heavy Blaster Pistol",
     "cost": 8,
     "upgradeSlot": "armament",
@@ -4659,7 +4659,7 @@
   },
   {
     "apiId": "20841",
-    "id": "heavy-weapon-kraken",
+    "id": "heavy-weapon-kraken-ig-100-magnaguard",
     "name": "Kraken",
     "cost": 30,
     "upgradeSlot": "heavy-weapon",
@@ -4680,7 +4680,7 @@
   },
   {
     "apiId": "20803",
-    "id": "heavy-weapon-kraken",
+    "id": "heavy-weapon-kraken-separatist-alliance-corps",
     "name": "Kraken",
     "cost": 30,
     "upgradeSlot": "heavy-weapon",
@@ -7528,7 +7528,7 @@
   },
   {
     "apiId": "71",
-    "id": "armament-the-darksaber",
+    "id": "armament-the-darksaber-sabine-wren",
     "name": "The Darksaber",
     "cost": 15,
     "upgradeSlot": "armament",
@@ -7554,7 +7554,7 @@
   },
   {
     "apiId": "6132",
-    "id": "armament-the-darksaber",
+    "id": "armament-the-darksaber-moff-gideon",
     "name": "The Darksaber",
     "cost": 15,
     "upgradeSlot": "armament",
@@ -7798,7 +7798,7 @@
   },
   {
     "apiId": "964",
-    "id": "hardpoint-twin-blaster-cannons",
+    "id": "hardpoint-twin-blaster-cannons-infantry-support-platform",
     "name": "Twin Blaster Cannons",
     "cost": 25,
     "upgradeSlot": "hardpoint",
@@ -7821,7 +7821,7 @@
   },
   {
     "apiId": "16578",
-    "id": "hardpoint-twin-blaster-cannons",
+    "id": "hardpoint-twin-blaster-cannons-lm-432-crab-droid",
     "name": "Twin Blaster Cannons",
     "cost": 5,
     "upgradeSlot": "hardpoint",
