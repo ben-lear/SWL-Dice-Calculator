@@ -38,6 +38,7 @@ export interface DefenderPreset {
   holdTheLine: boolean;
   dugIn: boolean;
   completeTheMission: boolean;
+  katarnPatternArmor: boolean;  // Expend: cap wounds to 1 from non-melee attacks
   
   // Guardian configuration (if applicable)
   guardianX: number;

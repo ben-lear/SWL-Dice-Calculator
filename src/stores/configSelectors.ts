@@ -29,6 +29,8 @@ const EMPTY_KEYWORDS: WeaponKeywords = {
   sidearmRanged: false,
   immuneDeflect: false,
   primitive: false,
+  blackOps: false,
+  krakenBlaster: false,
 };
 
 function makeEmptyWeapon(): WeaponProfile {
@@ -119,6 +121,7 @@ export function getFullConfig(): AttackConfig {
   const defender = applyDefenderUpgrades(
     baseDefender,
     defenseState.equippedUpgradeIds,
+    attackTypeState.attackType,
   );
 
   return {
@@ -174,7 +177,7 @@ export function useFullConfig(): AttackConfig {
 
   const attacker = { ...attackerWithUpgrades, weapons: finalWeapons };
 
-  const defender = applyDefenderUpgrades(defenderConfig, defenderUpgradeIds);
+  const defender = applyDefenderUpgrades(defenderConfig, defenderUpgradeIds, attackType);
 
   return {
     attacker,

@@ -35,6 +35,8 @@ function makeWeapon(name: string, redDice = 0, blackDice = 0, whiteDice = 0): We
       sidearmRanged: false,
       immuneDeflect: false,
       primitive: false,
+      blackOps: false,
+      krakenBlaster: false,
     },
   };
 }

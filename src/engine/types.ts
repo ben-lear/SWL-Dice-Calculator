@@ -124,6 +124,10 @@ export interface WeaponKeywords {
   cumbersome: boolean;
   sidearmMelee: boolean;    // Weapon only usable in melee attack pools
   sidearmRanged: boolean;   // Weapon only usable in ranged attack pools
+
+  // Pool formation modifiers (per-weapon, triggered by defeatedMinis on AttackerConfig)
+  blackOps: boolean;      // +1 white die per defeated mini in the unit
+  krakenBlaster: boolean; // Upgrade 1 die (white→black→red) per defeated mini in the unit
 }
 
 // ============================================================================
@@ -181,6 +185,10 @@ export interface AggregatedWeaponKeywords {
 
   // Summed across weapons
   ionX: number;
+
+  // OR'd across weapons — pool formation modifiers
+  blackOps: boolean;      // +1 white die per defeated mini
+  krakenBlaster: boolean; // Upgrade 1 die per defeated mini
 }
 
 // ============================================================================
@@ -216,6 +224,9 @@ export interface AttackerConfig {
   deathFromAbove: boolean;
   holdTheLine: boolean;
   completeTheMission: boolean;
+
+  // Defeated miniature count (for Black Ops / Kraken's Blaster)
+  defeatedMinis: number;  // Number of destroyed minis in this unit
 
   // Points
   unitCost: number;
@@ -268,6 +279,7 @@ export interface DefenderConfig {
   holdTheLine: boolean;
   dugIn: boolean;  // Dug In upgrade: cover dice become red instead of white
   completeTheMission: boolean;  // Complete the Mission: surge→block near allied Priority Mission Token
+  katarnPatternArmor: boolean;  // Expend: cap wounds to 1 from non-melee attacks
 
   // Guardian
   guardianX: number;

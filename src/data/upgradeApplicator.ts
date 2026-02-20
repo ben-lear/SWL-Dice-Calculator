@@ -4,7 +4,7 @@
  */
 
 import { getResolvedUpgradeById } from './upgradeResolver';
-import { AttackType } from '../engine/types';
+import { AttackType, AttackSurgeChart, DefenseSurgeChart } from '../engine/types';
 import type { WeaponProfile } from '../engine/types';
 import type { WeaponProfile as DataLayerWeaponProfile } from './types';
 import { UpgradeSlot } from './types';
@@ -38,11 +38,14 @@ const WEAPON_KEYWORD_FIELDS = new Set<string>([
   'antiMaterielX', 'antiPersonnelX', 'cumbersome',
   'immuneDeflect', 'primitive',
   'sidearmMelee', 'sidearmRanged',
+  // Pool formation modifiers (per-weapon)
+  'blackOps', 'krakenBlaster',
   // Display weapon keywords
   'longshot', 'scatter', 'exhaust', 'expend',
   'immobilizeX', 'overrunX', 'fixed',
   'areaWeapon', 'beamX', 'poisonX', 'selfDestructX',
   'towCable', 'versatile', 'armX', 'detonateX',
+  'saberThrow',
 ]);
 
 // ============================================================================
@@ -79,6 +82,8 @@ export function normalizeToEngineWeapon(
       immuneDeflect: false,
       primitive: false,
       ionX: 0,
+      blackOps: false,
+      krakenBlaster: false,
       ...weapon.keywords,
     },
   };
@@ -153,18 +158,20 @@ export function applyAttackerUpgrades<T extends ConfigWithCost>(
   attackType?: AttackType,
   unitBaseWeapons?: DataLayerWeaponProfile[],
 ): T {
-  return applyUpgrades(config, equippedUpgradeIds, attackType, unitBaseWeapons);
+  return applyUpgrades(config, equippedUpgradeIds, attackType, unitBaseWeapons, false);
 }
 
 /**
  * Apply equipped defender upgrades to the defender config.
  * Same logic as attacker (no weapon manipulation for defenders).
+ * @param attackType - When provided, enables conditional surge overrides (e.g. meleySurgeBlock).
  */
 export function applyDefenderUpgrades<T extends ConfigWithCost>(
   config: T,
   equippedUpgradeIds: (string | null)[],
+  attackType?: AttackType,
 ): T {
-  return applyUpgrades(config, equippedUpgradeIds);
+  return applyUpgrades(config, equippedUpgradeIds, attackType, undefined, true);
 }
 
 // ============================================================================
@@ -176,6 +183,7 @@ function applyUpgrades<T extends ConfigWithCost>(
   equippedUpgradeIds: (string | null)[],
   attackType?: AttackType,
   unitBaseWeapons?: DataLayerWeaponProfile[],
+  isDefender = false,
 ): T {
   // Shallow clone to avoid mutating the original
   const result: ConfigWithCost = { ...config };
@@ -222,6 +230,20 @@ function applyUpgrades<T extends ConfigWithCost>(
     // Keywords are stored using typed field names. Some may be weapon keywords
     // (applied to all weapons in pool) vs unit keywords (applied to config).
     for (const [fieldName, kwValue] of Object.entries(upgrade.keywords)) {
+      // Special case: duckAndCover → +1 suppressionTokens (applies only on defender side)
+      if (fieldName === 'duckAndCover' && kwValue === true) {
+        const current = (result['suppressionTokens'] as number) ?? 0;
+        result['suppressionTokens'] = current + 1;
+        continue;
+      }
+
+      // Special case: missionObjective → +1 observationTokens (reroll approximation)
+      if (fieldName === 'missionObjective' && kwValue === true) {
+        const current = (result['observationTokens'] as number) ?? 0;
+        result['observationTokens'] = current + 1;
+        continue;
+      }
+
       if (WEAPON_KEYWORD_FIELDS.has(fieldName)) {
         // Weapon keywords: will be applied to all weapons after the loop
         pendingWeaponKeywords[fieldName] = kwValue;
@@ -232,6 +254,38 @@ function applyUpgrades<T extends ConfigWithCost>(
         // Numeric unit keywords: add to existing value
         const currentValue = (result[fieldName] as number) ?? 0;
         result[fieldName] = currentValue + kwValue;
+      }
+    }
+
+    // Apply surge overrides from enrichment data
+    if (upgrade.surgeOverrides) {
+      if (!isDefender) {
+        // Attacker-side surge chart modifications
+        if (upgrade.surgeOverrides.surgeCrit) {
+          result['surgeChart'] = AttackSurgeChart.ToCrit;
+        }
+        if (upgrade.surgeOverrides.surgeHit) {
+          result['surgeChart'] = AttackSurgeChart.ToHit;
+        }
+        // meleeSurgeCrit: only override surge chart when in a melee attack context
+        if (upgrade.surgeOverrides.meleeSurgeCrit && attackType === AttackType.Melee) {
+          result['surgeChart'] = AttackSurgeChart.ToCrit;
+        }
+      } else {
+        // Defender-side surge chart modifications (melee conditional)
+        if (upgrade.surgeOverrides.meleeSurgeBlock && attackType === AttackType.Melee) {
+          result['surgeChart'] = DefenseSurgeChart.ToBlock;
+        }
+      }
+    }
+
+    // Apply defense stat overrides (defender-side only)
+    if (isDefender && upgrade.defenseOverrides) {
+      if (upgrade.defenseOverrides.dieColor !== undefined) {
+        result['dieColor'] = upgrade.defenseOverrides.dieColor;
+      }
+      if (upgrade.defenseOverrides.surgeChart !== undefined) {
+        result['surgeChart'] = upgrade.defenseOverrides.surgeChart;
       }
     }
 

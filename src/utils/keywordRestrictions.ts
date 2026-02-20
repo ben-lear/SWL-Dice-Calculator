@@ -120,6 +120,7 @@ export const DEFENDER_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> =
   soresuMastery: 'ranged',     // Reroll all defense dice (Ranged only)
   backup: 'ranged',            // Cancel up to 2 hits (Ranged only)
   shieldedX: 'ranged',         // Shielded cancels hits/crits (Ranged attacks only)
+  katarnPatternArmor: 'ranged', // Wound cap 1 — only triggers vs non-melee attacks
 
   // Melee-only defender keywords
   djemSoMastery: 'melee',      // Melee: attacker suffers wounds per blank

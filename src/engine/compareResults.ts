@@ -38,7 +38,7 @@ export function compareResults(
   // ════════════════════════════════════════════════════════════════
 
   const mainTargetHits = attackResults.hits + attackResults.crits;
-  const mainTargetWoundsNoPierce = Math.max(0, mainTargetHits - defenseInfo.mainTargetBlocks);
+  let mainTargetWoundsNoPierce = Math.max(0, mainTargetHits - defenseInfo.mainTargetBlocks);
 
   // guardianWoundsNoPierce is already computed in Step 6b and passed in.
 
@@ -123,7 +123,28 @@ export function compareResults(
   const totalHits = mainTargetHits + defenseInfo.guardianHits;
 
   const blocksAfterPierce = Math.max(0, combinedBlocks - totalPierce);
-  const totalWounds = Math.max(0, totalHits - blocksAfterPierce);
+  let totalWounds = Math.max(0, totalHits - blocksAfterPierce);
+
+  // ════════════════════════════════════════════════════════════════
+  // 6.5. Katarn Pattern Armor — Cap wounds to 1 on non-melee attacks
+  // ════════════════════════════════════════════════════════════════
+  //
+  // Rule: when this unit would suffer 1+ wounds from a non-melee attack,
+  // expend this card — suffer only 1 wound instead.
+  // The calculator assumes the card is available when the keyword is active.
+  // Toggle the keyword off to represent an expended card.
+  //
+  // Only triggers when wounds > 0 (0-wound attacks do not trigger the expend).
+
+  if (
+    defender.katarnPatternArmor &&
+    config.attackType !== AttackType.Melee &&
+    config.attackType !== AttackType.Overrun &&
+    totalWounds > 0
+  ) {
+    totalWounds = Math.min(totalWounds, 1);
+    mainTargetWoundsNoPierce = Math.min(mainTargetWoundsNoPierce, 1);
+  }
 
   // ════════════════════════════════════════════════════════════════
   // 7. Deflect / Shien Mastery — Reflection wounds to attacker

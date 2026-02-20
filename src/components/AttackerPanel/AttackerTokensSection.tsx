@@ -46,6 +46,15 @@ export default function AttackerTokensSection() {
             tooltip="Spend dodge tokens to upgrade results in melee: blank → hit (1 token), hit → crit (1 token), or blank → crit (2 tokens)."
           />
         )}
+        <NumberSpinner
+          label="Defeated Minis"
+          value={store.defeatedMinis}
+          onChange={(value) => store.setField('defeatedMinis', value)}
+          min={0}
+          max={99}
+          compact
+          tooltip="Number of defeated miniatures in this unit. Affects Black Ops (+1 white die per defeated mini) and Kraken's Blaster (upgrade 1 die per defeated mini)."
+        />
       </div>
     </SectionHeader>
   );

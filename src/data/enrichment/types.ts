@@ -6,6 +6,7 @@
 import type {
   AttackType,
   AttackSurgeChart,
+  DefenseDieColor,
   DefenseSurgeChart,
   WeaponKeywords,
 } from '../../engine/types';
@@ -171,6 +172,16 @@ export interface UpgradeEnrichment {
     surgeCrit?: boolean;
     meleeSurgeCrit?: boolean;
     meleeSurgeBlock?: boolean;
+    surgeHit?: boolean;       // Surge → Hit (e.g. Imperial Hammers Elite Armor Pilot)
+  };
+
+  /**
+   * Defense stat overrides this upgrade grants (e.g. Combat Armor gives a red die).
+   * Applied to the defender config when this upgrade is equipped on the defender.
+   */
+  defenseOverrides?: {
+    dieColor?: DefenseDieColor;
+    surgeChart?: DefenseSurgeChart;
   };
 
   /**

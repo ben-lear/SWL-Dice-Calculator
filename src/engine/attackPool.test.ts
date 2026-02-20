@@ -20,6 +20,8 @@ describe('aggregateWeaponKeywords', () => {
       immuneDeflect: false,
       primitive: false,
       ionX: 0,
+      blackOps: false,
+      krakenBlaster: false,
     });
   });
 

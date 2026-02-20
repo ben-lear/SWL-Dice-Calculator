@@ -94,6 +94,9 @@ function generateAttackerPreset(
 ): AttackerPreset {
   const weapon = unit.weapons[weaponIndex];
 
+  // Strip display-only keywords not in the engine WeaponKeywords type (e.g. saberThrow)
+  const { saberThrow: _saberThrow, ...weaponEngineKeywords } = weapon.keywords ?? {};
+
   // Build profile — weapons[] replaces flat dice fields (Phase 2.5)
   // Data-layer WeaponProfile now uses typed Partial<WeaponKeywords>, so we can
   // directly use the keywords (fill in defaults for missing fields)
@@ -122,8 +125,10 @@ function generateAttackerPreset(
       cumbersome: false,
       sidearmMelee: false,
       sidearmRanged: false,
-      // Override with enrichment values
-      ...weapon.keywords,
+      blackOps: false,
+      krakenBlaster: false,
+      // Override with enrichment values (display-only keywords stripped above)
+      ...weaponEngineKeywords,
     },
   };
 
@@ -192,6 +197,9 @@ function generateMultiMiniAttackerPreset(unit: ResolvedUnit): AttackerPreset {
         isWeaponUsableForAttackType(w.weaponType, AttackType.Melee)
       )[0];
 
+  // Strip display-only keywords not in the engine WeaponKeywords type (e.g. saberThrow)
+  const { saberThrow: _saberThrowDefault, ...defaultWeaponEngineKeywords } = defaultWeapon.keywords ?? {};
+
   // Expand: N copies of the default weapon for the base pool
   const expandedWeapons: WeaponProfile[] = Array.from({ length: unit.figures }, () => ({
     name: defaultWeapon.name,
@@ -217,7 +225,9 @@ function generateMultiMiniAttackerPreset(unit: ResolvedUnit): AttackerPreset {
       cumbersome: false,
       sidearmMelee: false,
       sidearmRanged: false,
-      ...defaultWeapon.keywords,
+      blackOps: false,
+      krakenBlaster: false,
+      ...defaultWeaponEngineKeywords,
     },
   }));
 
@@ -293,6 +303,8 @@ function generateSkeletonAttackerPreset(
       cumbersome: false,
       sidearmMelee: false,
       sidearmRanged: false,
+      blackOps: false,
+      krakenBlaster: false,
     },
   };
 

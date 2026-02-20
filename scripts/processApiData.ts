@@ -55,6 +55,17 @@ const AFFILIATION_MAP_FALLBACK: Record<number, string> = {
 };
 
 /**
+ * Upgrade API IDs whose `revamp` flag is incorrectly set to `false` in the
+ * Tabletop Admiral API but should be treated as Revamp-mode cards.
+ *
+ * Add an entry here whenever fresh API data incorrectly marks a Revamp card
+ * as non-revamp, so the fix survives future `fetchApiData` runs.
+ */
+const UPGRADE_REVAMP_OVERRIDES = new Set<number>([
+  15011, // Hunter (heavy-weapon for The Bad Batch / Clone Force 99) — API incorrectly marks revamp: false
+]);
+
+/**
  * Maps API upgrade_type_fkey integers to UpgradeSlot string values.
  * Built dynamically from /api/upgrade-types data, with fallback hardcoded
  * values for types present in unit data but missing from /api/upgrade-types
@@ -173,6 +184,14 @@ function processData() {
   const AFFILIATION_MAP: Record<number, string> = { ...AFFILIATION_MAP_FALLBACK };
   for (const aff of rawAffiliations) {
     AFFILIATION_MAP[Number(aff.id)] = slugify(aff.name);
+  }
+
+  // Apply per-ID revamp overrides before filtering — corrects API data errors
+  // for specific upgrade IDs listed in UPGRADE_REVAMP_OVERRIDES.
+  for (const up of allRawUpgrades) {
+    if (UPGRADE_REVAMP_OVERRIDES.has(Number(up.id))) {
+      up.revamp = true;
+    }
   }
 
   // Ignore legacy entries explicitly marked as non-revamp.

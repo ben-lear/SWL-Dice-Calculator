@@ -13094,7 +13094,7 @@
     "image_in_aws": true,
     "image_version": 2,
     "revamp_cost": null,
-    "revamp": false,
+    "revamp": true,
     "classic": true,
     "name_portuguese": null,
     "keyword_ids": [

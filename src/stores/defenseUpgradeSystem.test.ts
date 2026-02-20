@@ -39,6 +39,7 @@ describe('Defender Upgrade System', () => {
     holdTheLine: false,
     dugIn: false,
     completeTheMission: false,
+    katarnPatternArmor: false,
     guardianX: 0,
     guardianDieColor: DefenseDieColor.White,
     guardianSurgeChart: DefenseSurgeChart.None,

@@ -3964,6 +3964,27 @@
     "requiredUpgradeSlot": null
   },
   {
+    "apiId": "15011",
+    "id": "heavy-weapon-hunter",
+    "name": "Hunter",
+    "cost": 0,
+    "upgradeSlot": "heavy-weapon",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      23655
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [
+      "Leader"
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
     "apiId": "143",
     "id": "armament-iden-s-dlt-20a-rifle",
     "name": "Iden's DLT-20A Rifle",

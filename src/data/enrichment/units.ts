@@ -337,6 +337,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'r2-d2-hero-of-a-thousand-devices': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    keywords: {
+      repairXCapacity2: 2,
+    },
     weapons: [
       {
         name: 'Electro-Shock',

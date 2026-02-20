@@ -48,6 +48,8 @@ export function aggregateWeaponKeywords(
       highVelocity: false,
       immuneDeflect: false,
       primitive: false,
+      blackOps: false,
+      krakenBlaster: false,
     };
   }
 
@@ -62,6 +64,8 @@ export function aggregateWeaponKeywords(
   let highVelocity = true; // AND: start true, flip false if any weapon lacks it
   let immuneDeflect = false;
   let primitive = false;
+  let blackOps = false;
+  let krakenBlaster = false;
 
   for (const weapon of weapons) {
     const kw = weapon.keywords;
@@ -76,6 +80,8 @@ export function aggregateWeaponKeywords(
     highVelocity = highVelocity && kw.highVelocity;
     immuneDeflect = immuneDeflect || kw.immuneDeflect;
     primitive = primitive || kw.primitive;
+    blackOps = blackOps || kw.blackOps;
+    krakenBlaster = krakenBlaster || kw.krakenBlaster;
   }
 
   return {
@@ -90,7 +96,27 @@ export function aggregateWeaponKeywords(
     highVelocity,
     immuneDeflect,
     primitive,
+    blackOps,
+    krakenBlaster,
   };
+}
+
+/**
+ * Upgrade a single die in the pool from lowest to highest colour.
+ * white → black → red. If all dice are already red, no change.
+ */
+function upgradeDieInPool(pool: AttackDieColor[]): void {
+  // Find lowest-colour die: white first, then black
+  const whiteIdx = pool.indexOf(AttackDieColor.White);
+  if (whiteIdx !== -1) {
+    pool[whiteIdx] = AttackDieColor.Black;
+    return;
+  }
+  const blackIdx = pool.indexOf(AttackDieColor.Black);
+  if (blackIdx !== -1) {
+    pool[blackIdx] = AttackDieColor.Red;
+  }
+  // All red: nothing to upgrade
 }
 
 /**
@@ -126,6 +152,22 @@ export function formAttackPool(config: AttackConfig): AttackDieColor[] {
     for (let i = 0; i < red; i++) pool.push(AttackDieColor.Red);
     for (let i = 0; i < black; i++) pool.push(AttackDieColor.Black);
     for (let i = 0; i < white; i++) pool.push(AttackDieColor.White);
+
+    // Black Ops: +1 white die per defeated mini (when this weapon is in the pool)
+    if (weapon.keywords.blackOps) {
+      const defeatedCount = config.attacker.defeatedMinis ?? 0;
+      for (let i = 0; i < defeatedCount; i++) {
+        pool.push(AttackDieColor.White);
+      }
+    }
+
+    // Kraken's Blaster: upgrade 1 die (white → black → red) per defeated mini
+    if (weapon.keywords.krakenBlaster) {
+      const defeatedCount = config.attacker.defeatedMinis ?? 0;
+      for (let i = 0; i < defeatedCount; i++) {
+        upgradeDieInPool(pool);
+      }
+    }
   }
 
   return pool;

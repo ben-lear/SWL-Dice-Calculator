@@ -25,6 +25,7 @@ describe('surgeConversionUtils', () => {
     holdTheLine: false,
     completeTheMission: false,
     unitCost: 0,
+    defeatedMinis: 0,
     rerollStrategy: RerollStrategy.Conservative,
     ...overrides,
   });
@@ -41,6 +42,8 @@ describe('surgeConversionUtils', () => {
     immuneDeflect: false,
     primitive: false,
     ionX: 0,
+    blackOps: false,
+    krakenBlaster: false,
     ...overrides,
   });
 

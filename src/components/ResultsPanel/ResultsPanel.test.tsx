@@ -92,7 +92,7 @@ function createMockResult(
 const mockConfig: AttackConfig = {
   attackType: AttackType.Ranged,
   attacker: {
-    weapons: [{ redDice: 2, blackDice: 0, whiteDice: 0, keywords: { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, spray: false, antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false, sidearmMelee: false, sidearmRanged: false } }],
+    weapons: [{ redDice: 2, blackDice: 0, whiteDice: 0, keywords: { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, spray: false, antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false, sidearmMelee: false, sidearmRanged: false, blackOps: false, krakenBlaster: false } }],
     surgeChart: AttackSurgeChart.None,
     aimTokens: 0,
     surgeTokens: 0,
@@ -112,6 +112,7 @@ const mockConfig: AttackConfig = {
     holdTheLine: false,
     completeTheMission: false,
     unitCost: 0,
+    defeatedMinis: 0,
   },
   defender: {
     dieColor: DefenseDieColor.White,
@@ -147,6 +148,7 @@ const mockConfig: AttackConfig = {
     dugIn: false,
     guardianX: 0,
     completeTheMission: false,
+    katarnPatternArmor: false,
     unitCost: 0,
   },
 };

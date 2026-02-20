@@ -149,6 +149,8 @@ describe('attackConfigStore', () => {
           cumbersome: false,
           sidearmMelee: false,
           sidearmRanged: false,
+          blackOps: false,
+          krakenBlaster: false,
         },
       }],
       surgeChart: AttackSurgeChart.ToCrit,

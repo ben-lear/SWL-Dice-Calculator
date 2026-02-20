@@ -59,6 +59,7 @@ export interface DefenseConfigState {
   holdTheLine: boolean;
   dugIn: boolean;
   completeTheMission: boolean;
+  katarnPatternArmor: boolean;  // Expend: cap wounds to 1 from non-melee attacks
 
   // ── Guardian Sub-config ──
   guardianX: number;
@@ -192,6 +193,7 @@ const DEFAULT_DEFENSE_CONFIG = {
   holdTheLine: false,
   dugIn: false,
   completeTheMission: false,
+  katarnPatternArmor: false,
 
   // Guardian
   guardianX: 0,

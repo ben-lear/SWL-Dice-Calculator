@@ -39,6 +39,8 @@ export function createMinimalWeaponKeywords(
     immuneDeflect: false,
     primitive: false,
     ionX: 0,
+    blackOps: false,
+    krakenBlaster: false,
     ...overrides,
   };
 }
@@ -102,6 +104,7 @@ export function createMinimalAttacker(
     holdTheLine: false,
     completeTheMission: false,
     unitCost: 0,
+    defeatedMinis: 0,
     ...overrides,
   };
 }
@@ -144,6 +147,8 @@ export function createMinimalPoolKeywords(
     immuneDeflect: false,
     primitive: false,
     ionX: 0,
+    blackOps: false,
+    krakenBlaster: false,
     ...overrides,
   };
 }
@@ -187,6 +192,7 @@ export function createMinimalDefender(overrides: Partial<DefenderConfig> = {}): 
     holdTheLine: false,
     dugIn: false,
     completeTheMission: false,
+    katarnPatternArmor: false,
     guardianX: 0,
     unitCost: 0,
     ...overrides,

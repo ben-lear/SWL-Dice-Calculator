@@ -147,7 +147,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
             compact
             tooltip="Spend surge tokens to convert defense surge results to blocks."
           />
-          {store.dangerSenseX > 0 && (
+          {(store.dangerSenseX > 0 || store.suppressionTokens > 0) && (
             <NumberSpinner
               label="Suppression"
               value={store.suppressionTokens}
@@ -174,15 +174,6 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               tooltip="Cancel up to X non-critical hit results before rolling defense dice. Critical hits bypass Armor."
             />
             <NumberSpinner
-              label="Weak Point X"
-              value={store.weakPointX}
-              onChange={(value) => store.setField('weakPointX', value)}
-              min={0}
-              max={99}
-              compact
-              tooltip="When attacked from this unit's weak-point arc, the attacker's attack pool gains Impact X, converting up to X hits into crits."
-            />
-            <NumberSpinner
               label="Danger Sense X"
               value={store.dangerSenseX}
               onChange={(value) => store.setField('dangerSenseX', value)}
@@ -190,15 +181,6 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               max={99}
               compact
               tooltip="Roll 1 additional defense die per suppression token on this unit, up to X additional dice total."
-            />
-            <NumberSpinner
-              label="Uncanny Luck X"
-              value={store.uncannyLuckX}
-              onChange={(value) => store.setField('uncannyLuckX', value)}
-              min={0}
-              max={99}
-              compact
-              tooltip="After rolling defense dice, reroll up to X results once per attack."
             />
             <NumberSpinner
               label="Shielded X"
@@ -210,14 +192,45 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               disabled={isDisabled('shieldedX')}
               tooltip="This unit has X active shield tokens. Flip shields to cancel hit or critical results before defense dice are rolled (ranged attacks only)."
             />
+            <NumberSpinner
+              label="Uncanny Luck X"
+              value={store.uncannyLuckX}
+              onChange={(value) => store.setField('uncannyLuckX', value)}
+              min={0}
+              max={99}
+              compact
+              tooltip="After rolling defense dice, reroll up to X results once per attack."
+            />
+            <NumberSpinner
+              label="Weak Point X"
+              value={store.weakPointX}
+              onChange={(value) => store.setField('weakPointX', value)}
+              min={0}
+              max={99}
+              compact
+              tooltip="When attacked from this unit's weak-point arc, the attacker's attack pool gains Impact X, converting up to X hits into crits."
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+            <Checkbox
+              label="Backup"
+              value={store.backup}
+              onChange={(value) => store.setField('backup', value)}
+              disabled={isDisabled('backup')}
+              tooltip="While defending against a ranged attack, cancel up to 2 hit results."
+            />
             <Checkbox
               label="Block"
               value={store.block}
               onChange={(value) => store.setField('block', value)}
               tooltip="When this unit spends a dodge token, its defense surge results convert to blocks for this attack."
+            />
+            <Checkbox
+              label="Complete the Mission"
+              value={store.completeTheMission}
+              onChange={(value) => store.setField('completeTheMission', value)}
+              tooltip="While near an allied Priority Mission Token, this unit gains surge→block on defense."
             />
             <Checkbox
               label="Deflect"
@@ -236,13 +249,6 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               />
             )}
             <Checkbox
-              label="Soresu Mastery"
-              value={store.soresuMastery}
-              onChange={(value) => store.setField('soresuMastery', value)}
-              disabled={isDisabled('soresuMastery')}
-              tooltip="While defending against a ranged attack, reroll all your defense dice."
-            />
-            <Checkbox
               label="Djem So Mastery"
               value={store.djemSoMastery}
               onChange={(value) => store.setField('djemSoMastery', value)}
@@ -250,36 +256,25 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               tooltip="While defending against a melee attack, if the attacker's roll contained any blank results, the attacker suffers 1 wound."
             />
             <Checkbox
-              label="Outmaneuver"
-              value={store.outmaneuver}
-              onChange={(value) => store.setField('outmaneuver', value)}
-              tooltip="While defending, your dodge tokens can also cancel critical hit results (normally they only cancel hits)."
+              label="Duelist"
+              value={store.duelistDefender}
+              onChange={(value) => store.setField('duelistDefender', value)}
+              disabled={isDisabled('duelistDefender')}
+              tooltip="While defending against a melee attack, if you spend a dodge token, you gain Immune: Pierce for this attack."
             />
             <Checkbox
-              label="Low Profile"
-              value={store.lowProfile}
-              onChange={(value) => store.setField('lowProfile', value)}
-              disabled={isDisabled('lowProfile')}
-              tooltip="While this unit has cover, it gains 1 additional cover result."
+              label="Dug In"
+              value={store.dugIn}
+              onChange={(value) => store.setField('dugIn', value)}
+              disabled={isDisabled('dugIn')}
+              tooltip="This unit's cover pool rolls red defense dice instead of white (higher chance to block with cover)."
             />
             <Checkbox
-              label="Impervious"
-              value={store.impervious}
-              onChange={(value) => store.setField('impervious', value)}
-              tooltip="While defending, roll additional defense dice equal to the attacker's total Pierce value."
-            />
-            <Checkbox
-              label="Immune: Pierce"
-              value={store.immunePierce}
-              onChange={(value) => store.setField('immunePierce', value)}
-              tooltip="Pierce has no effect when attacking this unit."
-            />
-            <Checkbox
-              label="Immune: Melee Pierce"
-              value={store.immuneMeleePierce}
-              onChange={(value) => store.setField('immuneMeleePierce', value)}
-              disabled={isDisabled('immuneMeleePierce')}
-              tooltip="Pierce has no effect when the attacker is in melee with this unit."
+              label="Hold the Line"
+              value={store.holdTheLine}
+              onChange={(value) => store.setField('holdTheLine', value)}
+              disabled={isDisabled('holdTheLine')}
+              tooltip="While this unit is engaged in melee, defense surge results convert to blocks."
             />
             <Checkbox
               label="Immune: Blast"
@@ -295,38 +290,50 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               tooltip="Enemy units cannot engage this unit in melee. Melee attacks deal zero damage."
             />
             <Checkbox
-              label="Duelist"
-              value={store.duelistDefender}
-              onChange={(value) => store.setField('duelistDefender', value)}
-              disabled={isDisabled('duelistDefender')}
-              tooltip="While defending against a melee attack, if you spend a dodge token, you gain Immune: Pierce for this attack."
+              label="Immune: Melee Pierce"
+              value={store.immuneMeleePierce}
+              onChange={(value) => store.setField('immuneMeleePierce', value)}
+              disabled={isDisabled('immuneMeleePierce')}
+              tooltip="Pierce has no effect when the attacker is in melee with this unit."
             />
             <Checkbox
-              label="Backup"
-              value={store.backup}
-              onChange={(value) => store.setField('backup', value)}
-              disabled={isDisabled('backup')}
-              tooltip="While defending against a ranged attack, cancel up to 2 hit results."
+              label="Immune: Pierce"
+              value={store.immunePierce}
+              onChange={(value) => store.setField('immunePierce', value)}
+              tooltip="Pierce has no effect when attacking this unit."
             />
             <Checkbox
-              label="Hold the Line"
-              value={store.holdTheLine}
-              onChange={(value) => store.setField('holdTheLine', value)}
-              disabled={isDisabled('holdTheLine')}
-              tooltip="While this unit is engaged in melee, defense surge results convert to blocks."
+              label="Impervious"
+              value={store.impervious}
+              onChange={(value) => store.setField('impervious', value)}
+              tooltip="While defending, roll additional defense dice equal to the attacker's total Pierce value."
             />
             <Checkbox
-              label="Dug In"
-              value={store.dugIn}
-              onChange={(value) => store.setField('dugIn', value)}
-              disabled={isDisabled('dugIn')}
-              tooltip="This unit's cover pool rolls red defense dice instead of white (higher chance to block with cover)."
+              label="Katarn Armor"
+              value={store.katarnPatternArmor}
+              onChange={(value) => store.setField('katarnPatternArmor', value)}
+              disabled={isDisabled('katarnPatternArmor')}
+              tooltip="Expend: when suffering 1 or more wounds from a non-melee attack, suffer only 1 wound instead."
             />
             <Checkbox
-              label="Complete the Mission"
-              value={store.completeTheMission}
-              onChange={(value) => store.setField('completeTheMission', value)}
-              tooltip="While near an allied Priority Mission Token, this unit gains surge→block on defense."
+              label="Low Profile"
+              value={store.lowProfile}
+              onChange={(value) => store.setField('lowProfile', value)}
+              disabled={isDisabled('lowProfile')}
+              tooltip="While this unit has cover, it gains 1 additional cover result."
+            />
+            <Checkbox
+              label="Outmaneuver"
+              value={store.outmaneuver}
+              onChange={(value) => store.setField('outmaneuver', value)}
+              tooltip="While defending, your dodge tokens can also cancel critical hit results (normally they only cancel hits)."
+            />
+            <Checkbox
+              label="Soresu Mastery"
+              value={store.soresuMastery}
+              onChange={(value) => store.setField('soresuMastery', value)}
+              disabled={isDisabled('soresuMastery')}
+              tooltip="While defending against a ranged attack, reroll all your defense dice."
             />
           </div>
 

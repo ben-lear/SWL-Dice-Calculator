@@ -60,6 +60,7 @@ const EMPTY_KEYWORDS: WeaponKeywords = {
   blast: false, suppressive: false, highVelocity: false, spray: false,
   antiMaterielX: 0, antiPersonnelX: 0, cumbersome: false,
   sidearmMelee: false, sidearmRanged: false, immuneDeflect: false, primitive: false,
+  blackOps: false, krakenBlaster: false,
 };
 
 export default function AttackerUnitBuilderView() {

@@ -42,6 +42,10 @@ export interface EnrichmentWeaponKeywords {
   primitive?: boolean;
   sidearmMelee?: boolean;
   sidearmRanged?: boolean;
+
+  // Pool formation modifiers (scale with defeatedMinis on the attacker)
+  blackOps?: boolean;       // +1 white die per defeated mini in the unit
+  krakenBlaster?: boolean;  // Upgrade 1 die (white→black→red) per defeated mini in the unit
 }
 
 // ============================================================================
@@ -135,7 +139,15 @@ export interface DisplayWeaponKeywords {
   versatile?: boolean;
   armX?: string;
   detonateX?: string;
+
+  // Combat-affecting weapon keywords (engine-backed, typed here to resolve enrichment TODOs)
+  saberThrow?: boolean;       // Creates a ranged weapon from half this unit's melee dice
+  // Note: blackOps and krakenBlaster are now in EnrichmentWeaponKeywords (engine-backed)
 }
+
+// ============================================================================
+// Display Unit Keywords (non-engine, tagging/display only)
+// ============================================================================
 
 // ============================================================================
 // Display Unit Keywords (non-engine, tagging/display only)
@@ -196,7 +208,7 @@ export interface DisplayUnitKeywords {
   faultyEquipment?: boolean;
   fieldCommander?: boolean;
   flawed?: boolean;
-  guidance?: boolean;
+  guidance?: boolean | string;  // Parameterized: e.g. 'corps trooper'
   heavyWeaponTeam?: boolean;
   hunted?: boolean;
   imPartOfTheSquadToo?: boolean;
@@ -229,6 +241,25 @@ export interface DisplayUnitKeywords {
   wheelMode?: boolean;
   immuneEnemyEffects?: boolean;
   immuneRange1Weapons?: boolean;
+
+  // Non-combat action keywords (display/tagging only — Repair and Treat happen outside attack sequence)
+  noncombatant?: boolean;
+  repairXCapacity1?: EnrichmentNumericValue;
+  repairXCapacity2?: EnrichmentNumericValue;
+  treatXCapacity1?: EnrichmentNumericValue;
+  treatXCapacity2?: EnrichmentNumericValue;
+
+  // Token generation keywords (display/tagging only — generated before activation, not during attack)
+  cacheSurgeX?: EnrichmentNumericValue;
+  independentSurgeX?: EnrichmentNumericValue;
+  independentDodgeX?: EnrichmentNumericValue;
+
+  // Combat-affecting keywords (engine-backed; also listed here for type-safe enrichment validation)
+  combatArmor?: boolean;          // Override defense die to red, surge chart to none
+  katarnPatternArmor?: boolean;   // Cap wounds to 1 from non-melee attacks (expend)
+  frenziedGunner?: boolean;       // Roll red defense die during pool formation for bonus attack die
+  duckAndCover?: boolean;         // Gain +1 suppression token at start of dodge/cover step
+  missionObjective?: boolean;     // Exhaust: reroll 1 attack die (+1 observation token equivalent)
 
   // Numeric keywords
   tacticalX?: EnrichmentNumericValue;

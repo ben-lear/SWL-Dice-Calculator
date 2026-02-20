@@ -204,6 +204,8 @@ function normalizeEnrichmentWeapons(
       immuneDeflect: false,
       primitive: false,
       ionX: 0,
+      blackOps: false,
+      krakenBlaster: false,
       ...weapon.keywords,
     },
     minRange: weapon.minRange,
@@ -273,6 +275,7 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
       ]),
     ] as UpgradeSlot[],
     surgeOverrides: enrichment?.surgeOverrides ?? null,
+    defenseOverrides: enrichment?.defenseOverrides ?? null,
     isEnriched,
     requiredUpgradeSlot: processed.requiredUpgradeSlot ?? null,
   };

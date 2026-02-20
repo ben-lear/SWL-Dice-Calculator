@@ -6,9 +6,8 @@
  * - Numeric (X) keywords are set to '<need human>'.
  */
 
-import { AttackType } from '../../engine';
+import { AttackType, DefenseDieColor, DefenseSurgeChart } from '../../engine';
 import type { UpgradeEnrichment } from './types';
-import { createMinimalAttacker } from '../../engine/testHelpers';
 
 export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'armament-a-180': {
@@ -967,8 +966,17 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'force-saber-throw': {
-    // TODO: add a weapon that is a ranged attack with all the keywords of a unit's melee weapon, but with half of the red dice (rounded up, pick the best dice -> 3R3W becomes 3R)
-    keywords: {},
+    weapons: [
+      {
+        name: 'Saber Throw',
+        weaponType: AttackType.Ranged,
+        maxRange: 2,
+        keywords: {
+          // TODO: add saber throw effect. Saber Throw weapon uses the dice of one of that unit's equipped melee weapons, but with half of the dice (rounded up, pick the best dice. For example, 3R2W becomes a 3R saber throw weapon). All keywords from that melee weapon are also transferred to the saber throw weapon.
+          saberThrow: true
+        }
+      }
+    ]
   },
 
   'force-terror': {
@@ -1000,8 +1008,13 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-combat-armor': {
-    // TODO: transform white defense dice into red defense dice without surge (can be overridden by Platoon Leader)
-    keywords: {},
+    defenseOverrides: {
+      dieColor: DefenseDieColor.Red,
+      surgeChart: DefenseSurgeChart.None,
+    },
+    keywords: {
+      combatArmor: true,
+    },
   },
 
   'gear-command-and-control-uplink': {
@@ -1043,7 +1056,6 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-expanded-databanks': {
-    // TODO: gain a protocol upgrade slot
     keywords: {},
   },
 
@@ -1058,8 +1070,11 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-katarn-pattern-armor': {
-    // TODO: special defensive effect
-    keywords: {},
+    // Wound cap: when suffering 1+ wounds from a non-melee attack, expend to suffer only 1 wound instead.
+    keywords: {
+      katarnPatternArmor: true,
+      expend: true,
+    },
   },
 
   'gear-mandalorian-combat-shields': {
@@ -1634,7 +1649,6 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-agent-kallus': {
-    // TODO: add a heavy weapon upgrade slot when this is equipped
     keywords: {
       demoralizeX: 1,
       leader: true
@@ -1681,6 +1695,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-b2-ha-battle-droid': {
+    keywords: {
+      cycle: true,
+    },
     weapons: [
       {
         name: 'B2-HA Cannon',
@@ -1691,7 +1708,6 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         maxRange: 3,
         keywords: {
           blast: true,
-          cycle: true,
           exhaust: true,
           impactX: 2,
         }
@@ -1758,7 +1774,6 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-cassian-andor': {
-    // TODO: add a heavy weapon upgrade slot when this is equipped
     keywords: {
       uncannyLuckX: 1,
       lowProfile: true,
@@ -1775,11 +1790,15 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         }
       },
       {
-        // TODO: add special effect of defeated minis contributing 1 white die to attacks
         name: 'Black Ops',
         weaponType: AttackType.Hybrid,
         redDice: 2,
         maxRange: 2,
+        keywords: {
+          // TODO: add special effect of defeated minis contributing 1 white die to attacks
+          // When this unit forms an attack pool, add 1 white die to the attack pool for each miniature from this unit that is defeated.
+          blackOps: true,
+        }
       }
     ]
   },
@@ -1817,31 +1836,84 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-dc-15x-arc-trooper': {
-    keywords: {
-      immuneDeflect: true,
-    },
+    weapons: [
+      {
+        name: 'DC-15x Sniper Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        maxRange: 5,
+        keywords: {
+          immuneDeflect: true,
+          lethalX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-del-meeko': {
     keywords: {
-      highVelocity: true,
+      repairXCapacity1: 2,
     },
+    weapons: [
+      {
+        name: 'Del\'s DLT-19x',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 5,
+        keywords: {
+          highVelocity: true,
+          lethalX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dh-447-sniper': {
-    keywords: {
-      highVelocity: true,
-    },
+    weapons: [
+      {
+        name: 'DH-447 Sniper Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 5,
+        keywords: {
+          highVelocity: true,
+          pierceX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dioxis-mine-saboteur': {
-    keywords: {
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'Dioxis Mine',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          poisonX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dlt-19-stormtrooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'DLT-19 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dlt-19d-trooper': {
@@ -1860,91 +1932,270 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-dlt-19x-sniper': {
-    keywords: {
-      highVelocity: true,
-    },
+    weapons: [
+      {
+        name: 'DLT-19x Sniper Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 5,
+        keywords: {
+          highVelocity: true,
+          pierceX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dlt-20a-range-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'DLT-20A Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        maxRange: 5,
+        keywords: {
+          impactX: 2,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dlt-20a-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'DLT-20A Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        whiteDice: 1,
+        maxRange: 4,
+        keywords: {
+          criticalX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dp-23-clone-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'DP-23',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        maxRange: 2,
+        keywords: {
+          pierceX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dt-f16': {
-    keywords: {},
+    keywords: {
+      compel: true,
+      leader: true,
+    },
+    weapons: [
+      {
+        name: 'E-11D Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 3
+      }
+    ]
   },
 
   'heavy-weapon-e-5c-b1-battle-droid': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'E-5C Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        maxRange: 3
+      }
+    ]
   },
 
   'heavy-weapon-e-5s-b1-battle-droid': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'E-5s Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        maxRange: 4,
+        keywords: {
+          criticalX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-e-60r-b1-battle-droid': {
-    keywords: {
-      cumbersome: true,
-    },
+    weapons: [
+      {
+        name: 'E-60R',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          cumbersome: true,
+          impactX: 2,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-echo-arc-marksman': {
     keywords: {
-      immuneDeflect: true,
+      leader: true,
+      reliableX: 1,
     },
+    weapons: [
+      {
+        name: 'DC-15x',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        maxRange: 5,
+        keywords: {
+          criticalX: 1,
+          lethalX: 1,
+          immuneDeflect: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-echo-clone-force-99': {
-    keywords: {},
+    keywords: {
+      reliableX: 3
+    },
   },
 
   'heavy-weapon-electro-whip-magnaguard': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Electro-Whip',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        maxRange: 1,
+        keywords: {
+          immobilizeX: 1,
+          versatile: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-electro-whip-soldier': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Electro-Whip',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        maxRange: 1,
+        keywords: {
+          immobilizeX: 1,
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-electrostaff-guard': {
-    keywords: {
-      immunePierce: true,
-    },
   },
 
   'heavy-weapon-flametrooper': {
-    keywords: {
-      blast: true,
-      spray: true,
-    },
+    weapons: [
+      {
+        name: 'Flamethrower',
+        weaponType: AttackType.Hybrid,
+        blackDice: 1,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          spray: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-force-pike-warrior': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Force Pike',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        blackDice: 1,
+        keywords: {
+          suppressive: true,
+        }
+      },
+      {
+        name: 'Force Pike',
+        weaponType: AttackType.Overrun,
+        whiteDice: 2,
+        blackDice: 1,
+        keywords: {
+          overrunX: 1,
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-gideon-hask': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      coordinate: 'corps trooper'
+    },
+    weapons: [
+      {
+        name: 'Gideon\'s E-11',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        maxRange: 3
+      }
+    ]
   },
 
   'heavy-weapon-heavy-aqua-droid': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Heavy Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 1,
+        maxRange: 3,
+        keywords: {
+          impactX: 2
+        }
+      }
+    ]
   },
 
   'heavy-weapon-hh-12-stormtrooper': {
+    weapons: [
+      {
+        name: 'HH-12',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          cumbersome: true,
+          impactX: 3
+        }
+      }
+    ]
+  },
+
+  'heavy-weapon-hunter': {
     keywords: {
-      cumbersome: true,
+      leader: true,
     },
   },
 
@@ -1952,18 +2203,52 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {},
   },
 
-  // IG-100 MagnaGuard variant (no keywords, cost 30)
   'heavy-weapon-kraken-ig-100-magnaguard': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Kraken\'s Blaster',
+        weaponType: AttackType.Hybrid,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 3,
+        keywords: {
+          // TODO: add unique effect
+          // When this unit attacks, upgrade 1 die for each miniature from this unit that is defeated.
+          krakenBlaster: true,
+        }
+      }
+    ]
   },
 
-  // Separatist corps generic variant (addsUpgradeSlot: heavy-weapon, cost 30)
   'heavy-weapon-kraken-separatist-alliance-corps': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Kraken\'s Blaster',
+        weaponType: AttackType.Hybrid,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 3,
+        keywords: {
+          // TODO: add unique effect
+          // When this unit attacks, upgrade 1 die for each miniature from this unit that is defeated.
+          krakenBlaster: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-kx-series-security-droids': {
-    keywords: {},
+    addsMiniature: 2,
+    weapons: [
+      {
+        name: 'Oppress',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        keywords: {
+          impactX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-long-gun-wookiee': {
@@ -1981,40 +2266,106 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-mag-det-enforcer': {
-    keywords: {
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'Mag-Detpack',
+        weaponType: AttackType.Hybrid,
+        blackDice: 3,
+        keywords: {
+          blast: true,
+          impactX: 3
+        }
+      }
+    ]
   },
 
   'heavy-weapon-mandalorian-super-commando': {
-    keywords: {},
+    keywords: {
+      cacheSurgeX: 2,
+    },
   },
 
   'heavy-weapon-mertalizer-dark-trooper': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Mertalizer',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        blackDice: 1,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-mortar-clone-trooper': {
-    keywords: {
-      suppressive: true,
-      cumbersome: true,
-    },
+    weapons: [
+      {
+        name: 'Clone Mortar',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          criticalX: 1,
+          suppressive: true,
+          cumbersome: true
+        }
+      }
+    ]
   },
 
   'heavy-weapon-mpl-57-barrage-trooper': {
     keywords: {
-      blast: true,
+      cycle: true
     },
+    weapons: [
+      {
+        name: 'MPL-57 Barrage',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 2,
+        maxRange: 3,
+        keywords: {
+          blast: true,
+          impactX: 2,
+          exhaust: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-mpl-57-ion-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'MPL-57 Ion',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        whiteDice: 1,
+        maxRange: 3,
+        keywords: {
+          criticalX: 1,
+          impactX: 1,
+          ionX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-p13-m-disruptor-soldier': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'P-13M Disruptor',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        redDice: 1,
+        maxRange: 4,
+        keywords: {
+          impactX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-pao': {
@@ -2022,13 +2373,35 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-proton-charge-saboteur': {
-    keywords: {
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'Proton Charge',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        maxRange: 1,
+        keywords: {
+          blast: true,
+          criticalX: 2,
+          impactX: 3
+        }
+      }
+    ]
   },
 
   'heavy-weapon-radiation-cannon-b1-battle-droid': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Radiation Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        maxRange: 2,
+        keywords: {
+          poisonX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-rebel-marksman': {
@@ -2036,154 +2409,474 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-rook-kast': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      retinue: 'maul'
+    },
+    weapons: [
+      {
+        name: 'Rook\'s Blaster Pistols',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        whiteDice: 2,
+        maxRange: 2,
+      }
+    ]
   },
 
   'heavy-weapon-rps-6-arf-trooper': {
-    keywords: {
-      cumbersome: true,
-    },
+    weapons: [
+      {
+        name: 'RPS-6',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        redDice: 1,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 2,
+          cumbersome: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-rps-6-clone-trooper': {
-    keywords: {
-      cumbersome: true,
-    },
+    weapons: [
+      {
+        name: 'RPS-6',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        redDice: 1,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 2,
+          cumbersome: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-rps-6-magnaguard': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'RPS-6',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        redDice: 1,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          impactX: 2,
+          criticalX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-rt-97c-stormtrooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'RT-97C Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 3,
+        redDice: 1,
+        maxRange: 4,
+      }
+    ]
   },
 
   'heavy-weapon-scatter-gun-enforcer': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Scatter Gun',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        maxRange: 2,
+        keywords: {
+          pierceX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-scatter-gun-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Scatter Gun',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        maxRange: 2,
+        keywords: {
+          pierceX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-sm-9-frag-launcher': {
     keywords: {
-      blast: true,
+      cycle: true,
     },
+    weapons: [
+      {
+        name: 'Scatter Gun',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        blackDice: 1,
+        maxRange: 2,
+        keywords: {
+          blast: true,
+          impactX: 2,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-sonic-cannon-warrior': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Sonic Cannon',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        redDice: 1,
+        maxRange: 2,
+        keywords: {
+          impactX: 1,
+          scatter: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-sonic-charge-saboteur': {
-    keywords: {
-      blast: true,
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Sonic Charge',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+        whiteDice: 1,
+        redDice: 1,
+        maxRange: 1,
+        keywords: {
+          impactX: 2,
+          blast: true,
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-stormtrooper-marksman': {
-    keywords: {},
   },
 
   'heavy-weapon-super-commando-gunslinger': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Dual Blaster Pistols',
+        weaponType: AttackType.Hybrid,
+        blackDice: 2,
+        whiteDice: 2,
+        maxRange: 2,
+        keywords: {
+          lethalX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-super-commando-marksman': {
     keywords: {
-      preciseX: '<need human>',
+      preciseX: 1,
     },
+    weapons: [
+      {
+        name: 'Blaster Carbine',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 3,
+      }
+    ]
   },
 
   'heavy-weapon-sx-21-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'SX-21 Scatter Blaster',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 2,
+        maxRange: 2,
+        keywords: {
+          impactX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-t-21-special-forces-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'T-21 Repeating Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 4,
+        maxRange: 3,
+        keywords: {
+          criticalX: 2
+        }
+      }
+    ]
   },
 
   'heavy-weapon-t-21-stormtrooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'T-21 Repeating Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 4,
+        maxRange: 3,
+        keywords: {
+          criticalX: 2
+        }
+      }
+    ]
   },
 
   'heavy-weapon-t-21a-range-trooper': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'T-21A Repeating Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 2,
+        maxRange: 4,
+        keywords: {
+          suppressive: true
+        }
+      }
+    ]
   },
 
   'heavy-weapon-t-21b-shoretrooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'T-21B Repeating Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        blackDice: 2,
+        maxRange: 4,
+        keywords: {
+          criticalX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-t-7-ion-snowtrooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'T-7 Ion Rifle',
+        weaponType: AttackType.Ranged,
+        whiteDice: 1,
+        blackDice: 2,
+        maxRange: 3,
+        keywords: {
+          criticalX: 1,
+          ionX: 1,
+          impactX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-tech': {
-    keywords: {},
-  },
-
-  'heavy-weapon-tristan-wren': {
     keywords: {
-      suppressive: true,
+      tacticalX: 1,
+      cacheAimX: 1,
+      cacheDodgeX: 1
     },
   },
 
+  'heavy-weapon-tristan-wren': {
+    weapons: [
+      {
+        name: 'Tristan\'s Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 3,
+        keywords: {
+          lethalX: 1,
+          suppressive: true,
+        }
+      }
+    ]
+  },
+
   'heavy-weapon-ursa-wren': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      dauntless: true,
+    },
+    weapons: [
+      {
+        name: 'Ursa\'s Blaster',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        keywords: {
+          longshot: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-wrecker': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Wrecker\'s Blaster',
+        weaponType: AttackType.Hybrid,
+        redDice: 1,
+        whiteDice: 1,
+        blackDice: 1,
+        maxRange: 2,
+      }
+    ]
   },
 
   'heavy-weapon-xs-iv-assault-cannon': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'XS-IV Assault Cannon',
+        weaponType: AttackType.Ranged,
+        blackDice: 4,
+        maxRange: 3,
+        keywords: {
+          criticalX: 1,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-z-6-clone-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Z-6',
+        weaponType: AttackType.Ranged,
+        whiteDice: 6,
+        maxRange: 3,
+      }
+    ]
   },
 
   'heavy-weapon-z-6-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Z-6 Rotary Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 6,
+        maxRange: 3,
+      }
+    ]
   },
 
   'ordnance-armor-piercing-shells': {
-    keywords: {},
+    keywords: {
+      cycle: true,
+    },
+    weapons: [
+      {
+        name: 'Armor-Piercing Shells',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 2,
+        minRange: 2,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front',
+          impactX: 3,
+          exhaust: true,
+        }
+      }
+    ]
   },
 
   'ordnance-bunker-buster-shells': {
     keywords: {
-      blast: true,
+      cycle: true,
     },
+    weapons: [
+      {
+        name: 'Bunker Buster Shells',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 3,
+        maxRange: 2,
+        keywords: {
+          fixed: 'front',
+          blast: true,
+          scatter: true,
+          exhaust: true,
+        }
+      }
+    ]
   },
 
   'ordnance-high-energy-shells': {
     keywords: {
-      highVelocity: true,
+      cycle: true,
     },
+    weapons: [
+      {
+        name: 'High-Energy Shells',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 1,
+        minRange: 2,
+        maxRange: 4,
+        keywords: {
+          fixed: 'front',
+          criticalX: 1,
+          highVelocity: true,
+          exhaust: true,
+        }
+      }
+    ]
   },
 
   'personnel-2-1b-medical-droid': {
-    keywords: {},
+    keywords: {
+      noncombatant: true,
+      treatXCapacity2: 1,
+    },
   },
 
   'personnel-arf-trooper-duo': {
-    keywords: {},
+    addsMiniature: 2,
+    keywords: {
+      cacheSurgeX: 1,
+    },
   },
 
   'personnel-astromech': {
-    keywords: {},
+    keywords: {
+      noncombatant: true,
+      repairXCapacity2: 1,
+    },
   },
 
   'personnel-astromech-droid': {
-    keywords: {},
+    keywords: {
+      noncombatant: true,
+      repairXCapacity2: 1,
+    },
   },
 
   'personnel-b1-battle-droid': {
@@ -2217,15 +2910,22 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-black-sun-vigo': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      independentSurgeX: 1
+    },
   },
 
   'personnel-clone-comms-technician': {
-    keywords: {},
+    keywords: {
+      fireSupport: true
+    },
   },
 
   'personnel-clone-engineer': {
-    keywords: {},
+    keywords: {
+      repairXCapacity1: 1,
+    },
   },
 
   'personnel-clone-marksman': {
@@ -2233,7 +2933,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-clone-specialist': {
-    keywords: {},
+    keywords: {
+      exhaust: true,
+    },
   },
 
   'personnel-clone-trooper-infantry': {
@@ -2255,7 +2957,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-ev-series-medical-droid': {
-    keywords: {},
+    keywords: {
+      noncombatant: true,
+      treatXCapacity2: 1,
+    },
   },
 
   'personnel-ewok-skirmisher-squad': {
@@ -2288,7 +2993,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-fx-9-medical-droid': {
-    keywords: {},
+    keywords: {
+      noncombatant: true,
+      treatXCapacity2: 1,
+    },
   },
 
   'personnel-geonosian-warrior': {
@@ -2311,19 +3019,30 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-imperial-officer': {
-    keywords: {},
+    keywords: {
+      inspireX: 1,
+      leader: true,
+    },
   },
 
   'personnel-oom-series-battle-droid': {
-    keywords: {},
+    keywords: {
+      leader: true,
+    },
   },
 
   'personnel-pk-series-worker-droid': {
-    keywords: {},
+    keywords: {
+      noncombatant: true,
+      repairXCapacity2: 1,
+    },
   },
 
   'personnel-pyke-syndicate-capo': {
-    keywords: {},
+    keywords: {
+      independentSurgeX: 1,
+      leader: true,
+    },
   },
 
   'personnel-pyke-syndicate-foot-soldier': {
@@ -2333,7 +3052,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-r4-astromech': {
-    keywords: {},
+    keywords: {
+      noncombatant: true,
+      repairXCapacity2: 1,
+    },
   },
 
   'personnel-range-trooper': {
@@ -2345,7 +3067,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-rebel-officer': {
-    keywords: {},
+    keywords: {
+      inspireX: 1,
+      leader: true,
+    },
   },
 
   'personnel-rebel-trooper': {
@@ -2353,7 +3078,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-rebel-trooper-captain': {
-    keywords: {},
+    keywords: {
+      leader: true
+    },
   },
 
   'personnel-rebel-trooper-specialist': {
@@ -2405,7 +3132,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-stormtrooper-captain': {
-    keywords: {},
+    keywords: {
+      leader: true
+    },
   },
 
   'personnel-stormtrooper-specialist': {
@@ -2420,7 +3149,21 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-t-series-tactical-droid': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      reliableX: 1,
+    },
+    weapons: [
+      {
+        name: 'E-5 Blaster Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        maxRange: 3,
+        keywords: {
+          sidearmRanged: true,
+        }
+      }
+    ]
   },
 
   'personnel-viper-recon-droid': {
@@ -2446,7 +3189,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-aayla-secura': {
-    keywords: {},
+    keywords: {
+      fieldCommander: true,
+      inspireX: 2
+    },
   },
 
   'pilot-baron-rudor': {
@@ -2456,7 +3202,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-clone-commander-fox': {
-    keywords: {},
+    keywords: {
+      fieldCommander: true,
+    },
   },
 
   'pilot-clone-shock-trooper-pilot': {
@@ -2464,37 +3212,54 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-first-sergeant-arbmab': {
-    keywords: {},
+    keywords: {
+      tacticalX: 1,
+    },
   },
 
   'pilot-frenzied-gunner': {
-    keywords: {},
+    // TODO: add unique effect of dice being added to pool during the Form Attack Pool step.
+    // Logic is: roll a red defense die. On a blank result, add a white attack die to the pool. On a block result, add a black attack die to the pool. On a surge result, add a red attack die to the pool.
+    keywords: {
+      frenziedGunner: true
+    },
   },
 
   'pilot-gang-boss': {
-    keywords: {},
+    keywords: {
+      commandVehicleX: 2
+    },
   },
 
   'pilot-general-weiss': {
-    keywords: {},
+    keywords: {
+      arsenalX: 2,
+      fieldCommander: true,
+    },
   },
 
   'pilot-governor-pryce': {
-    keywords: {},
+    keywords: {
+      fieldCommander: true
+    },
   },
 
   'pilot-hotshot-pilot': {
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
     },
   },
 
   'pilot-hound-grizzer': {
-    keywords: {},
+    keywords: {
+      observeX: 4
+    },
   },
 
   'pilot-imperial-hammers-elite-armor-pilot': {
-    keywords: {},
+    surgeOverrides: {
+      surgeHit: true,
+    }
   },
 
   'pilot-imperial-tie-pilot': {
@@ -2502,18 +3267,17 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-lok-durd': {
-    keywords: {
-      suppressive: true,
-    },
   },
 
   'pilot-oom-series-droid-pilot': {
-    keywords: {},
+    keywords: {
+      coordinate: 'droid trooper'
+    },
   },
 
   'pilot-outer-rim-speeder-jockey': {
     keywords: {
-      coverX: '<need human>',
+      coverX: 1,
     },
   },
 
@@ -2526,7 +3290,11 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-raiding-party-leader': {
-    keywords: {},
+    keywords: {
+      alliesOfConvenience: true,
+      fieldCommander: true,
+      demoralizeX: 1
+    },
   },
 
   'pilot-ryder-azadi': {
@@ -2534,11 +3302,15 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-shriv-suurgav': {
-    keywords: {},
+    keywords: {
+      fieldCommander: true
+    },
   },
 
   'pilot-t-series-tactical-droid-pilot': {
-    keywords: {},
+    keywords: {
+      fieldCommander: true
+    },
   },
 
   'pilot-veteran-clone-pilot': {
@@ -2549,51 +3321,104 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {},
   },
 
-  'programming-c-3po': {
-    keywords: {},
-  },
-
-  'programming-grogu': {
-    keywords: {},
-  },
-
-  'programming-iden-s-id10-seeker-droid': {
+  'counterpart-c-3po': {
     keywords: {
-      shieldedX: '<need human>',
+      calculateOdds: true,
+      distract: true
+    },
+    weapons: [
+      {
+        name: 'Clumsy Kick',
+        weaponType: AttackType.Melee,
+        whiteDice: 1
+      }
+    ]
+  },
+
+  'counterpart-grogu': {
+    keywords: {
+      hunted: true,
+      latentPower: true,
+      small: true
     },
   },
 
-  'programming-omega': {
-    keywords: {},
+  'counterpart-iden-s-id10-seeker-droid': {
+    keywords: {
+      shieldedX: 1,
+      rechargeX: 1,
+      observeX: 1,
+      small: true,
+    },
+    weapons: [
+      {
+        name: 'Electro-Shock',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 3,
+        maxRange: 1,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ]
+  },
+
+  'counterpart-omega': {
+    keywords: {
+      imPartOfTheSquadToo: true,
+    },
+    weapons: [
+      {
+        name: 'Zygerrian Energy Bow',
+        weaponType: AttackType.Hybrid,
+        whiteDice: 2,
+        maxRange: 2,
+      }
+    ]
   },
 
   'protocol-bounty-programming': {
     keywords: {
+      bounty: true,
+      ai: 'aim, attack',
+      pierceX: 1,
       suppressive: true,
     },
   },
 
   'protocol-nanny-programming': {
-    keywords: {},
+    // TODO: unique effect to allow equipping Grogu
+    keywords: {
+      ai: 'dodge, move'
+    },
   },
 
   'protocol-attack-protocols': {
     keywords: {
-      preciseX: '<need human>',
+      ai: 'aim',
+      preciseX: 2,
     },
   },
 
   'protocol-defense-protocols': {
-    keywords: {},
+    keywords: {
+      ai: 'dodge',
+      nimble: true,
+      outmaneuver: true,
+    },
   },
 
   'protocol-engagement-protocols': {
-    keywords: {},
+    keywords: {
+      ai: 'attack, move',
+
+    },
   },
 
   'protocol-enhanced-combat-subroutines': {
     keywords: {
-      sharpshooterX: '<need human>',
+      sharpshooterX: 1,
+      lethalX: 1,
     },
   },
 
@@ -2602,7 +3427,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'protocol-optimized-task-flow': {
-    keywords: {},
+    keywords: {
+      direct: 'ai unit'
+    },
   },
 
   'protocol-overclock': {
@@ -2618,7 +3445,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'protocol-strategic-programming': {
-    keywords: {},
+    keywords: {
+      strategizeX: 1
+    },
   },
 
   'protocol-targeting-relay': {
@@ -2627,44 +3456,113 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'squad-leader-ahsoka-tano-jedi-padawan': {
     keywords: {
+      leader: true,
       block: true,
+      charge: true,
+      independentDodgeX: 1,
     },
+    weapons: [
+      {
+        name: 'Ahsoka\'s Lightsabers',
+        weaponType: AttackType.Melee,
+        whiteDice: 2,
+        blackDice: 2,
+        keywords: {
+          criticalX: 1,
+          impactX: 2,
+          pierceX: 1,
+          sidearmMelee: true,
+          sidearmRanged: true
+        }
+      }
+    ]
   },
 
   'squad-leader-boil': {
     keywords: {
-      guardianX: '<need human>',
+      leader: true,
+      guardianX: 1,
+      scoutX: 1,
     },
   },
 
   'squad-leader-clone-captain': {
     keywords: {
+      leader: true,
       outmaneuver: true,
+      defendX: 1,
     },
   },
 
   'squad-leader-clone-captain-rex': {
-    keywords: {},
+    keywords: {
+      leader: true,
+    },
+    weapons: [
+      {
+        name: 'Dual Hand Blasters',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        maxRange: 2,
+      }
+    ]
   },
 
   'squad-leader-clone-commander': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      inspireX: 1,
+      reliableX: 1,
+    },
   },
 
   'squad-leader-clone-medic': {
-    keywords: {},
+    keywords: {
+      treatXCapacity1: 1,
+    },
   },
 
   'squad-leader-fives': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      charge: true,
+      coordinate: 'clone trooper'
+    },
+    weapons: [
+      {
+        name: 'Fives\' Blaster',
+        weaponType: AttackType.Hybrid,
+        blackDice: 3,
+        maxRange: 3,
+      }
+    ]
   },
 
   'squad-leader-jedi-guardian': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      charge: true,
+    },
+    weapons: [
+      {
+        name: 'Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+        keywords: {
+          impactX: 2,
+          pierceX: 1,
+          sidearmRanged: true
+        }
+      }
+    ]
   },
 
   'squad-leader-waxer': {
-    keywords: {},
+    keywords: {
+      leader: true,
+      disciplinedX: 1,
+      scoutX: 1,
+    },
   },
 
   'training-call-to-arms': {
@@ -2672,11 +3570,15 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'training-duck-and-cover': {
-    keywords: {},
+    keywords: {
+      duckAndCover: true,
+    },
   },
 
   'training-dug-in': {
-    keywords: {},
+    keywords: {
+      dugIn: true,
+    },
   },
 
   'training-endurance': {
@@ -2684,7 +3586,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'training-forest-dwellers': {
-    keywords: {},
+    keywords: {
+      scoutX: 1,
+    },
   },
 
   'training-herbal-medicine': {
@@ -2708,30 +3612,46 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'training-jedi-training-force-adept': {
-    keywords: {},
+    keywords: {
+      jumpX: 2
+    },
   },
 
   'training-jedi-training-master-duelist': {
     keywords: {
       outmaneuver: true,
       block: true,
+      criticalX: 1,
+      jumpX: 1
     },
   },
 
   'training-jedi-training-peacekeeping-mission': {
-    keywords: {},
+    keywords: {
+      preparedPosition: true,
+      reliableX: 2,
+      sentinel: true,
+    },
   },
 
   'training-jedi-training-tactical-acumen': {
-    keywords: {},
+    keywords: {
+      guidance: 'corps trooper',
+    },
   },
 
   'training-mission-objective': {
-    keywords: {},
+    keywords: {
+      missionObjective: true,
+      exhaust: true,
+    },
   },
 
   'training-offensive-push': {
-    keywords: {},
+    keywords: {
+      tacticalX: 1,
+      exhaust: true,
+    },
   },
 
   'training-offensive-defensive-stance': {
@@ -2777,7 +3697,13 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'training-tenacity': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Tenacity',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+      }
+    ]
   },
 
   'training-up-close-and-personal': {

@@ -68,6 +68,7 @@ function makeUpgrade(
     addsUpgradeSlot: [],
     requiredUpgradeSlot: null,
     surgeOverrides: null,
+    defenseOverrides: null,
     isEnriched: true,
     ...overrides,
   };

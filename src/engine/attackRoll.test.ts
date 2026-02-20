@@ -49,7 +49,7 @@ describe('attackRoll', () => {
         aimTokens: 1,
       });
       const config = { attacker, defender: createMinimalDefender(), attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Blank },
@@ -69,7 +69,7 @@ describe('attackRoll', () => {
         aimTokens: 0,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Blank },
@@ -88,7 +88,7 @@ describe('attackRoll', () => {
         surgeTokens: 0,
       });
       const config = { attacker, defender: createMinimalDefender(), attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Surge },
@@ -106,7 +106,7 @@ describe('attackRoll', () => {
         surgeChart: AttackSurgeChart.ToHit,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Surge },
@@ -126,7 +126,7 @@ describe('attackRoll', () => {
         surgeTokens: 1,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 1, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 1, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Surge },
@@ -147,7 +147,7 @@ describe('attackRoll', () => {
         preciseX: 2, // 2 + 2 = 4 rerolls per aim
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Blank },
@@ -166,7 +166,7 @@ describe('attackRoll', () => {
         aimTokens: 1, // 2 rerolls by default
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.White, face: AttackFace.Blank },
@@ -188,7 +188,7 @@ describe('attackRoll', () => {
         duelistAttacker: true,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Melee };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Blank },
@@ -205,7 +205,7 @@ describe('attackRoll', () => {
         duelistAttacker: true,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Blank },
@@ -223,7 +223,7 @@ describe('attackRoll', () => {
       });
       const defender = createMinimalDefender(); // Use proper minimal defender
       const config = { attacker, defender, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Hit },
@@ -245,7 +245,7 @@ describe('attackRoll', () => {
         surgeTokens: 0,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Surge },
@@ -267,7 +267,7 @@ describe('attackRoll', () => {
         surgeTokens: 0,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Melee }; // Hold the Line is melee-only
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Surge },
@@ -286,7 +286,7 @@ describe('attackRoll', () => {
         aimTokens: 0,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Hit },
@@ -304,7 +304,7 @@ describe('attackRoll', () => {
         aimTokens: 2,
       });
       const config = { attacker, defender: {} as any, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Hit },
@@ -326,7 +326,7 @@ describe('attackRoll', () => {
       });
       const defender = createMinimalDefender({ armorX: 1 }); // Makes hit→crit valuable
       const config = { attacker, defender, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Hit },
@@ -349,7 +349,7 @@ describe('attackRoll', () => {
       });
       const defender = createMinimalDefender({ armorX: 2 }); // Would cancel new hits from blank→hit
       const config = { attacker, defender, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Blank }, // Good reroll: 6/8 favorable faces with surge conversion
@@ -374,7 +374,7 @@ describe('attackRoll', () => {
         dodgeTokens: 1, // Further boosts crit value (can't be dodged)
       });
       const config = { attacker, defender, attackType: AttackType.Ranged };
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Hit }, // hit→crit has very high EV (bypasses Armor + Dodge)
@@ -394,7 +394,7 @@ describe('attackRoll', () => {
         marksman: true,
       };
       const defender = createMinimalDefender({ armorX: 1 });
-      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+      const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
       const results = [
         { color: AttackDieColor.Red, face: AttackFace.Hit },
@@ -435,7 +435,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Hit },
@@ -459,7 +459,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Hit },
@@ -483,7 +483,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Blank },
@@ -509,7 +509,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Critical },
@@ -533,7 +533,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 1, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 1, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.White, face: AttackFace.Surge }, // Protected (converts to crit)
@@ -559,7 +559,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Surge }, // Would convert to hit (rerollable)
@@ -584,7 +584,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 1, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 1, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.White, face: AttackFace.Surge }, // #1: Protected (crit conversion)
@@ -608,7 +608,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.White, face: AttackFace.Hit },
@@ -635,7 +635,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Surge },
@@ -656,7 +656,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Surge },
@@ -681,7 +681,7 @@ describe('attackRoll', () => {
         });
         const defender = createMinimalDefender();
         const config = { attacker, defender, attackType: AttackType.Ranged };
-        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0 };
+        const poolKeywords = { criticalX: 0, lethalX: 0, pierceX: 0, impactX: 0, ramX: 0, blast: false, suppressive: false, highVelocity: false, immuneDeflect: false, primitive: false, ionX: 0, blackOps: false, krakenBlaster: false };
 
         const results = [
           { color: AttackDieColor.Red, face: AttackFace.Surge },

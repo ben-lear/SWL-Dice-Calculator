@@ -50,6 +50,9 @@ export interface AttackConfigState {
   unitCost: number;
   baseUnitCost: number;  // Base cost before upgrades (for auto-calculation)
 
+  // ── Defeated miniature count (Black Ops / Kraken's Blaster) ──
+  defeatedMinis: number;
+
   // ── UI State (not sent to engine) ──
   selectedFaction: Faction | null;
   selectedPresetId: string | null;
@@ -203,6 +206,8 @@ function createEmptyWeapon(): WeaponProfile {
       immuneDeflect: false,
       primitive: false,
       ionX: 0,
+      blackOps: false,
+      krakenBlaster: false,
     },
   };
 }
@@ -240,6 +245,9 @@ const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
   // Points
   unitCost: 0,
   baseUnitCost: 0,
+
+  // Defeated miniature count
+  defeatedMinis: 0,
 };
 
 // ============================================================================

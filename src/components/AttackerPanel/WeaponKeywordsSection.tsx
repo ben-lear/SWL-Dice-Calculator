@@ -33,6 +33,26 @@ export default function WeaponKeywordsSection({
           tooltip="Convert the first X attack surge results into critical hits. Remaining surges still convert via the surge chart."
         />
         <NumberSpinner
+          label="Impact X"
+          value={keywords.impactX ?? 0}
+          onChange={(value) => onKeywordChange?.('impactX', value)}
+          min={0}
+          max={99}
+          compact
+          disabled={isDisabled('impactX')}
+          tooltip="Convert up to X hit results into critical hits when attacking a unit with the Armor keyword."
+        />
+        <NumberSpinner
+          label="Ion X"
+          value={keywords.ionX ?? 0}
+          onChange={(value) => onKeywordChange?.('ionX', value)}
+          min={0}
+          max={99}
+          compact
+          disabled={isDisabled('ionX')}
+          tooltip="At the start of Modify Attack Dice, flip up to X of the defender's active Shield tokens per hit/crit result, reducing shields available."
+        />
+        <NumberSpinner
           label="Lethal X"
           value={keywords.lethalX ?? 0}
           onChange={(value) => onKeywordChange?.('lethalX', value)}
@@ -51,16 +71,6 @@ export default function WeaponKeywordsSection({
           compact
           disabled={isDisabled('pierceX')}
           tooltip="Cancel X of the defender's block results after defense dice are rolled."
-        />
-        <NumberSpinner
-          label="Impact X"
-          value={keywords.impactX ?? 0}
-          onChange={(value) => onKeywordChange?.('impactX', value)}
-          min={0}
-          max={99}
-          compact
-          disabled={isDisabled('impactX')}
-          tooltip="Convert up to X hit results into critical hits when attacking a unit with the Armor keyword."
         />
         <NumberSpinner
           label="Ram X"
@@ -83,25 +93,11 @@ export default function WeaponKeywordsSection({
           tooltip="This weapon ignores all cover when attacking."
         />
         <Checkbox
-          label="Suppressive"
-          value={keywords.suppressive ?? false}
-          onChange={(value) => onKeywordChange?.('suppressive', value)}
-          disabled={isDisabled('suppressive')}
-          tooltip="This weapon applies 1 additional suppression token to the defender beyond the normal amount."
-        />
-        <Checkbox
           label="High Velocity"
           value={keywords.highVelocity ?? false}
           onChange={(value) => onKeywordChange?.('highVelocity', value)}
           disabled={isDisabled('highVelocity')}
           tooltip="The defender cannot spend dodge tokens when defending against this weapon."
-        />
-        <Checkbox
-          label="Spray"
-          value={keywords.spray ?? false}
-          onChange={(value) => onKeywordChange?.('spray', value)}
-          disabled={isDisabled('spray')}
-          tooltip="This weapon's dice are added once per defending miniature in line of sight, multiplying its contribution to the attack pool."
         />
         <Checkbox
           label="Immune: Deflect"
@@ -117,18 +113,19 @@ export default function WeaponKeywordsSection({
           disabled={isDisabled('primitive')}
           tooltip="When attacking a unit with Armor X, after resolving Impact X, all crit results become hit results."
         />
-      </div>
-
-      <div className="grid grid-cols-2 gap-x-2 gap-y-2">
-        <NumberSpinner
-          label="Ion X"
-          value={keywords.ionX ?? 0}
-          onChange={(value) => onKeywordChange?.('ionX', value)}
-          min={0}
-          max={99}
-          compact
-          disabled={isDisabled('ionX')}
-          tooltip="At the start of Modify Attack Dice, flip up to X of the defender's active Shield tokens per hit/crit result, reducing shields available."
+        <Checkbox
+          label="Spray"
+          value={keywords.spray ?? false}
+          onChange={(value) => onKeywordChange?.('spray', value)}
+          disabled={isDisabled('spray')}
+          tooltip="This weapon's dice are added once per defending miniature in line of sight, multiplying its contribution to the attack pool."
+        />
+        <Checkbox
+          label="Suppressive"
+          value={keywords.suppressive ?? false}
+          onChange={(value) => onKeywordChange?.('suppressive', value)}
+          disabled={isDisabled('suppressive')}
+          tooltip="This weapon applies 1 additional suppression token to the defender beyond the normal amount."
         />
       </div>
     </div>

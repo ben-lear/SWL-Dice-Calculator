@@ -382,6 +382,16 @@ export interface ResolvedUpgrade {
     surgeCrit?: boolean;
     meleeSurgeCrit?: boolean;
     meleeSurgeBlock?: boolean;
+    surgeHit?: boolean;
+  } | null;
+
+  /**
+   * Defense stat overrides this upgrade grants.
+   * Null if the upgrade has no defense overrides.
+   */
+  defenseOverrides: {
+    dieColor?: DefenseDieColor;
+    surgeChart?: DefenseSurgeChart;
   } | null;
 
   /** Whether this upgrade has been manually enriched with keyword/dice data */
