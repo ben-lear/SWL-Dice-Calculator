@@ -1725,6 +1725,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-17 Hand Blasters',
         weaponType: AttackType.Ranged,
         redDice: 3,
+        maxRange: 2,
       }
     ],
   },
@@ -1745,6 +1746,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-15 Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 3,
+        maxRange: 3,
       }
     ],
   },
@@ -1764,6 +1766,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         redDice: 2,
         whiteDice: 1,
         blackDice: 1,
+        maxRange: 4,
         keywords: {
           lethalX: 1,
           impactX: 1,
@@ -1825,6 +1828,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Chieftain\'s Bowcaster',
         weaponType: AttackType.Ranged,
         blackDice: 4,
+        maxRange: 3,
         keywords: {
           impactX: 1,
           pierceX: 1,
@@ -1854,6 +1858,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Force Wave',
         weaponType: AttackType.Ranged,
         blackDice: 4,
+        maxRange: 2,
         keywords: {
           blast: true,
           suppressive: true,
@@ -1873,13 +1878,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Weequay\'s Cunning',
         weaponType: AttackType.Hybrid,
-        blackDice: 3
+        blackDice: 3,
+        maxRange: 1,
       },
       {
         name: 'Hondo\'s Blaster',
         weaponType: AttackType.Ranged,
         blackDice: 3,
         whiteDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -1909,7 +1916,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Padme\'s Blaster',
         weaponType: AttackType.Ranged,
-        redDice: 3
+        redDice: 3,
+        maxRange: 2,
       }
     ],
   },
@@ -1921,7 +1929,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Electro-Shock',
         weaponType: AttackType.Hybrid,
-        whiteDice: 3
+        whiteDice: 3,
+        maxRange: 1
       }
     ],
   },
@@ -1945,6 +1954,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         whiteDice: 1,
         blackDice: 1,
+        maxRange: 2
       }
     ],
   },
@@ -1963,6 +1973,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-15A Blaster Carbine',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 3
       }
     ],
   },
@@ -1984,6 +1995,10 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-15A Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 3,
+        keywords: {
+          longshot: true,
+        }
       }
     ],
   },
@@ -2004,6 +2019,10 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 2,
+        keywords: {
+          versatile: true,
+        }
       }
     ],
   },
@@ -2021,6 +2040,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-17 Hand Blaster',
         weaponType: AttackType.Hybrid,
         blackDice: 2,
+        maxRange: 2
       }
     ],
   },
@@ -2038,6 +2058,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-17 Hand Blaster',
         weaponType: AttackType.Hybrid,
         blackDice: 2,
+        maxRange: 2
       }
     ],
   },
@@ -2059,6 +2080,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-15A Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 4
       }
     ],
   },
@@ -2081,6 +2103,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'X1 Carbine',
         weaponType: AttackType.Ranged,
         whiteDice: 2,
+        maxRange: 3
       }
     ],
   },
@@ -2104,6 +2127,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 2
       }
     ],
   },
@@ -2128,6 +2152,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         whiteDice: 2,
         blackDice: 1,
+        maxRange: 3,
         keywords: {
           criticalX: 1,
           impactX: 1
@@ -2148,6 +2173,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-15A Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 3
       },
       {
         name: 'Twin Blaster Cannon',
@@ -2155,6 +2181,10 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         redDice: 1,
         whiteDice: 1,
         blackDice: 1,
+        maxRange: 3,
+        keywords: {
+          fixed: 'front'
+        }
       }
     ],
   },
@@ -2178,6 +2208,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 2,
         keywords: {
           suppressive: true
         }
@@ -2203,6 +2234,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-17M ICWS Blaster',
         weaponType: AttackType.Ranged,
         blackDice: 2,
+        maxRange: 2,
         keywords: {
           suppressive: true
         }
@@ -2224,6 +2256,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -2242,6 +2275,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -2258,6 +2292,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'DC-15A Blaster Rifles',
         weaponType: AttackType.Ranged,
         blackDice: 2,
+        maxRange: 3,
       }
     ],
   },
@@ -2278,6 +2313,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 2,
         blackDice: 2,
+        maxRange: 3,
         keywords: {
           impactX: 1,
         }
@@ -2300,6 +2336,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         redDice: 2,
         whiteDice: 2,
         blackDice: 2,
+        maxRange: 4,
         keywords: {
           impactX: 2,
           criticalX: 1
@@ -2315,6 +2352,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       deflect: true,
       immunePierce: true,
       makashiMastery: true,
+      direct: 'trooper unit',
+      cunning: true,
+      masterOfTheForceX: 2
     },
     weapons: [
       {
@@ -2330,8 +2370,10 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Force Lightning',
         weaponType: AttackType.Ranged,
         blackDice: 6,
+        maxRange: 2,
         keywords: {
           pierceX: 1,
+          scatter: true,
           suppressive: true,
         }
       }
@@ -2364,9 +2406,11 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         whiteDice: 2,
         blackDice: 2,
+        maxRange: 2,
         keywords: {
           criticalX: 1,
           pierceX: 1,
+          versatile: true,
         }
       }
     ],
@@ -2389,7 +2433,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         keywords: {
           impactX: 2,
           pierceX: 1,
-          ramX: 1
+          ramX: 1,
+          overrunX: 1,
+          scatter: true
         }
       },
       {
@@ -2398,7 +2444,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         whiteDice: 2,
         blackDice: 2,
         redDice: 1,
+        maxRange: 2,
         keywords: {
+          fixed: 'front',
           impactX: 1,
           pierceX: 1,
         }
@@ -2422,6 +2470,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 3,
+        maxRange: 3,
       }
     ],
   },
@@ -2445,6 +2494,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Blaster Rifle',
         weaponType: AttackType.Ranged,
         redDice: 3,
+        maxRange: 3,
         keywords: {
           lethalX: 1,
         }
@@ -2466,6 +2516,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Concealed Blaster',
         weaponType: AttackType.Ranged,
         blackDice: 2,
+        maxRange: 3,
       }
     ],
   },
@@ -2484,6 +2535,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'E-5 Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 3,
+        maxRange: 3,
       }
     ],
   },
@@ -2501,6 +2553,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 2,
+        maxRange: 3,
       }
     ],
   },
@@ -2539,6 +2592,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'LL-30 Blaster Pistols',
         weaponType: AttackType.Ranged,
         blackDice: 4,
+        maxRange: 2,
         keywords: {
           pierceX: 1,
         }
@@ -2590,6 +2644,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         blackDice: 1,
         redDice: 1,
         whiteDice: 1,
+        maxRange: 3,
         keywords: {
           suppressive: true,
         }
@@ -2611,6 +2666,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'E-5 Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 3,
+        maxRange: 3,
       }
     ],
   },
@@ -2628,7 +2684,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'E-5 Blaster Rifle',
         weaponType: AttackType.Ranged,
-        whiteDice: 1
+        whiteDice: 1,
+        maxRange: 3,
       }
     ],
   },
@@ -2642,6 +2699,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Wrist Rockets',
         weaponType: AttackType.Ranged,
         redDice: 1,
+        maxRange: 1,
         keywords: {
           impactX: 1,
         }
@@ -2649,7 +2707,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Arm Cannons',
         weaponType: AttackType.Hybrid,
-        blackDice: 2
+        blackDice: 2,
+        maxRange: 2,
       }
     ],
   },
@@ -2671,7 +2730,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Sonic Blasters',
         weaponType: AttackType.Ranged,
         blackDice: 1,
-        whiteDice: 1
+        whiteDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -2692,7 +2752,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Commando E-5 Blaster',
         weaponType: AttackType.Ranged,
-        whiteDice: 2
+        whiteDice: 2,
+        maxRange: 3,
       }
     ],
   },
@@ -2713,7 +2774,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Commando E-5 Blaster',
         weaponType: AttackType.Ranged,
-        whiteDice: 2
+        whiteDice: 2,
+        maxRange: 3,
       }
     ],
   },
@@ -2727,6 +2789,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Electro-stun Blaster',
         weaponType: AttackType.Hybrid,
         whiteDice: 2,
+        maxRange: 2,
         keywords: {
           suppressive: true,
         }
@@ -2752,6 +2815,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -2775,6 +2839,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -2797,6 +2862,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 1,
         whiteDice: 1,
+        maxRange: 2,
         keywords: {
           impactX: 1,
         }
@@ -2817,6 +2883,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 1,
         blackDice: 2,
+        maxRange: 3,
         keywords: {
           immuneDeflect: true,
           suppressive: true,
@@ -2875,6 +2942,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Dual Blaster Cannons',
         weaponType: AttackType.Ranged,
         blackDice: 3,
+        maxRange: 3,
         keywords: {
           criticalX: 1,
         }
@@ -2893,12 +2961,15 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Anti-Personnel Lasers',
         weaponType: AttackType.Ranged,
-        blackDice: 3
+        blackDice: 3,
+        maxRange: 2,
       },
       {
         name: 'Artillery Cannon',
         weaponType: AttackType.Ranged,
         redDice: 4,
+        minRange: 2,
+        maxRange: 4,
         keywords: {
           impactX: 2,
           criticalX: 2,
@@ -2909,28 +2980,73 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'aqua-droids': {
-    attackSurgeChart: AttackSurgeChart.None,
-    defenseSurgeChart: DefenseSurgeChart.None,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 3,
     keywords: {
-      armorX: '<need human>',
+      armorX: 2,
+      infiltrate: true,
+      ai: 'attack, move'
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Crushing Punch',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        keywords: {
+          impactX: 1,
+        }
+      },
+      {
+        name: 'Laser Cannon',
+        weaponType: AttackType.Ranged,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 3,
+      }
+    ],
   },
 
   'persuader-class-tank-droid': {
-    attackSurgeChart: AttackSurgeChart.None,
-    defenseSurgeChart: DefenseSurgeChart.None,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
-      armorX: '<need human>',
-      arsenalX: '<need human>',
+      armorX: 5,
+      arsenalX: 2,
     },
-    weapons: [],
+    weapons: [
+      {
+        name: 'Ion Cannons',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        blackDice: 1,
+        whiteDice: 1,
+        maxRange: 2,
+        keywords: {
+          criticalX: 1,
+          impactX: 1,
+          ionX: 1,
+          fixed: 'front'
+        }
+      },
+      {
+        name: 'Heavy Blasters',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 2,
+        blackDice: 2,
+        maxRange: 4,
+        keywords: {
+          criticalX: 1,
+          fixed: 'front'
+        }
+      }
+    ],
   },
 
   'persuader-class-tank-droid-prototype-tank-droid': {
-    attackSurgeChart: AttackSurgeChart.None,
-    defenseSurgeChart: DefenseSurgeChart.None,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       armorX: 5,
       arsenalX: 3,
@@ -2941,6 +3057,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 1,
         blackDice: 1,
+        maxRange: 2,
         keywords: {
           impactX: 1,
           ionX: 1
@@ -2952,6 +3069,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         redDice: 1,
         whiteDice: 2,
         blackDice: 2,
+        maxRange: 4,
         keywords: {
           criticalX: 1
         }
@@ -2968,6 +3086,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Hybrid,
         blackDice: 2,
         whiteDice: 2,
+        maxRange: 2,
       }
     ],
   },
@@ -2997,6 +3116,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         blackDice: 2,
         redDice: 1,
         whiteDice: 1,
+        maxRange: 2,
         keywords: {
           pierceX: 1,
         }
@@ -3038,6 +3158,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Capo\'s Long Blaster',
         weaponType: AttackType.Ranged,
         blackDice: 3,
+        maxRange: 3,
       }
     ],
   },
@@ -3062,6 +3183,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Sling',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 2,
         keywords: {
           pierceX: 1,
           primitive: true,
@@ -3088,6 +3210,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Integrated Rockets',
         weaponType: AttackType.Ranged,
         blackDice: 2,
+        maxRange: 2,
         keywords: {
           impactX: 1,
         }
@@ -3096,6 +3219,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'EE-3 Carbine Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 2,
+        maxRange: 3,
         keywords: {
           pierceX: 1,
         }
@@ -3122,6 +3246,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'EE-3 Carbine Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 3,
+        maxRange: 3,
         keywords: {
           pierceX: 1,
         }
@@ -3148,6 +3273,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 1,
         whiteDice: 4,
+        minRange: 2,
+        maxRange: 4,
         keywords: {
           pierceX: 1,
           suppressive: true,
@@ -3173,6 +3300,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'LL-30 Blaster Pistols',
         weaponType: AttackType.Ranged,
         blackDice: 4,
+        maxRange: 2,
         keywords: {
           pierceX: 1,
         }
@@ -3201,9 +3329,11 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 2,
         blackDice: 1,
+        maxRange: 2,
         keywords: {
           lethalX: 1,
           longshot: true,
+          versatile: true,
         }
       }
     ],
@@ -3228,6 +3358,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 2,
+        maxRange: 3,
         keywords: {
           pierceX: 1
         }
@@ -3236,7 +3367,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Modified DLT-20A',
         weaponType: AttackType.Ranged,
         blackDice: 2,
-        whiteDice: 1
+        whiteDice: 1,
+        maxRange: 4,
       }
     ],
   },
@@ -3266,6 +3398,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 2,
+        maxRange: 3,
         keywords: {
           pierceX: 1
         }
@@ -3274,7 +3407,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Modified DLT-20A',
         weaponType: AttackType.Ranged,
         blackDice: 2,
-        whiteDice: 1
+        whiteDice: 1,
+        maxRange: 4,
       }
     ],
   },
@@ -3319,6 +3453,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         weaponType: AttackType.Ranged,
         whiteDice: 1,
         blackDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -3340,7 +3475,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Double Blaster',
         weaponType: AttackType.Ranged,
         whiteDice: 1,
-        blackDice: 1
+        blackDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -3379,6 +3515,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'P13 Long Blaster',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 3,
       }
     ],
   },
@@ -3400,6 +3537,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Slings',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 2,
         keywords: {
           primitive: true
         }
@@ -3419,12 +3557,14 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'WESTAR-35 Blasters',
         weaponType: AttackType.Hybrid,
         blackDice: 2,
+        maxRange: 2,
       },
       {
         name: 'Blaster Carbines',
         weaponType: AttackType.Ranged,
         blackDice: 1,
         whiteDice: 1,
+        maxRange: 3,
       }
     ],
   },
@@ -3447,7 +3587,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Heavy Blaster Pistol',
         weaponType: AttackType.Ranged,
         blackDice: 1,
-        redDice: 1
+        redDice: 1,
+        maxRange: 2,
       }
     ],
   },
@@ -3473,6 +3614,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Grenade Launcher',
         weaponType: AttackType.Hybrid,
         blackDice: 2,
+        maxRange: 2,
         keywords: {
           blast: true
         }
@@ -3483,6 +3625,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         redDice: 1,
         whiteDice: 1,
         blackDice: 1,
+        maxRange: 3,
         keywords: {
           impactX: 1,
         }
@@ -3493,6 +3636,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         redDice: 2,
         whiteDice: 2,
         blackDice: 2,
+        maxRange: 4,
         keywords: {
           impactX: 3,
         }
@@ -3512,7 +3656,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         name: 'Anti-Personnel Lasers',
         weaponType: AttackType.Ranged,
         blackDice: 3,
-        whiteDice: 2
+        whiteDice: 2,
+        maxRange: 2,
       },
       {
         name: 'Heavy Laser Cannon',
@@ -3520,6 +3665,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         redDice: 1,
         whiteDice: 2,
         blackDice: 2,
+        maxRange: 3,
         keywords: {
           impactX: 2,
         }

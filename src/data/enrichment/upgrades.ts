@@ -176,6 +176,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         name: 'E-11D Focused Fire',
         weaponType: AttackType.Ranged,
         blackDice: 1,
+        maxRange: 4,
         keywords: {
           suppressive: true,
           exhaust: true
@@ -185,6 +186,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         name: 'E-11D Grenade Launcher',
         weaponType: AttackType.Ranged,
         redDice: 1,
+        maxRange: 2,
         keywords: {
           blast: true,
           exhaust: true
@@ -234,6 +236,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         weaponType: AttackType.Ranged,
         redDice: 2,
         whiteDice: 3,
+        maxRange: 2,
         keywords: {
           suppressive: true,
         },
@@ -252,6 +255,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         name: 'Heavy Blaster Pistol',
         weaponType: AttackType.Ranged,
         redDice: 2,
+        maxRange: 2,
         keywords: {
           lethalX: 1,
           highVelocity: true,
@@ -772,6 +776,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         weaponType: AttackType.Ranged,
         blackDice: 2,
         redDice: 2,
+        maxRange: 3,
         keywords: {
           fixed: 'rear',
           impactX: 1,
@@ -1204,6 +1209,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         name: 'Impact Grenade',
         weaponType: AttackType.Hybrid,
         blackDice: 1,
+        maxRange: 1,
         keywords: {
           impactX: 4,
         }
@@ -1624,14 +1630,22 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-agent-kallus': {
+    // TODO: add a heavy weapon upgrade slot when this is equipped
+    keywords: {
+      demoralizeX: 1,
+      leader: true
+    },
     weapons: [
       {
         name: 'J-19 Bo-Rifle',
         weaponType: AttackType.Hybrid,
         whiteDice: 1,
         blackDice: 2,
+        maxRange: 2,
         keywords: {
-          sidearmRanged: true
+          sidearmRanged: true,
+          longshot: true,
+
         }
       }
     ]
@@ -1728,6 +1742,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
         weaponType: AttackType.Ranged,
         whiteDice: 1,
         redDice: 2,
+        maxRange: 4,
         keywords: {
           impactX: 1
         }

@@ -197,6 +197,8 @@ export default function AttackerUnitBuilderView() {
         </div>
       </SectionHeader>
 
+      <AttackerTokensSection />
+
       <SectionHeader title="Weapon Keywords">
         <WeaponKeywordsSection
           keywords={mergedKeywords}
@@ -204,8 +206,6 @@ export default function AttackerUnitBuilderView() {
           isKeywordDisabled={isWeaponDisabled}
         />
       </SectionHeader>
-
-      <AttackerTokensSection />
 
       <AttackerUnitKeywordsSection />
     </>
