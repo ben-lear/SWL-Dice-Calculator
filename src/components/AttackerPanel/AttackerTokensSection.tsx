@@ -1,9 +1,20 @@
+import { useEffect } from 'react';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 
 export default function AttackerTokensSection() {
   const store = useAttackConfigStore();
+
+  const hasDefeatedMinisKeyword = store.weapons.some(
+    (w) => w.enabled !== false && (w.keywords.blackOps || w.keywords.krakenBlaster),
+  );
+
+  useEffect(() => {
+    if (!hasDefeatedMinisKeyword && store.defeatedMinis > 0) {
+      store.setField('defeatedMinis', 0);
+    }
+  }, [hasDefeatedMinisKeyword, store.defeatedMinis, store]);
 
   return (
     <SectionHeader title="Tokens">
@@ -53,7 +64,12 @@ export default function AttackerTokensSection() {
           min={0}
           max={99}
           compact
-          tooltip="Number of defeated miniatures in this unit. Affects Black Ops (+1 white die per defeated mini) and Kraken's Blaster (upgrade 1 die per defeated mini)."
+          disabled={!hasDefeatedMinisKeyword}
+          tooltip={
+            hasDefeatedMinisKeyword
+              ? "Number of defeated miniatures in this unit. Affects Black Ops (+1 white die per defeated mini) and Kraken's Blaster (upgrade 1 die per defeated mini)."
+              : "Requires Black Ops (Cassian Andor) or Kraken's Blaster heavy weapon upgrade."
+          }
         />
       </div>
     </SectionHeader>

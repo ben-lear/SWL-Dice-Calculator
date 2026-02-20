@@ -32,6 +32,8 @@ export function executeAttackSequence(config: AttackConfig): AttackResult {
       deflectWounds: 0,
       djemSoWounds: 0,
       suppressionApplied: 0,
+      hitsBeforeDefense: 0,
+      critsBeforeDefense: 0,
     };
   }
 

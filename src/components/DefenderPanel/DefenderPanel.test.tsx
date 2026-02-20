@@ -84,9 +84,12 @@ describe('DefenderPanel', () => {
   });
 
   it('hides Surge Chart when Defense Die is set to None', () => {
+    // Start with defense dice enabled (White die)
+    useDefenseConfigStore.getState().setField('disableDefenseDice', false);
+
     render(<DefenderPanel />);
 
-    // Surge Chart should be visible by default (when Defense Die is White)
+    // Surge Chart should be visible when Defense Die is White
     expect(screen.getByLabelText('Surge Chart')).toBeInTheDocument();
 
     // Find the Defense Die control and click the 'None' option within it

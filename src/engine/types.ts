@@ -322,6 +322,10 @@ export interface AttackResult {
   // Suppression
   suppressionApplied: number;   // 1 + Suppressive flag
 
+  // Pre-defense intermediate results (after Step 6, before Step 7)
+  hitsBeforeDefense: number;    // Hit results entering the defense roll
+  critsBeforeDefense: number;   // Crit results entering the defense roll
+
   // Breakdown (optional, for debugging/UI)
   breakdown?: {
     initialPool: AttackDieColor[];
@@ -407,6 +411,10 @@ export interface SimulationResult {
   // Config echo (for verifying results match the current config)
   iterations: number;
   durationMs: number;
+
+  // Pre-defense attack results
+  hitsBeforeDefense: StatsSummary;
+  critsBeforeDefense: StatsSummary;
 
   // Primary results — total wounds (with pierce)
   totalWounds: StatsSummary;

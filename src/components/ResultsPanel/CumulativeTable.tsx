@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { DistributionEntry } from '../../engine/types';
 import { formatPercent } from '../../utils/format';
 
@@ -46,6 +47,8 @@ const MIN_CUMULATIVE = 0.0005;
 // ============================================================================
 
 export default function CumulativeTable({ series }: CumulativeTableProps) {
+  const [isExpanded, setIsExpanded] = useState(true);
+
   if (series.length === 0) return null;
 
   // Union all wound counts across all series
@@ -70,54 +73,83 @@ export default function CumulativeTable({ series }: CumulativeTableProps) {
   });
 
   return (
-    <div className="rounded-lg bg-gray-800">
-      <table className="w-full text-sm">
-        <thead className="sticky top-0 bg-gray-800">
-          <tr className="border-b border-gray-700">
-            <th className="px-3 py-2 text-left font-semibold text-gray-300">
-              Wounds
-            </th>
-            {series.map((s) => {
-              const hexColor = getSeriesHexColor(s.color);
-              return (
-                <th
-                  key={s.label}
-                  className="px-3 py-2 text-right font-semibold text-gray-300"
-                >
-                  <div className="inline-flex items-center gap-1.5 justify-end">
-                    <div
-                      className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: hexColor }}
-                    />
-                    <span>{s.label}</span>
-                  </div>
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedWounds.map((wounds) => (
-            <tr
-              key={wounds}
-              className="border-b border-gray-700/50 last:border-0"
-            >
-              <td className="px-3 py-1.5 text-gray-100">≥ {wounds}</td>
-              {seriesMaps.map((map, idx) => {
-                const cumulative = map.get(wounds);
+    <div className="overflow-hidden rounded-lg bg-gray-800">
+      {/* Collapsible header */}
+      <button
+        type="button"
+        onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
+        className="flex w-full items-center justify-between px-3 py-2 text-left"
+      >
+        <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
+          Cumulative Probability (≥ X Wounds)
+        </span>
+        <span
+          className={`text-gray-500 transition-transform duration-200 ${
+            isExpanded ? 'rotate-0' : '-rotate-90'
+          }`}
+          aria-hidden="true"
+        >
+          ▾
+        </span>
+      </button>
+
+      {/* Collapsible body */}
+      <div
+        className={`transition-all duration-200 ease-in-out ${
+          isExpanded
+            ? 'max-h-[2000px] opacity-100 overflow-visible'
+            : 'max-h-0 opacity-0 overflow-hidden'
+        }`}
+      >
+        <table className="w-full text-sm">
+          <thead className="sticky top-0 bg-gray-800">
+            <tr className="border-t border-b border-gray-700">
+              <th className="px-3 py-2 text-left font-semibold text-gray-300">
+                Wounds
+              </th>
+              {series.map((s) => {
+                const hexColor = getSeriesHexColor(s.color);
                 return (
-                  <td
-                    key={idx}
-                    className="px-3 py-1.5 text-right font-mono text-gray-100"
+                  <th
+                    key={s.label}
+                    className="px-3 py-2 text-right font-semibold text-gray-300"
                   >
-                    {cumulative !== undefined ? formatPercent(cumulative) : '—'}
-                  </td>
+                    <div className="inline-flex items-center gap-1.5 justify-end">
+                      <div
+                        className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: hexColor }}
+                      />
+                      <span>{s.label}</span>
+                    </div>
+                  </th>
                 );
               })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedWounds.map((wounds) => (
+              <tr
+                key={wounds}
+                className="border-b border-gray-700/50 last:border-0"
+              >
+                <td className="px-3 py-1.5 text-gray-100">≥ {wounds}</td>
+                {seriesMaps.map((map, idx) => {
+                  const cumulative = map.get(wounds);
+                  return (
+                    <td
+                      key={idx}
+                      className="px-3 py-1.5 text-right font-mono text-gray-100"
+                    >
+                      {cumulative !== undefined ? formatPercent(cumulative) : '—'}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

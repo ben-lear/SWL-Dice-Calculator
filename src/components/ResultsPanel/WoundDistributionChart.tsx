@@ -136,8 +136,12 @@ export default function WoundDistributionChart({
   const data = toMultiSeriesChartData(series);
 
   return (
-    <div className="h-44 w-full sm:h-52 md:h-64">
-      <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
+    <div>
+      <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-400">
+        Wound Probability Distribution
+      </h3>
+      <div className="h-44 w-full sm:h-52 md:h-64">
+        <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
         <BarChart
           data={data}
           margin={{ top: 10, right: 10, left: 0, bottom: 4 }}
@@ -203,7 +207,8 @@ export default function WoundDistributionChart({
             );
           })}
         </BarChart>
-      </ResponsiveContainer>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import EfficiencyDisplay from './EfficiencyDisplay';
 import EmptyState from './EmptyState';
 import LoadingOverlay from './LoadingOverlay';
 import ErrorDisplay from './ErrorDisplay';
+import PreDefenseStats from './PreDefenseStats';
 
 export default function ResultsPanel() {
   // Get imperative simulation trigger
@@ -38,6 +39,8 @@ export default function ResultsPanel() {
 
   // Reset All confirmation state
   const [confirmingReset, setConfirmingReset] = useState(false);
+  // Clear Results confirmation state
+  const [confirmingClearResults, setConfirmingClearResults] = useState(false);
 
   // Reset confirmation timeout (2 seconds)
   useEffect(() => {
@@ -49,6 +52,23 @@ export default function ResultsPanel() {
 
     return () => clearTimeout(timeout);
   }, [confirmingReset]);
+
+  // Clear Results confirmation timeout (2 seconds)
+  useEffect(() => {
+    if (!confirmingClearResults) return;
+    const timeout = setTimeout(() => setConfirmingClearResults(false), 2000);
+    return () => clearTimeout(timeout);
+  }, [confirmingClearResults]);
+
+  // Handle Clear Results button (results only, preserves config)
+  const handleClearResults = () => {
+    if (!confirmingClearResults) {
+      setConfirmingClearResults(true);
+    } else {
+      useResultsStore.getState().clearAll();
+      setConfirmingClearResults(false);
+    }
+  };
 
   // Handle Reset All button
   const handleResetAll = () => {
@@ -88,7 +108,7 @@ export default function ResultsPanel() {
         Results
       </h2>
 
-      {/* Action buttons: Run/Add Simulation + Reset All */}
+      {/* Action buttons: Run/Add Simulation + Clear Results + Clear All */}
       <div className="flex gap-2">
         <button
           onClick={runSimulation}
@@ -125,15 +145,27 @@ export default function ResultsPanel() {
         </button>
 
         <button
+          onClick={handleClearResults}
+          disabled={loading || slots.length === 0}
+          className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
+            confirmingClearResults
+              ? 'bg-amber-700 text-white'
+              : 'bg-gray-700 text-gray-300 hover:bg-amber-700 hover:text-white'
+          }`}
+        >
+          {confirmingClearResults ? 'Confirm?' : 'Clear Results'}
+        </button>
+
+        <button
           onClick={handleResetAll}
           disabled={loading}
-          className={`px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
+          className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
             confirmingReset
               ? 'bg-red-700 text-white'
               : 'bg-gray-700 text-gray-300 hover:bg-red-700 hover:text-white'
           }`}
         >
-          {confirmingReset ? 'Confirm Reset?' : 'Reset All'}
+          {confirmingReset ? 'Confirm?' : 'Clear All'}
         </button>
       </div>
 
@@ -202,8 +234,27 @@ export default function ResultsPanel() {
             <>
               {/* Viewed slot label */}
               <div className="text-sm text-gray-400 border-t border-gray-700 pt-3">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-300">
+                  Stats at a Glance
+                </h2>
+              </div>             
+
+              {/* Viewed slot label */}
+              <div className="text-sm text-gray-400">
                 Viewing: <span className="text-gray-200 font-medium">{viewedSlot.label}</span>
               </div>
+
+              {/* Pre-defense results */}
+              <PreDefenseStats
+                hitsBeforeDefense={viewedSlot.result.hitsBeforeDefense}
+                critsBeforeDefense={viewedSlot.result.critsBeforeDefense}
+                accentColor={viewedSlot.color}
+              />
+
+              {/* Post-defense results sub-header */}
+              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                Post-defense results
+              </h3>
 
               {/* Core stats: Mean / Median / Mode */}
               <CoreStats

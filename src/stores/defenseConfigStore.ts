@@ -152,7 +152,7 @@ const DEFAULT_DEFENSE_CONFIG = {
   // Defense
   dieColor: DefenseDieColor.White,
   surgeChart: DefenseSurgeChart.None,
-  disableDefenseDice: false,
+  disableDefenseDice: true,
 
   // Cover
   coverType: CoverType.None,
@@ -273,6 +273,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       return {
         ...DEFAULT_DEFENSE_CONFIG,
         ...profile,
+        disableDefenseDice: profile.dieColor === undefined,
         selectedPresetId: presetId,
         upgradeBar: upgradeBar ?? [],
         equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),

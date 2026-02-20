@@ -31,8 +31,8 @@ describe('defenseConfigStore', () => {
     expect(useDefenseConfigStore.getState().activeMode).toBe('custom');
   });
 
-  it('initializes with defense dice enabled', () => {
-    expect(useDefenseConfigStore.getState().disableDefenseDice).toBe(false);
+  it('initializes with defense dice disabled', () => {
+    expect(useDefenseConfigStore.getState().disableDefenseDice).toBe(true);
   });
 
   // ── setField ──
@@ -143,7 +143,7 @@ describe('defenseConfigStore', () => {
     expect(state.dieColor).toBe(DefenseDieColor.White);
     expect(state.armorX).toBe(0);
     expect(state.activeMode).toBe('custom');
-    expect(state.disableDefenseDice).toBe(false);
+    expect(state.disableDefenseDice).toBe(true);
     expect(state.selectedPresetId).toBe(null);
   });
 

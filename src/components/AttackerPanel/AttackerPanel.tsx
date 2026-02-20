@@ -93,7 +93,7 @@ export default function AttackerPanel() {
   };
 
   return (
-    <PanelShell title="Attacker">
+    <PanelShell title="Attacker" collapsible>
         <SegmentedControl
           label="Mode"
           value={store.activeMode}

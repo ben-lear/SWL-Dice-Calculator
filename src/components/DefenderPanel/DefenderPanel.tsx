@@ -71,7 +71,7 @@ export default function DefenderPanel() {
   };
 
   return (
-    <PanelShell title="Defender">
+    <PanelShell title="Defender" collapsible>
         <SegmentedControl
           label="Mode"
           value={store.activeMode}

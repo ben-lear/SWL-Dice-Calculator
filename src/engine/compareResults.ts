@@ -254,5 +254,7 @@ export function compareResults(
     deflectWounds,
     djemSoWounds,
     suppressionApplied,
+    hitsBeforeDefense: attackResults.hits,
+    critsBeforeDefense: attackResults.crits,
   };
 }

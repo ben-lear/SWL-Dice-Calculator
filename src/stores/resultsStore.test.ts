@@ -23,6 +23,8 @@ const mockResult: SimulationResult = {
   djemSoWounds: { mean: 0, median: 0, mode: 0, min: 0, max: 0, standardDeviation: 0 },
   djemSoWoundsDistribution: [],
   suppressionPerAttack: 1,
+  hitsBeforeDefense: { mean: 2, median: 2, mode: 2, min: 0, max: 5, standardDeviation: 1 },
+  critsBeforeDefense: { mean: 1, median: 1, mode: 1, min: 0, max: 3, standardDeviation: 0.5 },
   efficiency: {
     attackerWoundsPerPoint: 0,
     attackerPointsPerWound: 0,

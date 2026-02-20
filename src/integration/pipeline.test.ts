@@ -39,6 +39,7 @@ describe('End-to-End Pipeline', () => {
   it('applies attack type filtering correctly in engine', () => {
     // Configure deflect (ranged-only keyword)
     useAttackConfigStore.getState().setWeaponDice(0, 'red', 6);
+    useDefenseConfigStore.getState().setField('disableDefenseDice', false);
     useDefenseConfigStore.getState().setField('deflect', true);
     useDefenseConfigStore.getState().setField('dieColor', DefenseDieColor.Red);
     useDefenseConfigStore.getState().setField('surgeChart', DefenseSurgeChart.None);

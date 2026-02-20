@@ -78,6 +78,8 @@ function createMockResult(
       { wounds: 0, count: 10000, probability: 1, cumulative: 1 },
     ],
     suppressionPerAttack: 1,
+    hitsBeforeDefense: { mean: 2, median: 2, mode: 2, min: 0, max: 5, standardDeviation: 1 },
+    critsBeforeDefense: { mean: 1, median: 1, mode: 1, min: 0, max: 3, standardDeviation: 0.5 },
     efficiency: {
       attackerWoundsPerPoint: 0,
       attackerPointsPerWound: 0,
@@ -381,9 +383,9 @@ describe('ResultsPanel', () => {
     expect(screen.getByText('Simulating...')).toBeInTheDocument();
   });
 
-  it('shows Reset All button', () => {
+  it('shows Clear All button', () => {
     render(<ResultsPanel />);
-    expect(screen.getByText('Reset All')).toBeInTheDocument();
+    expect(screen.getByText('Clear All')).toBeInTheDocument();
   });
 
   it('disables Add Simulation button at 4 slots', () => {
