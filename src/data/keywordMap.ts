@@ -223,7 +223,6 @@ export const DISPLAY_KEYWORD_FIELD_MAP: Record<string, string> = {
   'Attack Run': 'attackRun',
   'Authoritative': 'authoritative',
   'Bounty': 'bounty',
-  'Cache': 'cache',
   '\u27a6Calculate Odds': 'calculateOdds',
   'Compel': 'compel',
   'Detachment': 'detachment',

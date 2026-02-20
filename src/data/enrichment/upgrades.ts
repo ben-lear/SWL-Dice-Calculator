@@ -8,6 +8,7 @@
 
 import { AttackType } from '../../engine';
 import type { UpgradeEnrichment } from './types';
+import { createMinimalAttacker } from '../../engine/testHelpers';
 
 export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'armament-a-180': {
@@ -1094,13 +1095,15 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'gear-sabine-s-combat-shield': {
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 1,
+      rechargeX: 1,
     },
   },
 
   'gear-saxon-s-combat-shield': {
     keywords: {
-      shieldedX: '<need human>',
+      shieldedX: 1,
+      rechargeX: 1,
     },
   },
 
@@ -1108,6 +1111,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       shieldedX: 1,
       rechargeX: 1,
+      observeX: 1
     },
   },
 
@@ -1652,23 +1656,65 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-axe-ewok': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Stone Axe',
+        weaponType: AttackType.Melee,
+        redDice: 1,
+        keywords: {
+          impactX: 1,
+          pierceX: 1,
+        },
+      },
+    ],
   },
 
   'heavy-weapon-b2-acm-battle-droid': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Heavy Arm Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 3,
+        maxRange: 2,
+      }
+    ]
   },
 
   'heavy-weapon-b2-ha-battle-droid': {
-    keywords: {
-      blast: true,
-    },
+    weapons: [
+      {
+        name: 'B2-HA Cannon',
+        weaponType: AttackType.Ranged,
+        redDice: 2,
+        whiteDice: 1,
+        minRange: 2,
+        maxRange: 3,
+        keywords: {
+          blast: true,
+          cycle: true,
+          exhaust: true,
+          impactX: 2,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-battle-shield-wookiee': {
     keywords: {
-      armorX: '<need human>',
+      armorX: 1,
     },
+    weapons: [
+      {
+        name: 'Battle Shield',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+      },
+      {
+        name: 'Battle Shield',
+        weaponType: AttackType.Melee,
+        blackDice: 2,
+      }
+    ]
   },
 
   'heavy-weapon-beskad-duelist': {
@@ -1676,6 +1722,13 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
       duelistAttacker: true,
       duelistDefender: true,
     },
+    weapons: [
+      {
+        name: 'Vibroblade',
+        weaponType: AttackType.Melee,
+        redDice: 2,
+      }
+    ]
   },
 
   'heavy-weapon-bistan': {
@@ -1683,7 +1736,19 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-bowcaster-wookiee': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'Bowcaster',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        whiteDice: 1,
+        maxRange: 3,
+        keywords: {
+          impactX: 1,
+          pierceX: 1,
+        },
+      }
+    ]
   },
 
   'heavy-weapon-bx-series-droid-sniper': {
@@ -1693,18 +1758,62 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-cassian-andor': {
-    keywords: {},
+    // TODO: add a heavy weapon upgrade slot when this is equipped
+    keywords: {
+      uncannyLuckX: 1,
+      lowProfile: true,
+      secretMission: true
+    },
+    weapons: [
+      {
+        name: 'A280 Sniper Config',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 3,
+        keywords: {
+          longshot: true,
+        }
+      },
+      {
+        // TODO: add special effect of defeated minis contributing 1 white die to attacks
+        name: 'Black Ops',
+        weaponType: AttackType.Hybrid,
+        redDice: 2,
+        maxRange: 2,
+      }
+    ]
   },
 
   'heavy-weapon-cm-0-93-trooper': {
-    keywords: {},
+    weapons: [
+      {
+        name: 'CM-O/93',
+        weaponType: AttackType.Ranged,
+        whiteDice: 4,
+        maxRange: 4,
+        keywords: {
+          criticalX: 2
+        }
+      }
+    ]
   },
 
   'heavy-weapon-crosshair': {
     keywords: {
-      highVelocity: true,
-      preciseX: '<need human>',
+      preciseX: 1,
     },
+    weapons: [
+      {
+        name: 'Firepuncher Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 1,
+        maxRange: 5,
+        keywords: {
+          highVelocity: true,
+          pierceX: 1
+        }
+      }
+    ]
   },
 
   'heavy-weapon-dc-15x-arc-trooper': {
@@ -1858,9 +1967,17 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-long-gun-wookiee': {
-    keywords: {
-      suppressive: true,
-    },
+    weapons: [
+      {
+        name: 'Long Gun',
+        weaponType: AttackType.Ranged,
+        blackDice: 2,
+        maxRange: 4,
+        keywords: {
+          suppressive: true,
+        }
+      }
+    ]
   },
 
   'heavy-weapon-mag-det-enforcer': {
@@ -2074,7 +2191,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-b1-battle-droid-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 7
   },
 
   'personnel-b1-security-droid': {
@@ -2086,7 +2206,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-b2-super-battle-droid-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 4
   },
 
   'personnel-black-sun-enforcer': {
@@ -2118,11 +2241,17 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-clone-trooper-infantry-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-clone-trooper-marksmen-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-ev-series-medical-droid': {
@@ -2130,11 +2259,17 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-ewok-skirmisher-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 4
   },
 
   'personnel-ewok-slinger-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 4
   },
 
   'personnel-ewok-trapper': {
@@ -2146,7 +2281,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-fleet-trooper-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-fx-9-medical-droid': {
@@ -2158,7 +2296,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-geonosian-warrior-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-imperial-comms-technician': {
@@ -2186,7 +2327,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-pyke-syndicate-foot-soldier': {
-    keywords: {},
+    keywords: {
+      cacheAimX: 1,
+    },
   },
 
   'personnel-r4-astromech': {
@@ -2218,7 +2361,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-rebel-trooper-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-rebel-veteran': {
@@ -2226,7 +2372,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-rebel-veteran-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-shoretrooper': {
@@ -2234,7 +2383,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-shoretrooper-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-snowtrooper': {
@@ -2242,7 +2394,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-snowtrooper-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-stormtrooper': {
@@ -2258,7 +2413,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-stormtrooper-squad': {
-    keywords: {},
+    keywords: {
+      indomitable: true,
+    },
+    addsMiniature: 5
   },
 
   'personnel-t-series-tactical-droid': {
@@ -2266,7 +2424,21 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'personnel-viper-recon-droid': {
-    keywords: {},
+    keywords: {
+      observeX: 2,
+    },
+    weapons: [
+      {
+        name: 'Recon Blaster',
+        weaponType: AttackType.Ranged,
+        whiteDice: 2,
+        maxRange: 2,
+        keywords: {
+          sidearmMelee: true,
+          sidearmRanged: true,
+        }
+      }
+    ]
   },
 
   'pilot-327th-star-corps-elite-armor-pilots': {

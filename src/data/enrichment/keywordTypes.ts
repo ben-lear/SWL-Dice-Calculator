@@ -184,7 +184,8 @@ export interface DisplayUnitKeywords {
   attackRun?: boolean;
   authoritative?: boolean;
   bounty?: boolean;
-  cache?: boolean;
+  cacheDodgeX?: EnrichmentNumericValue;
+  cacheAimX?: EnrichmentNumericValue;
   calculateOdds?: boolean;
   compel?: boolean;
   detachment?: boolean;

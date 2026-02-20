@@ -11,7 +11,7 @@ export default function Layout({ children }: LayoutProps) {
       <header className="sticky top-0 z-20 border-b border-gray-800 bg-gray-950/95 px-4 py-3 backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <img src="/justrollcrits.png" alt="Just Roll Crits logo" className="h-16 w-16" />
+            <img src="/justrollcrits_compressed.png" alt="Just Roll Crits logo" className="h-16 w-16" />
             <div className="flex flex-col">
               <h1 className="text-lg font-bold tracking-tight">
                 Just Roll Crits
