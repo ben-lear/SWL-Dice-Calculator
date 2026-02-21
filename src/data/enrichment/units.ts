@@ -1375,7 +1375,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'scout-troopers-strike-team': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
-    miniatureCount: 4,
+    miniatureCount: 1,
     keywords: {
       sharpshooterX: 1,
       lowProfile: true,
@@ -2051,7 +2051,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'arc-troopers-strike-team': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
-    miniatureCount: 4,
+    miniatureCount: 1,
     keywords: {
       impervious: true,
       sharpshooterX: 1,
@@ -2746,6 +2746,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       impervious: true,
       sharpshooterX: 1,
     },
+    miniatureCount: 4,
     weapons: [
       {
         name: 'Unarmed',

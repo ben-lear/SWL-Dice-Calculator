@@ -195,6 +195,35 @@ describe('useDisplayWeapons', () => {
     expect(hwRow?.maxCount).toBe(1);
     expect(hwRow?.source).toBe('heavy');
     expect(result.current.totalMiniCount).toBe(5);
+    // Base weapon maxCount should include the heavy weapon mini slot
+    expect(baseRow?.maxCount).toBe(5); // 4 base + 1 from heavy weapon
+  });
+
+  it('unassigning compatible heavy weapon: base weapon allows re-assignment', () => {
+    // Regression: when a heavy weapon is unassigned (count=0), its mini should be
+    // re-assignable to the default base weapon (maxCount and default count must reflect this).
+    const hw = makeUpgrade('hw-unassign', {
+      upgradeSlot: UpgradeSlot.HeavyWeapon,
+      addsMiniature: 1,
+      weapons: [makeDataWeapon('RT-97C', AttackType.Ranged)],
+    });
+    mockUpgradeMap.set('hw-unassign', hw);
+    setStoreState({
+      unitBaseWeapons: [makeDataWeapon('E-11')],
+      baseMiniatureCount: 4,
+      equippedUpgradeIds: ['hw-unassign'],
+      // User explicitly unassigned the heavy weapon
+      weaponMiniCounts: { 'RT-97C': 0 },
+    });
+    const { result } = renderHook(() => useDisplayWeapons());
+    const baseRow = result.current.weapons.find((w) => w.name === 'E-11');
+    const hwRow = result.current.weapons.find((w) => w.name === 'RT-97C');
+    // Heavy weapon is unassigned
+    expect(hwRow?.count).toBe(0);
+    // Base weapon should now show 5 (4 base + 1 unassigned heavy mini)
+    expect(baseRow?.count).toBe(5);
+    // Base weapon maxCount must allow up to 5
+    expect(baseRow?.maxCount).toBe(5);
   });
 
   it('incompatible heavy weapon: row not shown, base weapon count increased', () => {

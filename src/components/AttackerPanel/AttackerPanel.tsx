@@ -6,6 +6,7 @@ import { useAttackConfigStore } from '../../stores/attackConfigStore';
 import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
 import UnitPresetSection from '../shared/UnitPresetSection';
 import PanelShell, { MODE_OPTIONS } from '../shared/PanelShell';
+import NumberSpinner from '../shared/NumberSpinner';
 import AttackerCustomPoolView from './AttackerCustomPoolView';
 import AttackerUnitBuilderView from './AttackerUnitBuilderView';
 
@@ -133,6 +134,17 @@ export default function AttackerPanel() {
         ) : (
           <AttackerUnitBuilderView />
         )}
+
+        <div className="border-t border-gray-700 pt-3">
+          <NumberSpinner
+            label="Unit Cost"
+            value={store.unitCost}
+            onChange={(value) => store.setField('unitCost', value)}
+            min={0}
+            max={999}
+            tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
+          />
+        </div>
     </PanelShell>
   );
 }

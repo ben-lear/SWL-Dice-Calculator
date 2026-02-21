@@ -337,14 +337,6 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
             />
           </div>
 
-          <NumberSpinner
-            label="Unit Cost"
-            value={store.unitCost}
-            onChange={(value) => store.setField('unitCost', value)}
-            min={0}
-            max={999}
-            tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
-          />
         </div>
       </SectionHeader>
 

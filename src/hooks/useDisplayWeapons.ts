@@ -19,7 +19,7 @@ import type { DisplayWeaponKeywords } from '../data/enrichment/keywordTypes';
 // ============================================================================
 
 /** Source of a weapon in the display list */
-export type WeaponSource = 'base' | 'heavy' | 'personnel' | 'grenade' | 'armament';
+export type WeaponSource = 'base' | 'heavy' | 'personnel' | 'grenade' | 'armament' | 'hardpoint';
 
 /** A unique weapon row in the display list */
 export interface DisplayWeapon {
@@ -162,6 +162,19 @@ export function useDisplayWeapons(): DisplayWeaponsResult {
             });
           }
         }
+      } else if (upgrade.upgradeSlot === UpgradeSlot.Hardpoint && upgrade.weapons.length > 0) {
+        // Hardpoint: add compatible weapon entries (vehicles with hardpoint slots)
+        for (const w of upgrade.weapons) {
+          if (isWeaponUsableForAttackType(w.weaponType, attackType)) {
+            upgradeWeaponEntries.push({
+              weapon: w,
+              source: 'hardpoint',
+              maxCount: totalMiniCount,
+              hasSidearmMelee: w.keywords?.sidearmMelee ?? false,
+              hasSidearmRanged: w.keywords?.sidearmRanged ?? false,
+            });
+          }
+        }
       }
     }
 
@@ -173,13 +186,35 @@ export function useDisplayWeapons(): DisplayWeaponsResult {
     // Check if any armament is equipped (affects base weapon defaults)
     const hasArmament = upgradeWeaponEntries.some((e) => e.source === 'armament');
 
+    // Compute how many minis from compatible heavy/personnel/squad-leader upgrade weapons
+    // are currently unassigned. Unassigned upgrade minis should be allowed to fall back to
+    // the base weapon — both as available slots (maxCount) and as auto-filled defaults.
+    let totalCompatibleUpgradeMinis = 0;
+    let unassignedCompatibleUpgradeMinis = 0;
+    for (const entry of upgradeWeaponEntries) {
+      if (entry.source === 'heavy' || entry.source === 'personnel') {
+        totalCompatibleUpgradeMinis += entry.maxCount;
+        // Default for heavy/personnel entries is their maxCount (all minis use the upgrade weapon)
+        const defaultCount = entry.maxCount;
+        const rawCount = weaponMiniCounts[entry.weapon.name] ?? defaultCount;
+        const currentCount = Math.max(0, Math.min(rawCount, entry.maxCount));
+        unassignedCompatibleUpgradeMinis += entry.maxCount - currentCount;
+      }
+    }
+
     // Build the display weapon list
     const displayWeapons: DisplayWeapon[] = [];
 
     // Base weapons
-    let firstBaseWeaponDefault = baseMiniatureCount + fallbackMiniCount - grenadeCount;
+    // maxCount: base minis + fallback minis (from incompatible upgrades) + ALL compatible
+    //           upgrade minis (in case any are unassigned and need a home).
+    // default:  base minis + fallback minis + UNASSIGNED compatible upgrade minis
+    //           so that unassigning a heavy weapon auto-falls back to the base weapon.
+    let firstBaseWeaponDefault =
+      baseMiniatureCount + fallbackMiniCount + unassignedCompatibleUpgradeMinis - grenadeCount;
     if (firstBaseWeaponDefault < 0) firstBaseWeaponDefault = 0;
-    const firstBaseWeaponMaxCount = baseMiniatureCount + fallbackMiniCount;
+    const firstBaseWeaponMaxCount =
+      baseMiniatureCount + fallbackMiniCount + totalCompatibleUpgradeMinis;
 
     if (hasArmament) {
       // Armament: all base minis move to armament, first base weapon default = 0
@@ -239,6 +274,9 @@ export function useDisplayWeapons(): DisplayWeaponsResult {
         } else {
           defaultCount = 0;
         }
+      } else if (source === 'hardpoint') {
+        // Hardpoints default to enabled; Arsenal X cap (Step 4) auto-disables excess
+        defaultCount = totalMiniCount;
       } else {
         // heavy or personnel: default = maxCount (typically addsMiniature)
         defaultCount = maxCount;

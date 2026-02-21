@@ -11,6 +11,17 @@ import { getResolvedUpgradeById } from '../data/upgradeResolver';
 import { recomputeEffectiveUpgradeBar } from './upgradeBarHelpers';
 
 // ============================================================================
+// Module-level snapshot: preserves Unit Builder state across mode toggles
+// ============================================================================
+
+/** Saved Unit Builder state when switching to Custom Pool */
+let _savedDefenderUBSnapshot: Record<string, unknown> | null = null;
+
+/** @internal Exported for testing only */
+export function _getDefenderUBSnapshot() { return _savedDefenderUBSnapshot; }
+export function _clearDefenderUBSnapshot() { _savedDefenderUBSnapshot = null; }
+
+// ============================================================================
 // State Interface
 // ============================================================================
 
@@ -250,12 +261,22 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
     set({ selectedPresetId: presetId }),
 
   // Setter for mode toggle
-  // When switching from Unit Builder → Custom Pool, reset all gameplay
-  // fields to defaults to prevent stale unit-builder state from leaking
-  // into Custom Pool calculations (Issue 2).
+  // When switching from Unit Builder → Custom Pool, save a snapshot of
+  // unit builder state and reset gameplay fields. When switching back,
+  // restore the saved snapshot.
   setActiveMode: (mode) =>
     set((state) => {
       if (state.activeMode === 'unit-builder' && mode === 'custom') {
+        // Save unit builder state before resetting
+        const {
+          setField: _a, setSelectedFaction: _b, setSelectedPresetId: _c,
+          setActiveMode: _d, clearUnit: _e, loadPreset: _f,
+          equipUpgrade: _g, reset: _h,
+          activeMode: _i, selectedFaction: _j,
+          ...dataFields
+        } = state;
+        _savedDefenderUBSnapshot = dataFields;
+
         return {
           ...DEFAULT_DEFENSE_CONFIG,
           activeMode: 'custom' as const,
@@ -269,6 +290,14 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
           selectedUnitRank: null,
           selectedUnitType: null,
           selectedUnitAffiliation: null,
+        };
+      }
+      if (state.activeMode === 'custom' && mode === 'unit-builder' && _savedDefenderUBSnapshot) {
+        const snapshot = _savedDefenderUBSnapshot;
+        _savedDefenderUBSnapshot = null;
+        return {
+          ...snapshot,
+          activeMode: 'unit-builder' as const,
         };
       }
       return { activeMode: mode };
@@ -352,8 +381,9 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
     }),
 
   // Full reset to defaults
-  reset: () =>
-    set(() => ({
+  reset: () => {
+    _savedDefenderUBSnapshot = null;
+    return set(() => ({
       ...DEFAULT_DEFENSE_CONFIG,
       selectedFaction: null,
       selectedPresetId: null,
@@ -366,7 +396,8 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       selectedUnitRank: null,
       selectedUnitType: null,
       selectedUnitAffiliation: null,
-    })),
+    }));
+  },
 }));
 
 /**

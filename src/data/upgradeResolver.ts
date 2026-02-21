@@ -80,6 +80,8 @@ export function getResolvedUpgradeById(
  */
 const SLOT_ALIASES: Partial<Record<UpgradeSlot, UpgradeSlot>> = {
   [UpgradeSlot.ImperialMarch]: UpgradeSlot.Training,
+  [UpgradeSlot.Electrobinoculars]: UpgradeSlot.Gear,
+  [UpgradeSlot.PortableScanner]: UpgradeSlot.Gear,
 };
 
 /**
@@ -88,6 +90,8 @@ const SLOT_ALIASES: Partial<Record<UpgradeSlot, UpgradeSlot>> = {
  */
 const SLOT_ALIAS_NAME_FILTER: Partial<Record<UpgradeSlot, string>> = {
   [UpgradeSlot.ImperialMarch]: 'Imperial March',
+  [UpgradeSlot.Electrobinoculars]: 'Electrobinoculars',
+  [UpgradeSlot.PortableScanner]: 'Portable Scanner',
 };
 
 /**

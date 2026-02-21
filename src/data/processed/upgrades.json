@@ -2602,7 +2602,7 @@
     "name": "Echo, ARC Marksman",
     "cost": 52,
     "upgradeSlot": "heavy-weapon",
-    "factionRestrictions": [],
+    "factionRestrictions": ["republic"],
     "rankRestrictions": [],
     "unitTypeRestrictions": [
       "trooper"

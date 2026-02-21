@@ -86,10 +86,18 @@ export default function UpgradeSlotsSection({
           const selectedValue = equippedUpgradeIds[index] ?? '';
           const options: SelectOption<string>[] = [
             { value: '', label: 'None' },
-            ...uniqueUpgrades.map((upgrade) => ({
-              value: upgrade.id,
-              label: `${upgrade.name} (${upgrade.cost})`,
-            })),
+            // Exclude upgrades already equipped in another slot (each upgrade can only be equipped once)
+            ...uniqueUpgrades
+              .filter(
+                (upgrade) =>
+                  !equippedUpgradeIds.some(
+                    (id, i) => i !== index && id === upgrade.id,
+                  ),
+              )
+              .map((upgrade) => ({
+                value: upgrade.id,
+                label: `${upgrade.name} (${upgrade.cost})`,
+              })),
           ];
 
           return (

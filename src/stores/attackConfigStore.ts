@@ -12,6 +12,17 @@ import { getResolvedUpgradeById } from '../data/upgradeResolver';
 import { recomputeEffectiveUpgradeBar } from './upgradeBarHelpers';
 
 // ============================================================================
+// Module-level snapshot: preserves Unit Builder state across mode toggles
+// ============================================================================
+
+/** Saved Unit Builder state when switching to Custom Pool */
+let _savedAttackerUBSnapshot: Record<string, unknown> | null = null;
+
+/** @internal Exported for testing only */
+export function _getAttackerUBSnapshot() { return _savedAttackerUBSnapshot; }
+export function _clearAttackerUBSnapshot() { _savedAttackerUBSnapshot = null; }
+
+// ============================================================================
 // State Interface
 // ============================================================================
 
@@ -356,12 +367,27 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
     set({ selectedPresetId: presetId }),
 
   // Setter for mode toggle
-  // When switching from Unit Builder → Custom Pool, reset all gameplay
-  // fields to defaults to prevent stale unit-builder state from leaking
-  // into Custom Pool calculations (Issue 3).
+  // When switching from Unit Builder → Custom Pool, save a snapshot of
+  // unit builder state and reset gameplay fields (prevents stale state
+  // from leaking into Custom Pool calculations).
+  // When switching back from Custom Pool → Unit Builder, restore the
+  // saved snapshot so the user's unit selection and upgrades are preserved.
   setActiveMode: (mode) =>
     set((state) => {
       if (state.activeMode === 'unit-builder' && mode === 'custom') {
+        // Save unit builder state before resetting
+        const {
+          setField: _a, setWeaponDice: _b, setWeaponKeyword: _c,
+          setWeaponEnabled: _d, addWeapon: _e, removeWeapon: _f,
+          setWeaponMiniCount: _g, setBuilderKeywordOverride: _h,
+          setSelectedFaction: _i, setSelectedPresetId: _j,
+          setActiveMode: _k, clearUnit: _l, loadPreset: _m,
+          equipUpgrade: _n, reset: _o,
+          activeMode: _p, selectedFaction: _q,
+          ...dataFields
+        } = state;
+        _savedAttackerUBSnapshot = dataFields;
+
         return {
           ...DEFAULT_ATTACK_CONFIG,
           activeMode: 'custom' as const,
@@ -380,6 +406,14 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
           selectedUnitRank: null,
           selectedUnitType: null,
           selectedUnitAffiliation: null,
+        };
+      }
+      if (state.activeMode === 'custom' && mode === 'unit-builder' && _savedAttackerUBSnapshot) {
+        const snapshot = _savedAttackerUBSnapshot;
+        _savedAttackerUBSnapshot = null;
+        return {
+          ...snapshot,
+          activeMode: 'unit-builder' as const,
         };
       }
       return { activeMode: mode };
@@ -473,8 +507,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
     }),
 
   // Full reset to defaults
-  reset: () =>
-    set(() => ({
+  reset: () => {
+    _savedAttackerUBSnapshot = null;
+    return set(() => ({
       ...DEFAULT_ATTACK_CONFIG,
       selectedFaction: null,
       selectedPresetId: null,
@@ -491,7 +526,8 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       selectedUnitRank: null,
       selectedUnitType: null,
       selectedUnitAffiliation: null,
-    })),
+    }));
+  },
 }));
 
 /**

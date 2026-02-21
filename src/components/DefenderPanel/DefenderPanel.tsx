@@ -9,6 +9,7 @@ import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
 import SegmentedControl from '../shared/SegmentedControl';
 import UnitPresetSection from '../shared/UnitPresetSection';
 import PanelShell, { MODE_OPTIONS } from '../shared/PanelShell';
+import NumberSpinner from '../shared/NumberSpinner';
 import DefenderCustomPoolView from './DefenderCustomPoolView';
 import DefenderDefenseSection from './DefenderDefenseSection';
 import DefenderUnitBuilderView from './DefenderUnitBuilderView';
@@ -98,6 +99,17 @@ export default function DefenderPanel() {
           </>
         )}
         <DefenderCustomPoolView hideDefense={store.activeMode === 'unit-builder'} />
+
+        <div className="border-t border-gray-700 pt-3">
+          <NumberSpinner
+            label="Unit Cost"
+            value={store.unitCost}
+            onChange={(value) => store.setField('unitCost', value)}
+            min={0}
+            max={999}
+            tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
+          />
+        </div>
     </PanelShell>
   );
 }

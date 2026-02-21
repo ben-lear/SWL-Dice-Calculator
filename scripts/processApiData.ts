@@ -55,6 +55,17 @@ const AFFILIATION_MAP_FALLBACK: Record<number, string> = {
 };
 
 /**
+ * Upgrade API IDs whose faction restriction is incorrectly null in the
+ * Tabletop Admiral API but should be restricted to specific factions.
+ *
+ * Add an entry here whenever fresh API data incorrectly omits a faction
+ * restriction, so the fix survives future `fetchApiData` runs.
+ */
+const UPGRADE_FACTION_OVERRIDES: Record<number, string[]> = {
+  16569: ['republic'], // Echo, ARC Marksman — API omits Republic faction restriction
+};
+
+/**
  * Upgrade API IDs whose `revamp` flag is incorrectly set to `false` in the
  * Tabletop Admiral API but should be treated as Revamp-mode cards.
  *
@@ -102,8 +113,8 @@ const UPGRADE_TYPE_MAP: Record<number, string> = {
   13: 'crew',
   14: 'ordnance',
   15: 'programming',
-  // 16: unused
-  17: 'scanner',
+  16: 'electrobinoculars',
+  17: 'portable-scanner',
   18: 'protocol',
   19: 'squad-leader',
   20: 'strike-and-fade',
@@ -359,7 +370,7 @@ function processData() {
         name: up.name,
         cost: resolveCost(up),
         upgradeSlot,
-        factionRestrictions:    isCounterpartOverride ? [] : compact([up.faction_fkey], FACTION_MAP),
+        factionRestrictions:    isCounterpartOverride ? [] : (UPGRADE_FACTION_OVERRIDES[Number(up.id)] ?? compact([up.faction_fkey], FACTION_MAP)),
         rankRestrictions:       compact([up.rank_fkey, up.rank_fkey2], RANK_MAP),
         unitTypeRestrictions:   unique(compact([up.unit_type_fkey, up.unit_type_fkey2, up.unit_type_fkey3], UNIT_TYPE_MAP)),
         unitRestrictions:       [up.unit_fkey, up.unit_fkey2, up.unit_fkey3, up.unit_fkey4].filter(isNumber),
