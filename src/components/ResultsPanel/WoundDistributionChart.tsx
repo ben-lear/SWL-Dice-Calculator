@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import type { DistributionEntry } from '../../engine/types';
 import { formatPercent } from '../../utils/format';
+import DeferredMount from '../shared/DeferredMount';
 
 // ============================================================================
 // Types
@@ -141,6 +142,7 @@ export default function WoundDistributionChart({
         Wound Probability Distribution
       </h3>
       <div className="h-44 w-full sm:h-52 md:h-64">
+        <DeferredMount>
         <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
         <BarChart
           data={data}
@@ -208,6 +210,7 @@ export default function WoundDistributionChart({
           })}
         </BarChart>
         </ResponsiveContainer>
+        </DeferredMount>
       </div>
     </div>
   );

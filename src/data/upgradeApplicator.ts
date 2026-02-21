@@ -157,8 +157,9 @@ export function applyAttackerUpgrades<T extends ConfigWithCost>(
   equippedUpgradeIds: (string | null)[],
   attackType?: AttackType,
   unitBaseWeapons?: DataLayerWeaponProfile[],
+  baseMiniatureCount?: number,
 ): T {
-  return applyUpgrades(config, equippedUpgradeIds, attackType, unitBaseWeapons, false);
+  return applyUpgrades(config, equippedUpgradeIds, attackType, unitBaseWeapons, false, baseMiniatureCount);
 }
 
 /**
@@ -184,6 +185,7 @@ function applyUpgrades<T extends ConfigWithCost>(
   attackType?: AttackType,
   unitBaseWeapons?: DataLayerWeaponProfile[],
   isDefender = false,
+  baseMiniatureCount?: number,
 ): T {
   // Shallow clone to avoid mutating the original
   const result: ConfigWithCost = { ...config };
@@ -191,7 +193,7 @@ function applyUpgrades<T extends ConfigWithCost>(
   // Re-derive base weapons from unitBaseWeapons and baseMiniatureCount
   // if we have unit context (Unit Builder mode). This ensures that
   // changing attack type produces the correct base weapon expansion.
-  const baseMiniCount = (config as any).baseMiniatureCount ?? 1;
+  const baseMiniCount = baseMiniatureCount ?? 1;
   let weapons: WeaponProfile[];
 
   if (unitBaseWeapons && unitBaseWeapons.length > 0 && attackType !== undefined) {

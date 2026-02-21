@@ -11,6 +11,7 @@ export default function DefenderUnitBuilderView() {
       upgradeBar={store.upgradeBar}
       equippedUpgradeIds={store.equippedUpgradeIds}
       equipUpgrade={store.equipUpgrade}
+      grantedByIndex={store.grantedByIndex}
       unitApiId={store.unitApiId ?? undefined}
       selectedFaction={store.selectedFaction}
       selectedUnitRank={store.selectedUnitRank}

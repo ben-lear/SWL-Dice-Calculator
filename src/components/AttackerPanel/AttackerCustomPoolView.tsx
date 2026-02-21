@@ -80,7 +80,7 @@ export default function AttackerCustomPoolView() {
 
       <AttackerTokensSection />
 
-      <SectionHeader title="Weapon Keywords">
+      <SectionHeader title="Weapon Keywords" defaultExpanded={false}>
         <WeaponKeywordsSection
           keywords={weapon.keywords}
           onKeywordChange={(key, value) => store.setWeaponKeyword(0, key, value)}

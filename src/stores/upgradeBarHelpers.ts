@@ -18,6 +18,12 @@ export interface EffectiveUpgradeBarResult {
   equippedUpgradeIds: (string | null)[];
   /** IDs that were cascading-unequipped (e.g. upgrade in a removed dynamic slot) */
   removedUpgradeIds: string[];
+  /**
+   * Parallel to effectiveUpgradeBar.
+   * `null` for base (static) slots; for dynamic slots, the index of the
+   * granting upgrade slot in `effectiveUpgradeBar`.
+   */
+  grantedByIndex: (number | null)[];
 }
 
 /**
@@ -40,6 +46,7 @@ export function recomputeEffectiveUpgradeBar(
 ): EffectiveUpgradeBarResult {
   const effectiveBar: UpgradeSlot[] = [...baseBar];
   const effectiveIds: (string | null)[] = equippedIds.slice(0, baseBar.length);
+  const grantedByIndex: (number | null)[] = new Array(baseBar.length).fill(null);
   // Pad with nulls if equippedIds is shorter than baseBar
   while (effectiveIds.length < baseBar.length) effectiveIds.push(null);
 
@@ -54,6 +61,7 @@ export function recomputeEffectiveUpgradeBar(
         for (const addedSlot of upgrade.addsUpgradeSlot) {
           const dynamicIndex = effectiveBar.length;
           effectiveBar.push(addedSlot);
+          grantedByIndex.push(i);
           // Carry over the previously-equipped ID at this position if it exists
           const carried = equippedIds[dynamicIndex] ?? null;
           effectiveIds.push(carried);
@@ -75,5 +83,6 @@ export function recomputeEffectiveUpgradeBar(
     effectiveUpgradeBar: effectiveBar,
     equippedUpgradeIds: effectiveIds,
     removedUpgradeIds,
+    grantedByIndex,
   };
 }

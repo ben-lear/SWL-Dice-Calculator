@@ -165,4 +165,54 @@ describe('defenseConfigStore', () => {
 
     expect(state.disableDefenseDice).toBe(true);
   });
+
+  // ── setActiveMode reset (Issue 2) ──
+
+  describe('setActiveMode resets state when switching to custom', () => {
+    it('resets gameplay fields when switching from unit-builder to custom', () => {
+      const store = useDefenseConfigStore.getState();
+      // Simulate being in Unit Builder mode with a unit selected
+      store.setActiveMode('unit-builder');
+      store.setField('armorX', 5);
+      store.setField('unitCost', 145);
+      store.setField('dieColor', DefenseDieColor.Red);
+      store.setField('surgeChart', DefenseSurgeChart.ToBlock);
+
+      // Switch to custom pool
+      useDefenseConfigStore.getState().setActiveMode('custom');
+
+      const after = useDefenseConfigStore.getState();
+      expect(after.activeMode).toBe('custom');
+      expect(after.armorX).toBe(0);
+      expect(after.unitCost).toBe(0);
+      expect(after.dieColor).toBe(DefenseDieColor.White);
+      expect(after.surgeChart).toBe(DefenseSurgeChart.None);
+      expect(after.equippedUpgradeIds).toEqual([]);
+      expect(after.selectedPresetId).toBeNull();
+    });
+
+    it('does not reset when switching from custom to unit-builder', () => {
+      const store = useDefenseConfigStore.getState();
+      store.setField('armorX', 3);
+      store.setField('dieColor', DefenseDieColor.Red);
+
+      store.setActiveMode('unit-builder');
+
+      const after = useDefenseConfigStore.getState();
+      expect(after.activeMode).toBe('unit-builder');
+      expect(after.armorX).toBe(3);
+      expect(after.dieColor).toBe(DefenseDieColor.Red);
+    });
+
+    it('preserves selectedFaction on reset', () => {
+      const store = useDefenseConfigStore.getState();
+      store.setActiveMode('unit-builder');
+      store.setSelectedFaction('empire' as any);
+
+      useDefenseConfigStore.getState().setActiveMode('custom');
+
+      const after = useDefenseConfigStore.getState();
+      expect(after.selectedFaction).toBe('empire');
+    });
+  });
 });

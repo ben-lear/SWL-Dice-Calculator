@@ -460,10 +460,16 @@ describe('executeAttackSequence - Keyword Combinations', () => {
     it('adds Critical 2 effect — more crits/wounds vs Armor', () => {
       // With Armor 3, only crits deal damage (hits are cancelled by Armor).
       // CTM grants Critical 2, converting up to 2 surges → crits.
+      //
+      // NOTE: Do NOT use a ToCrit surge chart here. With ToCrit active, ALL
+      // surges already become crits via the surge chart (Priority 3), so
+      // CTM's criticalX: 2 (Priority 1) converts the same surges that
+      // ToCrit would have caught anyway — the net result is identical.
+      // Using no surge chart isolates CTM's exclusive contribution.
       const configCTM: AttackConfig = {
         attacker: createAttackerWithWeapon(
           { whiteDice: 6 },
-          { surgeChart: AttackSurgeChart.ToCrit, completeTheMission: true }
+          { completeTheMission: true }  // criticalX: +2 converts up to 2 surges → crits
         ),
         defender: createMinimalDefender({ armorX: 3, dieColor: DefenseDieColor.White }),
         attackType: AttackType.Ranged,
@@ -472,24 +478,28 @@ describe('executeAttackSequence - Keyword Combinations', () => {
       const configNoCTM: AttackConfig = {
         attacker: createAttackerWithWeapon(
           { whiteDice: 6 },
-          { surgeChart: AttackSurgeChart.ToCrit, completeTheMission: false }
+          { completeTheMission: false }  // surges are wasted against Armor 3
         ),
         defender: createMinimalDefender({ armorX: 3, dieColor: DefenseDieColor.White }),
         attackType: AttackType.Ranged,
       };
 
-      // Run many iterations; CTM should produce more wounds on average
+      // Run many iterations; CTM should produce more wounds on average.
+      // With 6 white dice (1/8 surge each) and Armor 3:
+      //   noCTM: only natural crits (1/8 each die) contribute → E[wounds] ≈ 0.75
+      //   CTM:   up to 2 surges become crits as well → E[wounds] ≈ 1.47
+      // The ~2× expected-value gap makes this robust at 2000 samples.
       const ctmResults = [];
       const noCTMResults = [];
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 2000; i++) {
         ctmResults.push(executeAttackSequence(configCTM));
         noCTMResults.push(executeAttackSequence(configNoCTM));
       }
 
       const ctmAvg = ctmResults.reduce((s, r) => s + r.totalWounds, 0) / ctmResults.length;
       const noCTMAvg = noCTMResults.reduce((s, r) => s + r.totalWounds, 0) / noCTMResults.length;
-      // CTM Critical 2 adds extra surge → crit conversions on top of surge chart
-      expect(ctmAvg).toBeGreaterThanOrEqual(noCTMAvg);
+      // CTM should produce meaningfully more wounds (not just marginally greater)
+      expect(ctmAvg).toBeGreaterThan(noCTMAvg + 0.25);
     });
   });
 });

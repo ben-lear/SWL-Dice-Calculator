@@ -94,6 +94,8 @@ export interface DefenseConfigState {
   equippedUpgradeIds: (string | null)[];
   /** Effective upgrade bar: base bar + dynamic slots from equipped upgrades with addsUpgradeSlot */
   effectiveUpgradeBar: UpgradeSlot[];
+  /** Index of the granting slot for each dynamic slot, or null for base slots */
+  grantedByIndex: (number | null)[];
 
   // ── Actions ──
   // ── Actions ──
@@ -111,7 +113,7 @@ export interface DefenseConfigState {
     profile: DefenderPresetProfile,
     upgradeBar?: UpgradeSlot[],
     unitApiId?: number,
-    unitMeta?: { rank: UnitRank; unitType: UnitType; affiliation: string | null }
+    unitMeta?: { rank: UnitRank; unitType: UnitType; affiliation: string | null; faction?: Faction | null }
   ) => void;
   /** Equip an upgrade in a specific slot (by index in upgradeBar) */
   equipUpgrade: (slotIndex: number, upgradeId: string | null) => void;
@@ -137,6 +139,7 @@ type DefenseConfigFields = Omit<
   | 'upgradeBar'
   | 'equippedUpgradeIds'
   | 'effectiveUpgradeBar'
+  | 'grantedByIndex'
   | 'equipUpgrade'
   | 'unitApiId'
   | 'selectedUnitRank'
@@ -229,6 +232,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
   upgradeBar: [],
   equippedUpgradeIds: [],
   effectiveUpgradeBar: [],
+  grantedByIndex: [],
 
   // Generic setter for any field
   setField: (field, value) =>
@@ -246,8 +250,29 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
     set({ selectedPresetId: presetId }),
 
   // Setter for mode toggle
+  // When switching from Unit Builder → Custom Pool, reset all gameplay
+  // fields to defaults to prevent stale unit-builder state from leaking
+  // into Custom Pool calculations (Issue 2).
   setActiveMode: (mode) =>
-    set({ activeMode: mode }),
+    set((state) => {
+      if (state.activeMode === 'unit-builder' && mode === 'custom') {
+        return {
+          ...DEFAULT_DEFENSE_CONFIG,
+          activeMode: 'custom' as const,
+          selectedFaction: state.selectedFaction,
+          selectedPresetId: null,
+          upgradeBar: [],
+          equippedUpgradeIds: [],
+          effectiveUpgradeBar: [],
+          grantedByIndex: [],
+          unitApiId: null,
+          selectedUnitRank: null,
+          selectedUnitType: null,
+          selectedUnitAffiliation: null,
+        };
+      }
+      return { activeMode: mode };
+    }),
 
   // Clear all unit-related state, preserving faction and mode
   clearUnit: () =>
@@ -259,6 +284,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       upgradeBar: [],
       equippedUpgradeIds: [],
       effectiveUpgradeBar: [],
+      grantedByIndex: [],
       unitApiId: null,
       selectedUnitRank: null,
       selectedUnitType: null,
@@ -267,7 +293,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
 
   // Load a preset: reset to defaults, then apply preset overrides
   loadPreset: (presetId, profile, upgradeBar = [], unitApiId, unitMeta) =>
-    set(() => {
+    set((state) => {
       const baseCost = profile.unitCost ?? 0;
 
       return {
@@ -278,7 +304,9 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
         upgradeBar: upgradeBar ?? [],
         equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),
         effectiveUpgradeBar: upgradeBar ?? [],
+        grantedByIndex: new Array((upgradeBar ?? []).length).fill(null),
         unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
+        selectedFaction: unitMeta?.faction ?? state.selectedFaction,
         selectedUnitRank: unitMeta?.rank ?? null,
         selectedUnitType: unitMeta?.unitType ?? null,
         selectedUnitAffiliation: unitMeta?.affiliation ?? null,
@@ -318,6 +346,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       return {
         equippedUpgradeIds: result.equippedUpgradeIds,
         effectiveUpgradeBar: result.effectiveUpgradeBar,
+        grantedByIndex: result.grantedByIndex,
         unitCost: totalCost,
       };
     }),
@@ -332,6 +361,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
       upgradeBar: [],
       equippedUpgradeIds: [],
       effectiveUpgradeBar: [],
+      grantedByIndex: [],
       unitApiId: null,  // ← NEW: reset API ID
       selectedUnitRank: null,
       selectedUnitType: null,
@@ -355,6 +385,7 @@ export function selectDefenderConfig(state: DefenseConfigState): DefenderConfig 
     upgradeBar,
     equippedUpgradeIds,
     effectiveUpgradeBar,
+    grantedByIndex,
     setField,
     setSelectedFaction,
     setSelectedPresetId,

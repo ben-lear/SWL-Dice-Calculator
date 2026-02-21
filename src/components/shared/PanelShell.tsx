@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useState, useRef, useCallback, type ReactNode } from 'react';
 import type { SegmentedControlOption } from './SegmentedControl';
 
 export const MODE_OPTIONS: SegmentedControlOption<'custom' | 'unit-builder'>[] = [
@@ -22,6 +22,22 @@ export default function PanelShell({
   defaultExpanded = true,
 }: PanelShellProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  // Track whether the expand/collapse transition is in progress
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const handleToggle = useCallback(() => {
+    setIsTransitioning(true);
+    setIsExpanded((prev) => !prev);
+  }, []);
+
+  const handleTransitionEnd = useCallback(() => {
+    setIsTransitioning(false);
+  }, []);
+
+  // overflow-hidden during collapse or while transitioning; overflow-visible when fully expanded
+  const overflowClass =
+    collapsible && !isExpanded ? 'overflow-hidden' : isTransitioning ? 'overflow-hidden' : 'overflow-visible';
 
   const headerContent = (
     <>
@@ -45,7 +61,7 @@ export default function PanelShell({
         {collapsible ? (
           <button
             type="button"
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={handleToggle}
             aria-expanded={isExpanded}
             className="flex w-full items-center justify-between text-left"
           >
@@ -57,10 +73,12 @@ export default function PanelShell({
       </div>
 
       <div
-        className={`transition-all duration-200 ease-in-out ${
+        ref={contentRef}
+        onTransitionEnd={handleTransitionEnd}
+        className={`${overflowClass} transition-all duration-200 ease-in-out ${
           collapsible && !isExpanded
-            ? 'max-h-0 opacity-0 overflow-hidden'
-            : 'max-h-[5000px] opacity-100 overflow-visible'
+            ? 'max-h-0 opacity-0'
+            : 'max-h-[5000px] opacity-100'
         }`}
       >
         <div className="space-y-4 px-4 py-4">

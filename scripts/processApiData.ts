@@ -66,6 +66,21 @@ const UPGRADE_REVAMP_OVERRIDES = new Set<number>([
 ]);
 
 /**
+ * Upgrade API IDs that should be reclassified to a different upgrade slot.
+ * The Tabletop Admiral API classifies counterpart upgrades under the
+ * "programming" slot type (upgrade_type_fkey=15).  We override them to
+ * "counterpart" so they match unit upgrade bars and enrichment keys.
+ *
+ * Add entries here when the API delivers a card under the wrong slot type.
+ */
+const UPGRADE_SLOT_OVERRIDES: Record<number, string> = {
+  3649:  'counterpart', // Grogu
+  131:   'counterpart', // C-3PO
+  167:   'counterpart', // Iden's ID10 Seeker Droid
+  15628: 'counterpart', // Omega
+};
+
+/**
  * Maps API upgrade_type_fkey integers to UpgradeSlot string values.
  * Built dynamically from /api/upgrade-types data, with fallback hardcoded
  * values for types present in unit data but missing from /api/upgrade-types
@@ -306,11 +321,13 @@ function processData() {
   // 4. Process upgrades
   const processedUpgrades = rawUpgrades
     .map((up: any) => {
-      const upgradeSlot = UPGRADE_TYPE_MAP[up.upgrade_type_fkey];
-      if (!upgradeSlot) {
+      const rawSlot = UPGRADE_TYPE_MAP[up.upgrade_type_fkey];
+      if (!rawSlot) {
         console.warn(`Skipping upgrade "${up.name}" (id=${up.id}): unmapped upgrade_type_fkey=${up.upgrade_type_fkey}`);
         return null;
       }
+      // Apply slot overrides (e.g. counterpart upgrades miscategorised as programming)
+      const upgradeSlot = UPGRADE_SLOT_OVERRIDES[Number(up.id)] ?? rawSlot;
 
       const keywordNames = mapKeywordIdsToNames(getRawKeywordIds(up), keywordIdToName);
 
@@ -326,6 +343,12 @@ function processData() {
           .filter((v): v is string => Boolean(v));
       }
 
+      // Counterpart upgrades are fully controlled by unitRestrictions (they are
+      // inherently unit-specific).  The API's faction restriction is an artifact
+      // of the original "programming" slot classification and can be wrong (e.g.
+      // Grogu is marked rebel-alliance but both target units are mercenaries).
+      const isCounterpartOverride = UPGRADE_SLOT_OVERRIDES[Number(up.id)] === 'counterpart';
+
       return {
         apiId: up.id,
         // Upgrade IDs intentionally use slot + name only.
@@ -336,7 +359,7 @@ function processData() {
         name: up.name,
         cost: resolveCost(up),
         upgradeSlot,
-        factionRestrictions:    compact([up.faction_fkey], FACTION_MAP),
+        factionRestrictions:    isCounterpartOverride ? [] : compact([up.faction_fkey], FACTION_MAP),
         rankRestrictions:       compact([up.rank_fkey, up.rank_fkey2], RANK_MAP),
         unitTypeRestrictions:   unique(compact([up.unit_type_fkey, up.unit_type_fkey2, up.unit_type_fkey3], UNIT_TYPE_MAP)),
         unitRestrictions:       [up.unit_fkey, up.unit_fkey2, up.unit_fkey3, up.unit_fkey4].filter(isNumber),

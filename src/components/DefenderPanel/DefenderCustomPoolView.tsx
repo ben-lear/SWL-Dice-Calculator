@@ -161,7 +161,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
         </div>
       </SectionHeader>
 
-      <SectionHeader title="Keywords">
+      <SectionHeader title="Keywords" defaultExpanded={false}>
         <div className="space-y-2">
           <div className="grid grid-cols-2 gap-x-2 gap-y-2">
             <NumberSpinner
@@ -348,7 +348,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
         </div>
       </SectionHeader>
 
-      <SectionHeader title="Guardian">
+      <SectionHeader title="Guardian" defaultExpanded={false}>
         <div className="space-y-3">
           <NumberSpinner
             label="Guardian X"

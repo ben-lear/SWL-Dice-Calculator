@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export interface SectionHeaderProps {
   /** Section title text */
@@ -15,12 +15,26 @@ export default function SectionHeader({
   defaultExpanded = true,
 }: SectionHeaderProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleToggle = useCallback(() => {
+    setIsTransitioning(true);
+    setIsExpanded((prev) => !prev);
+  }, []);
+
+  const handleTransitionEnd = useCallback(() => {
+    setIsTransitioning(false);
+  }, []);
+
+  // overflow-hidden during collapse or while transitioning; overflow-visible when fully expanded
+  const overflowClass =
+    !isExpanded ? 'overflow-hidden' : isTransitioning ? 'overflow-hidden' : 'overflow-visible';
 
   return (
     <div className="border-t border-gray-800 pt-2">
       <button
         type="button"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={handleToggle}
         aria-expanded={isExpanded}
         className="flex w-full items-center justify-between py-2 text-left"
       >
@@ -37,8 +51,9 @@ export default function SectionHeader({
         </span>
       </button>
       <div
-        className={`transition-all duration-200 ease-in-out ${
-          isExpanded ? 'max-h-[2000px] opacity-100 overflow-visible' : 'max-h-0 opacity-0 overflow-hidden'
+        onTransitionEnd={handleTransitionEnd}
+        className={`${overflowClass} transition-all duration-200 ease-in-out ${
+          isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <div className="space-y-2 pb-1">

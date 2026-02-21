@@ -66,6 +66,7 @@ export default function DefenderPanel() {
         rank: preset.rank,
         unitType: preset.unitType,
         affiliation: preset.unitAffiliation,
+        faction: preset.faction,
       });
     }
   };

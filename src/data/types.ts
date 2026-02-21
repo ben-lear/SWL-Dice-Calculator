@@ -46,7 +46,7 @@ export enum UpgradeSlot {
   ImperialMarch = 'imperial-march',
   Doctrine = 'doctrine',
 
-  // Deferred (counterpart support is future work)
+  // Counterpart upgrades
   Counterpart = 'counterpart',
 }
 

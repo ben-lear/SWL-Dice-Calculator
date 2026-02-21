@@ -35,6 +35,8 @@ function formatWeaponKeywords(keywords: Partial<WeaponKeywords & DisplayWeaponKe
   if (keywords.primitive)     labels.push('Primitive');
   if (keywords.spray)         labels.push('Spray');
   if (keywords.cumbersome)    labels.push('Cumbersome');
+  if (keywords.sidearmMelee)  labels.push('Sidearm: Melee');
+  if (keywords.sidearmRanged) labels.push('Sidearm: Ranged');
   // Display weapon keywords
   if (keywords.longshot)       labels.push('Long Shot');
   if (keywords.scatter)        labels.push('Scatter');
@@ -119,6 +121,7 @@ export default function AttackerUnitBuilderView() {
         upgradeBar={store.upgradeBar}
         equippedUpgradeIds={store.equippedUpgradeIds}
         equipUpgrade={store.equipUpgrade}
+        grantedByIndex={store.grantedByIndex}
         unitApiId={store.unitApiId ?? undefined}
         selectedFaction={store.selectedFaction}
         selectedUnitRank={store.selectedUnitRank}
@@ -200,7 +203,7 @@ export default function AttackerUnitBuilderView() {
 
       <AttackerTokensSection />
 
-      <SectionHeader title="Weapon Keywords">
+      <SectionHeader title="Weapon Keywords" defaultExpanded={false}>
         <WeaponKeywordsSection
           keywords={mergedKeywords}
           onKeywordChange={(key, value) => store.setBuilderKeywordOverride(key, value)}

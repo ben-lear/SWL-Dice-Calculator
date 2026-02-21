@@ -5,9 +5,10 @@ import type { WeaponProfile as DataLayerWeaponProfile } from '../types';
 
 describe('upgradeApplicator', () => {
   // Helper: minimal attack config for Unit Builder mode
+  // Note: baseMiniatureCount is passed as a separate parameter (5th arg)
+  // to match the real call path from configSelectors.ts
   const createBaseConfig = (weaponCount: number = 4) => ({
     unitCost: 44,
-    baseMiniatureCount: weaponCount,
     weapons: Array(weaponCount).fill({
       name: 'E-11 Blaster Rifle',
       weaponType: AttackType.Ranged,
@@ -46,14 +47,14 @@ describe('upgradeApplicator', () => {
   describe('No upgrades', () => {
     it('returns config unchanged when no upgrades equipped', () => {
       const config = createBaseConfig(4);
-      const result = applyAttackerUpgrades(config, [], AttackType.Ranged, unitBaseWeapons);
+      const result = applyAttackerUpgrades(config, [], AttackType.Ranged, unitBaseWeapons, 4);
       expect(result.weapons).toHaveLength(4);
       expect(result.weapons[0].name).toBe('E-11 Blaster Rifle');
     });
 
     it('returns config unchanged when equippedUpgradeIds contains only null', () => {
       const config = createBaseConfig(4);
-      const result = applyAttackerUpgrades(config, [null, null], AttackType.Ranged, unitBaseWeapons);
+      const result = applyAttackerUpgrades(config, [null, null], AttackType.Ranged, unitBaseWeapons, 4);
       expect(result.weapons).toHaveLength(4);
     });
   });
@@ -61,14 +62,12 @@ describe('upgradeApplicator', () => {
   describe('Heavy Weapon upgrades', () => {
     it('heavy weapon adds a weapon entry', () => {
       const config = createBaseConfig(4);
-      // Note: This test uses a placeholder upgrade ID
-      // Actual upgrade IDs will be resolved from enrichment data
-      // This test validates the applicator logic structure
       const result = applyAttackerUpgrades(
         config,
         ['heavy-weapon-dlt-19'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // 4 base + 1 heavy weapon = 5 total
       // (Assuming enrichment data exists for 'heavy-weapon-dlt-19')
@@ -77,16 +76,13 @@ describe('upgradeApplicator', () => {
     });
 
     it('uses all weapons from an upgrade, not just weapons[0]', () => {
-      // Test validates that when an upgrade has multiple weapon profiles,
-      // the applicator selects the appropriate one for the attack type
       const config = createBaseConfig(4);
-      // Agent Kallus has both ranged (Bo-Rifle Ranged) and melee (Bo-Rifle Melee)
-      // In melee mode, should select the melee profile
       const result = applyAttackerUpgrades(
         config,
         ['heavy-weapon-agent-kallus'],
         AttackType.Melee,
         unitBaseWeapons,
+        4,
       );
       // If enrichment exists and has multiple weapons, this validates weapon selection
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -101,6 +97,7 @@ describe('upgradeApplicator', () => {
         ['personnel-stormtrooper'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // 4 base + 1 personnel = 5 total (if enrichment exists)
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -113,6 +110,7 @@ describe('upgradeApplicator', () => {
         ['personnel-2-1b-medical-droid'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // Noncombatant adds a miniature but NO weapon
       // If enrichment has noncombatant: true, weapons count stays at 4
@@ -125,12 +123,12 @@ describe('upgradeApplicator', () => {
 
     it('squad personnel adds 2 weapon entries', () => {
       const config = createBaseConfig(4);
-      // Squad personnel have addsMiniature: 2
       const result = applyAttackerUpgrades(
         config,
         ['personnel-stormtrooper-squad'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // 4 base + 2 from squad = 6 total (if enrichment exists with addsMiniature: 2)
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -145,6 +143,7 @@ describe('upgradeApplicator', () => {
         ['grenades-impact-grenades'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // 4 base + 1 grenade = 5 total (grenade contributes once regardless of mini count)
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -163,6 +162,7 @@ describe('upgradeApplicator', () => {
         ['grenades-impact-grenades', 'grenades-concussion-grenades'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // 4 base + 1 Impact + 1 Concussion = 6 total (if both enrichments exist)
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -171,14 +171,13 @@ describe('upgradeApplicator', () => {
 
   describe('Sidearm behavior', () => {
     it('sidearm enforced — upgrade mini uses sidearm weapon only', () => {
-      // Agent Kallus has Sidearm: Melee on his Bo-Rifle Melee weapon
-      // In a melee attack, the Kallus mini MUST use Bo-Rifle Melee
       const config = createBaseConfig(4);
       const result = applyAttackerUpgrades(
         config,
         ['heavy-weapon-agent-kallus'],
         AttackType.Melee,
         unitBaseWeapons,
+        4,
       );
       // 4 base minis (using Unarmed) + 1 Kallus mini (Bo-Rifle Melee)
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -186,14 +185,13 @@ describe('upgradeApplicator', () => {
     });
 
     it('sidearm NOT enforced — upgrade mini can use any compatible weapon', () => {
-      // Agent Kallus has Sidearm: Melee — NOT enforced during ranged attack
-      // The Kallus mini can use any available weapon for ranged attack type
       const config = createBaseConfig(4);
       const result = applyAttackerUpgrades(
         config,
         ['heavy-weapon-agent-kallus'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // 4 base minis + 1 Kallus mini — Kallus should still contribute a weapon
       // (either his ranged weapon if he has one, or falls back to base weapon)
@@ -201,13 +199,13 @@ describe('upgradeApplicator', () => {
     });
 
     it('sidearm does not affect other minis in the unit', () => {
-      // Sidearm is per-miniature — base minis are unaffected
       const config = createBaseConfig(4);
       const result = applyAttackerUpgrades(
         config,
         ['heavy-weapon-agent-kallus'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // Base minis should still use their base weapons
       // Only the upgrade mini (Kallus) is affected by sidearm
@@ -224,6 +222,7 @@ describe('upgradeApplicator', () => {
         ['heavy-weapon-dlt-19', 'personnel-stormtrooper'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // 4 base + 1 heavy + 1 personnel = 6 total (if both enrichments exist)
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -231,12 +230,12 @@ describe('upgradeApplicator', () => {
 
     it('applies keyword upgrades alongside weapon upgrades', () => {
       const config = createBaseConfig(4);
-      // Example: equipment upgrade that grants keywords
       const result = applyAttackerUpgrades(
         config,
         ['equipment-targeting-scopes'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // Targeting Scopes grants Precise 1 keyword (if enrichment exists)
       // Weapons count should remain unchanged (equipment doesn't add weapon)
@@ -248,7 +247,6 @@ describe('upgradeApplicator', () => {
     it('melee attack uses unit base melee weapons', () => {
       const config = {
         unitCost: 44,
-        baseMiniatureCount: 4,
         weapons: [] as WeaponProfile[],
       };
       const result = applyAttackerUpgrades(
@@ -256,6 +254,7 @@ describe('upgradeApplicator', () => {
         [],
         AttackType.Melee,
         unitBaseWeapons,
+        4,
       );
       // With baseMiniatureCount: 4 and Melee attack type,
       // should get 4× Unarmed from unitBaseWeapons
@@ -266,7 +265,6 @@ describe('upgradeApplicator', () => {
     it('ranged attack uses unit base ranged weapons', () => {
       const config = {
         unitCost: 44,
-        baseMiniatureCount: 4,
         weapons: [] as WeaponProfile[],
       };
       const result = applyAttackerUpgrades(
@@ -274,6 +272,7 @@ describe('upgradeApplicator', () => {
         [],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // With baseMiniatureCount: 4 and Ranged attack type,
       // should get 4× E-11 from unitBaseWeapons
@@ -283,12 +282,12 @@ describe('upgradeApplicator', () => {
 
     it('pure-ranged upgrade falls back to melee base weapon in melee attack', () => {
       const config = createBaseConfig(4);
-      // DLT-19 is ranged-only; in melee, the heavy weapon mini uses Unarmed
       const result = applyAttackerUpgrades(
         config,
         ['heavy-weapon-dlt-19'],
         AttackType.Melee,
         unitBaseWeapons,
+        4,
       );
       // 4 base minis (Unarmed) + 1 heavy weapon mini (falls back to Unarmed)
       expect(result.weapons.length).toBeGreaterThanOrEqual(4);
@@ -362,7 +361,6 @@ describe('upgradeApplicator', () => {
     it('handles invalid upgrade ID gracefully', () => {
       const config = {
         unitCost: 44,
-        baseMiniatureCount: 4,
         weapons: [],
       };
       const result = applyAttackerUpgrades(
@@ -370,6 +368,7 @@ describe('upgradeApplicator', () => {
         ['nonexistent-upgrade-id'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // Invalid upgrade should be skipped; base weapons should be applied
       expect(result.weapons).toHaveLength(4);
@@ -378,10 +377,9 @@ describe('upgradeApplicator', () => {
     it('handles empty weapons array', () => {
       const config = {
         unitCost: 0,
-        baseMiniatureCount: 1,
         weapons: [],
       };
-      const result = applyAttackerUpgrades(config, [], AttackType.Ranged, unitBaseWeapons);
+      const result = applyAttackerUpgrades(config, [], AttackType.Ranged, unitBaseWeapons, 1);
       // baseMiniatureCount: 1 → should get 1 weapon
       expect(result.weapons).toBeDefined();
       expect(result.weapons.length).toBe(1);
@@ -390,7 +388,6 @@ describe('upgradeApplicator', () => {
     it('accumulates costs from multiple upgrades', () => {
       const config = {
         unitCost: 44,
-        baseMiniatureCount: 4,
         weapons: [],
       };
       const result = applyAttackerUpgrades(
@@ -398,9 +395,45 @@ describe('upgradeApplicator', () => {
         ['heavy-weapon-dlt-19', 'personnel-stormtrooper', 'equipment-targeting-scopes'],
         AttackType.Ranged,
         unitBaseWeapons,
+        4,
       );
       // Total cost should include unit cost + all upgrade costs
       expect(result.unitCost).toBeGreaterThanOrEqual(44);
+    });
+  });
+
+  describe('baseMiniatureCount expansion (Issue 1 regression)', () => {
+    it('expands base weapons to N copies when baseMiniatureCount is provided as parameter', () => {
+      // This test reproduces the exact bug: config does NOT contain baseMiniatureCount
+      // (just like selectAttackerConfig strips it), but the 5th parameter provides it.
+      const config = {
+        unitCost: 44,
+        weapons: [] as WeaponProfile[], // weapons will be rebuilt from unitBaseWeapons
+      };
+      const result = applyAttackerUpgrades(
+        config,
+        [],
+        AttackType.Ranged,
+        unitBaseWeapons,
+        4,
+      );
+      expect(result.weapons).toHaveLength(4);
+      expect(result.weapons.every(w => w.name === 'E-11 Blaster Rifle')).toBe(true);
+    });
+
+    it('defaults to 1 weapon when baseMiniatureCount is not provided', () => {
+      const config = {
+        unitCost: 44,
+        weapons: [],
+      };
+      const result = applyAttackerUpgrades(
+        config,
+        [],
+        AttackType.Ranged,
+        unitBaseWeapons,
+        // baseMiniatureCount omitted — should default to 1
+      );
+      expect(result.weapons).toHaveLength(1);
     });
   });
 });

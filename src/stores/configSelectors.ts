@@ -101,6 +101,7 @@ export function getFullConfig(): AttackConfig {
     attackState.equippedUpgradeIds,
     attackTypeState.attackType,
     attackState.unitBaseWeapons ?? [],
+    attackState.baseMiniatureCount,
   );
 
   // Apply weaponMiniCounts overrides (Unit Builder mode)
@@ -148,6 +149,7 @@ export function useFullConfig(): AttackConfig {
   );
   const activeMode = useAttackConfigStore((s) => s.activeMode);
   const builderKeywordOverrides = useAttackConfigStore((s) => s.builderKeywordOverrides);
+  const baseMiniatureCount = useAttackConfigStore((s) => s.baseMiniatureCount);
   const defenderConfig = useDefenseConfigStore(selectDefenderConfig);
   const defenderUpgradeIds = useDefenseConfigStore(
     (s) => s.equippedUpgradeIds,
@@ -160,6 +162,7 @@ export function useFullConfig(): AttackConfig {
     attackerUpgradeIds,
     attackType,
     unitBaseWeapons ?? [],
+    baseMiniatureCount,
   );
 
   // Apply weaponMiniCounts overrides (Unit Builder mode)

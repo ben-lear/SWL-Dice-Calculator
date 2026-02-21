@@ -22,6 +22,11 @@ vi.mock('recharts', () => ({
   Cell: () => null,
 }));
 
+// Mock DeferredMount to render children immediately in tests
+vi.mock('../shared/DeferredMount', () => ({
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 // Import after mocking
 import ResultsPanel from './ResultsPanel';
 

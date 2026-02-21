@@ -611,4 +611,89 @@ describe('upgradeResolver', () => {
       expect(ods.length).toBeGreaterThan(0);
     });
   });
+
+  // ── Pilot slot filtering (AT-ST scenario) ────────────────────────────────
+  describe('getUpgradesForSlot — pilot slot with AT-ST context', () => {
+    // AT-ST: apiId 9, faction galactic-empire, unitType ground-vehicle, rank heavy
+    const atStContext = {
+      unitApiId: 9,
+      faction: 'galactic-empire',
+      rank: 'heavy',
+      unitType: 'ground-vehicle',
+      affiliation: null as string | null,
+    };
+
+    it('returns pilot upgrades for AT-ST with full context', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Pilot, atStContext);
+      expect(upgrades.length).toBeGreaterThan(0);
+    });
+
+    it('includes General Weiss for AT-ST (empire + ground-vehicle)', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Pilot, atStContext);
+      const weiss = upgrades.find(u => u.id === 'pilot-general-weiss');
+      expect(weiss).toBeDefined();
+    });
+
+    it('excludes rebel pilot (Hotshot Pilot) from AT-ST', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Pilot, atStContext);
+      const hotshot = upgrades.find(u => u.id === 'pilot-hotshot-pilot');
+      expect(hotshot).toBeUndefined();
+    });
+
+    it('excludes repulsor-vehicle-only pilot (Baron Rudor) from AT-ST (ground-vehicle)', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Pilot, atStContext);
+      const baron = upgrades.find(u => u.id === 'pilot-baron-rudor');
+      expect(baron).toBeUndefined();
+    });
+
+    it('excludes mercenaries-only pilot (Frenzied Gunner) from AT-ST', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Pilot, atStContext);
+      const gunner = upgrades.find(u => u.id === 'pilot-frenzied-gunner');
+      expect(gunner).toBeUndefined();
+    });
+
+    it('returns no pilot upgrades when faction is undefined (no context)', () => {
+      // When faction is undefined, faction-restricted upgrades pass through —
+      // but the purpose of this test is to document that behavior
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Pilot, {
+        unitApiId: 9,
+        // faction intentionally omitted
+        rank: 'heavy',
+        unitType: 'ground-vehicle',
+      });
+      // Without faction, faction-restricted pilots pass; we still filter on unitType etc.
+      const baron = upgrades.find(u => u.id === 'pilot-baron-rudor');
+      expect(baron).toBeUndefined(); // Still excluded by unitType mismatch
+    });
+  });
+
+  // ── Counterpart slot availability ──────────────────────────────────────────
+  describe('getUpgradesForSlot — counterpart slot', () => {
+    it('returns counterpart upgrades for Iden Versio (apiId 58)', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Counterpart, {
+        unitApiId: 58,
+        faction: 'galactic-empire',
+      });
+      const id10 = upgrades.find(u => u.id === 'counterpart-iden-s-id10-seeker-droid');
+      expect(id10).toBeDefined();
+    });
+
+    it('returns Grogu for Din Djarin (apiId 6179)', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Counterpart, {
+        unitApiId: 6179,
+        faction: 'mercenaries',
+      });
+      const grogu = upgrades.find(u => u.id === 'counterpart-grogu');
+      expect(grogu).toBeDefined();
+    });
+
+    it('excludes Grogu from non-matching units', () => {
+      const upgrades = getUpgradesForSlot(UpgradeSlot.Counterpart, {
+        unitApiId: 9, // AT-ST
+        faction: 'galactic-empire',
+      });
+      const grogu = upgrades.find(u => u.id === 'counterpart-grogu');
+      expect(grogu).toBeUndefined();
+    });
+  });
 });

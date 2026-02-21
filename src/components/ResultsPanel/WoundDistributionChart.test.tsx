@@ -19,6 +19,11 @@ vi.mock('recharts', () => ({
   Cell: ({ fill }: { fill: string }) => <div data-testid="cell" data-fill={fill} />,
 }));
 
+// Mock DeferredMount to render children immediately in tests
+vi.mock('../shared/DeferredMount', () => ({
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 const createMockDistribution = (): DistributionEntry[] => [
   { wounds: 0, probability: 0.1, cumulative: 1.0, count: 0 },
   { wounds: 1, probability: 0.2, cumulative: 0.9, count: 0 },

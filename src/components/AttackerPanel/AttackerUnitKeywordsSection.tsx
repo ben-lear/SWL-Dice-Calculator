@@ -18,7 +18,7 @@ export default function AttackerUnitKeywordsSection() {
   const isDisabled = useAttackerKeywordDisabled();
 
   return (
-    <SectionHeader title="Unit Keywords">
+    <SectionHeader title="Unit Keywords" defaultExpanded={false}>
       <div className="space-y-2">
         <div className="grid grid-cols-2 gap-x-2 gap-y-2">
           <NumberSpinner

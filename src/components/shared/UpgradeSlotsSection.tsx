@@ -10,6 +10,8 @@ export interface UpgradeSlotsSectionProps {
   upgradeBar: UpgradeSlot[];
   equippedUpgradeIds: (string | null)[];
   equipUpgrade: (index: number, upgradeId: string | null) => void;
+  /** Parallel to effectiveUpgradeBar: index of the granting slot, or null for base slots */
+  grantedByIndex?: (number | null)[];
   unitApiId?: number;
   selectedFaction?: string | null;
   selectedUnitRank?: string | null;
@@ -23,16 +25,39 @@ export default function UpgradeSlotsSection({
   upgradeBar,
   equippedUpgradeIds,
   equipUpgrade,
+  grantedByIndex,
   unitApiId,
   selectedFaction,
   selectedUnitRank,
   selectedUnitType,
   selectedUnitAffiliation,
 }: UpgradeSlotsSectionProps) {
-  const slotRows = useMemo(
-    () => effectiveUpgradeBar.map((slot, index) => ({ slot, index })),
-    [effectiveUpgradeBar],
-  );
+  // Compute display order: base slots in order, dynamic slots interleaved after their grantor
+  const slotRows = useMemo(() => {
+    const indices = effectiveUpgradeBar.map((slot, index) => ({ slot, index }));
+    if (!grantedByIndex || grantedByIndex.every((v) => v === null)) {
+      return indices;
+    }
+    // Build ordered list: each base slot followed by its granted dynamic slots
+    const ordered: { slot: UpgradeSlot; index: number }[] = [];
+    const baseLen = upgradeBar.length;
+    for (let i = 0; i < baseLen; i++) {
+      ordered.push(indices[i]);
+      // Append dynamic slots granted by this base index
+      for (let j = baseLen; j < effectiveUpgradeBar.length; j++) {
+        if (grantedByIndex[j] === i) {
+          ordered.push(indices[j]);
+        }
+      }
+    }
+    // Safety: include any remaining dynamic slots not matched (shouldn't happen)
+    for (let j = baseLen; j < effectiveUpgradeBar.length; j++) {
+      if (!ordered.some((o) => o.index === j)) {
+        ordered.push(indices[j]);
+      }
+    }
+    return ordered;
+  }, [effectiveUpgradeBar, grantedByIndex, upgradeBar]);
 
   return (
     <SectionHeader title="Upgrade Slots">

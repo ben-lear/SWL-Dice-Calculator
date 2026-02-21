@@ -69,6 +69,7 @@ describe('recomputeEffectiveUpgradeBar', () => {
     expect(result.effectiveUpgradeBar).toEqual(baseBar);
     expect(result.equippedUpgradeIds).toEqual([null, null]);
     expect(result.removedUpgradeIds).toEqual([]);
+    expect(result.grantedByIndex).toEqual([null, null]);
   });
 
   it('equipping a plain upgrade (no addsUpgradeSlot) does not extend bar', () => {
@@ -87,6 +88,8 @@ describe('recomputeEffectiveUpgradeBar', () => {
     ]);
     expect(result.equippedUpgradeIds).toEqual(['adds-training', null, null]);
     expect(result.removedUpgradeIds).toEqual([]);
+    // Dynamic slot at index 2 was granted by index 0
+    expect(result.grantedByIndex).toEqual([null, null, 0]);
   });
 
   it('upgrade adding two slots appends both', () => {
@@ -99,6 +102,8 @@ describe('recomputeEffectiveUpgradeBar', () => {
     ]);
     expect(result.equippedUpgradeIds).toHaveLength(4);
     expect(result.removedUpgradeIds).toEqual([]);
+    // Both dynamic slots at indices 2,3 were granted by index 0
+    expect(result.grantedByIndex).toEqual([null, null, 0, 0]);
   });
 
   it('carries over previously-equipped ID in dynamic slot', () => {
@@ -146,5 +151,18 @@ describe('recomputeEffectiveUpgradeBar', () => {
     );
     expect(result.removedUpgradeIds).toContain('plain-upgrade');
     expect(result.removedUpgradeIds).toContain('adds-training');
+  });
+
+  it('grantedByIndex tracks different grantors when two base slots grant dynamic slots', () => {
+    // Base bar: [Personnel, Gear]. Equip adds-training in slot 0 and adds-gear in slot 1.
+    // Slot 0 adds Training (dynamic index 2), slot 1 adds Gear (dynamic index 3).
+    const result = recomputeEffectiveUpgradeBar(baseBar, ['adds-training', 'adds-gear']);
+    expect(result.effectiveUpgradeBar).toEqual([
+      UpgradeSlot.Personnel,
+      UpgradeSlot.Gear,
+      UpgradeSlot.Training,
+      UpgradeSlot.Gear,
+    ]);
+    expect(result.grantedByIndex).toEqual([null, null, 0, 1]);
   });
 });

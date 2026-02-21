@@ -91,6 +91,8 @@ export interface AttackConfigState {
   equippedUpgradeIds: (string | null)[];
   /** Effective upgrade bar: base bar + dynamic slots from equipped upgrades with addsUpgradeSlot */
   effectiveUpgradeBar: UpgradeSlot[];
+  /** Index of the granting slot for each dynamic slot, or null for base slots */
+  grantedByIndex: (number | null)[];
 
   /**
    * User overrides for how many miniatures use each weapon (by weapon name).
@@ -133,7 +135,7 @@ export interface AttackConfigState {
     profile: AttackerPresetProfile,
     upgradeBar?: UpgradeSlot[],
     unitApiId?: number,
-    unitMeta?: { rank: UnitRank; unitType: UnitType; affiliation: string | null }
+    unitMeta?: { rank: UnitRank; unitType: UnitType; affiliation: string | null; faction?: Faction | null }
   ) => void;
   /** Equip an upgrade in a specific slot (by index in upgradeBar) */
   equipUpgrade: (slotIndex: number, upgradeId: string | null) => void;
@@ -167,6 +169,7 @@ type AttackConfigFields = Omit<
   | 'upgradeBar'
   | 'equippedUpgradeIds'
   | 'effectiveUpgradeBar'
+  | 'grantedByIndex'
   | 'equipUpgrade'
   | 'unitApiId'
   | 'selectedUnitRank'
@@ -273,6 +276,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
   upgradeBar: [],
   equippedUpgradeIds: [],
   effectiveUpgradeBar: [],
+  grantedByIndex: [],
   weaponMiniCounts: {},
   builderKeywordOverrides: {},
 
@@ -352,8 +356,34 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
     set({ selectedPresetId: presetId }),
 
   // Setter for mode toggle
+  // When switching from Unit Builder → Custom Pool, reset all gameplay
+  // fields to defaults to prevent stale unit-builder state from leaking
+  // into Custom Pool calculations (Issue 3).
   setActiveMode: (mode) =>
-    set({ activeMode: mode }),
+    set((state) => {
+      if (state.activeMode === 'unit-builder' && mode === 'custom') {
+        return {
+          ...DEFAULT_ATTACK_CONFIG,
+          activeMode: 'custom' as const,
+          selectedFaction: state.selectedFaction,
+          rerollStrategy: state.rerollStrategy,
+          selectedPresetId: null,
+          baseMiniatureCount: 1,
+          unitBaseWeapons: [],
+          upgradeBar: [],
+          equippedUpgradeIds: [],
+          effectiveUpgradeBar: [],
+          grantedByIndex: [],
+          weaponMiniCounts: {},
+          builderKeywordOverrides: {},
+          unitApiId: null,
+          selectedUnitRank: null,
+          selectedUnitType: null,
+          selectedUnitAffiliation: null,
+        };
+      }
+      return { activeMode: mode };
+    }),
 
   // Clear all unit-related state, preserving faction, mode and reroll settings
   clearUnit: () =>
@@ -368,6 +398,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       upgradeBar: [],
       equippedUpgradeIds: [],
       effectiveUpgradeBar: [],
+      grantedByIndex: [],
       weaponMiniCounts: {},
       builderKeywordOverrides: {},
       unitApiId: null,
@@ -378,7 +409,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
 
   // Load a preset: reset to defaults, then apply preset overrides
   loadPreset: (presetId, profile, upgradeBar = [], unitApiId, unitMeta) =>
-    set(() => {
+    set((state) => {
       const emptyWeapon = createEmptyWeapon();
       const normalizedWeapons = profile.weapons?.map((weapon) => ({
         ...emptyWeapon,
@@ -399,7 +430,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         upgradeBar: upgradeBar ?? [],
         equippedUpgradeIds: new Array((upgradeBar ?? []).length).fill(null),
         effectiveUpgradeBar: upgradeBar ?? [],
+        grantedByIndex: new Array((upgradeBar ?? []).length).fill(null),
         unitApiId: unitApiId ?? null,  // ← NEW: store API ID for upgrade filtering
+        selectedFaction: unitMeta?.faction ?? state.selectedFaction,
         selectedUnitRank: unitMeta?.rank ?? null,
         selectedUnitType: unitMeta?.unitType ?? null,
         selectedUnitAffiliation: unitMeta?.affiliation ?? null,
@@ -433,6 +466,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       return {
         equippedUpgradeIds: result.equippedUpgradeIds,
         effectiveUpgradeBar: result.effectiveUpgradeBar,
+        grantedByIndex: result.grantedByIndex,
         unitCost: totalCost,
         weaponMiniCounts: {},  // Reset overrides on upgrade change
       };
@@ -450,6 +484,7 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       upgradeBar: [],
       equippedUpgradeIds: [],
       effectiveUpgradeBar: [],
+      grantedByIndex: [],
       weaponMiniCounts: {},
       builderKeywordOverrides: {},
       unitApiId: null,

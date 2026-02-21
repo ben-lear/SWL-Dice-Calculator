@@ -88,6 +88,7 @@ export default function AttackerPanel() {
         rank: preset.rank,
         unitType: preset.unitType,
         affiliation: preset.unitAffiliation,
+        faction: preset.faction,
       });
     }
   };

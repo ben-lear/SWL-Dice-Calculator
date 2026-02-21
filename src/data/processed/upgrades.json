@@ -1326,10 +1326,10 @@
   },
   {
     "apiId": "131",
-    "id": "programming-c-3po",
+    "id": "counterpart-c-3po",
     "name": "C-3PO",
     "cost": 15,
-    "upgradeSlot": "programming",
+    "upgradeSlot": "counterpart",
     "factionRestrictions": [],
     "rankRestrictions": [],
     "unitTypeRestrictions": [],
@@ -3644,13 +3644,11 @@
   },
   {
     "apiId": "3649",
-    "id": "programming-grogu",
+    "id": "counterpart-grogu",
     "name": "Grogu",
     "cost": 17,
-    "upgradeSlot": "programming",
-    "factionRestrictions": [
-      "rebel-alliance"
-    ],
+    "upgradeSlot": "counterpart",
+    "factionRestrictions": [],
     "rankRestrictions": [],
     "unitTypeRestrictions": [],
     "unitRestrictions": [
@@ -4010,13 +4008,11 @@
   },
   {
     "apiId": "167",
-    "id": "programming-iden-s-id10-seeker-droid",
+    "id": "counterpart-iden-s-id10-seeker-droid",
     "name": "Iden's ID10 Seeker Droid",
     "cost": 15,
-    "upgradeSlot": "programming",
-    "factionRestrictions": [
-      "galactic-empire"
-    ],
+    "upgradeSlot": "counterpart",
+    "factionRestrictions": [],
     "rankRestrictions": [],
     "unitTypeRestrictions": [],
     "unitRestrictions": [
@@ -5327,10 +5323,10 @@
   },
   {
     "apiId": "15628",
-    "id": "programming-omega",
+    "id": "counterpart-omega",
     "name": "Omega",
     "cost": 10,
-    "upgradeSlot": "programming",
+    "upgradeSlot": "counterpart",
     "factionRestrictions": [],
     "rankRestrictions": [],
     "unitTypeRestrictions": [],

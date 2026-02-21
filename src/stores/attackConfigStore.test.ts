@@ -238,4 +238,58 @@ describe('attackConfigStore', () => {
     expect(config.weapons[0].blackDice).toBe(0);
     expect(config.weapons[0].whiteDice).toBe(0);
   });
+
+  // ── setActiveMode reset (Issue 3) ──
+
+  describe('setActiveMode resets state when switching to custom', () => {
+    it('resets gameplay fields when switching from unit-builder to custom', () => {
+      const store = useAttackConfigStore.getState();
+      // Simulate being in Unit Builder mode with a unit selected
+      store.setActiveMode('unit-builder');
+      store.setField('preciseX', 2);
+      store.setField('sharpshooterX', 1);
+      store.setField('unitCost', 44);
+      store.setWeaponDice(0, 'black', 4);
+
+      // Switch to custom pool
+      useAttackConfigStore.getState().setActiveMode('custom');
+
+      const after = useAttackConfigStore.getState();
+      expect(after.activeMode).toBe('custom');
+      expect(after.preciseX).toBe(0);
+      expect(after.sharpshooterX).toBe(0);
+      expect(after.unitCost).toBe(0);
+      expect(after.weapons).toHaveLength(1);
+      expect(after.weapons[0].blackDice).toBe(0);
+      expect(after.baseMiniatureCount).toBe(1);
+      expect(after.unitBaseWeapons).toEqual([]);
+      expect(after.equippedUpgradeIds).toEqual([]);
+      expect(after.weaponMiniCounts).toEqual({});
+      expect(after.builderKeywordOverrides).toEqual({});
+    });
+
+    it('does not reset when switching from custom to unit-builder', () => {
+      const store = useAttackConfigStore.getState();
+      store.setField('preciseX', 3);
+      store.setWeaponDice(0, 'red', 6);
+
+      store.setActiveMode('unit-builder');
+
+      const after = useAttackConfigStore.getState();
+      expect(after.activeMode).toBe('unit-builder');
+      expect(after.preciseX).toBe(3);
+      expect(after.weapons[0].redDice).toBe(6);
+    });
+
+    it('preserves selectedFaction and rerollStrategy on reset', () => {
+      const store = useAttackConfigStore.getState();
+      store.setActiveMode('unit-builder');
+      store.setSelectedFaction('empire' as any);
+
+      useAttackConfigStore.getState().setActiveMode('custom');
+
+      const after = useAttackConfigStore.getState();
+      expect(after.selectedFaction).toBe('empire');
+    });
+  });
 });
