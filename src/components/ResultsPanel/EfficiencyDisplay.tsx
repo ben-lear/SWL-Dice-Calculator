@@ -4,6 +4,7 @@ import {
   formatPerWound,
   formatEfficiencyRatio,
 } from '../../utils/format';
+import { StatRow } from '../shared/StatRow';
 
 interface EfficiencyDisplayProps {
   efficiency: EfficiencyMetrics;
@@ -21,60 +22,43 @@ export default function EfficiencyDisplay({
 
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+      <h3 className="section-heading">
         Points Efficiency
       </h3>
 
       <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-        <EfficiencyRow
+        <StatRow
           label="Wounds / attacker pt"
           value={formatPerPoint(efficiency.attackerWoundsPerPoint)}
           tooltip="Average wounds dealt per point of attacker cost"
+          mono
         />
-        <EfficiencyRow
+        <StatRow
           label="Attacker pts / wound"
           value={formatPerWound(efficiency.attackerPointsPerWound)}
           tooltip="Attacker cost per wound dealt"
+          mono
         />
-        <EfficiencyRow
+        <StatRow
           label="Wounds / defender pt"
           value={formatPerPoint(efficiency.defenderWoundsPerPoint)}
           tooltip="Average wounds dealt per point of defender cost"
+          mono
         />
-        <EfficiencyRow
+        <StatRow
           label="Defender pts / wound"
           value={formatPerWound(efficiency.defenderPointsPerWound)}
           tooltip="Defender cost per wound absorbed"
+          mono
         />
-        <EfficiencyRow
+        <StatRow
           label="Efficiency ratio"
           value={formatEfficiencyRatio(efficiency.attackerEfficiencyRatio)}
           tooltip="(Wounds / attacker cost) / defender cost — higher = better trade for attacker"
-          span2
+          mono
+          className="sm:col-span-2"
         />
       </div>
-    </div>
-  );
-}
-
-interface EfficiencyRowProps {
-  label: string;
-  value: string;
-  tooltip: string;
-  /** Span full width (2 columns) on sm+ screens */
-  span2?: boolean;
-}
-
-function EfficiencyRow({ label, value, tooltip, span2 }: EfficiencyRowProps) {
-  return (
-    <div
-      className={`flex items-center justify-between rounded bg-gray-800/50 px-3 py-1.5 text-sm ${
-        span2 ? 'sm:col-span-2' : ''
-      }`}
-      title={tooltip}
-    >
-      <span className="text-gray-300">{label}</span>
-      <span className="font-mono font-semibold text-gray-200">{value}</span>
     </div>
   );
 }

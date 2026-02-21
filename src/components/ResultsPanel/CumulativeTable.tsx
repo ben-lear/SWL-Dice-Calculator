@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { DistributionEntry } from '../../engine/types';
 import { formatPercent } from '../../utils/format';
+import { CollapseChevron } from '../shared/CollapseChevron';
+import { getSeriesHexColor } from '../../utils/seriesColors';
 
 // ============================================================================
 // Types
@@ -14,21 +16,6 @@ interface TableSeries {
 
 interface CumulativeTableProps {
   series: TableSeries[];
-}
-
-// ============================================================================
-// Color Mapping
-// ============================================================================
-
-const COLOR_MAP: Record<string, string> = {
-  indigo: '#6366f1',
-  emerald: '#10b981',
-  amber: '#f59e0b',
-  rose: '#f43f5e',
-};
-
-function getSeriesHexColor(colorName: string): string {
-  return COLOR_MAP[colorName] || '#6366f1';
 }
 
 // ============================================================================
@@ -81,17 +68,10 @@ export default function CumulativeTable({ series }: CumulativeTableProps) {
         aria-expanded={isExpanded}
         className="flex w-full items-center justify-between px-3 py-2 text-left"
       >
-        <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
+        <span className="section-heading">
           Cumulative Probability (≥ X Wounds)
         </span>
-        <span
-          className={`text-gray-500 transition-transform duration-200 ${
-            isExpanded ? 'rotate-0' : '-rotate-90'
-          }`}
-          aria-hidden="true"
-        >
-          ▾
-        </span>
+        <CollapseChevron isExpanded={isExpanded} />
       </button>
 
       {/* Collapsible body */}

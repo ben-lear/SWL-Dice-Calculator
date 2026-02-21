@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { CollapseChevron } from './CollapseChevron';
 
 export interface SectionHeaderProps {
   /** Section title text */
@@ -38,17 +39,10 @@ export default function SectionHeader({
         aria-expanded={isExpanded}
         className="flex w-full items-center justify-between py-2 text-left"
       >
-        <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
+        <span className="section-heading">
           {title}
         </span>
-        <span
-          className={`text-gray-500 transition-transform duration-200 ${
-            isExpanded ? 'rotate-0' : '-rotate-90'
-          }`}
-          aria-hidden="true"
-        >
-          ▾
-        </span>
+        <CollapseChevron isExpanded={isExpanded} />
       </button>
       <div
         onTransitionEnd={handleTransitionEnd}

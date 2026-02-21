@@ -21,7 +21,7 @@ export default function WeaponKeywordsSection({
 
   return (
     <div className="space-y-2">
-      <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+      <div className="keyword-grid">
         <NumberSpinner
           label="Critical X"
           value={keywords.criticalX ?? 0}
@@ -84,7 +84,7 @@ export default function WeaponKeywordsSection({
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+      <div className="checkbox-grid">
         <Checkbox
           label="Blast"
           value={keywords.blast ?? false}

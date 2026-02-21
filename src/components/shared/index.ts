@@ -28,5 +28,9 @@ export type { UnitPresetSectionProps } from './UnitPresetSection';
 export { default as PanelShell, MODE_OPTIONS } from './PanelShell';
 export type { PanelShellProps } from './PanelShell';
 
+export { StatCard } from './StatCard';
+export { StatRow } from './StatRow';
+export { CollapseChevron } from './CollapseChevron';
+
 export { default as DeferredMount } from './DeferredMount';
 export type { DeferredMountProps } from './DeferredMount';

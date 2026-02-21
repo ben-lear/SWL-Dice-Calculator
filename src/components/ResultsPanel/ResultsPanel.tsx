@@ -109,11 +109,11 @@ export default function ResultsPanel() {
       </h2>
 
       {/* Action buttons: Run/Add Simulation + Clear Results + Clear All */}
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2 sm:flex-nowrap">
         <button
           onClick={runSimulation}
           disabled={loading || isFull}
-          className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400"
+          className="w-full sm:w-auto sm:flex-1 flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400"
         >
           {loading ? (
             <>
@@ -147,7 +147,7 @@ export default function ResultsPanel() {
         <button
           onClick={handleClearResults}
           disabled={loading || slots.length === 0}
-          className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
+          className={`flex-1 sm:flex-none px-3 py-2 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
             confirmingClearResults
               ? 'bg-amber-700 text-white'
               : 'bg-gray-700 text-gray-300 hover:bg-amber-700 hover:text-white'
@@ -159,7 +159,7 @@ export default function ResultsPanel() {
         <button
           onClick={handleResetAll}
           disabled={loading}
-          className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
+          className={`flex-1 sm:flex-none px-3 py-2 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400 ${
             confirmingReset
               ? 'bg-red-700 text-white'
               : 'bg-gray-700 text-gray-300 hover:bg-red-700 hover:text-white'
@@ -252,7 +252,7 @@ export default function ResultsPanel() {
               />
 
               {/* Post-defense results sub-header */}
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+              <h3 className="section-heading">
                 Post-defense results
               </h3>
 

@@ -128,7 +128,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
       </SectionHeader>
 
       <SectionHeader title="Tokens">
-        <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+        <div className="keyword-grid">
           <NumberSpinner
             label="Dodge"
             value={store.dodgeTokens}
@@ -163,7 +163,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
 
       <SectionHeader title="Keywords" defaultExpanded={false}>
         <div className="space-y-2">
-          <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+          <div className="keyword-grid">
             <NumberSpinner
               label="Armor X"
               value={store.armorX}
@@ -212,7 +212,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+          <div className="checkbox-grid">
             <Checkbox
               label="Backup"
               value={store.backup}

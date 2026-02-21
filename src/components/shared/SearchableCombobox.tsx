@@ -146,7 +146,7 @@ export default function SearchableCombobox({
     >
       <label
         htmlFor={inputId}
-        className="mb-1 block text-sm font-medium text-gray-300 select-none"
+        className="control-label mb-1 block"
         title={tooltip}
       >
         {label}
@@ -172,7 +172,7 @@ export default function SearchableCombobox({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           autoComplete="off"
-          className="h-8 w-full rounded border border-gray-700 bg-gray-800 px-3 pr-8 text-sm text-gray-100 outline-none placeholder:text-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:cursor-not-allowed"
+          className="input-surface h-8 w-full px-3 pr-8 placeholder:text-gray-500"
         />
         {/* Clear button (shown when a value is selected and dropdown is closed) */}
         {value && !isOpen && (

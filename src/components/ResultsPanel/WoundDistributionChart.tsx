@@ -11,6 +11,7 @@ import {
 import type { DistributionEntry } from '../../engine/types';
 import { formatPercent } from '../../utils/format';
 import DeferredMount from '../shared/DeferredMount';
+import { getSeriesColor } from '../../utils/seriesColors';
 
 // ============================================================================
 // Types
@@ -25,21 +26,6 @@ interface ChartSeries {
 
 interface WoundDistributionChartProps {
   series: ChartSeries[];
-}
-
-// ============================================================================
-// Color Mapping
-// ============================================================================
-
-const COLOR_MAP: Record<string, { base: string; light: string }> = {
-  indigo: { base: '#6366f1', light: '#818cf8' },
-  emerald: { base: '#10b981', light: '#34d399' },
-  amber: { base: '#f59e0b', light: '#fbbf24' },
-  rose: { base: '#f43f5e', light: '#fb7185' },
-};
-
-function getSeriesColor(colorName: string): { base: string; light: string } {
-  return COLOR_MAP[colorName] || { base: '#6366f1', light: '#818cf8' };
 }
 
 // ============================================================================
@@ -138,7 +124,7 @@ export default function WoundDistributionChart({
 
   return (
     <div>
-      <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-400">
+      <h3 className="section-heading mb-2">
         Wound Probability Distribution
       </h3>
       <div className="h-44 w-full sm:h-52 md:h-64">

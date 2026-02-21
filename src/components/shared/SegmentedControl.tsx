@@ -70,7 +70,7 @@ export default function SegmentedControl<T extends string = string>({
     <div className={`flex items-center justify-between gap-2 ${disabled ? 'opacity-50' : ''}`}>
       <label
         htmlFor={groupId}
-        className="text-sm font-medium text-gray-300 select-none"
+        className="control-label"
         title={tooltip}
       >
         {label}
@@ -79,7 +79,7 @@ export default function SegmentedControl<T extends string = string>({
         id={groupId}
         role="radiogroup"
         aria-label={label}
-        className="inline-flex min-h-[2rem] rounded border border-gray-700 bg-gray-800 overflow-hidden"
+        className="inline-flex min-h-[2.75rem] sm:min-h-[2rem] rounded border border-gray-700 bg-gray-800 overflow-hidden"
       >
         {options.map((option, index) => {
           const isActive = option.value === value;

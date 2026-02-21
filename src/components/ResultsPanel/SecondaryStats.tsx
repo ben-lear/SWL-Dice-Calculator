@@ -1,5 +1,6 @@
 import { formatWoundStat } from '../../utils/format';
 import type { SimulationResult } from '../../engine/types';
+import { StatRow } from '../shared/StatRow';
 
 interface SecondaryStatsProps {
   result: SimulationResult;
@@ -20,19 +21,19 @@ export default function SecondaryStats({
 
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+      <h3 className="section-heading">
         Additional Effects
       </h3>
 
       {showDeflect && (
-        <SecondaryStatLine
+        <StatRow
           label="Deflect/Shien wounds to attacker"
           value={formatWoundStat(result.deflectWounds.mean)}
         />
       )}
 
       {showDjemSo && (
-        <SecondaryStatLine
+        <StatRow
           label="Djem So wounds to attacker"
           value={formatWoundStat(result.djemSoWounds.mean)}
         />
@@ -40,30 +41,16 @@ export default function SecondaryStats({
 
       {showGuardian && (
         <>
-          <SecondaryStatLine
+          <StatRow
             label="Guardian wounds (no Pierce)"
             value={formatWoundStat(result.guardianWounds.mean)}
           />
-          <SecondaryStatLine
+          <StatRow
             label="Main target wounds (no Pierce)"
             value={formatWoundStat(result.mainTargetWounds.mean)}
           />
         </>
       )}
-    </div>
-  );
-}
-
-interface SecondaryStatLineProps {
-  label: string;
-  value: string;
-}
-
-function SecondaryStatLine({ label, value }: SecondaryStatLineProps) {
-  return (
-    <div className="flex items-center justify-between rounded bg-gray-800/50 px-3 py-1.5 text-sm">
-      <span className="text-gray-300">{label}</span>
-      <span className="font-semibold text-gray-200">{value}</span>
     </div>
   );
 }

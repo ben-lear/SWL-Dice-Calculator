@@ -6,3 +6,31 @@
   }
 }
 
+@layer components {
+  /* Section heading — used in SectionHeader, PreDefenseStats, SecondaryStats, etc. */
+  .section-heading {
+    @apply text-xs font-bold uppercase tracking-wider text-gray-400;
+  }
+
+  /* Form control label — used in Toggle, Select, SegmentedControl, NumberSpinner, etc. */
+  .control-label {
+    @apply text-sm font-medium text-gray-300 select-none;
+  }
+
+  /* Input surface — base for select, combobox, number spinner inputs */
+  .input-surface {
+    @apply rounded border border-gray-700 bg-gray-800 text-sm text-gray-100 outline-none
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+           disabled:cursor-not-allowed;
+  }
+
+  /* Keyword spinner grid — single column on mobile, 2-column on sm+ */
+  .keyword-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2;
+  }
+
+  /* Checkbox keyword grid — single column on mobile, 2-column on sm+ */
+  .checkbox-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5;
+  }
+}

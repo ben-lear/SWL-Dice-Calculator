@@ -35,8 +35,8 @@ export default function AttackerCustomPoolView() {
     <>
       <SectionHeader title="Dice Pool">
         <div className="space-y-3">
-          {/* Compact dice pool row with icons */}
-          <div className="flex items-center justify-between">
+          {/* Compact dice pool row with icons — single column on mobile, 3-col on sm+ */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <NumberSpinner
               labelContent={<DiceIcon color="bg-red-500 ring-2 ring-red-600" title="Red Dice" />}
               label="Red Dice"

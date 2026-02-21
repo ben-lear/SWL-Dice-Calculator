@@ -20,7 +20,7 @@ export default function AttackerUnitKeywordsSection() {
   return (
     <SectionHeader title="Unit Keywords" defaultExpanded={false}>
       <div className="space-y-2">
-        <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+        <div className="keyword-grid">
           <NumberSpinner
             label="Arsenal X"
             value={store.arsenalX}
@@ -51,7 +51,7 @@ export default function AttackerUnitKeywordsSection() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+        <div className="checkbox-grid">
           <Checkbox
             label="Complete the Mission"
             value={store.completeTheMission}

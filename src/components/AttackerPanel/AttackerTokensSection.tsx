@@ -18,7 +18,7 @@ export default function AttackerTokensSection() {
 
   return (
     <SectionHeader title="Tokens">
-      <div className="grid grid-cols-2 gap-x-2 gap-y-2">
+      <div className="keyword-grid">
         <NumberSpinner
           label="Aim"
           value={store.aimTokens}

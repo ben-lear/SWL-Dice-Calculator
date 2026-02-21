@@ -36,7 +36,7 @@ export default function Toggle({
     <div className={`flex items-center justify-between gap-2 ${disabled ? 'opacity-50' : ''}`}>
       <label
         htmlFor={inputId}
-        className="text-sm font-medium text-gray-300 select-none cursor-pointer"
+        className="control-label cursor-pointer"
         title={tooltip}
       >
         {label}

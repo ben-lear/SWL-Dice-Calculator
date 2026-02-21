@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, type ReactNode } from 'react';
+import { CollapseChevron } from './CollapseChevron';
 import type { SegmentedControlOption } from './SegmentedControl';
 
 export const MODE_OPTIONS: SegmentedControlOption<'custom' | 'unit-builder'>[] = [
@@ -41,16 +42,9 @@ export default function PanelShell({
 
   const headerContent = (
     <>
-      <h2 className="text-xs font-bold uppercase tracking-wider text-gray-300">{title}</h2>
+      <h2 className="section-heading text-gray-300">{title}</h2>
       {collapsible && (
-        <span
-          className={`text-gray-500 transition-transform duration-200 ${
-            isExpanded ? 'rotate-0' : '-rotate-90'
-          }`}
-          aria-hidden="true"
-        >
-          ▾
-        </span>
+        <CollapseChevron isExpanded={isExpanded} />
       )}
     </>
   );
