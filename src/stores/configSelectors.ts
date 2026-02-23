@@ -5,6 +5,7 @@ import { useAttackTypeStore } from './attackTypeStore';
 import {
   applyAttackerUpgrades,
   applyDefenderUpgrades,
+  normalizeToEngineWeapon,
 } from '../data/upgradeApplicator';
 import { rebuildWeaponsFromCounts } from '../utils/weaponCounts';
 import { aggregateWeaponKeywords } from '../engine/attackPool';
@@ -104,11 +105,18 @@ export function getFullConfig(): AttackConfig {
     attackState.baseMiniatureCount,
   );
 
+  // Build allAvailableWeapons from unit base weapons (all weapon templates)
+  // so rebuildWeaponsFromCounts can find templates for any weapon the user selects
+  const allAvailableWeapons: WeaponProfile[] = [
+    ...attackerWithUpgrades.weapons,
+    ...(attackState.unitBaseWeapons ?? []).map(normalizeToEngineWeapon),
+  ];
+
   // Apply weaponMiniCounts overrides (Unit Builder mode)
   const rebuiltWeapons = rebuildWeaponsFromCounts(
     attackerWithUpgrades.weapons,
     attackState.weaponMiniCounts,
-    attackerWithUpgrades.weapons,
+    allAvailableWeapons,
   );
 
   // Apply builder keyword overrides on top of the truly-active weapon list
@@ -165,11 +173,18 @@ export function useFullConfig(): AttackConfig {
     baseMiniatureCount,
   );
 
+  // Build allAvailableWeapons from unit base weapons (all weapon templates)
+  // so rebuildWeaponsFromCounts can find templates for any weapon the user selects
+  const allAvailableWeapons: WeaponProfile[] = [
+    ...attackerWithUpgrades.weapons,
+    ...(unitBaseWeapons ?? []).map(normalizeToEngineWeapon),
+  ];
+
   // Apply weaponMiniCounts overrides (Unit Builder mode)
   const rebuiltWeapons = rebuildWeaponsFromCounts(
     attackerWithUpgrades.weapons,
     weaponMiniCounts,
-    attackerWithUpgrades.weapons,
+    allAvailableWeapons,
   );
 
   // Apply builder keyword overrides on top of the truly-active weapon list
