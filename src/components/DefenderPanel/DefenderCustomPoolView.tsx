@@ -83,7 +83,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               onChange={(value) => store.setField('minisInLOS', value)}
               min={1}
               max={99}
-              tooltip="Number of defending miniatures in line of sight — used to multiply the dice of Spray weapons."
+              tooltip="Number of defending miniatures in line of sight - used to multiply the dice of Spray weapons."
             />
           </div>
         </SectionHeader>
@@ -122,7 +122,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
             value={store.suppressed}
             onChange={(value) => store.setField('suppressed', value)}
             disabled={isDisabled('suppressed')}
-            tooltip="This unit is suppressed: it improves its cover by 1 (e.g. no cover → light, light → heavy)."
+            tooltip="This unit is suppressed: it improves its cover by 1 (e.g. no cover to light, light to heavy)."
           />
         </div>
       </SectionHeader>
@@ -230,7 +230,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               label="Complete the Mission"
               value={store.completeTheMission}
               onChange={(value) => store.setField('completeTheMission', value)}
-              tooltip="While near an allied Priority Mission Token, this unit gains surge→block on defense."
+              tooltip="While near an allied Priority Mission Token, this unit gains surge: block on defense."
             />
             <Checkbox
               label="Deflect"

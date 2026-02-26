@@ -54,7 +54,7 @@ export default function EfficiencyDisplay({
         <StatRow
           label="Efficiency ratio"
           value={formatEfficiencyRatio(efficiency.attackerEfficiencyRatio)}
-          tooltip="(Wounds / attacker cost) / defender cost — higher = better trade for attacker"
+          tooltip="(Wounds / attacker cost) / defender cost - higher = better trade for attacker"
           mono
           className="sm:col-span-2"
         />

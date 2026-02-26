@@ -70,6 +70,7 @@ export interface RangeBandDice {
   whiteDice: number;
   totalDice: number;
   expectedSuccesses: number;
+  adjustedExpectedSuccesses: number;
   attackingEfficacy: number;
 }
 
@@ -89,12 +90,26 @@ export interface SaveTier {
   totalWounds: number;
 }
 
-/** Rank composition with points breakdown */
+/** Courage tier grouping with points breakdown */
+export interface CourageBreakdown {
+  /** null = unknown (unenriched units), Infinity = fearless, finite = concrete value */
+  courage: number | null;
+  label: string;
+  unitCount: number;
+  points: number;
+  percentage: number;
+}
+
+/** Rank composition with points breakdown and dice contribution */
 export interface RankBreakdown {
   rank: string;
   count: number;
   points: number;
   percentage: number;
+  /** Fraction of army-wide expected successes contributed by this rank (0–1) */
+  expectedContribution: number;
+  /** Fraction of army-wide adjusted expected successes contributed by this rank (0–1) */
+  adjustedContribution: number;
 }
 
 /** Aggregate army-level statistics */
@@ -105,7 +120,7 @@ export interface ArmyStats {
   totalWounds: number;
   totalEffectiveWounds: number;
   totalMiniatures: number;
-  avgPointsPerActivation: number;
+  avgPointsPerEffectiveWound: number;
 
   // — Tier 2A: Dice output by range —
   diceByRange: RangeBandDice[];
@@ -142,6 +157,7 @@ export interface ArmyStats {
 
   // — Tier 2H: Composition —
   unitsByRank: RankBreakdown[];
+  courageBreakdown: CourageBreakdown[];
 
   // — Tier 2I: Cards —
   commandCards: string[];

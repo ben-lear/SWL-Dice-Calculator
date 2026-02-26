@@ -27,6 +27,7 @@ export default function SimulateButton({ unit }: SimulateButtonProps) {
           onClick={() => navigateAsAttacker(unit)}
           disabled={disabled}
           className="flex-1 rounded bg-red-700 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+          title="Load this unit as the attacker in the Dice Simulator"
         >
           Simulate as Attacker
         </button>
@@ -34,6 +35,7 @@ export default function SimulateButton({ unit }: SimulateButtonProps) {
           onClick={() => navigateAsDefender(unit)}
           disabled={disabled}
           className="flex-1 rounded bg-blue-700 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+          title="Load this unit as the defender in the Dice Simulator"
         >
           Simulate as Defender
         </button>

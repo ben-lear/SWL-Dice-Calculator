@@ -1,4 +1,4 @@
-import type { ResolvedListUnit } from '../../data/listTypes';
+import type { ArmyStats, ResolvedListUnit } from '../../data/listTypes';
 import type { ResolvedUpgrade } from '../../data/types';
 import { computeUnitDiceByRange, computeEffectiveWounds } from '../../data/armyStats';
 import { StatCard } from '../shared/StatCard';
@@ -9,6 +9,7 @@ import SimulateButton from './SimulateButton';
 
 interface UnitDetailViewProps {
   unit: ResolvedListUnit;
+  armyStats: ArmyStats;
   onBackToArmy: () => void;
 }
 
@@ -18,6 +19,7 @@ interface UnitDetailViewProps {
  */
 export default function UnitDetailView({
   unit,
+  armyStats,
   onBackToArmy,
 }: UnitDetailViewProps) {
   const resolved = unit.resolvedUnit;
@@ -45,10 +47,24 @@ export default function UnitDetailView({
   }
   totalCost += upgradeCost;
 
-  // Collect unit keywords for display
+  // Collect unit keywords for display — merge base unit keywords with
+  // upgrade-granted unit keywords (same merging logic as tallyKeywords in armyStats.ts)
   const keywordEntries: string[] = [];
   if (resolved?.keywords) {
-    for (const [key, value] of Object.entries(resolved.keywords)) {
+    const merged: Record<string, number | boolean | string> = { ...resolved.keywords };
+    for (const upg of upgrades) {
+      for (const [key, value] of Object.entries(upg.keywords)) {
+        const existing = merged[key];
+        if (typeof value === 'number' && typeof existing === 'number') {
+          merged[key] = existing + value;
+        } else if (typeof value === 'boolean' && value) {
+          merged[key] = true;
+        } else if (merged[key] === undefined) {
+          merged[key] = value;
+        }
+      }
+    }
+    for (const [key, value] of Object.entries(merged)) {
       if (value === true) {
         keywordEntries.push(formatKeyword(key));
       } else if (typeof value === 'number' && value > 0) {
@@ -62,9 +78,10 @@ export default function UnitDetailView({
       {/* Back button */}
       <button
         onClick={onBackToArmy}
-        className="text-sm text-blue-400 transition-colors hover:text-blue-300"
+        className="inline-flex items-center gap-1.5 rounded-md border border-gray-600 bg-gray-700/80 px-3 py-1.5 text-sm font-medium text-gray-200 shadow-sm transition-colors hover:border-blue-500 hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
       >
-        ← Army Stats
+        <span aria-hidden="true">←</span>
+        Army Overview
       </button>
 
       {/* Header */}
@@ -89,11 +106,12 @@ export default function UnitDetailView({
       {/* Stat Cards */}
       {resolved && (
         <div className="grid grid-cols-3 gap-2">
-          <StatCard label="Points" value={String(totalCost)} />
-          <StatCard label="Health" value={`${resolved.health}♥`} />
-          <StatCard label="Figures" value={String(resolved.figures)} />
+          <StatCard label="Points" value={String(totalCost)} tooltip="Total unit cost including equipped upgrades" />
+          <StatCard label="Health" value={String(resolved.health)} tooltip="Wound threshold per miniature" />
+          <StatCard label="Figures" value={String(resolved.figures)} tooltip="Number of miniatures in this unit" />
           <StatCard
             label="Def. Die"
+            tooltip="Defense die color - Red saves on 3/6 results, White saves on 1/6 results"
             value={
               resolved.defenseDieColor === DefenseDieColor.Red ? (
                 <span
@@ -110,15 +128,15 @@ export default function UnitDetailView({
           />
           <StatCard
             label="Def. Surge"
+            tooltip="Whether this unit converts defense surges to Block results"
             value={
               resolved.defenseSurgeChart === DefenseSurgeChart.ToBlock
                 ? 'Block'
-                : '—'
+                : 'None'
             }
           />
           <StatCard
-            label="Eff. Wounds"
-            value={`≈${Math.round(effectiveWounds * 10) / 10}`}
+            label="Eff. Wounds"            tooltip="Effective wounds - health adjusted by defense die and surge. Higher means more durable."            value={`~${Math.round(effectiveWounds * 10) / 10}`}
           />
         </div>
       )}
@@ -208,7 +226,15 @@ export default function UnitDetailView({
           <h3 className="mb-2 text-xs uppercase tracking-wide text-gray-500">
             Dice Output by Range
           </h3>
-          <RangeDiceTable data={diceByRange} />
+          <RangeDiceTable
+            data={diceByRange}
+            armyTotals={armyStats.diceByRange}
+            unitCostPercentage={
+              armyStats.totalPoints > 0
+                ? totalCost / armyStats.totalPoints
+                : 0
+            }
+          />
         </div>
       )}
 

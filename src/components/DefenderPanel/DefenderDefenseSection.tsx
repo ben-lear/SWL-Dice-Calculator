@@ -58,7 +58,7 @@ export default function DefenderDefenseSection() {
           onChange={(value) => store.setField('minisInLOS', value)}
           min={1}
           max={99}
-          tooltip="Number of defending miniatures in line of sight — used to multiply the dice of Spray weapons."
+          tooltip="Number of defending miniatures in line of sight - used to multiply the dice of Spray weapons."
         />
       </div>
     </SectionHeader>

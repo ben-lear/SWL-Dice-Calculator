@@ -35,6 +35,7 @@ export default function JsonImportSection() {
           }}
           className="ml-2 rounded px-2 py-1 text-xs text-gray-400 transition-colors hover:bg-gray-700 hover:text-gray-200"
           aria-label="Clear imported list"
+          title="Clear the imported list and return to the import view"
         >
           ✕ Clear
         </button>
@@ -62,6 +63,7 @@ export default function JsonImportSection() {
           onClick={handleImport}
           disabled={!inputValue.trim()}
           className="mt-2 w-full rounded bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+          title="Ctrl+Enter to import"
         >
           Import List
         </button>

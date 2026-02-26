@@ -66,7 +66,9 @@ export default function UnitListItem({
 
       {/* Unresolved indicator */}
       {isUnmatched && (
-        <div className="mt-1 text-xs text-amber-400">Unresolved</div>
+        <div className="mt-1 text-xs text-amber-400" title="This unit could not be matched to the database">
+          Unresolved
+        </div>
       )}
 
       {/* Upgrade tags */}
@@ -80,6 +82,7 @@ export default function UnitListItem({
                   ? 'bg-gray-700 text-gray-300'
                   : 'bg-amber-900/40 text-amber-300'
               }`}
+              title={upg.isResolved ? upg.name : `${upg.name} (unresolved)`}
             >
               {upg.name}
             </span>

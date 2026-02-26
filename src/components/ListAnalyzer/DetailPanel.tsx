@@ -36,7 +36,11 @@ export default function DetailPanel() {
   ) {
     const unit = resolvedList.units[selectedIndex];
     return (
-      <UnitDetailView unit={unit} onBackToArmy={() => showArmyOverview()} />
+      <UnitDetailView
+        unit={unit}
+        armyStats={resolvedList.stats}
+        onBackToArmy={() => showArmyOverview()}
+      />
     );
   }
 

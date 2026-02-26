@@ -84,7 +84,7 @@ export default function AttackerUnitKeywordsSection() {
             value={store.jarKaiMastery}
             onChange={(value) => store.setField('jarKaiMastery', value)}
             disabled={isDisabled('jarKaiMastery')}
-            tooltip="While making a melee attack, spend dodge tokens to upgrade results: blank → hit (1 token), hit → crit (1 token), or blank → crit (2 tokens)."
+            tooltip="While making a melee attack, spend dodge tokens to upgrade results: blank to hit (1 token), hit to crit (1 token), or blank to crit (2 tokens)."
           />
           <Checkbox
             label="Jedi Hunter"
@@ -103,7 +103,7 @@ export default function AttackerUnitKeywordsSection() {
             label="Marksman"
             value={store.marksman}
             onChange={(value) => store.setField('marksman', value)}
-            tooltip="After converting surges, spend saved aim tokens to upgrade results: blank → hit (1 aim), hit → crit (1 aim), or blank → crit (2 aims)."
+            tooltip="After converting surges, spend saved aim tokens to upgrade results: blank to hit (1 aim), hit to crit (1 aim), or blank to crit (2 aims)."
           />
         </div>
 

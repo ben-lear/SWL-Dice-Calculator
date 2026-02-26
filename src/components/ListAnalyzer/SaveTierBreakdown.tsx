@@ -20,10 +20,16 @@ export default function SaveTierBreakdown({ tiers }: SaveTierBreakdownProps) {
             key={tier.label}
             className="flex items-center justify-between rounded bg-gray-800/50 px-2 py-1 text-sm"
           >
-            <span className={isRed ? 'text-red-400' : 'text-gray-300'}>
+            <span
+              className={isRed ? 'text-red-400' : 'text-gray-300'}
+              title="Defense save tier - units grouped by die color and surge conversion"
+            >
               {tier.label}
             </span>
-            <span className="text-gray-400">
+            <span
+              className="text-gray-400 cursor-help"
+              title="u = units, w = total wounds in this save tier"
+            >
               {tier.unitCount}u / {tier.totalWounds}w
             </span>
           </div>

@@ -7,6 +7,9 @@ import {
   computeWeaponExpectedSuccesses,
   categorizeUpgrades,
   aggregateArmyStats,
+  extractAdjustedTokens,
+  buildAttackerConfigForEstimation,
+  computeEffectiveCourage,
 } from '../armyStats';
 import { AttackSurgeChart, AttackType, DefenseDieColor, DefenseSurgeChart } from '../../engine/types';
 import type { ResolvedUnit, ResolvedUpgrade, WeaponProfile } from '../types';
@@ -38,6 +41,7 @@ function makeMinimalUnit(overrides: Partial<ResolvedUnit> = {}): ResolvedUnit {
     weapons: [],
     upgradeBar: [],
     isEnriched: false,
+    courage: null,
     ...overrides,
   };
 }
@@ -292,6 +296,7 @@ function makeMinimalUpgrade(overrides: Partial<ResolvedUpgrade> = {}): ResolvedU
     surgeOverrides: null,
     defenseOverrides: null,
     isEnriched: false,
+    courageModifier: 0,
     ...overrides,
   };
 }
@@ -854,5 +859,424 @@ describe('computeUnitDiceByRange', () => {
     expect(r1.blackDice).toBe(6);
     expect(r1.whiteDice).toBe(0);
     expect(r1.totalDice).toBe(6);
+  });
+});
+
+// ============================================================================
+// extractAdjustedTokens
+// ============================================================================
+
+describe('extractAdjustedTokens', () => {
+  it('returns all zeroes for empty keywords', () => {
+    const tokens = extractAdjustedTokens({});
+    expect(tokens.bonusAimTokens).toBe(0);
+    expect(tokens.bonusObservationTokens).toBe(0);
+    expect(tokens.bonusSurgeTokens).toBe(0);
+    expect(tokens.bonusDodgeTokens).toBe(0);
+  });
+
+  it('sums aim-related keywords correctly', () => {
+    const tokens = extractAdjustedTokens({
+      tacticalX: 1,
+      independentAimX: 1,
+      independentAimOrDodgeX: 1,
+      targetX: 2,
+      cacheAimX: 1,
+    });
+    // 1 + 1 + 1 + 2 + 1 = 6
+    expect(tokens.bonusAimTokens).toBe(6);
+  });
+
+  it('extracts observeX into observation tokens', () => {
+    const tokens = extractAdjustedTokens({ observeX: 3 });
+    expect(tokens.bonusObservationTokens).toBe(3);
+    expect(tokens.bonusAimTokens).toBe(0);
+  });
+
+  it('sums surge-related keywords correctly', () => {
+    const tokens = extractAdjustedTokens({
+      independentSurgeX: 2,
+      cacheSurgeX: 1,
+    });
+    expect(tokens.bonusSurgeTokens).toBe(3);
+  });
+
+  it('sums dodge-related keywords correctly', () => {
+    const tokens = extractAdjustedTokens({
+      independentDodgeX: 1,
+      cacheDodgeX: 2,
+    });
+    expect(tokens.bonusDodgeTokens).toBe(3);
+  });
+
+  it('ignores non-numeric keyword values', () => {
+    const tokens = extractAdjustedTokens({
+      tacticalX: true as unknown as number,
+      observeX: 'abc' as unknown as number,
+    });
+    expect(tokens.bonusAimTokens).toBe(0);
+    expect(tokens.bonusObservationTokens).toBe(0);
+  });
+});
+
+// ============================================================================
+// buildAttackerConfigForEstimation
+// ============================================================================
+
+describe('buildAttackerConfigForEstimation', () => {
+  it('produces config with correct surge chart and zero tokens when no keywords', () => {
+    const config = buildAttackerConfigForEstimation(
+      AttackSurgeChart.ToHit,
+      {},
+      { bonusAimTokens: 0, bonusObservationTokens: 0, bonusSurgeTokens: 0, bonusDodgeTokens: 0 },
+    );
+    expect(config.surgeChart).toBe(AttackSurgeChart.ToHit);
+    expect(config.aimTokens).toBe(0);
+    expect(config.marksman).toBe(false);
+    expect(config.preciseX).toBe(0);
+  });
+
+  it('maps bonus tokens into AttackerConfig fields', () => {
+    const config = buildAttackerConfigForEstimation(
+      AttackSurgeChart.None,
+      {},
+      { bonusAimTokens: 3, bonusObservationTokens: 2, bonusSurgeTokens: 1, bonusDodgeTokens: 1 },
+    );
+    expect(config.aimTokens).toBe(3);
+    expect(config.observationTokens).toBe(2);
+    expect(config.surgeTokens).toBe(1);
+    expect(config.dodgeTokensAttacker).toBe(1);
+  });
+
+  it('maps combat keywords from merged keyword record', () => {
+    const config = buildAttackerConfigForEstimation(
+      AttackSurgeChart.ToCrit,
+      { marksman: true, preciseX: 2, jarKaiMastery: true, holdTheLine: true, completeTheMission: true },
+      { bonusAimTokens: 0, bonusObservationTokens: 0, bonusSurgeTokens: 0, bonusDodgeTokens: 0 },
+    );
+    expect(config.marksman).toBe(true);
+    expect(config.preciseX).toBe(2);
+    expect(config.jarKaiMastery).toBe(true);
+    expect(config.holdTheLine).toBe(true);
+    expect(config.completeTheMission).toBe(true);
+  });
+});
+
+// ============================================================================
+// computeUnitDiceByRange — adjusted expected successes
+// ============================================================================
+
+describe('computeUnitDiceByRange — adjusted successes', () => {
+  it('adjusted equals expected when unit has no token-granting keywords', () => {
+    const unit = makeMinimalUnit({
+      figures: 4,
+      weapons: [makeWeapon({ blackDice: 1, maxRange: 3 })],
+      attackSurgeChart: AttackSurgeChart.None,
+    });
+    const r2 = getDiceAtRange(computeUnitDiceByRange(unit, []), 'R2');
+    expect(r2.adjustedExpectedSuccesses).toBeCloseTo(r2.expectedSuccesses, 5);
+  });
+
+  it('adjusted > expected when unit has tacticalX', () => {
+    const unit = makeMinimalUnit({
+      figures: 4,
+      weapons: [makeWeapon({ blackDice: 1, maxRange: 3 })],
+      attackSurgeChart: AttackSurgeChart.ToHit,
+      keywords: { tacticalX: 1 },
+    });
+    const r2 = getDiceAtRange(computeUnitDiceByRange(unit, []), 'R2');
+    expect(r2.adjustedExpectedSuccesses).toBeGreaterThan(r2.expectedSuccesses);
+  });
+
+  it('adjusted reflects marksman keyword boost', () => {
+    const unit = makeMinimalUnit({
+      figures: 4,
+      weapons: [makeWeapon({ blackDice: 1, maxRange: 3 })],
+      attackSurgeChart: AttackSurgeChart.ToHit,
+      keywords: { tacticalX: 1, marksman: true },
+    });
+    const r2 = getDiceAtRange(computeUnitDiceByRange(unit, []), 'R2');
+    // Marksman with 1 aim → +1 hit instead of rerolls, so adjusted should be higher
+    expect(r2.adjustedExpectedSuccesses).toBeGreaterThan(r2.expectedSuccesses);
+  });
+
+  it('adjusted is populated for melee range bands', () => {
+    const unit = makeMinimalUnit({
+      figures: 3,
+      weapons: [makeWeapon({ redDice: 1, weaponType: AttackType.Melee })],
+      keywords: { tacticalX: 1 },
+      attackSurgeChart: AttackSurgeChart.ToCrit,
+    });
+    const melee = getDiceAtRange(computeUnitDiceByRange(unit, []), 'Melee');
+    expect(melee.adjustedExpectedSuccesses).toBeGreaterThan(0);
+    expect(melee.adjustedExpectedSuccesses).toBeGreaterThan(melee.expectedSuccesses);
+  });
+
+  it('gunslinger weapon keywords contribute to adjusted calculation', () => {
+    // Gunslinger unit with a weapon that has Critical 1.
+    // The duplicated weapon's keywords should feed into the adjusted calculation.
+    const unit = makeMinimalUnit({
+      figures: 1,
+      keywords: { gunslinger: true },
+      attackSurgeChart: AttackSurgeChart.None,
+      weapons: [
+        makeWeapon({
+          name: 'Blaster',
+          blackDice: 2,
+          maxRange: 2,
+          keywords: { criticalX: 1 },
+        }),
+      ],
+    });
+
+    const r1 = getDiceAtRange(computeUnitDiceByRange(unit, []), 'R1');
+    // Gunslinger doubles dice: 4B total. Critical 1 from TWO weapon contributions
+    // → Critical 2 for surge conversion in the adjusted calculation.
+    // With no surge chart but Critical 2, surges convert → crits → more successes.
+    expect(r1.adjustedExpectedSuccesses).toBeGreaterThan(r1.expectedSuccesses);
+  });
+});
+
+// ============================================================================
+// computeEffectiveCourage
+// ============================================================================
+
+describe('computeEffectiveCourage', () => {
+  it('returns base courage when no upgrades modify it', () => {
+    expect(computeEffectiveCourage(2, [])).toBe(2);
+  });
+
+  it('returns null when base courage is null and no Infinity modifier', () => {
+    expect(computeEffectiveCourage(null, [])).toBeNull();
+  });
+
+  it('adds finite modifiers to base courage', () => {
+    const upg = makeMinimalUpgrade({ courageModifier: 1 });
+    expect(computeEffectiveCourage(2, [upg])).toBe(3);
+  });
+
+  it('sums multiple modifiers', () => {
+    const upg1 = makeMinimalUpgrade({ courageModifier: 1 });
+    const upg2 = makeMinimalUpgrade({ courageModifier: 1 });
+    expect(computeEffectiveCourage(1, [upg1, upg2])).toBe(3);
+  });
+
+  it('clamps negative results to 0', () => {
+    const upg = makeMinimalUpgrade({ courageModifier: -5 });
+    expect(computeEffectiveCourage(2, [upg])).toBe(0);
+  });
+
+  it('Infinity modifier overrides finite base courage', () => {
+    const upg = makeMinimalUpgrade({ courageModifier: Infinity });
+    expect(computeEffectiveCourage(2, [upg])).toBe(Infinity);
+  });
+
+  it('Infinity modifier overrides null base courage', () => {
+    const upg = makeMinimalUpgrade({ courageModifier: Infinity });
+    expect(computeEffectiveCourage(null, [upg])).toBe(Infinity);
+  });
+
+  it('preserves Infinity base courage without modifiers', () => {
+    expect(computeEffectiveCourage(Infinity, [])).toBe(Infinity);
+  });
+
+  it('preserves Infinity base courage with finite modifier', () => {
+    const upg = makeMinimalUpgrade({ courageModifier: 1 });
+    expect(computeEffectiveCourage(Infinity, [upg])).toBe(Infinity);
+  });
+});
+
+// ============================================================================
+// aggregateArmyStats — courageBreakdown
+// ============================================================================
+
+describe('aggregateArmyStats — courageBreakdown', () => {
+  it('produces courage breakdown from units with known courage', () => {
+    const unit1 = makeMinimalUnit({ courage: 1, cost: 40 });
+    const unit2 = makeMinimalUnit({ courage: 2, cost: 60 });
+    const units = [makeListUnit(unit1), makeListUnit(unit2)];
+
+    const stats = aggregateArmyStats(units, {});
+    expect(stats.courageBreakdown).toHaveLength(2);
+
+    const c1 = stats.courageBreakdown.find(c => c.courage === 1);
+    const c2 = stats.courageBreakdown.find(c => c.courage === 2);
+    expect(c1).toBeDefined();
+    expect(c1!.unitCount).toBe(1);
+    expect(c1!.label).toBe('1');
+    expect(c2).toBeDefined();
+    expect(c2!.unitCount).toBe(1);
+    expect(c2!.label).toBe('2');
+  });
+
+  it('groups unknown courage units under null', () => {
+    const unit = makeMinimalUnit({ courage: null, cost: 50 });
+    const stats = aggregateArmyStats([makeListUnit(unit)], {});
+    const unknown = stats.courageBreakdown.find(c => c.courage === null);
+    expect(unknown).toBeDefined();
+    expect(unknown!.label).toBe('Unknown');
+    expect(unknown!.unitCount).toBe(1);
+  });
+
+  it('groups Infinity courage units with label \u221E', () => {
+    const unit = makeMinimalUnit({ courage: Infinity, cost: 100 });
+    const stats = aggregateArmyStats([makeListUnit(unit)], {});
+    const inf = stats.courageBreakdown.find(c => c.courage === Infinity);
+    expect(inf).toBeDefined();
+    expect(inf!.label).toBe('\u221E');
+    expect(inf!.unitCount).toBe(1);
+  });
+
+  it('sorts finite < Infinity < Unknown', () => {
+    const units = [
+      makeListUnit(makeMinimalUnit({ courage: null, cost: 10 })),
+      makeListUnit(makeMinimalUnit({ courage: Infinity, cost: 20 })),
+      makeListUnit(makeMinimalUnit({ courage: 1, cost: 30 })),
+      makeListUnit(makeMinimalUnit({ courage: 3, cost: 40 })),
+    ];
+    const stats = aggregateArmyStats(units, {});
+    const labels = stats.courageBreakdown.map(c => c.label);
+    expect(labels).toEqual(['1', '3', '\u221E', 'Unknown']);
+  });
+
+  it('applies upgrade courageModifier to unit courage', () => {
+    const unit = makeMinimalUnit({ courage: 1, cost: 50 });
+    const upg = makeMinimalUpgrade({ courageModifier: 1, cost: 10 });
+    const listUnit = makeListUnit(unit, { resolvedUpgrades: [upg] });
+
+    const stats = aggregateArmyStats([listUnit], {});
+    const c2 = stats.courageBreakdown.find(c => c.courage === 2);
+    expect(c2).toBeDefined();
+    expect(c2!.unitCount).toBe(1);
+    expect(c2!.points).toBe(60);
+  });
+
+  it('Infinity upgrade modifier overrides finite base courage in breakdown', () => {
+    const unit = makeMinimalUnit({ courage: 2, cost: 50 });
+    const upg = makeMinimalUpgrade({ courageModifier: Infinity });
+    const listUnit = makeListUnit(unit, { resolvedUpgrades: [upg] });
+
+    const stats = aggregateArmyStats([listUnit], {});
+    const inf = stats.courageBreakdown.find(c => c.courage === Infinity);
+    expect(inf).toBeDefined();
+    expect(inf!.unitCount).toBe(1);
+  });
+
+  it('calculates percentage based on total points', () => {
+    const unit1 = makeMinimalUnit({ courage: 1, cost: 25 });
+    const unit2 = makeMinimalUnit({ courage: 1, cost: 75 });
+    const stats = aggregateArmyStats(
+      [makeListUnit(unit1), makeListUnit(unit2)],
+      {},
+    );
+    const c1 = stats.courageBreakdown.find(c => c.courage === 1);
+    expect(c1).toBeDefined();
+    expect(c1!.percentage).toBe(1);
+    expect(c1!.points).toBe(100);
+  });
+});
+
+// ============================================================================
+// aggregateArmyStats — unitsByRank dice contribution
+// ============================================================================
+
+describe('aggregateArmyStats — unitsByRank dice contribution', () => {
+  it('computes expectedContribution and adjustedContribution that sum to ~1', () => {
+    const commander = makeMinimalUnit({
+      id: 'cmdr',
+      rank: 'commander',
+      cost: 100,
+      figures: 1,
+      weapons: [makeWeapon({ redDice: 2, maxRange: 3 })],
+    });
+    const corps1 = makeMinimalUnit({
+      id: 'corps1',
+      rank: 'corps',
+      cost: 50,
+      figures: 4,
+      weapons: [makeWeapon({ blackDice: 1, maxRange: 3 })],
+    });
+    const corps2 = makeMinimalUnit({
+      id: 'corps2',
+      rank: 'corps',
+      cost: 50,
+      figures: 4,
+      weapons: [makeWeapon({ blackDice: 1, maxRange: 3 })],
+    });
+
+    const stats = aggregateArmyStats(
+      [makeListUnit(commander), makeListUnit(corps1), makeListUnit(corps2)],
+      {},
+    );
+
+    expect(stats.unitsByRank.length).toBeGreaterThanOrEqual(2);
+
+    const cmdrRank = stats.unitsByRank.find(r => r.rank === 'Commander');
+    const corpsRank = stats.unitsByRank.find(r => r.rank === 'Corps');
+    expect(cmdrRank).toBeDefined();
+    expect(corpsRank).toBeDefined();
+
+    // Contributions should be between 0 and 1
+    expect(cmdrRank!.expectedContribution).toBeGreaterThan(0);
+    expect(cmdrRank!.expectedContribution).toBeLessThanOrEqual(1);
+    expect(corpsRank!.expectedContribution).toBeGreaterThan(0);
+    expect(corpsRank!.expectedContribution).toBeLessThanOrEqual(1);
+
+    // Sum of contributions should be ~1
+    const expectedSum = cmdrRank!.expectedContribution + corpsRank!.expectedContribution;
+    expect(expectedSum).toBeCloseTo(1, 2);
+
+    const adjustedSum = cmdrRank!.adjustedContribution + corpsRank!.adjustedContribution;
+    expect(adjustedSum).toBeCloseTo(1, 2);
+  });
+
+  it('returns 0 contribution for ranks with no weapons', () => {
+    const commander = makeMinimalUnit({
+      id: 'cmdr',
+      rank: 'commander',
+      cost: 100,
+      figures: 1,
+      weapons: [],
+    });
+    const corps = makeMinimalUnit({
+      id: 'corps',
+      rank: 'corps',
+      cost: 50,
+      figures: 4,
+      weapons: [makeWeapon({ blackDice: 2, maxRange: 3 })],
+    });
+
+    const stats = aggregateArmyStats(
+      [makeListUnit(commander), makeListUnit(corps)],
+      {},
+    );
+
+    const cmdrRank = stats.unitsByRank.find(r => r.rank === 'Commander');
+    const corpsRank = stats.unitsByRank.find(r => r.rank === 'Corps');
+    expect(cmdrRank).toBeDefined();
+    expect(corpsRank).toBeDefined();
+
+    // Commander has no weapons → 0 contribution
+    expect(cmdrRank!.expectedContribution).toBe(0);
+    expect(cmdrRank!.adjustedContribution).toBe(0);
+
+    // Corps should own 100% of dice output
+    expect(corpsRank!.expectedContribution).toBe(1);
+    expect(corpsRank!.adjustedContribution).toBe(1);
+  });
+
+  it('returns 0 contribution when no units have weapons', () => {
+    const unit = makeMinimalUnit({
+      id: 'empty',
+      rank: 'corps',
+      cost: 50,
+      weapons: [],
+    });
+
+    const stats = aggregateArmyStats([makeListUnit(unit)], {});
+    const corpsRank = stats.unitsByRank.find(r => r.rank === 'Corps');
+    expect(corpsRank).toBeDefined();
+    expect(corpsRank!.expectedContribution).toBe(0);
+    expect(corpsRank!.adjustedContribution).toBe(0);
   });
 });

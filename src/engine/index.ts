@@ -4,6 +4,10 @@ export { executeAttackSequence } from './attackSequence';
 // Attack pool functions
 export { aggregateWeaponKeywords } from './attackPool';
 
+// Deterministic attack estimation
+export { estimateExpectedAttackSuccesses } from './attackEstimation';
+export type { AttackEstimationResult } from './attackEstimation';
+
 // Dice functions
 export {
   rollAttackDie,

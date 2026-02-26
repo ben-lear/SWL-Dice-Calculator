@@ -8,12 +8,15 @@ export interface SectionHeaderProps {
   children: React.ReactNode;
   /** Whether the section starts expanded (default: true) */
   defaultExpanded?: boolean;
+  /** Optional tooltip shown on hover over the section title */
+  tooltip?: string;
 }
 
 export default function SectionHeader({
   title,
   children,
   defaultExpanded = true,
+  tooltip,
 }: SectionHeaderProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -39,7 +42,7 @@ export default function SectionHeader({
         aria-expanded={isExpanded}
         className="flex w-full items-center justify-between py-2 text-left"
       >
-        <span className="section-heading">
+        <span className={`section-heading ${tooltip ? 'cursor-help' : ''}`} title={tooltip}>
           {title}
         </span>
         <CollapseChevron isExpanded={isExpanded} />

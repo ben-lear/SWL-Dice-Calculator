@@ -11,7 +11,7 @@ import type {
   WeaponKeywords,
 } from '../../engine/types';
 import type { UpgradeSlot } from '../types';
-import type { DisplayWeaponKeywords, UnitKeywords, UpgradeKeywords } from './keywordTypes';
+import type { DisplayWeaponKeywords, EnrichmentNumericValue, UnitKeywords, UpgradeKeywords } from './keywordTypes';
 
 /**
  * Weapon profile shape used by manual unit enrichment.
@@ -64,6 +64,22 @@ export interface UnitEnrichment {
    * Personnel upgrades may add additional miniatures on top of this count.
    */
   miniatureCount?: number;
+
+  /**
+   * Override the health (wounds per miniature) for this unit.
+   * When present, overrides the API's `health` field.
+   * When absent, the API `health` value is used.
+   *
+   * Use when the API data is incorrect or missing for this unit.
+   */
+  healthOverride?: number;
+
+  /**
+   * Courage value for this unit (used for morale checks).
+   * Set to a concrete number (e.g., 1, 2, 3) once known.
+   * Defaults to '<need human>' until manually curated.
+   */
+  courage?: EnrichmentNumericValue;
 
   /**
    * Weapon profiles for this unit.
@@ -167,6 +183,15 @@ export interface UpgradeEnrichment {
    * grenade upgrade (not one total across all grenades).
    */
   isGrenade?: boolean;
+
+  /**
+   * Courage modifier this upgrade applies to the equipped unit.
+   * When a finite number, adds to (or subtracts from) the unit's base courage.
+   * When Infinity, overrides the unit's courage to Infinity (fearless).
+   * When '<need human>', requires manual curation.
+   * When absent/undefined, the upgrade does not affect courage.
+   */
+  courageModifier?: EnrichmentNumericValue;
 
   /**
    * Surge chart overrides this upgrade grants.

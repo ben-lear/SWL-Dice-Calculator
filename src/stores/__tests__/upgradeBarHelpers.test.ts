@@ -43,6 +43,7 @@ function makeUpgrade(
     requiredUpgradeSlot: null,
     surgeOverrides: null,
     defenseOverrides: null,
+    courageModifier: 0,
     isEnriched: false,
   };
 }

@@ -16,13 +16,18 @@ import type {
   KeywordTally,
   SaveTier,
   RankBreakdown,
+  CourageBreakdown,
 } from './listTypes';
 import {
   AttackSurgeChart,
   DefenseDieColor,
   DefenseSurgeChart,
   AttackType,
+  MarksmanStrategy,
+  RerollStrategy,
 } from '../engine/types';
+import type { AttackerConfig, AggregatedWeaponKeywords } from '../engine/types';
+import { estimateExpectedAttackSuccesses } from '../engine';
 
 // ============================================================================
 // Defense Probability Helpers
@@ -147,13 +152,17 @@ export function computeAttackDieSuccessRate(
 // ============================================================================
 
 /** Range bands used for aggregation */
-const RANGE_BANDS = ['Melee', 'R1', 'R2', 'R3', 'R4', 'R5'] as const;
+const RANGE_BANDS = ['Overrun', 'Melee', 'R1', 'R2', 'R3', 'R4', 'R5'] as const;
 
 /** Check if a weapon is eligible for a given range band */
 function weaponCoversRange(
   weapon: WeaponProfile,
   rangeBand: string,
 ): boolean {
+  if (rangeBand === 'Overrun') {
+    return weapon.weaponType === AttackType.Overrun;
+  }
+
   if (rangeBand === 'Melee') {
     return (
       weapon.weaponType === AttackType.Melee ||
@@ -164,7 +173,8 @@ function weaponCoversRange(
   // Ranged bands
   const band = parseInt(rangeBand.slice(1), 10);
   if (
-    weapon.weaponType === AttackType.Melee
+    weapon.weaponType === AttackType.Melee ||
+    weapon.weaponType === AttackType.Overrun
   ) {
     return false;
   }
@@ -288,6 +298,93 @@ export function categorizeUpgrades(
   };
 }
 
+// ============================================================================
+// Adjusted Token Extraction (data-layer adapter)
+// ============================================================================
+
+/** Bonus tokens derived from display/enrichment keywords for adjusted calculations */
+export interface AdjustedTokens {
+  bonusAimTokens: number;
+  bonusObservationTokens: number;
+  bonusSurgeTokens: number;
+  bonusDodgeTokens: number;
+}
+
+/**
+ * Extract bonus token counts from display/enrichment keywords for the adjusted
+ * expected successes calculation.
+ *
+ * This is the ONLY place where non-engine display keywords are translated into
+ * engine-compatible token values. The engine function itself knows nothing about
+ * Tactical X, Independent X, Target X, Observe X, or Cache keywords.
+ */
+export function extractAdjustedTokens(
+  mergedKeywords: Record<string, number | boolean | string>,
+): AdjustedTokens {
+  const num = (key: string): number => {
+    const v = mergedKeywords[key];
+    return typeof v === 'number' ? v : 0;
+  };
+
+  return {
+    bonusAimTokens:
+      num('tacticalX') +
+      num('independentAimX') +
+      num('independentAimOrDodgeX') +
+      num('targetX') +
+      num('cacheAimX'),
+    bonusObservationTokens:
+      num('observeX'),
+    bonusSurgeTokens:
+      num('independentSurgeX') +
+      num('cacheSurgeX'),
+    bonusDodgeTokens:
+      num('independentDodgeX') +
+      num('cacheDodgeX'),
+  };
+}
+
+/**
+ * Build a minimal AttackerConfig suitable for estimateExpectedAttackSuccesses().
+ * Populates engine-backed combat keywords from the merged unit+upgrade keyword
+ * record, plus bonus tokens from extractAdjustedTokens().
+ */
+export function buildAttackerConfigForEstimation(
+  attackSurge: AttackSurgeChart,
+  mergedKeywords: Record<string, number | boolean | string>,
+  bonusTokens: AdjustedTokens,
+): AttackerConfig {
+  const num = (key: string): number => {
+    const v = mergedKeywords[key];
+    return typeof v === 'number' ? v : 0;
+  };
+  const bool = (key: string): boolean => mergedKeywords[key] === true;
+
+  return {
+    weapons: [],
+    surgeChart: attackSurge,
+    aimTokens: bonusTokens.bonusAimTokens,
+    surgeTokens: bonusTokens.bonusSurgeTokens,
+    observationTokens: bonusTokens.bonusObservationTokens,
+    dodgeTokensAttacker: bonusTokens.bonusDodgeTokens,
+    preciseX: num('preciseX'),
+    sharpshooterX: 0,
+    arsenalX: 0,
+    marksman: bool('marksman'),
+    marksmanStrategy: MarksmanStrategy.Deterministic,
+    rerollStrategy: RerollStrategy.Conservative,
+    jediHunter: false,
+    jarKaiMastery: bool('jarKaiMastery'),
+    duelistAttacker: false,
+    makashiMastery: false,
+    deathFromAbove: false,
+    holdTheLine: bool('holdTheLine'),
+    completeTheMission: bool('completeTheMission'),
+    defeatedMinis: 0,
+    unitCost: 0,
+  };
+}
+
 /** Add a weapon's dice to accumulators, multiplied by count */
 function addWeaponDice(
   weapon: WeaponProfile,
@@ -297,6 +394,56 @@ function addWeaponDice(
   acc.redDice += (weapon.redDice ?? 0) * count;
   acc.blackDice += (weapon.blackDice ?? 0) * count;
   acc.whiteDice += (weapon.whiteDice ?? 0) * count;
+}
+
+/**
+ * Build AggregatedWeaponKeywords from data-layer WeaponProfiles.
+ *
+ * The data layer uses `Partial<WeaponKeywords>` (all fields optional),
+ * while the engine's `aggregateWeaponKeywords()` expects `WeaponKeywords`
+ * (all fields required). This helper safely defaults undefined values to
+ * 0/false. Only fields used by estimateExpectedAttackSuccesses are
+ * semantically important (criticalX, ramX).
+ */
+function aggregateDataWeaponKeywords(
+  weapons: WeaponProfile[],
+): AggregatedWeaponKeywords {
+  let criticalX = 0;
+  let ramX = 0;
+  let lethalX = 0;
+  let pierceX = 0;
+  let impactX = 0;
+  let ionX = 0;
+  let blast = false;
+  let suppressive = false;
+  let highVelocity = weapons.length > 0;
+  let immuneDeflect = false;
+  let primitive = false;
+  let blackOps = false;
+  let krakenBlaster = false;
+
+  for (const w of weapons) {
+    const kw = w.keywords;
+    criticalX += kw.criticalX ?? 0;
+    ramX += kw.ramX ?? 0;
+    lethalX += kw.lethalX ?? 0;
+    pierceX += kw.pierceX ?? 0;
+    impactX += kw.impactX ?? 0;
+    ionX += kw.ionX ?? 0;
+    if (kw.blast) blast = true;
+    if (kw.suppressive) suppressive = true;
+    if (!kw.highVelocity) highVelocity = false;
+    if (kw.immuneDeflect) immuneDeflect = true;
+    if (kw.primitive) primitive = true;
+    if (kw.blackOps) blackOps = true;
+    if (kw.krakenBlaster) krakenBlaster = true;
+  }
+
+  return {
+    criticalX, lethalX, pierceX, impactX, ramX, ionX,
+    blast, suppressive, highVelocity, immuneDeflect, primitive,
+    blackOps, krakenBlaster,
+  };
 }
 
 /**
@@ -350,11 +497,78 @@ export function computeUnitDiceByRange(
     arsenalX,
   } = categorizeUpgrades(unit, upgrades);
 
+  // Merge unit + upgrade keywords for adjusted token extraction
+  const mergedKeywords: Record<string, number | boolean | string> = { ...unit.keywords };
+  for (const upg of upgrades) {
+    for (const [key, value] of Object.entries(upg.keywords)) {
+      const existing = mergedKeywords[key];
+      if (typeof value === 'number' && typeof existing === 'number') {
+        mergedKeywords[key] = existing + value;
+      } else if (typeof value === 'boolean' && value) {
+        mergedKeywords[key] = true;
+      } else if (mergedKeywords[key] === undefined) {
+        mergedKeywords[key] = value;
+      }
+    }
+  }
+  const bonusTokens = extractAdjustedTokens(mergedKeywords);
+  const estimationAttacker = buildAttackerConfigForEstimation(attackSurge, mergedKeywords, bonusTokens);
+
   // The pool of weapons available to base minis: unit weapons + armament weapons
   const baseMiniWeaponPool = [...unit.weapons, ...armamentWeapons];
 
   return RANGE_BANDS.map((rangeBand) => {
     const acc = { redDice: 0, blackDice: 0, whiteDice: 0 };
+
+    // --- Overrun band: single attack pool regardless of mini count, scaled by overrunX ---
+    // Even if multiple minis carry overrun weapons, the unit makes only one overrun
+    // attack pool per activation (the best weapon). Units with overrunX > 1 can make
+    // that many overrun attacks, so we multiply the weapon's dice by overrunX.
+    if (rangeBand === 'Overrun') {
+      const allOverrunWeapons = [
+        ...baseMiniWeaponPool,
+        ...upgradeMiniGroups.flatMap(g => g.weapons),
+        ...otherUpgradeWeapons,
+      ].filter(w => w.weaponType === AttackType.Overrun);
+
+      const contributedOverrun: WeaponProfile[] = [];
+      if (allOverrunWeapons.length > 0) {
+        const best = allOverrunWeapons.reduce((a, b) =>
+          computeWeaponExpectedSuccesses(a, attackSurge) >= computeWeaponExpectedSuccesses(b, attackSurge) ? a : b,
+        );
+        const overrunX = typeof best.keywords.overrunX === 'number' ? best.keywords.overrunX : 1;
+        addWeaponDice(best, overrunX, acc);
+        contributedOverrun.push(best);
+      }
+
+      const { redDice, blackDice, whiteDice } = acc;
+      const totalDice = redDice + blackDice + whiteDice;
+      const expectedSuccesses =
+        redDice * computeAttackDieSuccessRate('red', attackSurge) +
+        blackDice * computeAttackDieSuccessRate('black', attackSurge) +
+        whiteDice * computeAttackDieSuccessRate('white', attackSurge);
+      const attackingEfficacy = totalDice > 0 ? expectedSuccesses / totalDice : 0;
+
+      // Adjusted: factor in offensive keywords via engine estimation
+      const overrunPoolKw = aggregateDataWeaponKeywords(contributedOverrun);
+      const overrunEstimation = totalDice > 0
+        ? estimateExpectedAttackSuccesses(redDice, blackDice, whiteDice, estimationAttacker, overrunPoolKw, AttackType.Overrun)
+        : { expectedSuccesses: 0 };
+
+      return {
+        rangeBand,
+        redDice,
+        blackDice,
+        whiteDice,
+        totalDice,
+        expectedSuccesses: Math.round(expectedSuccesses * 100) / 100,
+        adjustedExpectedSuccesses: Math.round(overrunEstimation.expectedSuccesses * 100) / 100,
+        attackingEfficacy: Math.round(attackingEfficacy * 1000) / 1000,
+      };
+    }
+
+    // Track all contributed weapons for keyword aggregation (adjusted calc)
+    const contributedWeapons: WeaponProfile[] = [];
 
     // --- Base minis ---
     if (baseMiniCount === 1) {
@@ -364,6 +578,7 @@ export function computeUnitDiceByRange(
       );
       for (const w of chosen) {
         addWeaponDice(w, 1, acc);
+        contributedWeapons.push(w);
       }
     } else if (baseMiniCount > 1) {
       // Multi-mini unit: all base minis use the single best weapon
@@ -372,6 +587,7 @@ export function computeUnitDiceByRange(
       );
       if (chosen.length > 0) {
         addWeaponDice(chosen[0], baseMiniCount, acc);
+        contributedWeapons.push(chosen[0]);
       }
     }
 
@@ -383,6 +599,7 @@ export function computeUnitDiceByRange(
       );
       if (upgradeEligible.length > 0) {
         addWeaponDice(upgradeEligible[0], group.count, acc);
+        contributedWeapons.push(upgradeEligible[0]);
       } else if (rangeBand === 'Melee') {
         // Melee fallback: upgrade minis can use the unit's melee weapon
         // (e.g., heavy weapon specialist uses Unarmed in melee)
@@ -393,6 +610,7 @@ export function computeUnitDiceByRange(
         );
         if (fallback.length > 0) {
           addWeaponDice(fallback[0], group.count, acc);
+          contributedWeapons.push(fallback[0]);
         }
       }
     }
@@ -401,6 +619,7 @@ export function computeUnitDiceByRange(
     for (const w of grenadeWeapons) {
       if (weaponCoversRange(w, rangeBand)) {
         addWeaponDice(w, 1, acc);
+        contributedWeapons.push(w);
       }
     }
 
@@ -408,6 +627,7 @@ export function computeUnitDiceByRange(
     for (const w of otherUpgradeWeapons) {
       if (weaponCoversRange(w, rangeBand)) {
         addWeaponDice(w, 1, acc);
+        contributedWeapons.push(w);
       }
     }
 
@@ -455,6 +675,9 @@ export function computeUnitDiceByRange(
             computeWeaponExpectedSuccesses(a, attackSurge),
         )[0];
         addWeaponDice(best, 1, acc);
+        // The gunslinger's second attack action contributes its weapon keywords
+        // (Critical X, Ram X, etc.) to the adjusted calculation.
+        contributedWeapons.push(best);
       }
     }
 
@@ -466,6 +689,15 @@ export function computeUnitDiceByRange(
       whiteDice * computeAttackDieSuccessRate('white', attackSurge);
     const attackingEfficacy = totalDice > 0 ? expectedSuccesses / totalDice : 0;
 
+    // Determine the attack type for this range band
+    const bandAttackType = rangeBand === 'Melee' ? AttackType.Melee : AttackType.Ranged;
+
+    // Adjusted: factor in offensive keywords via engine estimation
+    const bandPoolKw = aggregateDataWeaponKeywords(contributedWeapons);
+    const bandEstimation = totalDice > 0
+      ? estimateExpectedAttackSuccesses(redDice, blackDice, whiteDice, estimationAttacker, bandPoolKw, bandAttackType)
+      : { expectedSuccesses: 0 };
+
     return {
       rangeBand,
       redDice,
@@ -473,6 +705,7 @@ export function computeUnitDiceByRange(
       whiteDice,
       totalDice,
       expectedSuccesses: Math.round(expectedSuccesses * 100) / 100,
+      adjustedExpectedSuccesses: Math.round(bandEstimation.expectedSuccesses * 100) / 100,
       attackingEfficacy: Math.round(attackingEfficacy * 1000) / 1000,
     };
   });
@@ -871,15 +1104,19 @@ const RANK_LABELS: Record<string, string> = {
 function computeRankBreakdown(
   units: ResolvedListUnit[],
   totalPoints: number,
+  perUnitDiceSummaries: { rank: string; expectedTotal: number; adjustedTotal: number }[],
 ): RankBreakdown[] {
-  const byRank = new Map<string, { count: number; points: number }>();
+  const byRank = new Map<
+    string,
+    { count: number; points: number; expectedTotal: number; adjustedTotal: number }
+  >();
 
   for (const listUnit of units) {
     const unit = listUnit.resolvedUnit;
     if (!unit) continue;
 
     const rank = unit.rank;
-    const entry = byRank.get(rank) ?? { count: 0, points: 0 };
+    const entry = byRank.get(rank) ?? { count: 0, points: 0, expectedTotal: 0, adjustedTotal: 0 };
     entry.count++;
 
     // Unit cost + upgrade costs
@@ -889,6 +1126,23 @@ function computeRankBreakdown(
     }
     entry.points += unitPoints;
     byRank.set(rank, entry);
+  }
+
+  // Aggregate dice successes by rank
+  for (const summary of perUnitDiceSummaries) {
+    const entry = byRank.get(summary.rank);
+    if (entry) {
+      entry.expectedTotal += summary.expectedTotal;
+      entry.adjustedTotal += summary.adjustedTotal;
+    }
+  }
+
+  // Grand totals for contribution fractions
+  let grandExpected = 0;
+  let grandAdjusted = 0;
+  for (const entry of byRank.values()) {
+    grandExpected += entry.expectedTotal;
+    grandAdjusted += entry.adjustedTotal;
   }
 
   return RANK_ORDER.filter((r) => byRank.has(r)).map((rank) => {
@@ -901,8 +1155,105 @@ function computeRankBreakdown(
         totalPoints > 0
           ? Math.round((entry.points / totalPoints) * 1000) / 1000
           : 0,
+      expectedContribution:
+        grandExpected > 0
+          ? Math.round((entry.expectedTotal / grandExpected) * 1000) / 1000
+          : 0,
+      adjustedContribution:
+        grandAdjusted > 0
+          ? Math.round((entry.adjustedTotal / grandAdjusted) * 1000) / 1000
+          : 0,
     };
   });
+}
+
+// ============================================================================
+// Courage Breakdown
+// ============================================================================
+
+/**
+ * Compute effective courage for a unit after applying upgrade modifiers.
+ * Returns null if base courage is unknown and no Infinity modifier is present.
+ */
+export function computeEffectiveCourage(
+  baseCourage: number | null,
+  upgrades: ResolvedUpgrade[],
+): number | null {
+  // Check for any Infinity modifier — immediately overrides to Infinity
+  for (const upg of upgrades) {
+    if (upg.courageModifier === Infinity) return Infinity;
+  }
+
+  // If base courage is unknown and no Infinity override, result is unknown
+  if (baseCourage === null) return null;
+
+  // If base courage is already Infinity, modifiers don't change it
+  if (baseCourage === Infinity) return Infinity;
+
+  // Sum finite modifiers and clamp to 0
+  let total = baseCourage;
+  for (const upg of upgrades) {
+    total += upg.courageModifier;
+  }
+  return Math.max(0, total);
+}
+
+function computeCourageBreakdown(
+  units: ResolvedListUnit[],
+  totalPoints: number,
+): CourageBreakdown[] {
+  // Map key: stringified courage ("null", "Infinity", or numeric string)
+  const byCourage = new Map<string, { courage: number | null; count: number; points: number }>();
+
+  for (const listUnit of units) {
+    const unit = listUnit.resolvedUnit;
+    if (!unit) continue;
+
+    const upgrades = listUnit.resolvedUpgrades.filter(
+      (u): u is ResolvedUpgrade => u !== null,
+    );
+
+    const effective = computeEffectiveCourage(unit.courage, upgrades);
+    const key = String(effective);
+
+    const entry = byCourage.get(key) ?? { courage: effective, count: 0, points: 0 };
+    entry.count++;
+
+    // Unit cost + upgrade costs
+    let unitPoints = unit.cost;
+    for (const upg of listUnit.resolvedUpgrades) {
+      if (upg) unitPoints += upg.cost;
+    }
+    entry.points += unitPoints;
+    byCourage.set(key, entry);
+  }
+
+  // Sort: finite ascending, then Infinity, then null (Unknown) last
+  const entries = Array.from(byCourage.values());
+  entries.sort((a, b) => {
+    if (a.courage === b.courage) return 0;
+    if (a.courage === null) return 1;
+    if (b.courage === null) return -1;
+    if (a.courage === Infinity) return 1;
+    if (b.courage === Infinity) return -1;
+    return a.courage - b.courage;
+  });
+
+  return entries.map((entry) => ({
+    courage: entry.courage,
+    label:
+      entry.courage === null
+        ? 'Unknown'
+        : entry.courage === Infinity
+          ? '\u221E'
+          : String(entry.courage),
+    unitCount: entry.count,
+    points: entry.points,
+    percentage:
+      totalPoints > 0
+        ? Math.round((entry.points / totalPoints) * 1000) / 1000
+        : 0,
+  }));
 }
 
 // ============================================================================
@@ -958,9 +1309,9 @@ export function aggregateArmyStats(
   }
 
   const activationCount = units.length;
-  const avgPointsPerActivation =
-    activationCount > 0
-      ? Math.round((totalPoints / activationCount) * 10) / 10
+  const avgPointsPerEffectiveWound =
+    totalEffectiveWounds > 0
+      ? Math.round((totalPoints / totalEffectiveWounds) * 10) / 10
       : 0;
 
   // Tier 2A: Dice by range (aggregate across all units)
@@ -978,6 +1329,7 @@ export function aggregateArmyStats(
     let blackDice = 0;
     let whiteDice = 0;
     let expectedSuccesses = 0;
+    let adjustedExpectedSuccesses = 0;
 
     for (const unitDice of perUnitDice) {
       const band = unitDice[i];
@@ -985,6 +1337,7 @@ export function aggregateArmyStats(
       blackDice += band.blackDice;
       whiteDice += band.whiteDice;
       expectedSuccesses += band.expectedSuccesses;
+      adjustedExpectedSuccesses += band.adjustedExpectedSuccesses;
     }
 
     const totalDice = redDice + blackDice + whiteDice;
@@ -997,6 +1350,7 @@ export function aggregateArmyStats(
       whiteDice,
       totalDice,
       expectedSuccesses: Math.round(expectedSuccesses * 100) / 100,
+      adjustedExpectedSuccesses: Math.round(adjustedExpectedSuccesses * 100) / 100,
       attackingEfficacy: Math.round(attackingEfficacy * 1000) / 1000,
     };
   });
@@ -1008,7 +1362,25 @@ export function aggregateArmyStats(
   const deploymentKeywords = computeDeploymentKeywords(units);
   const actionEconomy = computeActionEconomy(units);
   const defensiveProfile = computeDefensiveProfile(units);
-  const unitsByRank = computeRankBreakdown(units, totalPoints);
+  // Build per-unit dice summaries for rank contribution calculation
+  const resolvedUnits = units.filter((lu) => lu.resolvedUnit !== null);
+  const perUnitDiceSummaries = resolvedUnits.map((lu, idx) => {
+    const unitBands = perUnitDice[idx];
+    let expectedTotal = 0;
+    let adjustedTotal = 0;
+    for (const band of unitBands) {
+      expectedTotal += band.expectedSuccesses;
+      adjustedTotal += band.adjustedExpectedSuccesses;
+    }
+    return {
+      rank: lu.resolvedUnit!.rank,
+      expectedTotal,
+      adjustedTotal,
+    };
+  });
+
+  const unitsByRank = computeRankBreakdown(units, totalPoints, perUnitDiceSummaries);
+  const courageBreakdown = computeCourageBreakdown(units, totalPoints);
 
   return {
     totalPoints,
@@ -1016,7 +1388,7 @@ export function aggregateArmyStats(
     totalWounds,
     totalEffectiveWounds: Math.round(totalEffectiveWounds * 10) / 10,
     totalMiniatures,
-    avgPointsPerActivation,
+    avgPointsPerEffectiveWound,
     diceByRange,
     ...antiArmor,
     ...coverDenial,
@@ -1025,6 +1397,7 @@ export function aggregateArmyStats(
     ...actionEconomy,
     ...defensiveProfile,
     unitsByRank,
+    courageBreakdown,
     commandCards: meta.commandCards ?? [],
     contingencies: meta.contingencies ?? [],
   };

@@ -319,6 +319,14 @@ export interface ResolvedUnit {
   /** Available upgrade slots (from processed API data). Populated for all units. */
   upgradeBar: UpgradeSlot[];
 
+  /**
+   * Courage value for this unit (from enrichment).
+   * null = unknown (unenriched or '<need human>' sentinel).
+   * Infinity = fearless (vehicles, droids).
+   * Finite number = concrete courage value (1, 2, 3, etc.).
+   */
+  courage: number | null;
+
   /** Whether this unit has been manually enriched with full data */
   isEnriched: boolean;
 }
@@ -397,6 +405,14 @@ export interface ResolvedUpgrade {
     dieColor?: DefenseDieColor;
     surgeChart?: DefenseSurgeChart;
   } | null;
+
+  /**
+   * Courage modifier this upgrade applies to the equipped unit.
+   * Positive values increase courage, negative values decrease it.
+   * Infinity overrides the base courage to Infinity (fearless).
+   * 0 (default) means no modification.
+   */
+  courageModifier: number;
 
   /** Whether this upgrade has been manually enriched with keyword/dice data */
   isEnriched: boolean;

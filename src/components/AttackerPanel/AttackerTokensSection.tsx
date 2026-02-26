@@ -54,7 +54,7 @@ export default function AttackerTokensSection() {
             min={0}
             max={99}
             compact
-            tooltip="Spend dodge tokens to upgrade results in melee: blank → hit (1 token), hit → crit (1 token), or blank → crit (2 tokens)."
+            tooltip="Spend dodge tokens to upgrade results in melee: blank to hit (1 token), hit to crit (1 token), or blank to crit (2 tokens)."
           />
         )}
         <NumberSpinner

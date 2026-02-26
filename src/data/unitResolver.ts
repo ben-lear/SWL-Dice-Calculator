@@ -103,7 +103,7 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
     title: processed.title ?? null,
     faction: processed.faction,
     cost: processed.cost,
-    health: processed.health,
+    health: enrichment?.healthOverride ?? processed.health,
     figures: enrichment?.miniatureCount ?? processed.figures ?? 1,
     defenseDieColor: enrichment?.defenseDieColor ?? processed.defenseDieColor,
     rank: processed.rank,
@@ -116,11 +116,22 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
     defenseSurgeChart:
       enrichment?.defenseSurgeChart ?? null,
 
+    courage: resolveCourage(enrichment?.courage),
     keywords,
     weapons: normalizeEnrichmentWeapons(enrichment?.weapons),
     upgradeBar: enrichment?.upgradeBarOverride ?? processed.upgradeBar,
     isEnriched,
   };
+}
+
+/**
+ * Convert enrichment courage to resolved courage value.
+ * '<need human>' sentinel and undefined → null (unknown).
+ * Finite number or Infinity → pass through.
+ */
+function resolveCourage(value: number | string | undefined): number | null {
+  if (typeof value === 'number') return value;
+  return null;
 }
 
 function normalizeEnrichmentWeapons(

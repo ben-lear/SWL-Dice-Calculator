@@ -5,14 +5,19 @@ interface StatCardProps {
   label: string;
   value: ReactNode;
   accentColor?: string;
+  tooltip?: string;
 }
 
-export function StatCard({ label, value, accentColor }: StatCardProps) {
+export function StatCard({ label, value, accentColor, tooltip }: StatCardProps) {
   const hexColor = getHexColor(accentColor);
   const style = hexColor ? { borderTopColor: hexColor, borderTopWidth: '2px' } : undefined;
 
   return (
-    <div className="rounded-lg bg-gray-800 p-3 md:p-2 text-center" style={style}>
+    <div
+      className={`rounded-lg bg-gray-800 p-3 md:p-2 text-center ${tooltip ? 'cursor-help' : ''}`}
+      style={style}
+      title={tooltip}
+    >
       <div className="section-heading text-xs font-medium">
         {label}
       </div>

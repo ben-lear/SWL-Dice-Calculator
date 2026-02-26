@@ -240,6 +240,16 @@ function resolveAddsMiniature(
   return ADDS_MINI_SLOTS.has(slot) ? 1 : 0;
 }
 
+/**
+ * Resolve the courageModifier value from enrichment.
+ * '<need human>' sentinel and undefined → 0 (no modification).
+ * Finite number or Infinity → pass through.
+ */
+function resolveCourageModifier(value: number | string | undefined): number {
+  if (typeof value === 'number') return value;
+  return 0;
+}
+
 function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
   const enrichment: UpgradeEnrichment | undefined =
     UPGRADE_ENRICHMENTS[processed.id];
@@ -280,6 +290,7 @@ function resolveUpgrade(processed: ProcessedUpgrade): ResolvedUpgrade {
     ] as UpgradeSlot[],
     surgeOverrides: enrichment?.surgeOverrides ?? null,
     defenseOverrides: enrichment?.defenseOverrides ?? null,
+    courageModifier: resolveCourageModifier(enrichment?.courageModifier),
     isEnriched,
     requiredUpgradeSlot: processed.requiredUpgradeSlot ?? null,
   };

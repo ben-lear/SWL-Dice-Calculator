@@ -11,6 +11,7 @@ import type { UnitEnrichment } from './types';
 
 export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'han-solo-unorthodox-general': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -37,6 +38,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'lando-calrissian-canny-general': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -62,6 +64,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'leia-organa-fearless-and-inventive': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -83,6 +86,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'luke-skywalker-hero-of-the-rebellion': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -116,6 +120,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'luke-skywalker-commander-skywalker': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -145,6 +150,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-officer-fighting-for-freedom': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
@@ -165,6 +171,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ahsoka-tano-fulcrum': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -188,6 +195,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'cassian-andor-capable-intelligence-agent': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -213,6 +221,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'chewbacca-walking-carpet': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -241,6 +250,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'han-solo-reluctant-hero': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -274,6 +284,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'jyn-erso-stardust': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -304,6 +315,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'k-2so-sardonic-security-droid': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -319,6 +331,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'luke-skywalker-jedi-knight': {
+    courage: 4,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -339,6 +352,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'r2-d2-hero-of-a-thousand-devices': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -358,6 +372,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-agent-defender-of-democracy': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -380,6 +395,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'sabine-wren-explosive-artist': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -401,6 +417,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'fleet-troopers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {},
@@ -416,9 +433,12 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mark-ii-medium-blaster-trooper': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    healthOverride: 4,
     keywords: {
+      preparedPosition: true
     },
     weapons: [
       {
@@ -440,6 +460,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-troopers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -459,6 +480,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-veterans': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -481,6 +503,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-resistance': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 3,
@@ -498,6 +521,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-resistance-clan-wren': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 1,
@@ -515,6 +539,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-commandos': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -539,6 +564,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-commandos-strike-team': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 1,
@@ -563,6 +589,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'rebel-sleeper-cell-ready-to-strike': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 6,
@@ -598,6 +625,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-freedom-fighters': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -622,6 +650,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-kashyyyk-resistance': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -645,6 +674,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   '1-4-fd-laser-cannon-team': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [
@@ -672,6 +702,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'at-rt': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -697,6 +728,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'tauntaun-riders': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
@@ -723,6 +755,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'a-a5-speeder-truck': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -732,6 +765,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   't-47-airspeeder': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -756,6 +790,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'x-34-landspeeder': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -774,6 +809,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'darth-vader-dark-lord-of-the-sith': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -794,6 +830,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'director-orson-krennic-architect-of-terror': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [
@@ -812,6 +849,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'general-veers-master-tactician': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -833,6 +871,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'grand-admiral-thrawn-imperial-high-command': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -855,6 +894,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'grand-moff-tarkin-imperial-high-command': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     weapons: [
@@ -867,6 +907,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'iden-versio-inferno-squad-leader': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     defenseDieColor: DefenseDieColor.Red,
@@ -906,6 +947,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-officer-ruthless-efficiency': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [
@@ -925,6 +967,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'moff-gideon-long-live-the-empire': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -951,6 +994,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'agent-kallus-hunter-of-spectres': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -973,6 +1017,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'boba-fett-infamous-bounty-hunter': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1009,6 +1054,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'bossk-trandoshan-terror': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1040,6 +1086,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'darth-vader-the-emperor-s-apprentice': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1070,6 +1117,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'fifth-brother-the-kill-is-mine': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1101,6 +1149,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-agent-bringing-order-to-the-galaxy': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [
@@ -1120,6 +1169,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'seventh-sister-compelled-to-inflict-pain': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1150,6 +1200,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'df-90-mortar-trooper': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     weapons: [
@@ -1175,6 +1226,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'shoretroopers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -1197,6 +1249,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'snowtroopers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -1216,6 +1269,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'stormtrooper-riot-squad': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -1241,6 +1295,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'stormtroopers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -1263,6 +1318,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'stormtroopers-heavy-response-unit': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -1286,6 +1342,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-death-troopers': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -1314,6 +1371,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-probe-droid': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1332,6 +1390,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-special-forces': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1353,6 +1412,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-special-forces-inferno-squad': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1374,6 +1434,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'scout-troopers': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -1398,6 +1459,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'scout-troopers-strike-team': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 1,
@@ -1422,6 +1484,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   '74-z-speeder-bikes': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
@@ -1450,6 +1513,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'dewback-rider': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1470,6 +1534,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'e-web-heavy-blaster-team': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     weapons: [
@@ -1500,6 +1565,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'range-troopers': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -1523,6 +1589,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'at-st': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1550,6 +1617,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'imperial-dark-troopers': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -1573,6 +1641,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'laat-le-patrol-transport-galactic-empire': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1598,6 +1667,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'major-marquand-tempest-scout-2': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1640,6 +1710,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'tx-225-gavw-occupier-tank': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1671,6 +1742,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ahsoka-tano-padawan-commander': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1695,6 +1767,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'anakin-skywalker-the-chosen-one': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1716,6 +1789,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'chewbacca-hero-of-kashyyyk': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     weapons: [
@@ -1743,6 +1817,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-captain-rex-honorable-soldier': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1767,6 +1842,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commander-trained-for-leadership': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1788,6 +1864,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commander-cody-leader-of-the-212th': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     weapons: [
@@ -1812,6 +1889,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'jedi-knight-general-strong-in-the-force': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1822,6 +1900,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'obi-wan-kenobi-civilized-warrior': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1846,6 +1925,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-chieftain-clan-leader': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1874,6 +1954,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'yoda-grand-master-of-the-jedi-order': {
+    courage: 4,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1904,12 +1985,13 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'hondo-ohnaka-trustworthy-compatriot': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       uncannyLuckX: 3,
       arsenalX: 3,
-      independentDodgeX: 4
+      independentDodgeX: 3
     },
     weapons: [
       {
@@ -1929,6 +2011,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'jedi-knight-keeper-of-the-peace': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -1939,6 +2022,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'padme-amidala-spirited-senator': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -1960,6 +2044,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'r2-d2-independent-astromech': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [
@@ -1973,6 +2058,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'the-bad-batch-clone-force-99': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 0,
@@ -1997,6 +2083,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-trooper-infantry': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -2016,6 +2103,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-trooper-marksmen': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -2041,6 +2129,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'weequay-pirates': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -2067,6 +2156,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'arc-troopers': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -2087,6 +2177,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'arc-troopers-strike-team': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 1,
@@ -2107,6 +2198,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'arf-troopers': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -2130,6 +2222,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-kashyyyk-defenders': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -2153,6 +2246,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wookiee-warriors-noble-fighters': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -2177,6 +2271,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'at-rt-republic': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2207,6 +2302,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'barc-speeder': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2235,6 +2331,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commandos': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -2263,6 +2360,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'clone-commandos-ds-delta-squad': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -2291,6 +2389,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'raddaugh-gnasp-fluttercraft': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -2310,6 +2409,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'raddaugh-gnasp-fluttercraft-attack-craft': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -2329,6 +2429,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'infantry-support-platform': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2346,6 +2447,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'laat-le-patrol-transport': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -2371,6 +2473,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'saber-class-tank': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2395,6 +2498,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'count-dooku-darth-tyranus': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -2430,6 +2534,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'general-grievous-sinister-cyborg': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2466,6 +2571,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'general-grievous-wheel-bike-warlord': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2505,6 +2611,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'kalani-super-tactical-droid': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2529,6 +2636,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'kraken-super-tactical-droid': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2556,6 +2664,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'poggle-the-lesser-public-leader-of-the-geonosians': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {},
@@ -2575,6 +2684,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'super-tactical-command-droid-command-and-control-droid': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     weapons: [
@@ -2594,6 +2704,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   't-series-tactical-droid-programmed-for-strategy': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [
@@ -2612,6 +2723,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'asajj-ventress-separatist-assassin': {
+    courage: '<need human>',
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2634,6 +2746,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'cad-bane-needs-no-introduction': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -2660,6 +2773,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'maul-impatient-apprentice': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2681,6 +2795,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'sun-fac-ruthless-lieutenant': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -2712,6 +2827,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'super-tactical-command-droid-auxiliary-command-droid': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     weapons: [
@@ -2731,6 +2847,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'b1-battle-droids': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 6,
@@ -2750,6 +2867,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'b2-super-battle-droids': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -2773,6 +2891,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'geonosian-warriors-soldiers-of-the-hive': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -2796,6 +2915,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'bx-series-droid-commandos': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2820,6 +2940,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'bx-series-droid-commandos-strike-team': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2843,6 +2964,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'drk-1-sith-probe-droids': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -2863,6 +2985,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-100-magnaguard': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -2886,6 +3009,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-100-magnaguard-prototype-assassin-droids': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
@@ -2910,6 +3034,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'tsmeu-6-wheel-bikes': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 2,
@@ -2920,7 +3045,10 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Spiked Wheel',
         weaponType: AttackType.Overrun,
-        blackDice: 3
+        blackDice: 3,
+        keywords: {
+          overrunX: 2
+        }
       },
       {
         name: 'Double Laser Cannon',
@@ -2936,6 +3064,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'droidekas': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
@@ -2958,6 +3087,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'dsd1-dwarf-spider-droid': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -2976,6 +3106,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'lm-432-crab-droid': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -2999,6 +3130,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'stap-riders': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 2,
@@ -3019,6 +3151,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'aat-battle-tank': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -3048,6 +3181,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'aqua-droids': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 3,
@@ -3076,6 +3210,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'persuader-class-tank-droid': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3113,6 +3248,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'persuader-class-tank-droid-prototype-tank-droid': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3146,6 +3282,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'black-sun-vigo': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -3163,12 +3300,14 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'c-3p0-golden-god': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     weapons: [],
   },
 
   'gar-saxon-militant-commando': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3196,6 +3335,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'logray-superstitious-shaman': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3215,6 +3355,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'pyke-syndicate-capo': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -3237,6 +3378,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wicket-hero-of-bright-tree': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3269,6 +3411,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'boba-fett-infamous-bounty-hunter-mercenaries': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3305,6 +3448,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'boba-fett-daimyo-of-mos-espa': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3334,6 +3478,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'bossk-trandoshan-terror-mercenaries': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -3366,6 +3511,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'cad-bane-needs-no-introduction-mercenaries': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3392,6 +3538,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'din-djarin-the-mandalorian': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3426,6 +3573,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-11-nurse-and-protect': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -3460,6 +3608,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ig-88-notorious-assassin-droid': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -3500,6 +3649,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'maul-a-rival': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
@@ -3521,6 +3671,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'the-bad-batch-clone-force-99-mercenaries': {
+    courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 0,
@@ -3545,6 +3696,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'black-sun-enforcers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 4,
@@ -3569,6 +3721,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ewok-skirmishers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 6,
@@ -3585,6 +3738,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'pyke-syndicate-foot-soldiers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
@@ -3609,6 +3763,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'ewok-slingers': {
+    courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 6,
@@ -3635,6 +3790,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'mandalorian-super-commandos': {
+    courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 1,
@@ -3660,6 +3816,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'swoop-bike-riders': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 2,
@@ -3688,6 +3845,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'a-a5-speeder-truck-mercenaries': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3697,6 +3855,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'chewbacca-let-the-wookiee-win': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
@@ -3739,6 +3898,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   },
 
   'wlo-5-speeder-tank': {
+    courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
