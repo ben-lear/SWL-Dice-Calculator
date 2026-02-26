@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useAttackConfigStore, selectAttackerConfig } from './attackConfigStore';
 import { AttackSurgeChart, MarksmanStrategy, RerollStrategy } from '../engine/types';
+import { UpgradeSlot } from '../data/types';
 
 describe('attackConfigStore', () => {
   beforeEach(() => {
@@ -290,6 +291,66 @@ describe('attackConfigStore', () => {
 
       const after = useAttackConfigStore.getState();
       expect(after.selectedFaction).toBe('empire');
+    });
+  });
+
+  // ── equipUpgrade — unit keyword recomputation ──
+
+  describe('equipUpgrade updates unit-level numeric keywords', () => {
+    it('sets basePreciseX from preset profile on loadPreset', () => {
+      useAttackConfigStore.getState().loadPreset('test-preset', { preciseX: 2, unitCost: 0 });
+      const state = useAttackConfigStore.getState();
+      expect(state.basePreciseX).toBe(2);
+      expect(state.preciseX).toBe(2);
+    });
+
+    it('updates preciseX when an upgrade granting preciseX is equipped', () => {
+      const store = useAttackConfigStore.getState();
+      // Load a preset with base preciseX of 0 and a gear upgrade slot
+      store.loadPreset(
+        'test-preset',
+        { preciseX: 0, unitCost: 44 },
+        [UpgradeSlot.Gear],
+      );
+
+      // Equip Targeting Scopes (preciseX: 1)
+      store.equipUpgrade(0, 'gear-targeting-scopes');
+
+      const state = useAttackConfigStore.getState();
+      expect(state.basePreciseX).toBe(0);   // base unchanged
+      expect(state.preciseX).toBe(1);       // base 0 + upgrade 1
+    });
+
+    it('reverts preciseX to base when upgrade is unequipped', () => {
+      const store = useAttackConfigStore.getState();
+      store.loadPreset(
+        'test-preset',
+        { preciseX: 0, unitCost: 44 },
+        [UpgradeSlot.Gear],
+      );
+
+      store.equipUpgrade(0, 'gear-targeting-scopes');
+      expect(useAttackConfigStore.getState().preciseX).toBe(1);
+
+      store.equipUpgrade(0, null);
+      expect(useAttackConfigStore.getState().preciseX).toBe(0);
+    });
+
+    it('stacks preciseX additively with the preset base value', () => {
+      const store = useAttackConfigStore.getState();
+      // Unit already has Precise 1 from its base profile
+      store.loadPreset(
+        'test-preset',
+        { preciseX: 1, unitCost: 44 },
+        [UpgradeSlot.Gear],
+      );
+
+      // Equip Targeting Scopes (another preciseX: 1)
+      store.equipUpgrade(0, 'gear-targeting-scopes');
+
+      const state = useAttackConfigStore.getState();
+      expect(state.basePreciseX).toBe(1);  // base from preset
+      expect(state.preciseX).toBe(2);      // base 1 + upgrade 1
     });
   });
 });

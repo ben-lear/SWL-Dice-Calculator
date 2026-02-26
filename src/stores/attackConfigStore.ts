@@ -61,6 +61,11 @@ export interface AttackConfigState {
   unitCost: number;
   baseUnitCost: number;  // Base cost before upgrades (for auto-calculation)
 
+  // ── Base keyword values before upgrades (mirrors baseUnitCost pattern) ──
+  basePreciseX: number;
+  baseSharpshooterX: number;
+  baseArsenalX: number;
+
   // ── Defeated miniature count (Black Ops / Kraken's Blaster) ──
   defeatedMinis: number;
 
@@ -259,6 +264,11 @@ const DEFAULT_ATTACK_CONFIG: AttackConfigFields = {
   // Points
   unitCost: 0,
   baseUnitCost: 0,
+
+  // Base keyword values before upgrades
+  basePreciseX: 0,
+  baseSharpshooterX: 0,
+  baseArsenalX: 0,
 
   // Defeated miniature count
   defeatedMinis: 0,
@@ -472,6 +482,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         selectedUnitAffiliation: unitMeta?.affiliation ?? null,
         unitCost: baseCost,
         baseUnitCost: baseCost,  // Store base cost for upgrade calculations
+        basePreciseX: profile.preciseX ?? 0,
+        baseSharpshooterX: profile.sharpshooterX ?? 0,
+        baseArsenalX: profile.arsenalX ?? 0,
         weaponMiniCounts: {},     // Reset weapon mini count overrides on preset load
         builderKeywordOverrides: {},  // Reset keyword overrides on preset load
       };
@@ -490,10 +503,18 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
       const result = recomputeEffectiveUpgradeBar(state.upgradeBar, newIds);
 
       let totalCost = state.baseUnitCost;
+      let totalPrecise = state.basePreciseX;
+      let totalSharpshooter = state.baseSharpshooterX;
+      let totalArsenal = state.baseArsenalX;
       for (const id of result.equippedUpgradeIds) {
         if (id !== null) {
           const upgrade = getResolvedUpgradeById(id);
-          if (upgrade) totalCost += upgrade.cost;
+          if (upgrade) {
+            totalCost += upgrade.cost;
+            if (typeof upgrade.keywords.preciseX === 'number') totalPrecise += upgrade.keywords.preciseX;
+            if (typeof upgrade.keywords.sharpshooterX === 'number') totalSharpshooter += upgrade.keywords.sharpshooterX;
+            if (typeof upgrade.keywords.arsenalX === 'number') totalArsenal += upgrade.keywords.arsenalX;
+          }
         }
       }
 
@@ -502,6 +523,9 @@ export const useAttackConfigStore = create<AttackConfigState>((set) => ({
         effectiveUpgradeBar: result.effectiveUpgradeBar,
         grantedByIndex: result.grantedByIndex,
         unitCost: totalCost,
+        preciseX: totalPrecise,
+        sharpshooterX: totalSharpshooter,
+        arsenalX: totalArsenal,
         weaponMiniCounts: {},  // Reset overrides on upgrade change
       };
     }),
