@@ -110,11 +110,11 @@ export default function NumberSpinner({
   };
 
   const buttonSize = compact
-    ? 'h-11 w-8 sm:h-8 sm:w-6'
-    : 'h-11 w-11 sm:h-8 sm:w-8';
+    ? 'h-8 w-6'
+    : 'h-8 w-8';
   const inputSize = compact
-    ? 'h-11 w-10 sm:h-8 sm:w-8'
-    : 'h-11 w-14 sm:h-8 sm:w-12';
+    ? 'h-8 w-8'
+    : 'h-8 w-12';
   const textSize = 'text-sm';
   
   const displayLabel = labelContent ?? label;
