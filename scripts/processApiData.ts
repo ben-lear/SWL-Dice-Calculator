@@ -177,15 +177,16 @@ function mapKeywordIdsToNames(
 }
 
 function resolveCost(record: {
-  recent_active_cost?: number | null;
-  curren_cost?: number | null;
+  revamp_cost?: number | null;
   current_cost?: number | null;
+  recent_active_cost?: number | null;
   original_cost?: number | null;
   cost?: number | null;
 }): number {
   return (
-    record.recent_active_cost ??
+    record.revamp_cost ??
     record.current_cost ??
+    record.recent_active_cost ??
     record.original_cost ??
     record.cost ??
     0

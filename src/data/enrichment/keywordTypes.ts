@@ -196,8 +196,6 @@ export interface DisplayUnitKeywords {
   attackRun?: boolean;
   authoritative?: boolean;
   bounty?: boolean;
-  cacheDodgeX?: EnrichmentNumericValue;
-  cacheAimX?: EnrichmentNumericValue;
   calculateOdds?: boolean;
   compel?: boolean;
   detachment?: boolean;
@@ -251,8 +249,13 @@ export interface DisplayUnitKeywords {
 
   // Token generation keywords (display/tagging only — generated before activation, not during attack)
   cacheSurgeX?: EnrichmentNumericValue;
+  cacheDodgeX?: EnrichmentNumericValue;
+  cacheAimX?: EnrichmentNumericValue;
+  independentAimOrDodgeX?: EnrichmentNumericValue;
+  independentAimX?: EnrichmentNumericValue;
   independentSurgeX?: EnrichmentNumericValue;
   independentDodgeX?: EnrichmentNumericValue;
+  independentStandbyX?: EnrichmentNumericValue;
 
   // Combat-affecting keywords (engine-backed; also listed here for type-safe enrichment validation)
   combatArmor?: boolean;          // Override defense die to red, surge chart to none
@@ -290,7 +293,8 @@ export interface DisplayUnitKeywords {
   smokeX?: EnrichmentNumericValue;
   takeCoverX?: EnrichmentNumericValue;
   woundX?: EnrichmentNumericValue;
-  advancedTargetingX?: EnrichmentNumericValue;
+  selfDestructX?: EnrichmentNumericValue;
+  advancedTargetingX?: EnrichmentNumericValue | string;
   lightTransportX?: EnrichmentNumericValue;
 
   // String (parameterized) keywords

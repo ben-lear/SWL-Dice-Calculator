@@ -49,6 +49,13 @@ export interface UnitEnrichment {
   defenseSurgeChart?: DefenseSurgeChart;
 
   /**
+   * Override the defense die color derived from the processed API data.
+   * Use when the API data is incorrect or missing for this unit.
+   * When absent, the processed unit's `defenseDieColor` value is used.
+   */
+  defenseDieColor?: DefenseDieColor;
+
+  /**
    * Override the base miniature count for this unit.
    * When present, overrides the API's `figures` field.
    * When absent, the API `figures` value is used (default: 1 if API is also absent).

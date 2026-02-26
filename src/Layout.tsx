@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { AttackTypeSelector } from './components';
 
 interface LayoutProps {
@@ -5,6 +7,15 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const location = useLocation();
+  const isSimulator = location.pathname === '/';
+
+  useEffect(() => {
+    document.title = isSimulator
+      ? 'Just Roll Crits — Simulator'
+      : 'Just Roll Crits — List Analyzer';
+  }, [isSimulator]);
+
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-gray-950 text-gray-100">
       {/* Header */}
@@ -20,10 +31,39 @@ export default function Layout({ children }: LayoutProps) {
                 A SW:Legion Dice Calculator
               </p>
             </div>
+            <nav className="ml-4 flex items-center gap-2">
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  `rounded px-2 py-1 text-sm transition-colors ${
+                    isActive
+                      ? 'font-semibold text-white'
+                      : 'text-gray-400 hover:text-gray-200'
+                  }`
+                }
+              >
+                Simulator
+              </NavLink>
+              <NavLink
+                to="/list"
+                className={({ isActive }) =>
+                  `rounded px-2 py-1 text-sm transition-colors ${
+                    isActive
+                      ? 'font-semibold text-white'
+                      : 'text-gray-400 hover:text-gray-200'
+                  }`
+                }
+              >
+                List Analyzer
+              </NavLink>
+            </nav>
           </div>
-          <div className="w-full sm:w-auto">
-            <AttackTypeSelector />
-          </div>
+          {isSimulator && (
+            <div className="w-full sm:w-auto">
+              <AttackTypeSelector />
+            </div>
+          )}
         </div>
       </header>
 

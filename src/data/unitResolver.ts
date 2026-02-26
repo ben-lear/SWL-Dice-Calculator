@@ -105,7 +105,7 @@ function resolveUnit(processed: ProcessedUnit): ResolvedUnit {
     cost: processed.cost,
     health: processed.health,
     figures: enrichment?.miniatureCount ?? processed.figures ?? 1,
-    defenseDieColor: processed.defenseDieColor,
+    defenseDieColor: enrichment?.defenseDieColor ?? processed.defenseDieColor,
     rank: processed.rank,
     unitType: processed.unitType,
     affiliation: processed.affiliation ?? null,

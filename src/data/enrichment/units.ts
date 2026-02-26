@@ -6,7 +6,7 @@
  * - Numeric (X) keywords are set to '<need human>'.
  */
 
-import { AttackSurgeChart, AttackType, DefenseSurgeChart } from '../../engine';
+import { AttackSurgeChart, AttackType, DefenseDieColor, DefenseSurgeChart } from '../../engine';
 import type { UnitEnrichment } from './types';
 
 export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
@@ -194,6 +194,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       dangerSenseX: 3,
       marksman: true,
       sharpshooterX: 1,
+      tacticalX: 1,
     },
     weapons: [
       {
@@ -245,6 +246,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       uncannyLuckX: 3,
       arsenalX: 2,
+      independentAimX: 1,
+      independentDodgeX: 1,
     },
     weapons: [
       {
@@ -275,6 +278,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       sharpshooterX: 1,
+      independent: 'move'
     },
     weapons: [
       {
@@ -356,7 +360,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'rebel-agent-defender-of-democracy': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
-    keywords: {},
+    keywords: {
+      independentDodgeX: 1
+    },
     weapons: [
       {
         name: 'Combat Training',
@@ -515,6 +521,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       lowProfile: true,
       sharpshooterX: 1,
+      scoutX: 2,
     },
     weapons: [
       {
@@ -538,6 +545,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       lowProfile: true,
       sharpshooterX: 1,
+      scoutX: 2,
     },
     weapons: [
       {
@@ -558,6 +566,10 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 6,
+    keywords: {
+      tacticalX: 1,
+      scoutX: 2,
+    },
     weapons: [
       {
         name: 'Det Packs',
@@ -664,6 +676,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       armorX: 2,
+      scoutX: 1,
     },
     weapons: [
       {
@@ -856,6 +869,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'iden-versio-inferno-squad-leader': {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       marksman: true,
       sharpshooterX: 1,
@@ -915,6 +929,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       sharpshooterX: 1,
+      tacticalX: 1,
     },
     weapons: [
       {
@@ -964,6 +979,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       impervious: true,
       sharpshooterX: 2,
       arsenalX: 2,
+      independentAimOrDodgeX: 1
     },
     weapons: [
       {
@@ -995,6 +1011,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'bossk-trandoshan-terror': {
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    keywords: {
+      independentSurgeX: 2
+    },
     weapons: [
       {
         name: 'Frenzy',
@@ -1249,6 +1268,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 3,
     keywords: {
       preciseX: 1,
+      flexibleResponseX: 2,
     },
     weapons: [
       {
@@ -1296,6 +1316,10 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'imperial-probe-droid': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    keywords: {
+      selfDestructX: 3,
+      hover: 'air 1',
+    },
     weapons: [
       {
         name: 'Light Blaster',
@@ -1356,6 +1380,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       sharpshooterX: 1,
       lowProfile: true,
+      scoutX: 3,
     },
     weapons: [
       {
@@ -1379,6 +1404,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       sharpshooterX: 1,
       lowProfile: true,
+      scoutX: 3,
     },
     weapons: [
       {
@@ -1479,6 +1505,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 4,
     keywords: {
       armorX: 1,
+      advancedTargetingX: 'trooper 1',
     },
     weapons: [
       {
@@ -1554,6 +1581,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       coverX: 1,
       immuneBlast: true,
       immuneMelee: true,
+      hover: 'air 2',
     },
     weapons: [
       {
@@ -1649,6 +1677,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       shienMastery: true,
       deflect: true,
       immunePierce: true,
+      scoutX: 1,
+      independent: 'recover',
     },
     weapons: [
       {
@@ -1717,6 +1747,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       sharpshooterX: 1,
+      scoutX: 1,
+      tacticalX: 1,
+      scoutingPartyX: 2
     },
     weapons: [
       {
@@ -1876,6 +1909,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       uncannyLuckX: 3,
       arsenalX: 3,
+      independentDodgeX: 4
     },
     weapons: [
       {
@@ -2010,7 +2044,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     miniatureCount: 4,
-    keywords: {},
+    keywords: {
+      independentAimX: 1,
+    },
     weapons: [
       {
         name: 'Vibroblade',
@@ -2037,6 +2073,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       sharpshooterX: 1,
+      scoutX: 2,
+      tacticalX: 1,
     },
     weapons: [
       {
@@ -2055,6 +2093,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       sharpshooterX: 1,
+      scoutX: 2,
+      tacticalX: 1,
     },
     weapons: [
       {
@@ -2072,6 +2112,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 4,
     keywords: {
       lowProfile: true,
+      scoutX: 1,
     },
     weapons: [
       {
@@ -2140,6 +2181,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       armorX: 2,
+      scoutX: 1,
     },
     weapons: [
       {
@@ -2198,6 +2240,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 4,
     keywords: {
       shieldedX: 1,
+      targetX: 1,
       completeTheMission: true
     },
     weapons: [
@@ -2225,6 +2268,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 4,
     keywords: {
       shieldedX: 1,
+      targetX: 2,
+      independent: 'recover',
       completeTheMission: true
     },
     weapons: [
@@ -2309,6 +2354,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       coverX: 1,
       immuneBlast: true,
       immuneMelee: true,
+      hover: 'air 2',
     },
     weapons: [
       {
@@ -2425,6 +2471,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       armorX: 1,
       immuneMeleePierce: true,
+      commandVehicleX: 2,
     },
     weapons: [
       {
@@ -2461,19 +2508,22 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
-      sharpshooterX: 1,
+      sharpshooterX: 1
     },
     weapons: [
       {
         name: 'Combat Expertise',
         weaponType: AttackType.Melee,
-        blackDice: 2,
+        blackDice: 2
       },
       {
         name: 'Blaster Rifle',
         weaponType: AttackType.Ranged,
         blackDice: 3,
         maxRange: 3,
+        keywords: {
+          lethalX: 1,
+        }
       }
     ],
   },
@@ -2568,12 +2618,17 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       deflect: true,
       immunePierce: true,
       jarKaiMastery: true,
+      independentDodgeX: 1,
     },
     weapons: [
       {
         name: 'Asajj\'s Lightsabers',
         weaponType: AttackType.Melee,
-        blackDice: 8
+        blackDice: 8,
+        keywords: {
+          impactX: 2,
+          pierceX: 2,
+        }
       }
     ],
   },
@@ -2584,6 +2639,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       dangerSenseX: 3,
       sharpshooterX: 1,
+      independentDodgeX: 2
     },
     weapons: [
       {
@@ -2745,6 +2801,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       sharpshooterX: 1,
+      scoutX: 3,
     },
     miniatureCount: 4,
     weapons: [
@@ -2768,6 +2825,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       sharpshooterX: 1,
+      scoutX: 3,
     },
     weapons: [
       {
@@ -2788,6 +2846,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
+    keywords: {
+      hover: 'air 1',
+    },
     weapons: [
       {
         name: 'Electro-stun Blaster',
@@ -2901,6 +2962,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       armorX: 3,
+      selfDestructX: 3
     },
     weapons: [
       {
@@ -2918,6 +2980,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       armorX: 2,
+      scoutX: 1,
+      scoutingPartyX: 1
     },
     weapons: [
       {
@@ -3084,6 +3148,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'black-sun-vigo': {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    keywords: {
+      independentAimX: 1
+    },
     weapons: [
       {
         name: 'Vigo\'s Double Blaster',
@@ -3133,6 +3200,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       lowProfile: true,
+      independentAimOrDodgeX: 1
     },
     weapons: [
       {
@@ -3151,6 +3219,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.None,
     keywords: {
       dangerSenseX: 2,
+      independentDodgeX: 1
     },
     weapons: [
       {
@@ -3172,6 +3241,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
     keywords: {
       lowProfile: true,
+      scoutX: 1,
+      scoutingPartyX: 2,
+      independentDodgeX: 1
     },
     weapons: [
       {
@@ -3203,6 +3275,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       impervious: true,
       sharpshooterX: 2,
       arsenalX: 2,
+      independentAimOrDodgeX: 1
     },
     weapons: [
       {
@@ -3238,6 +3311,8 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       impervious: true,
       sharpshooterX: 1,
       arsenalX: 2,
+      tacticalX: 1,
+      independentStandbyX: 1
     },
     weapons: [
       {
@@ -3261,6 +3336,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
   'bossk-trandoshan-terror-mercenaries': {
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    keywords: {
+      independentSurgeX: 2
+    },
     weapons: [
       {
         name: 'Frenzy',
@@ -3293,6 +3371,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       dangerSenseX: 3,
       sharpshooterX: 1,
+      independentDodgeX: 2
     },
     weapons: [
       {
@@ -3318,6 +3397,9 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       impervious: true,
       arsenalX: 2,
+      tacticalX: 1,
+      independentAimX: 1,
+      independentDodgeX: 1,
     },
     weapons: [
       {
@@ -3468,6 +3550,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 4,
     keywords: {
       preciseX: 1,
+      independentAimX: 1
     },
     weapons: [
       {
@@ -3508,6 +3591,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     keywords: {
       outmaneuver: true,
       dangerSenseX: 2,
+      independentDodgeX: 1
     },
     weapons: [
       {
@@ -3530,6 +3614,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 6,
     keywords: {
       lowProfile: true,
+      independentSurgeX: 1
     },
     weapons: [
       {
@@ -3555,6 +3640,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 1,
     keywords: {
       impervious: true,
+      independentAimX: 1,
     },
     weapons: [
       {
@@ -3579,13 +3665,17 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     miniatureCount: 2,
     keywords: {
       coverX: 1,
+      independentAimOrDodgeX: 1
     },
     weapons: [
       {
         name: 'Vibro-Ax',
         weaponType: AttackType.Overrun,
         redDice: 1,
-        whiteDice: 2
+        whiteDice: 2,
+        keywords: {
+          overrunX: 2,
+        }
       },
       {
         name: 'Heavy Blaster Pistol',

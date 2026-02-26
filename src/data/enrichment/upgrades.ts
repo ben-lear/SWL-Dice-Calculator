@@ -248,7 +248,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'armament-heavy-blaster-pistol-imperial-agent': {
     keywords: {
       sharpshooterX: 1,
-      tacticalX: 1,
+      targetX: 1,
     },
     weapons: [
       {
