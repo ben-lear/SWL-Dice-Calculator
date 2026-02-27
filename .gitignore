@@ -24,7 +24,9 @@ dist-ssr
 *.sw?
 
 # Additional
-.env*
+# Ignore local env overrides but allow .env and .env.production to be committed
+# (EmailJS keys are client-side only and are baked into the JS bundle at build time)
+.env*.local
 coverage/
 
 # Playwright
