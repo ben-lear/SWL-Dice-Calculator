@@ -56,7 +56,7 @@ export default function RangeDiceTable({ data, armyTotals, unitCostPercentage }:
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="bg-gray-800 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
+          <tr className="text-xs text-gray-400">
             <th className="px-2 py-1.5 text-left font-medium cursor-help" title={TOOLTIPS.range}>
               Range
             </th>
