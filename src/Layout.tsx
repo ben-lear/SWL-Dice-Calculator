@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { AttackTypeSelector } from './components';
+import Footer from './components/Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -75,6 +76,8 @@ export default function Layout({ children }: LayoutProps) {
       <main className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 p-4">
         {children}
       </main>
+
+      <Footer />
     </div>
   );
 }

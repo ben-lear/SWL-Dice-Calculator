@@ -112,8 +112,16 @@ export function SlotSelector({
         return (
           <div
             key={slot.id}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm bg-gray-800 border cursor-pointer transition-colors ${colorClasses.border} ${colorClasses.ring}`}
+            role="button"
+            tabIndex={0}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm bg-gray-800 border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${colorClasses.border} ${colorClasses.ring}`}
             onClick={() => !isEditing && onSelect(slot.id)}
+            onKeyDown={(e) => {
+              if (!isEditing && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                onSelect(slot.id);
+              }
+            }}
           >
             {/* Color dot */}
             <div className={`w-3 h-3 rounded-full ${colorClasses.dot}`} />

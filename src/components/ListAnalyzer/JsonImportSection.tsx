@@ -33,7 +33,7 @@ export default function JsonImportSection() {
             clearList();
             setInputValue('');
           }}
-          className="ml-2 rounded px-2 py-1 text-xs text-gray-400 transition-colors hover:bg-gray-700 hover:text-gray-200"
+          className="ml-2 rounded border border-gray-600 bg-gray-700 px-2.5 py-1 text-xs font-medium text-gray-300 transition-colors hover:border-red-500/60 hover:bg-red-900/40 hover:text-red-300 active:bg-red-900/60"
           aria-label="Clear imported list"
           title="Clear the imported list and return to the import view"
         >

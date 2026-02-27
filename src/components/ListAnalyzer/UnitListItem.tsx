@@ -40,7 +40,7 @@ export default function UnitListItem({
     <button
       type="button"
       onClick={() => onSelect(index)}
-      className={`w-full rounded-lg px-3 py-2 text-left transition-colors ${
+      className={`group w-full rounded-lg px-3 py-2 text-left transition-colors ${
         isSelected
           ? 'bg-gray-800 ring-2 ring-blue-500'
           : isUnmatched
@@ -48,15 +48,27 @@ export default function UnitListItem({
             : 'bg-gray-900 hover:bg-gray-800'
       }`}
     >
-      {/* Top row: name + cost */}
-      <div className="flex items-baseline justify-between gap-2">
+      {/* Top row: name + cost + chevron */}
+      <div className="flex items-center justify-between gap-2">
         <span className="truncate text-sm font-semibold text-gray-100">
           {isUnmatched && <span className="mr-1">⚠</span>}
           {resolved?.name ?? unit.rawName}
         </span>
-        <span className="shrink-0 text-xs text-gray-400">
-          {totalCost}pts
-        </span>
+        <div className="flex shrink-0 items-center gap-1.5">
+          <span className="text-xs text-gray-400">
+            {totalCost}pts
+          </span>
+          <span
+            className={`text-xs transition-colors ${
+              isSelected
+                ? 'text-blue-400'
+                : 'text-gray-600 group-hover:text-gray-400'
+            }`}
+            aria-hidden="true"
+          >
+            ›
+          </span>
+        </div>
       </div>
 
       {/* Title row (if present) */}
