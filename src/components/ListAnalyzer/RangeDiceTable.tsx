@@ -79,7 +79,7 @@ export default function RangeDiceTable({ data, armyTotals, unitCostPercentage }:
               Dice
             </th>
             <th className="px-2 py-1.5 text-right font-medium text-blue-300 cursor-help" title={TOOLTIPS.expectedSuccesses}>
-              Expected
+              Wounds
             </th>
             <th className="px-2 py-1.5 text-right font-medium text-amber-300 cursor-help" title={TOOLTIPS.adjustedExpectedSuccesses}>
               Adjusted
@@ -87,10 +87,10 @@ export default function RangeDiceTable({ data, armyTotals, unitCostPercentage }:
             {showContribution && (
               <>
                 <th className="px-2 py-1.5 text-right font-medium text-blue-300 cursor-help" title={TOOLTIPS.expectedContribution}>
-                  Exp. Dice %
+                  Wound %
                 </th>
                 <th className="px-2 py-1.5 text-right font-medium text-amber-300 cursor-help" title={TOOLTIPS.adjustedContribution}>
-                  Adj. Dice %
+                  Adj. Wound %
                 </th>
                 <th className="px-2 py-1.5 text-right font-medium text-emerald-300 cursor-help" title={TOOLTIPS.efficiency}>
                   Efficiency

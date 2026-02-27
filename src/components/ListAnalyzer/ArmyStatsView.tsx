@@ -212,13 +212,13 @@ export default function ArmyStatsView({ stats, meta, isSimulated = false, isLoad
                     className="px-2 py-1 text-right font-medium text-blue-300 cursor-help"
                     title="This rank's share of the army's total expected successes across all range bands"
                   >
-                    Exp. Dice %
+                    Wound %
                   </th>
                   <th
                     className="px-2 py-1 text-right font-medium text-amber-300 cursor-help"
                     title="This rank's share of the army's total adjusted expected successes (accounting for tokens and offensive keywords) across all range bands"
                   >
-                    Adj. Dice %
+                    Adj. Wound %
                   </th>
                   <th
                     className="px-2 py-1 text-right font-medium text-emerald-300 cursor-help"
