@@ -117,7 +117,7 @@ export default function UnitDetailView({
         <div className="grid grid-cols-3 gap-3">
           <StatCard label="Points" value={String(totalCost)} tooltip="Total unit cost including equipped upgrades" />
           <StatCard label="Health" value={String(resolved.health)} tooltip="Wound threshold per miniature" />
-          <StatCard label="Figures" value={String(resolved.figures)} tooltip="Number of miniatures in this unit" />
+          <StatCard label="Figures" value={String(resolved.figures + upgrades.reduce((sum, u) => sum + u.addsMiniature, 0))} tooltip="Number of miniatures in this unit (including upgrade minis)" />
           <StatCard
             label="Def. Die"
             tooltip="Defense die color - Red saves on 3/6 results, White saves on 1/6 results"

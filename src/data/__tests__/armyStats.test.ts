@@ -191,6 +191,36 @@ describe('computeEffectiveWounds', () => {
 
     expect(ewArmor).toBeGreaterThan(ewNoArmor);
   });
+
+  it('includes combat upgrade minis in effective wounds', () => {
+    const unit = makeMinimalUnit({ health: 1, figures: 4 });
+    const hw = makeMinimalUpgrade({
+      addsMiniature: 1,
+      noncombatant: false,
+      weapons: [makeWeapon({ blackDice: 2, maxRange: 4 })],
+    });
+
+    const ewBase = computeEffectiveWounds(unit, []);
+    const ewWithUpgrade = computeEffectiveWounds(unit, [hw]);
+
+    // Adding 1 mini → 5 total health vs 4 → should be higher
+    expect(ewWithUpgrade).toBeGreaterThan(ewBase);
+  });
+
+  it('includes noncombatant upgrade minis in effective wounds', () => {
+    const unit = makeMinimalUnit({ health: 1, figures: 1 });
+    const medDroid = makeMinimalUpgrade({
+      addsMiniature: 1,
+      noncombatant: true,
+      weapons: [],
+    });
+
+    const ewBase = computeEffectiveWounds(unit, []);
+    const ewWithNoncombatant = computeEffectiveWounds(unit, [medDroid]);
+
+    // Noncombatant mini still absorbs wounds → should increase effective wounds
+    expect(ewWithNoncombatant).toBeGreaterThan(ewBase);
+  });
 });
 
 // ============================================================================
@@ -221,6 +251,38 @@ describe('aggregateArmyStats', () => {
     const stats = aggregateArmyStats(listUnits, {});
     // Unit1: 3 health * 1 figure = 3, Unit2: 1 health * 4 figures = 4
     expect(stats.totalWounds).toBe(7);
+  });
+
+  it('includes upgrade miniatures in totalWounds', () => {
+    const unit = makeMinimalUnit({ health: 1, figures: 4 });
+    const hw = makeMinimalUpgrade({
+      addsMiniature: 1,
+      noncombatant: false,
+      weapons: [makeWeapon({ blackDice: 2, maxRange: 4 })],
+    });
+    const listUnits: ResolvedListUnit[] = [
+      makeListUnit(unit, { resolvedUpgrades: [hw] }),
+    ];
+
+    const stats = aggregateArmyStats(listUnits, {});
+    // 1 health * (4 base + 1 upgrade) = 5
+    expect(stats.totalWounds).toBe(5);
+  });
+
+  it('includes noncombatant upgrade miniatures in totalWounds', () => {
+    const unit = makeMinimalUnit({ health: 1, figures: 4 });
+    const medDroid = makeMinimalUpgrade({
+      addsMiniature: 1,
+      noncombatant: true,
+      weapons: [],
+    });
+    const listUnits: ResolvedListUnit[] = [
+      makeListUnit(unit, { resolvedUpgrades: [medDroid] }),
+    ];
+
+    const stats = aggregateArmyStats(listUnits, {});
+    // 1 health * (4 base + 1 noncombatant) = 5
+    expect(stats.totalWounds).toBe(5);
   });
 
   it('counts activations (all list entries)', () => {

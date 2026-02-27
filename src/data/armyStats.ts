@@ -66,9 +66,9 @@ export function computeEffectiveWounds(
     0.95,
   );
 
-  // Count figures including non-noncombatant upgrade minis
+  // Count ALL figures including upgrade minis (noncombatants absorb wounds too)
   const extraMinis = upgrades.reduce(
-    (sum, u) => sum + (u.noncombatant ? 0 : u.addsMiniature),
+    (sum, u) => sum + u.addsMiniature,
     0,
   );
   const figures = unit.figures + extraMinis;
@@ -1068,7 +1068,7 @@ function computeDefensiveProfile(units: ResolvedListUnit[]) {
       if (unit.defenseDieColor === tier.dieColor) {
         unitCount++;
         const extraMinis = listUnit.resolvedUpgrades
-          .filter((u): u is ResolvedUpgrade => u !== null && !u.noncombatant)
+          .filter((u): u is ResolvedUpgrade => u !== null)
           .reduce((sum, u) => sum + u.addsMiniature, 0);
         totalWounds += unit.health * (unit.figures + extraMinis);
       }

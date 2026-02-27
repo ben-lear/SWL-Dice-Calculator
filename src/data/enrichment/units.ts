@@ -812,6 +812,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    healthOverride: 8,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -1089,6 +1090,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    healthOverride: 7,
     keywords: {
       deflect: true,
       immunePierce: true,
