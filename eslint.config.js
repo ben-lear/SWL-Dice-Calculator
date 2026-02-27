@@ -10,6 +10,7 @@ export default tseslint.config(
       'public/**',
       'rulebook_markdown/**',
       'node_modules/**',
+      'scripts/**/*.cjs',
     ],
   },
   js.configs.recommended,
