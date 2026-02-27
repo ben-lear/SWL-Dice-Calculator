@@ -2,7 +2,7 @@ import {
   DefenseDieColor,
   DefenseSurgeChart,
 } from '../../engine/types';
-import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import { useDefenderStore } from '../../hooks/useDefenderStoreContext';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
@@ -22,7 +22,7 @@ const DEFENSE_SURGE_OPTIONS: SegmentedControlOption<DefenseSurgeChart>[] = [
 ];
 
 export default function DefenderDefenseSection() {
-  const store = useDefenseConfigStore();
+  const store = useDefenderStore();
 
   return (
     <SectionHeader title="Defense">

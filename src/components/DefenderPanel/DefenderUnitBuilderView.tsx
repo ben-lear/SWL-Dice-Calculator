@@ -1,8 +1,8 @@
-import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import { useDefenderStore } from '../../hooks/useDefenderStoreContext';
 import UpgradeSlotsSection from '../shared/UpgradeSlotsSection';
 
 export default function DefenderUnitBuilderView() {
-  const store = useDefenseConfigStore();
+  const store = useDefenderStore();
 
   return (
     <UpgradeSlotsSection

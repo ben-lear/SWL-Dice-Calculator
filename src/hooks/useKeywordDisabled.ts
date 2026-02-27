@@ -5,6 +5,7 @@ import {
   DEFENDER_KEYWORD_RESTRICTIONS,
   isFieldActiveForAttackType,
 } from '../utils/keywordRestrictions';
+import { useDisableAttackTypeRestrictions } from './useDefenderStoreContext';
 
 /**
  * Returns a function that checks if a given attacker unit-level keyword field
@@ -49,11 +50,15 @@ export function useWeaponKeywordDisabled(): (field: string) => boolean {
 /**
  * Returns a function that checks if a given defender keyword field
  * should be disabled based on the current attack type.
+ * When rendered inside the list analyzer's DefenderStoreContext with
+ * disableAttackTypeRestrictions=true, all keywords remain enabled.
  */
 export function useDefenderKeywordDisabled(): (field: string) => boolean {
   const attackType = useAttackTypeStore((s) => s.attackType);
+  const disabled = useDisableAttackTypeRestrictions();
 
   return (field: string): boolean => {
+    if (disabled) return false; // All keywords enabled in list analyzer
     const restriction = DEFENDER_KEYWORD_RESTRICTIONS[field];
     if (!restriction) return false;
     return !isFieldActiveForAttackType(restriction, attackType);

@@ -1,4 +1,4 @@
-import type { ArmyStats, ResolvedListUnit } from '../../data/listTypes';
+import type { ArmyStats, RangeBandDice, ResolvedListUnit } from '../../data/listTypes';
 import type { ResolvedUpgrade } from '../../data/types';
 import { computeUnitDiceByRange, computeEffectiveWounds } from '../../data/armyStats';
 import { StatCard } from '../shared/StatCard';
@@ -11,6 +11,12 @@ interface UnitDetailViewProps {
   unit: ResolvedListUnit;
   armyStats: ArmyStats;
   onBackToArmy: () => void;
+  /** Per-band simulation results for this unit when available */
+  simulatedDice?: RangeBandDice[] | null;
+  /** Whether current data comes from simulation */
+  isSimulated?: boolean;
+  /** Whether a simulation is currently running */
+  isLoading?: boolean;
 }
 
 /**
@@ -21,6 +27,9 @@ export default function UnitDetailView({
   unit,
   armyStats,
   onBackToArmy,
+  simulatedDice,
+  isSimulated = false,
+  isLoading = false,
 }: UnitDetailViewProps) {
   const resolved = unit.resolvedUnit;
 
@@ -221,22 +230,37 @@ export default function UnitDetailView({
       )}
 
       {/* Dice by Range */}
-      {diceByRange.some((r) => r.totalDice > 0) && (
-        <div>
-          <h3 className="mb-2 text-xs uppercase tracking-wide text-gray-500">
-            Dice Output by Range
-          </h3>
-          <RangeDiceTable
-            data={diceByRange}
-            armyTotals={armyStats.diceByRange}
-            unitCostPercentage={
-              armyStats.totalPoints > 0
-                ? totalCost / armyStats.totalPoints
-                : 0
-            }
-          />
-        </div>
-      )}
+      {(() => {
+        const displayDice = simulatedDice ?? diceByRange;
+        return displayDice.some((r) => r.totalDice > 0) ? (
+          <div>
+            <div className="mb-2 flex items-center gap-2">
+              <h3 className="text-xs uppercase tracking-wide text-gray-500">
+                Dice Output by Range
+              </h3>
+              {isLoading && (
+                <span className="rounded bg-blue-900/50 px-1.5 py-0.5 text-[10px] font-medium text-blue-300">
+                  Simulating…
+                </span>
+              )}
+              {!isLoading && isSimulated && simulatedDice && (
+                <span className="rounded bg-green-900/50 px-1.5 py-0.5 text-[10px] font-medium text-green-300">
+                  Simulated
+                </span>
+              )}
+            </div>
+            <RangeDiceTable
+              data={displayDice}
+              armyTotals={armyStats.diceByRange}
+              unitCostPercentage={
+                armyStats.totalPoints > 0
+                  ? totalCost / armyStats.totalPoints
+                  : 0
+              }
+            />
+          </div>
+        ) : null;
+      })()}
 
       {/* Equipped Upgrades */}
       <div>

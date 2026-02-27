@@ -14,12 +14,15 @@ import { recomputeEffectiveUpgradeBar } from './upgradeBarHelpers';
 // Module-level snapshot: preserves Unit Builder state across mode toggles
 // ============================================================================
 
-/** Saved Unit Builder state when switching to Custom Pool */
-let _savedDefenderUBSnapshot: Record<string, unknown> | null = null;
-
-/** @internal Exported for testing only */
-export function _getDefenderUBSnapshot() { return _savedDefenderUBSnapshot; }
-export function _clearDefenderUBSnapshot() { _savedDefenderUBSnapshot = null; }
+/** @internal Exported for testing only — delegates to the main store's factory closure */
+export function _getDefenderUBSnapshot() {
+  const fn = (useDefenseConfigStore as unknown as Record<string, (() => unknown) | undefined>)._getSnapshot;
+  return fn?.() ?? null;
+}
+export function _clearDefenderUBSnapshot() {
+  const fn = (useDefenseConfigStore as unknown as Record<string, (() => void) | undefined>)._clearSnapshot;
+  fn?.();
+}
 
 // ============================================================================
 // State Interface
@@ -162,7 +165,7 @@ type DefenseConfigFields = Omit<
 // Default Values
 // ============================================================================
 
-const DEFAULT_DEFENSE_CONFIG = {
+export const DEFAULT_DEFENSE_CONFIG = {
   // Defense
   dieColor: DefenseDieColor.White,
   surgeChart: DefenseSurgeChart.None,
@@ -223,10 +226,18 @@ const DEFAULT_DEFENSE_CONFIG = {
 } as const;
 
 // ============================================================================
-// Store
+// Store Factory
 // ============================================================================
 
-export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
+/**
+ * Factory function to create independent defense config stores.
+ * Each store gets its own closure-scoped snapshot variable, ensuring
+ * multiple instances (main simulator, list analyzer) don't interfere.
+ */
+export function createDefenseStore() {
+  let _savedUBSnapshot: Record<string, unknown> | null = null;
+
+  const store = create<DefenseConfigState>((set) => ({
   // Spread defaults as initial state
   ...DEFAULT_DEFENSE_CONFIG,
 
@@ -275,7 +286,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
           activeMode: _i, selectedFaction: _j,
           ...dataFields
         } = state;
-        _savedDefenderUBSnapshot = dataFields;
+        _savedUBSnapshot = dataFields;
 
         return {
           ...DEFAULT_DEFENSE_CONFIG,
@@ -292,9 +303,9 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
           selectedUnitAffiliation: null,
         };
       }
-      if (state.activeMode === 'custom' && mode === 'unit-builder' && _savedDefenderUBSnapshot) {
-        const snapshot = _savedDefenderUBSnapshot;
-        _savedDefenderUBSnapshot = null;
+      if (state.activeMode === 'custom' && mode === 'unit-builder' && _savedUBSnapshot) {
+        const snapshot = _savedUBSnapshot;
+        _savedUBSnapshot = null;
         return {
           ...snapshot,
           activeMode: 'unit-builder' as const,
@@ -382,7 +393,7 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
 
   // Full reset to defaults
   reset: () => {
-    _savedDefenderUBSnapshot = null;
+    _savedUBSnapshot = null;
     return set(() => ({
       ...DEFAULT_DEFENSE_CONFIG,
       selectedFaction: null,
@@ -399,6 +410,19 @@ export const useDefenseConfigStore = create<DefenseConfigState>((set) => ({
     }));
   },
 }));
+
+  // Attach snapshot accessors for testing and cross-store isolation
+  (store as unknown as Record<string, unknown>)._getSnapshot = () => _savedUBSnapshot;
+  (store as unknown as Record<string, unknown>)._clearSnapshot = () => { _savedUBSnapshot = null; };
+
+  return store;
+}
+
+// ============================================================================
+// Backward-compatible singleton: the main simulator's defense store
+// ============================================================================
+
+export const useDefenseConfigStore = createDefenseStore();
 
 /**
  * Selector: extract the engine-compatible DefenderConfig from the store.

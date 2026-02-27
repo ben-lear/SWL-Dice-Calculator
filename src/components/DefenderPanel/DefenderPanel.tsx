@@ -5,7 +5,7 @@ import {
   getFactionOptions,
 } from '../../data/presetHelpers';
 import type { Faction } from '../../data/presets';
-import { useDefenseConfigStore } from '../../stores/defenseConfigStore';
+import { useDefenderStore } from '../../hooks/useDefenderStoreContext';
 import SegmentedControl from '../shared/SegmentedControl';
 import UnitPresetSection from '../shared/UnitPresetSection';
 import PanelShell, { MODE_OPTIONS } from '../shared/PanelShell';
@@ -14,8 +14,12 @@ import DefenderCustomPoolView from './DefenderCustomPoolView';
 import DefenderDefenseSection from './DefenderDefenseSection';
 import DefenderUnitBuilderView from './DefenderUnitBuilderView';
 
-export default function DefenderPanel() {
-  const store = useDefenseConfigStore();
+/**
+ * Inner content of the DefenderPanel — extracted so the list analyzer can
+ * render it inside its own PanelShell without double-nesting title bars.
+ */
+export function DefenderPanelContent() {
+  const store = useDefenderStore();
 
   const factionOptions = useMemo(
     () => [
@@ -73,43 +77,51 @@ export default function DefenderPanel() {
   };
 
   return (
-    <PanelShell title="Defender" collapsible>
-        <SegmentedControl
-          label="Mode"
-          value={store.activeMode}
-          onChange={store.setActiveMode}
-          options={MODE_OPTIONS}
+    <>
+      <SegmentedControl
+        label="Mode"
+        value={store.activeMode}
+        onChange={store.setActiveMode}
+        options={MODE_OPTIONS}
+      />
+
+      {store.activeMode === 'unit-builder' && (
+        <UnitPresetSection
+          faction={store.selectedFaction ?? ''}
+          onFactionChange={handleFactionChange}
+          factionOptions={factionOptions}
+          unitValue={store.selectedPresetId ?? ''}
+          onUnitChange={handlePresetChange}
+          unitOptions={unitOptions}
         />
+      )}
 
-        {store.activeMode === 'unit-builder' && (
-          <UnitPresetSection
-            faction={store.selectedFaction ?? ''}
-            onFactionChange={handleFactionChange}
-            factionOptions={factionOptions}
-            unitValue={store.selectedPresetId ?? ''}
-            onUnitChange={handlePresetChange}
-            unitOptions={unitOptions}
-          />
-        )}
+      {store.activeMode === 'unit-builder' && (
+        <>
+          <DefenderDefenseSection />
+          <DefenderUnitBuilderView />
+        </>
+      )}
+      <DefenderCustomPoolView hideDefense={store.activeMode === 'unit-builder'} />
 
-        {store.activeMode === 'unit-builder' && (
-          <>
-            <DefenderDefenseSection />
-            <DefenderUnitBuilderView />
-          </>
-        )}
-        <DefenderCustomPoolView hideDefense={store.activeMode === 'unit-builder'} />
+      <div className="border-t border-gray-700 pt-3">
+        <NumberSpinner
+          label="Unit Cost"
+          value={store.unitCost}
+          onChange={(value) => store.setField('unitCost', value)}
+          min={0}
+          max={999}
+          tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
+        />
+      </div>
+    </>
+  );
+}
 
-        <div className="border-t border-gray-700 pt-3">
-          <NumberSpinner
-            label="Unit Cost"
-            value={store.unitCost}
-            onChange={(value) => store.setField('unitCost', value)}
-            min={0}
-            max={999}
-            tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
-          />
-        </div>
+export default function DefenderPanel() {
+  return (
+    <PanelShell title="Defender" collapsible>
+      <DefenderPanelContent />
     </PanelShell>
   );
 }

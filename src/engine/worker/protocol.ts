@@ -16,7 +16,13 @@ export interface CancelRequest {
   id: string;                // ID of the request to cancel
 }
 
-export type WorkerRequest = SimulationRequest | CancelRequest;
+export interface BatchSimulationRequest {
+  type: 'batch';
+  id: string;
+  jobs: Array<{ jobId: string; config: AttackConfig; iterations: number }>;
+}
+
+export type WorkerRequest = SimulationRequest | CancelRequest | BatchSimulationRequest;
 
 // ============================================================================
 // Worker → Main Thread Messages
@@ -41,4 +47,17 @@ export interface SimulationProgress {
   total: number;             // Total iterations
 }
 
-export type WorkerResponse = SimulationResponse | SimulationError | SimulationProgress;
+export interface BatchSimulationResponse {
+  type: 'batch-result';
+  id: string;
+  results: Array<{ jobId: string; result: SimulationResult }>;
+}
+
+export interface BatchSimulationError {
+  type: 'batch-error';
+  id: string;
+  error: string;
+}
+
+export type WorkerResponse = SimulationResponse | SimulationError | SimulationProgress
+  | BatchSimulationResponse | BatchSimulationError;

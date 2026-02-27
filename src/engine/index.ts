@@ -26,6 +26,9 @@ export { simulate, DEFAULT_ITERATIONS } from './simulator';
 
 // Worker client
 export { SimulationWorkerClient } from './worker/simulationWorkerClient';
+export { BatchSimulationClient } from './worker/batchSimulationClient';
+export type { BatchJob } from './worker/batchSimulationClient';
+export type { WorkerLike } from './worker/simulationWorkerClient';
 
 // Types
 export type {

@@ -14,6 +14,8 @@ export interface PanelShellProps {
   collapsible?: boolean;
   /** Whether the panel starts expanded. Default: true */
   defaultExpanded?: boolean;
+  /** Optional content rendered at the right edge of the header row */
+  headerRight?: ReactNode;
 }
 
 export default function PanelShell({
@@ -21,6 +23,7 @@ export default function PanelShell({
   children,
   collapsible = false,
   defaultExpanded = true,
+  headerRight,
 }: PanelShellProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   // Track whether the expand/collapse transition is in progress
@@ -62,7 +65,10 @@ export default function PanelShell({
             {headerContent}
           </button>
         ) : (
-          headerContent
+          <div className="flex items-center justify-between">
+            {headerContent}
+            {headerRight && <div className="ml-auto">{headerRight}</div>}
+          </div>
         )}
       </div>
 

@@ -42,5 +42,29 @@ self.onmessage = (event: MessageEvent<WorkerRequest>) => {
       // to actually stop mid-simulation.
       break;
     }
+
+    case 'batch': {
+      try {
+        const results: Array<{ jobId: string; result: import('../types').SimulationResult }> = [];
+        for (const job of message.jobs) {
+          const result = simulate(job.config, job.iterations);
+          results.push({ jobId: job.jobId, result });
+        }
+        const response: WorkerResponse = {
+          type: 'batch-result',
+          id: message.id,
+          results,
+        };
+        self.postMessage(response);
+      } catch (err) {
+        const response: WorkerResponse = {
+          type: 'batch-error',
+          id: message.id,
+          error: err instanceof Error ? err.message : String(err),
+        };
+        self.postMessage(response);
+      }
+      break;
+    }
   }
 };

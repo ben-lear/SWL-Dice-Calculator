@@ -53,7 +53,7 @@ const KEYWORD_TOOLTIPS: Record<string, string> = {
   spotter: 'Spotter - when this unit aims, a nearby unit also gains an aim token.',
   commsRelay: 'Comms Relay - when issued an order, this unit may pass it to a nearby friendly unit.',
   aid: 'Aid - this unit can share tokens with friendly units.',
-  compel: 'Compel - after a nearby friendly unit activates, it may gain 1 suppression to perform a free move.',
+  compel: 'Compel - after a nearby friendly unit activates, if it is suppressed, it may gain 1 suppression to perform a move.',
   // Defensive Tech
   armor: 'Armor - non-critical hits are blocked automatically.',
   armorX: 'Armor X - cancel up to X non-critical hit results during defense.',
@@ -83,19 +83,38 @@ const KEYWORD_TOOLTIPS: Record<string, string> = {
 interface ArmyStatsViewProps {
   stats: ArmyStats;
   meta: ResolvedList['meta'];
+  isSimulated?: boolean;
+  isLoading?: boolean;
 }
 
 /**
  * Army-level aggregate statistics view — the default detail panel
  * content after importing a list.
  */
-export default function ArmyStatsView({ stats, meta }: ArmyStatsViewProps) {
+export default function ArmyStatsView({ stats, meta, isSimulated = false, isLoading = false }: ArmyStatsViewProps) {
   return (
     <div className="space-y-4 md:space-y-3">
       <div>
-        <h2 className="text-lg font-bold uppercase tracking-wide text-gray-300">
-          Army Overview
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-bold uppercase tracking-wide text-gray-300">
+            Army Overview
+          </h2>
+          {isLoading && (
+            <span className="rounded bg-blue-900/50 px-2 py-0.5 text-xs font-medium text-blue-300">
+              Simulating…
+            </span>
+          )}
+          {!isLoading && isSimulated && (
+            <span className="rounded bg-green-900/50 px-2 py-0.5 text-xs font-medium text-green-300" title="Dice output computed via Monte Carlo simulation against the configured defender profile">
+              Simulated
+            </span>
+          )}
+          {!isLoading && !isSimulated && (
+            <span className="rounded bg-gray-800/50 px-2 py-0.5 text-xs font-medium text-gray-400" title="Dice output computed using deterministic dice-weighting estimates (no defender profile)">
+              Estimated
+            </span>
+          )}
+        </div>
 
         {meta.faction && (
           <p className="mt-1 text-xs text-gray-500">

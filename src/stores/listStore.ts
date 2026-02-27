@@ -4,7 +4,7 @@
  */
 
 import { create } from 'zustand';
-import type { ResolvedList } from '../data/listTypes';
+import type { ResolvedList, ArmyStats, RangeBandDice } from '../data/listTypes';
 import { parseListJson } from '../data/listParser';
 
 // ============================================================================
@@ -18,10 +18,24 @@ interface ListState {
   selectedUnitIndex: number | null;
   showArmyStats: boolean;
 
+  // Simulation state
+  simulatedStats: ArmyStats | null;
+  simulatedUnitResults: Map<number, RangeBandDice[]> | null;
+  simulationLoading: boolean;
+  simulationError: string | null;
+  simulationStale: boolean;
+
   importList: (json: string) => void;
   selectUnit: (index: number) => void;
   showArmyOverview: () => void;
   clearList: () => void;
+
+  // Simulation actions
+  setSimulatedResults: (stats: ArmyStats, unitResults: Map<number, RangeBandDice[]>) => void;
+  setSimulationLoading: (loading: boolean) => void;
+  setSimulationError: (error: string | null) => void;
+  markSimulationStale: () => void;
+  clearSimulationResults: () => void;
 }
 
 // ============================================================================
@@ -34,6 +48,11 @@ const INITIAL_STATE = {
   parseError: null as string | null,
   selectedUnitIndex: null as number | null,
   showArmyStats: true,
+  simulatedStats: null as ArmyStats | null,
+  simulatedUnitResults: null as Map<number, RangeBandDice[]> | null,
+  simulationLoading: false,
+  simulationError: null as string | null,
+  simulationStale: false,
 };
 
 // ============================================================================
@@ -53,6 +72,11 @@ export const useListStore = create<ListState>((set) => ({
         parseError: result.error,
         selectedUnitIndex: null,
         showArmyStats: true,
+        simulatedStats: null,
+        simulatedUnitResults: null,
+        simulationLoading: false,
+        simulationError: null,
+        simulationStale: false,
       });
     } else {
       set({
@@ -61,6 +85,11 @@ export const useListStore = create<ListState>((set) => ({
         parseError: null,
         selectedUnitIndex: null,
         showArmyStats: true,
+        simulatedStats: null,
+        simulatedUnitResults: null,
+        simulationLoading: false,
+        simulationError: null,
+        simulationStale: false,
       });
     }
   },
@@ -81,5 +110,38 @@ export const useListStore = create<ListState>((set) => ({
 
   clearList: () => {
     set({ ...INITIAL_STATE });
+  },
+
+  // Simulation actions
+  setSimulatedResults: (stats: ArmyStats, unitResults: Map<number, RangeBandDice[]>) => {
+    set({
+      simulatedStats: stats,
+      simulatedUnitResults: unitResults,
+      simulationLoading: false,
+      simulationError: null,
+      simulationStale: false,
+    });
+  },
+
+  setSimulationLoading: (loading: boolean) => {
+    set({ simulationLoading: loading });
+  },
+
+  setSimulationError: (error: string | null) => {
+    set({ simulationError: error, simulationLoading: false });
+  },
+
+  markSimulationStale: () => {
+    set({ simulationStale: true });
+  },
+
+  clearSimulationResults: () => {
+    set({
+      simulatedStats: null,
+      simulatedUnitResults: null,
+      simulationLoading: false,
+      simulationError: null,
+      simulationStale: false,
+    });
   },
 }));

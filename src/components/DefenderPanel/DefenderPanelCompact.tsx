@@ -1,18 +1,29 @@
+import { useMemo } from 'react';
 import {
   CoverType,
   DefenseDieColor,
   DefenseSurgeChart,
 } from '../../engine/types';
+import {
+  getDefenderPresetById,
+  getDefenderPresets,
+  getFactionOptions,
+} from '../../data/presetHelpers';
+import type { Faction } from '../../data/presets';
 import { useDefenderStore } from '../../hooks/useDefenderStoreContext';
 import { useDefenderKeywordDisabled } from '../../hooks/useKeywordDisabled';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 import Select from '../shared/Select';
 import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
+import { MODE_OPTIONS } from '../shared/PanelShell';
 import Toggle from '../shared/Toggle';
 import Checkbox from '../shared/Checkbox';
+import UnitPresetSection from '../shared/UnitPresetSection';
+import DefenderUnitBuilderView from './DefenderUnitBuilderView';
 
-// UI-only type for defense die selector (includes 'none' option)
+// ── Defense die options (includes 'none') ──────────────────────────
+
 type DefenseDieOption = 'none' | DefenseDieColor;
 
 const DEFENSE_DIE_OPTIONS: SegmentedControlOption<DefenseDieOption>[] = [
@@ -21,7 +32,6 @@ const DEFENSE_DIE_OPTIONS: SegmentedControlOption<DefenseDieOption>[] = [
   { value: DefenseDieColor.Red, label: 'Red' },
 ];
 
-// Guardian die color options (no 'none' option for Guardian)
 const GUARDIAN_DIE_OPTIONS = [
   { value: DefenseDieColor.White, label: 'White' },
   { value: DefenseDieColor.Red, label: 'Red' },
@@ -38,59 +48,135 @@ const COVER_OPTIONS: SegmentedControlOption<CoverType>[] = [
   { value: CoverType.Heavy, label: 'Heavy' },
 ];
 
-interface DefenderCustomPoolViewProps {
-  /** When true, the Defense section is rendered elsewhere and hidden here. */
-  hideDefense?: boolean;
-}
-
-export default function DefenderCustomPoolView({ hideDefense = false }: DefenderCustomPoolViewProps) {
+/**
+ * Compact wide-layout variant of the defender panel, used on the List Analyzer
+ * page. Arranges Defense / Cover / Tokens in a responsive 3-column grid and
+ * expands Keywords and Guardian into wider multi-column grids.
+ *
+ * Supports both Custom Pool and Unit Builder modes.
+ */
+export default function DefenderPanelCompact() {
   const store = useDefenderStore();
   const isDisabled = useDefenderKeywordDisabled();
 
+  // ── Unit Builder preset logic (mirrors DefenderPanelContent) ─────
+
+  const factionOptions = useMemo(
+    () => [
+      { value: '', label: 'All Factions' },
+      ...getFactionOptions().map((f) => ({ value: f.value, label: f.label })),
+    ],
+    [],
+  );
+
+  const unitOptions = useMemo(() => {
+    const presets = getDefenderPresets(store.selectedFaction);
+    const nameRankCounts = new Map<string, number>();
+    for (const preset of presets) {
+      const key = `${preset.name}|${preset.rank}`;
+      nameRankCounts.set(key, (nameRankCounts.get(key) ?? 0) + 1);
+    }
+    return presets.map((preset) => {
+      const rankLabel = preset.rank.charAt(0).toUpperCase() + preset.rank.slice(1);
+      const key = `${preset.name}|${preset.rank}`;
+      const needsSubtitle = (nameRankCounts.get(key) ?? 0) > 1 && preset.title;
+      const label = needsSubtitle
+        ? `${preset.name}, ${preset.title} (${rankLabel})`
+        : `${preset.name} (${rankLabel})`;
+      return { value: preset.id, label };
+    });
+  }, [store.selectedFaction]);
+
+  const handleFactionChange = (value: string) => {
+    const newFaction = value === '' ? null : (value as Faction);
+    if (newFaction !== store.selectedFaction) {
+      store.clearUnit();
+    }
+    store.setSelectedFaction(newFaction);
+  };
+
+  const handlePresetChange = (presetId: string) => {
+    if (!presetId || presetId === '') {
+      store.clearUnit();
+      return;
+    }
+    const preset = getDefenderPresetById(presetId);
+    if (preset) {
+      store.loadPreset(preset.id, preset.profile, preset.upgradeBar, preset.unitApiId, {
+        rank: preset.rank,
+        unitType: preset.unitType,
+        affiliation: preset.unitAffiliation,
+        faction: preset.faction,
+      });
+    }
+  };
+
   return (
-    <>
-      {!hideDefense && (
-        <SectionHeader title="Defense">
-          <div className="space-y-3">
-            <SegmentedControl
-              label="Defense Die"
-              value={store.disableDefenseDice ? 'none' : store.dieColor}
-              onChange={(value: DefenseDieOption) => {
-                if (value === 'none') {
-                  store.setField('disableDefenseDice', true);
-                } else {
-                  store.setField('disableDefenseDice', false);
-                  store.setField('dieColor', value);
-                }
-              }}
-              options={DEFENSE_DIE_OPTIONS}
-              tooltip="The color of defense die rolled for this unit. Red dice have a higher block chance than white."
-            />
+    <div className="space-y-3">
+      {/* ── Mode toggle (full width) ─────────────────────────────── */}
+      <SegmentedControl
+        label="Mode"
+        value={store.activeMode}
+        onChange={store.setActiveMode}
+        options={MODE_OPTIONS}
+      />
 
-            {!store.disableDefenseDice && (
-              <SegmentedControl
-                label="Surge Chart"
-                value={store.surgeChart}
-                onChange={(value) => store.setField('surgeChart', value)}
-                options={DEFENSE_SURGE_OPTIONS}
-                tooltip="Whether defense surge results convert to blocks."
-              />
-            )}
-
-            <NumberSpinner
-              label="Minis in LOS"
-              value={store.minisInLOS}
-              onChange={(value) => store.setField('minisInLOS', value)}
-              min={1}
-              max={99}
-              tooltip="Number of defending miniatures in line of sight - used to multiply the dice of Spray weapons."
-            />
-          </div>
-        </SectionHeader>
+      {/* ── Unit Builder: preset + upgrades (side-by-side) ────────── */}
+      {store.activeMode === 'unit-builder' && (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <UnitPresetSection
+            faction={store.selectedFaction ?? ''}
+            onFactionChange={handleFactionChange}
+            factionOptions={factionOptions}
+            unitValue={store.selectedPresetId ?? ''}
+            onUnitChange={handlePresetChange}
+            unitOptions={unitOptions}
+          />
+          <DefenderUnitBuilderView />
+        </div>
       )}
 
-      <SectionHeader title="Cover">
-        <div className="space-y-3">
+      {/* ── Core controls: 3-column responsive grid ──────────────── */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {/* Column 1 — Defense */}
+        <div className="space-y-3 border-t border-gray-800 pt-2">
+          <span className="section-heading">Defense</span>
+          <SegmentedControl
+            label="Defense Die"
+            value={store.disableDefenseDice ? 'none' : store.dieColor}
+            onChange={(value: DefenseDieOption) => {
+              if (value === 'none') {
+                store.setField('disableDefenseDice', true);
+              } else {
+                store.setField('disableDefenseDice', false);
+                store.setField('dieColor', value);
+              }
+            }}
+            options={DEFENSE_DIE_OPTIONS}
+            tooltip="The color of defense die rolled for this unit. Red dice have a higher block chance than white."
+          />
+          {!store.disableDefenseDice && (
+            <SegmentedControl
+              label="Surge Chart"
+              value={store.surgeChart}
+              onChange={(value) => store.setField('surgeChart', value)}
+              options={DEFENSE_SURGE_OPTIONS}
+              tooltip="Whether defense surge results convert to blocks."
+            />
+          )}
+          <NumberSpinner
+            label="Minis in LOS"
+            value={store.minisInLOS}
+            onChange={(value) => store.setField('minisInLOS', value)}
+            min={1}
+            max={99}
+            tooltip="Number of defending miniatures in line of sight - used to multiply the dice of Spray weapons."
+          />
+        </div>
+
+        {/* Column 2 — Cover */}
+        <div className="space-y-3 border-t border-gray-800 pt-2">
+          <span className="section-heading">Cover</span>
           <SegmentedControl
             label="Cover Type"
             value={store.coverType}
@@ -125,10 +211,10 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
             tooltip="This unit is suppressed: it improves its cover by 1 (e.g. no cover to light, light to heavy)."
           />
         </div>
-      </SectionHeader>
 
-      <SectionHeader title="Tokens">
-        <div className="keyword-grid">
+        {/* Column 3 — Tokens */}
+        <div className="space-y-3 border-t border-gray-800 pt-2">
+          <span className="section-heading">Tokens</span>
           <NumberSpinner
             label="Dodge"
             value={store.dodgeTokens}
@@ -159,11 +245,12 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
             />
           )}
         </div>
-      </SectionHeader>
+      </div>
 
+      {/* ── Keywords (full width, collapsed by default, wide grid) ── */}
       <SectionHeader title="Keywords" defaultExpanded={false}>
         <div className="space-y-2">
-          <div className="keyword-grid">
+          <div className="keyword-grid-wide">
             <NumberSpinner
               label="Armor X"
               value={store.armorX}
@@ -171,6 +258,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               min={0}
               max={99}
               compact
+              gap="gap-1"
               tooltip="Cancel up to X non-critical hit results before rolling defense dice. Critical hits bypass Armor."
             />
             <NumberSpinner
@@ -180,6 +268,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               min={0}
               max={99}
               compact
+              gap="gap-1"
               tooltip="Roll 1 additional defense die per suppression token on this unit, up to X additional dice total."
             />
             <NumberSpinner
@@ -189,6 +278,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               min={0}
               max={99}
               compact
+              gap="gap-1"
               disabled={isDisabled('shieldedX')}
               tooltip="This unit has X active shield tokens. Flip shields to cancel hit or critical results before defense dice are rolled (ranged attacks only)."
             />
@@ -199,6 +289,7 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               min={0}
               max={99}
               compact
+              gap="gap-1"
               tooltip="After rolling defense dice, reroll up to X results once per attack."
             />
             <NumberSpinner
@@ -208,11 +299,12 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               min={0}
               max={99}
               compact
+              gap="gap-1"
               tooltip="When attacked from this unit's weak-point arc, the attacker's attack pool gains Impact X, converting up to X hits into crits."
             />
           </div>
 
-          <div className="checkbox-grid">
+          <div className="checkbox-grid-wide">
             <Checkbox
               label="Backup"
               value={store.backup}
@@ -336,10 +428,10 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
               tooltip="While defending against a ranged attack, reroll all your defense dice."
             />
           </div>
-
         </div>
       </SectionHeader>
 
+      {/* ── Guardian (full width, collapsed by default) ───────────── */}
       <SectionHeader title="Guardian" defaultExpanded={false}>
         <div className="space-y-3">
           <NumberSpinner
@@ -397,6 +489,18 @@ export default function DefenderCustomPoolView({ hideDefense = false }: Defender
           )}
         </div>
       </SectionHeader>
-    </>
+
+      {/* ── Unit Cost ─────────────────────────────────────────────── */}
+      <div className="border-t border-gray-700 pt-3">
+        <NumberSpinner
+          label="Unit Cost"
+          value={store.unitCost}
+          onChange={(value) => store.setField('unitCost', value)}
+          min={0}
+          max={999}
+          tooltip="Points cost of this unit, used for cost-efficiency comparisons in the results panel."
+        />
+      </div>
+    </div>
   );
 }

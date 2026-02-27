@@ -26,8 +26,10 @@ import {
   MarksmanStrategy,
   RerollStrategy,
 } from '../engine/types';
-import type { AttackerConfig, AggregatedWeaponKeywords } from '../engine/types';
+import type { AttackerConfig, DefenderConfig, AttackConfig, AggregatedWeaponKeywords } from '../engine/types';
 import { estimateExpectedAttackSuccesses } from '../engine';
+import type { BatchJob } from '../engine/worker/batchSimulationClient';
+import { normalizeToEngineWeapon } from './upgradeApplicator';
 
 // ============================================================================
 // Defense Probability Helpers
@@ -1378,6 +1380,502 @@ export function aggregateArmyStats(
       adjustedTotal,
     };
   });
+
+  const unitsByRank = computeRankBreakdown(units, totalPoints, perUnitDiceSummaries);
+  const courageBreakdown = computeCourageBreakdown(units, totalPoints);
+
+  return {
+    totalPoints,
+    activationCount,
+    totalWounds,
+    totalEffectiveWounds: Math.round(totalEffectiveWounds * 10) / 10,
+    totalMiniatures,
+    avgPointsPerEffectiveWound,
+    diceByRange,
+    ...antiArmor,
+    ...coverDenial,
+    ...suppression,
+    deploymentKeywords,
+    ...actionEconomy,
+    ...defensiveProfile,
+    unitsByRank,
+    courageBreakdown,
+    commandCards: meta.commandCards ?? [],
+    contingencies: meta.contingencies ?? [],
+  };
+}
+
+// ============================================================================
+// Simulation Config Builders (Phase 21)
+// ============================================================================
+
+/** Config pair for standard vs adjusted simulation at a given range band */
+export interface UnitRangeBandConfig {
+  rangeBand: string;
+  standardConfig: AttackConfig;
+  adjustedConfig: AttackConfig;
+  redDice: number;
+  blackDice: number;
+  whiteDice: number;
+  totalDice: number;
+}
+
+/**
+ * Convert a data-layer WeaponProfile to an engine WeaponProfile with full keywords.
+ * Marks the weapon as enabled and preserves weapon type.
+ */
+function toEngineWeapon(weapon: WeaponProfile): import('../engine/types').WeaponProfile {
+  return {
+    ...normalizeToEngineWeapon(weapon),
+    enabled: true,
+  };
+}
+
+/**
+ * Build AttackConfig pairs (standard and adjusted) for each range band
+ * where a unit has eligible weapons. Used by the batch simulation system.
+ */
+export function buildUnitRangeBandConfigs(
+  unit: ResolvedUnit,
+  upgrades: ResolvedUpgrade[],
+  defenderConfig: DefenderConfig,
+): UnitRangeBandConfig[] {
+  const attackSurge = unit.attackSurgeChart ?? AttackSurgeChart.None;
+
+  const {
+    baseMiniCount,
+    upgradeMiniGroups,
+    armamentWeapons,
+    grenadeWeapons,
+    otherUpgradeWeapons,
+    hasGunslinger,
+    arsenalX,
+  } = categorizeUpgrades(unit, upgrades);
+
+  // Merge unit + upgrade keywords
+  const mergedKeywords: Record<string, number | boolean | string> = { ...unit.keywords };
+  for (const upg of upgrades) {
+    for (const [key, value] of Object.entries(upg.keywords)) {
+      const existing = mergedKeywords[key];
+      if (typeof value === 'number' && typeof existing === 'number') {
+        mergedKeywords[key] = existing + value;
+      } else if (typeof value === 'boolean' && value) {
+        mergedKeywords[key] = true;
+      } else if (mergedKeywords[key] === undefined) {
+        mergedKeywords[key] = value;
+      }
+    }
+  }
+
+  const bonusTokens = extractAdjustedTokens(mergedKeywords);
+
+  const num = (key: string): number => {
+    const v = mergedKeywords[key];
+    return typeof v === 'number' ? v : 0;
+  };
+  const bool = (key: string): boolean => mergedKeywords[key] === true;
+
+  // Build shared attacker config fields (minus weapons and tokens)
+  const baseAttackerFields = {
+    surgeChart: attackSurge,
+    preciseX: num('preciseX'),
+    sharpshooterX: num('sharpshooterX'),
+    arsenalX: 0, // arsenal already handled by weapon selection
+    marksman: bool('marksman'),
+    marksmanStrategy: MarksmanStrategy.Deterministic,
+    rerollStrategy: RerollStrategy.Conservative,
+    jediHunter: bool('jediHunter'),
+    jarKaiMastery: bool('jarKaiMastery'),
+    duelistAttacker: bool('duelistAttacker'),
+    makashiMastery: bool('makashiMastery'),
+    deathFromAbove: bool('deathFromAbove'),
+    holdTheLine: bool('holdTheLine'),
+    completeTheMission: bool('completeTheMission'),
+    defeatedMinis: 0,
+    unitCost: 0,
+  };
+
+  const baseMiniWeaponPool = [...unit.weapons, ...armamentWeapons];
+  const results: UnitRangeBandConfig[] = [];
+
+  for (const rangeBand of RANGE_BANDS) {
+    const acc = { redDice: 0, blackDice: 0, whiteDice: 0 };
+    const engineWeapons: import('../engine/types').WeaponProfile[] = [];
+
+    if (rangeBand === 'Overrun') {
+      // Overrun: single best weapon, scaled by overrunX
+      const allOverrunWeapons = [
+        ...baseMiniWeaponPool,
+        ...upgradeMiniGroups.flatMap(g => g.weapons),
+        ...otherUpgradeWeapons,
+      ].filter(w => w.weaponType === AttackType.Overrun);
+
+      if (allOverrunWeapons.length > 0) {
+        const best = allOverrunWeapons.reduce((a, b) =>
+          computeWeaponExpectedSuccesses(a, attackSurge) >= computeWeaponExpectedSuccesses(b, attackSurge) ? a : b,
+        );
+        const overrunX = typeof best.keywords.overrunX === 'number' ? best.keywords.overrunX : 1;
+        addWeaponDice(best, overrunX, acc);
+        for (let i = 0; i < overrunX; i++) {
+          engineWeapons.push(toEngineWeapon(best));
+        }
+      }
+    } else {
+      // --- Base minis ---
+      if (baseMiniCount === 1) {
+        const chosen = selectBestWeapons(baseMiniWeaponPool, rangeBand, attackSurge, arsenalX);
+        for (const w of chosen) {
+          addWeaponDice(w, 1, acc);
+          engineWeapons.push(toEngineWeapon(w));
+        }
+      } else if (baseMiniCount > 1) {
+        const chosen = selectBestWeapons(baseMiniWeaponPool, rangeBand, attackSurge, 1);
+        if (chosen.length > 0) {
+          addWeaponDice(chosen[0], baseMiniCount, acc);
+          for (let i = 0; i < baseMiniCount; i++) {
+            engineWeapons.push(toEngineWeapon(chosen[0]));
+          }
+        }
+      }
+
+      // --- Upgrade mini groups ---
+      for (const group of upgradeMiniGroups) {
+        const upgradeEligible = selectBestWeapons(group.weapons, rangeBand, attackSurge, 1);
+        if (upgradeEligible.length > 0) {
+          addWeaponDice(upgradeEligible[0], group.count, acc);
+          for (let i = 0; i < group.count; i++) {
+            engineWeapons.push(toEngineWeapon(upgradeEligible[0]));
+          }
+        } else if (rangeBand === 'Melee') {
+          const fallback = selectBestWeapons(unit.weapons, rangeBand, attackSurge, 1);
+          if (fallback.length > 0) {
+            addWeaponDice(fallback[0], group.count, acc);
+            for (let i = 0; i < group.count; i++) {
+              engineWeapons.push(toEngineWeapon(fallback[0]));
+            }
+          }
+        }
+      }
+
+      // --- Grenades ---
+      for (const w of grenadeWeapons) {
+        if (weaponCoversRange(w, rangeBand)) {
+          addWeaponDice(w, 1, acc);
+          engineWeapons.push(toEngineWeapon(w));
+        }
+      }
+
+      // --- Other upgrade weapons ---
+      for (const w of otherUpgradeWeapons) {
+        if (weaponCoversRange(w, rangeBand)) {
+          addWeaponDice(w, 1, acc);
+          engineWeapons.push(toEngineWeapon(w));
+        }
+      }
+
+      // --- Gunslinger ---
+      if (hasGunslinger && rangeBand !== 'Melee') {
+        const allContributedRanged: WeaponProfile[] = [];
+        if (baseMiniCount === 1) {
+          const chosen = selectBestWeapons(baseMiniWeaponPool, rangeBand, attackSurge, arsenalX);
+          allContributedRanged.push(...chosen.filter(
+            w => w.weaponType === AttackType.Ranged || w.weaponType === AttackType.Hybrid,
+          ));
+        } else if (baseMiniCount > 1) {
+          const chosen = selectBestWeapons(baseMiniWeaponPool, rangeBand, attackSurge, 1);
+          allContributedRanged.push(...chosen.filter(
+            w => w.weaponType === AttackType.Ranged || w.weaponType === AttackType.Hybrid,
+          ));
+        }
+        for (const group of upgradeMiniGroups) {
+          const chosen = selectBestWeapons(group.weapons, rangeBand, attackSurge, 1);
+          allContributedRanged.push(...chosen.filter(
+            w => w.weaponType === AttackType.Ranged || w.weaponType === AttackType.Hybrid,
+          ));
+        }
+        if (allContributedRanged.length > 0) {
+          const best = allContributedRanged.sort(
+            (a, b) =>
+              computeWeaponExpectedSuccesses(b, attackSurge) -
+              computeWeaponExpectedSuccesses(a, attackSurge),
+          )[0];
+          addWeaponDice(best, 1, acc);
+          engineWeapons.push(toEngineWeapon(best));
+        }
+      }
+    }
+
+    const { redDice, blackDice, whiteDice } = acc;
+    const totalDice = redDice + blackDice + whiteDice;
+
+    // Skip bands with no dice
+    if (totalDice === 0) continue;
+
+    const bandAttackType = rangeBand === 'Overrun'
+      ? AttackType.Overrun
+      : rangeBand === 'Melee'
+        ? AttackType.Melee
+        : AttackType.Ranged;
+
+    const standardAttacker: AttackerConfig = {
+      ...baseAttackerFields,
+      weapons: engineWeapons,
+      aimTokens: 0,
+      surgeTokens: 0,
+      observationTokens: 0,
+      dodgeTokensAttacker: 0,
+    };
+
+    const adjustedAttacker: AttackerConfig = {
+      ...baseAttackerFields,
+      weapons: engineWeapons,
+      aimTokens: bonusTokens.bonusAimTokens,
+      surgeTokens: bonusTokens.bonusSurgeTokens,
+      observationTokens: bonusTokens.bonusObservationTokens,
+      dodgeTokensAttacker: bonusTokens.bonusDodgeTokens,
+    };
+
+    results.push({
+      rangeBand,
+      standardConfig: {
+        attacker: standardAttacker,
+        defender: defenderConfig,
+        attackType: bandAttackType,
+      },
+      adjustedConfig: {
+        attacker: adjustedAttacker,
+        defender: defenderConfig,
+        attackType: bandAttackType,
+      },
+      redDice,
+      blackDice,
+      whiteDice,
+      totalDice,
+    });
+  }
+
+  return results;
+}
+
+// ============================================================================
+// List Simulation Job Builder
+// ============================================================================
+
+export interface ListSimulationJobSet {
+  jobs: BatchJob[];
+  /** Maps unitIndex → Map<rangeBand, { stdJobId, adjJobId }> */
+  jobMapping: Map<number, Map<string, { stdJobId: string; adjJobId: string }>>;
+  /** Maps unitIndex → RangeBandDice[] skeleton (dice counts filled, success fields zeroed) */
+  diceCounts: Map<number, RangeBandDice[]>;
+}
+
+const SIMULATION_ITERATIONS = 5000;
+
+/**
+ * Build batch simulation jobs for all units in a resolved list.
+ *
+ * Deduplicates: units with the same base unit ID and identical equipped
+ * upgrades produce a single set of simulations. Results are shared via
+ * the jobMapping.
+ */
+export function buildListSimulationJobs(
+  units: ResolvedListUnit[],
+  defenderConfig: DefenderConfig,
+): ListSimulationJobSet {
+  const jobs: BatchJob[] = [];
+  const jobMapping = new Map<number, Map<string, { stdJobId: string; adjJobId: string }>>();
+  const diceCounts = new Map<number, RangeBandDice[]>();
+
+  // fingerprint → { firstUnitIdx, configs built from first occurrence }
+  const fingerprintCache = new Map<string, {
+    configs: UnitRangeBandConfig[];
+    bandMapping: Map<string, { stdJobId: string; adjJobId: string }>;
+    diceByRange: RangeBandDice[];
+  }>();
+
+  for (let i = 0; i < units.length; i++) {
+    const listUnit = units[i];
+    const resolved = listUnit.resolvedUnit;
+    if (!resolved) continue;
+
+    // Compute fingerprint
+    const upgIds = listUnit.resolvedUpgrades
+      .filter((u): u is ResolvedUpgrade => u !== null)
+      .map(u => u.id)
+      .sort()
+      .join(',');
+    const fingerprint = `${resolved.id}:${upgIds}`;
+
+    const cached = fingerprintCache.get(fingerprint);
+    if (cached) {
+      // Duplicate unit — reuse same job IDs
+      jobMapping.set(i, cached.bandMapping);
+      diceCounts.set(i, cached.diceByRange.map(d => ({ ...d })));
+      continue;
+    }
+
+    // First occurrence — build configs and generate jobs
+    const upgrades = listUnit.resolvedUpgrades.filter(
+      (u): u is ResolvedUpgrade => u !== null,
+    );
+    const configs = buildUnitRangeBandConfigs(resolved, upgrades, defenderConfig);
+    const bandMapping = new Map<string, { stdJobId: string; adjJobId: string }>();
+    const diceByRange: RangeBandDice[] = [];
+
+    for (const config of configs) {
+      const stdJobId = `fp-${fingerprint}-${config.rangeBand}-std`;
+      const adjJobId = `fp-${fingerprint}-${config.rangeBand}-adj`;
+
+      jobs.push({
+        jobId: stdJobId,
+        config: config.standardConfig,
+        iterations: SIMULATION_ITERATIONS,
+      });
+      jobs.push({
+        jobId: adjJobId,
+        config: config.adjustedConfig,
+        iterations: SIMULATION_ITERATIONS,
+      });
+
+      bandMapping.set(config.rangeBand, { stdJobId, adjJobId });
+      diceByRange.push({
+        rangeBand: config.rangeBand,
+        redDice: config.redDice,
+        blackDice: config.blackDice,
+        whiteDice: config.whiteDice,
+        totalDice: config.totalDice,
+        expectedSuccesses: 0, // Will be filled from simulation results
+        adjustedExpectedSuccesses: 0,
+        attackingEfficacy: 0,
+      });
+    }
+
+    fingerprintCache.set(fingerprint, { configs, bandMapping, diceByRange });
+    jobMapping.set(i, bandMapping);
+    diceCounts.set(i, diceByRange);
+  }
+
+  return { jobs, jobMapping, diceCounts };
+}
+
+// ============================================================================
+// Simulated Army Stats Aggregator
+// ============================================================================
+
+/**
+ * Aggregate army-level statistics from simulation-derived per-unit dice data.
+ * Mirrors aggregateArmyStats() but accepts pre-computed per-unit dice rather
+ * than computing them via the deterministic estimator.
+ */
+export function aggregateSimulatedArmyStats(
+  units: ResolvedListUnit[],
+  perUnitDice: Map<number, RangeBandDice[]>,
+  meta: { commandCards?: string[]; contingencies?: string[] },
+): ArmyStats {
+  // Tier 1: Key stat cards
+  let totalPoints = 0;
+  let totalWounds = 0;
+  let totalEffectiveWounds = 0;
+  let totalMiniatures = 0;
+
+  for (const listUnit of units) {
+    const unit = listUnit.resolvedUnit;
+    if (!unit) continue;
+
+    const upgrades = listUnit.resolvedUpgrades.filter(
+      (u): u is ResolvedUpgrade => u !== null,
+    );
+
+    let unitCost = unit.cost;
+    for (const upg of upgrades) {
+      unitCost += upg.cost;
+    }
+    totalPoints += unitCost;
+
+    const extraMinis = upgrades.reduce(
+      (sum, u) => sum + (u.noncombatant ? 0 : u.addsMiniature),
+      0,
+    );
+    const noncombatantMinis = upgrades.reduce(
+      (sum, u) => sum + (u.noncombatant ? u.addsMiniature : 0),
+      0,
+    );
+    const allFigures = unit.figures + extraMinis + noncombatantMinis;
+
+    totalMiniatures += allFigures;
+    totalWounds += unit.health * allFigures;
+    totalEffectiveWounds += computeEffectiveWounds(unit, upgrades);
+  }
+
+  const activationCount = units.length;
+  const avgPointsPerEffectiveWound =
+    totalEffectiveWounds > 0
+      ? Math.round((totalPoints / totalEffectiveWounds) * 10) / 10
+      : 0;
+
+  // Tier 2A: Aggregate dice by range from simulation data
+  const diceByRange: RangeBandDice[] = RANGE_BANDS.map((rangeBand) => {
+    let redDice = 0;
+    let blackDice = 0;
+    let whiteDice = 0;
+    let expectedSuccesses = 0;
+    let adjustedExpectedSuccesses = 0;
+
+    for (let i = 0; i < units.length; i++) {
+      const unitDice = perUnitDice.get(i);
+      if (!unitDice) continue;
+      const band = unitDice.find(d => d.rangeBand === rangeBand);
+      if (!band) continue;
+      redDice += band.redDice;
+      blackDice += band.blackDice;
+      whiteDice += band.whiteDice;
+      expectedSuccesses += band.expectedSuccesses;
+      adjustedExpectedSuccesses += band.adjustedExpectedSuccesses;
+    }
+
+    const totalDice = redDice + blackDice + whiteDice;
+    const attackingEfficacy = totalDice > 0 ? expectedSuccesses / totalDice : 0;
+
+    return {
+      rangeBand,
+      redDice,
+      blackDice,
+      whiteDice,
+      totalDice,
+      expectedSuccesses: Math.round(expectedSuccesses * 100) / 100,
+      adjustedExpectedSuccesses: Math.round(adjustedExpectedSuccesses * 100) / 100,
+      attackingEfficacy: Math.round(attackingEfficacy * 1000) / 1000,
+    };
+  });
+
+  // Tier 2B–2I: reuse existing computation functions (non-dice stats)
+  const antiArmor = computeAntiArmorStats(units);
+  const coverDenial = computeCoverDenialStats(units);
+  const suppression = computeSuppressionStats(units);
+  const deploymentKeywords = computeDeploymentKeywords(units);
+  const actionEconomy = computeActionEconomy(units);
+  const defensiveProfile = computeDefensiveProfile(units);
+
+  // Per-unit dice summaries for rank contribution
+  const perUnitDiceSummaries: Array<{ rank: string; expectedTotal: number; adjustedTotal: number }> = [];
+  for (let i = 0; i < units.length; i++) {
+    const unit = units[i].resolvedUnit;
+    if (!unit) continue;
+    const unitDice = perUnitDice.get(i);
+    let expectedTotal = 0;
+    let adjustedTotal = 0;
+    if (unitDice) {
+      for (const band of unitDice) {
+        expectedTotal += band.expectedSuccesses;
+        adjustedTotal += band.adjustedExpectedSuccesses;
+      }
+    }
+    perUnitDiceSummaries.push({
+      rank: unit.rank,
+      expectedTotal,
+      adjustedTotal,
+    });
+  }
 
   const unitsByRank = computeRankBreakdown(units, totalPoints, perUnitDiceSummaries);
   const courageBreakdown = computeCourageBreakdown(units, totalPoints);
