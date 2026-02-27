@@ -56,7 +56,7 @@ export default function RangeDiceTable({ data, armyTotals, unitCostPercentage }:
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="bg-gray-800 text-xs text-gray-400">
+          <tr className="bg-gray-800 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
             <th className="px-2 py-1.5 text-left font-medium cursor-help" title={TOOLTIPS.range}>
               Range
             </th>
@@ -118,7 +118,7 @@ export default function RangeDiceTable({ data, armyTotals, unitCostPercentage }:
             return (
               <tr
                 key={row.rangeBand}
-                className={`${i % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800/30'} ${isBest ? 'border-l-2 border-amber-400' : ''}`}
+                className={`${i % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800/30'} transition-colors hover:bg-gray-800/50 ${isBest ? 'border-l-2 border-amber-400' : ''}`}
               >
                 <td className="px-2 py-1 text-gray-300">{row.rangeBand}</td>
                 <td className="px-2 py-1 text-right text-red-400">

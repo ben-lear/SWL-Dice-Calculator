@@ -8,7 +8,7 @@ export default function SimulatorPage() {
   const defenderRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 md:grid-cols-2 md:gap-0 md:divide-x md:divide-gray-800 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:gap-0 lg:divide-x-0 lg:items-start">
+    <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 md:grid-cols-2 md:gap-0 md:divide-x md:divide-gray-800 lg:grid-cols-[5fr_auto_6fr_auto_5fr] lg:gap-0 lg:divide-x-0 lg:items-start">
       <div ref={attackerRef} className="order-1 flex min-h-0 flex-col lg:pr-4">
         <div className="flex-1 overflow-y-auto">
           <AttackerPanel />

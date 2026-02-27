@@ -110,7 +110,7 @@ export default function ArmyStatsView({ stats, meta, isSimulated = false, isLoad
             </span>
           )}
           {!isLoading && !isSimulated && (
-            <span className="rounded bg-gray-800/50 px-2 py-0.5 text-xs font-medium text-gray-400" title="Dice output computed using deterministic dice-weighting estimates (no defender profile)">
+            <span className="rounded bg-gray-700 px-2 py-0.5 text-xs font-medium text-gray-300" title="Dice output computed using deterministic dice-weighting estimates (no defender profile)">
               Estimated
             </span>
           )}
@@ -125,7 +125,7 @@ export default function ArmyStatsView({ stats, meta, isSimulated = false, isLoad
       </div>
 
       {/* Tier 1: Key Stat Cards */}
-      <div className="grid grid-cols-3 gap-2 md:grid-cols-6">
+      <div className="grid grid-cols-3 gap-3 md:grid-cols-6">
         <StatCard label="Points" value={String(stats.totalPoints)} accentColor="indigo" tooltip="Total army point cost including all upgrades" />
         <StatCard label="Activations" value={String(stats.activationCount)} accentColor="emerald" tooltip="Number of unit activations in the army" />
         <StatCard label="Miniatures" value={String(stats.totalMiniatures)} accentColor="emerald" tooltip="Total miniature count across all units" />

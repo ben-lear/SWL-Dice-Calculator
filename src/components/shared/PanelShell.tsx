@@ -45,7 +45,7 @@ export default function PanelShell({
 
   const headerContent = (
     <>
-      <h2 className="section-heading text-gray-300">{title}</h2>
+      <h2 className="section-heading">{title}</h2>
       {collapsible && (
         <CollapseChevron isExpanded={isExpanded} />
       )}

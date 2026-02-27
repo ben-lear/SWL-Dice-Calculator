@@ -1,6 +1,3 @@
-import {
-  AttackSurgeChart,
-} from '../../engine/types';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
 import { useWeaponKeywordDisabled } from '../../hooks/useKeywordDisabled';
 import NumberSpinner from '../shared/NumberSpinner';
@@ -8,13 +5,8 @@ import SectionHeader from '../shared/SectionHeader';
 import WeaponKeywordsSection from './WeaponKeywordsSection';
 import AttackerTokensSection from './AttackerTokensSection';
 import AttackerUnitKeywordsSection from './AttackerUnitKeywordsSection';
-import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
-
-const ATTACK_SURGE_OPTIONS: SegmentedControlOption<AttackSurgeChart>[] = [
-  { value: AttackSurgeChart.None, label: 'None' },
-  { value: AttackSurgeChart.ToHit, label: 'Hit' },
-  { value: AttackSurgeChart.ToCrit, label: 'Crit' },
-];
+import SegmentedControl from '../shared/SegmentedControl';
+import { ATTACK_SURGE_OPTIONS } from '../../constants/uiOptions';
 
 export default function AttackerCustomPoolView() {
   const store = useAttackConfigStore();

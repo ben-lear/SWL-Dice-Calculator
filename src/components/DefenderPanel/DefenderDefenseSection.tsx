@@ -1,25 +1,8 @@
-import {
-  DefenseDieColor,
-  DefenseSurgeChart,
-} from '../../engine/types';
 import { useDefenderStore } from '../../hooks/useDefenderStoreContext';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
-import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
-
-// UI-only type for defense die selector (includes 'none' option)
-type DefenseDieOption = 'none' | DefenseDieColor;
-
-const DEFENSE_DIE_OPTIONS: SegmentedControlOption<DefenseDieOption>[] = [
-  { value: 'none', label: 'None' },
-  { value: DefenseDieColor.White, label: 'White' },
-  { value: DefenseDieColor.Red, label: 'Red' },
-];
-
-const DEFENSE_SURGE_OPTIONS: SegmentedControlOption<DefenseSurgeChart>[] = [
-  { value: DefenseSurgeChart.None, label: 'None' },
-  { value: DefenseSurgeChart.ToBlock, label: 'Block' },
-];
+import SegmentedControl from '../shared/SegmentedControl';
+import { DEFENSE_DIE_OPTIONS, DEFENSE_SURGE_OPTIONS, type DefenseDieOption } from '../../constants/uiOptions';
 
 export default function DefenderDefenseSection() {
   const store = useDefenderStore();

@@ -2,15 +2,33 @@
 
 @layer base {
   *:focus-visible {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-1 ring-offset-gray-900;
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900;
   }
 }
 
 @layer components {
-  /* Section heading — used in SectionHeader, PreDefenseStats, SecondaryStats, etc. */
+  /* ============================================================================
+     SECTION HEADINGS
+     ============================================================================ */
+
+  /* Section heading — primary style for section titles */
   .section-heading {
     @apply text-xs font-bold uppercase tracking-wider text-gray-400;
   }
+
+  /* Section heading light — for labels within cards (medium weight) */
+  .section-heading-light {
+    @apply text-xs font-medium uppercase tracking-wider text-gray-400;
+  }
+
+  /* Section heading muted — for less prominent sections */
+  .section-heading-muted {
+    @apply text-xs font-bold uppercase tracking-wider text-gray-500;
+  }
+
+  /* ============================================================================
+     FORM CONTROLS
+     ============================================================================ */
 
   /* Form control label — used in Toggle, Select, SegmentedControl, NumberSpinner, etc. */
   .control-label {
@@ -23,6 +41,117 @@
            focus:border-blue-500 focus:ring-1 focus:ring-blue-500
            disabled:cursor-not-allowed;
   }
+
+  /* ============================================================================
+     BUTTONS
+     ============================================================================ */
+
+  /* Primary action button — blue theme */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded px-4 py-2
+           text-sm font-semibold transition-colors
+           disabled:cursor-not-allowed disabled:opacity-50
+           bg-blue-600 text-white
+           hover:bg-blue-500 active:bg-blue-700
+           disabled:hover:bg-blue-600;
+  }
+
+  /* Secondary button — gray/neutral */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded px-4 py-2
+           text-sm font-semibold transition-colors
+           disabled:cursor-not-allowed disabled:opacity-50
+           bg-gray-700 text-gray-100
+           hover:bg-gray-600 active:bg-gray-800
+           disabled:hover:bg-gray-700;
+  }
+
+  /* Danger button — red for destructive actions */
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded px-4 py-2
+           text-sm font-semibold transition-colors
+           disabled:cursor-not-allowed disabled:opacity-50
+           bg-red-700 text-white
+           hover:bg-red-600 active:bg-red-800
+           disabled:hover:bg-red-700;
+  }
+
+  /* Warning button — amber for caution actions */
+  .btn-warning {
+    @apply inline-flex items-center justify-center rounded px-4 py-2
+           text-sm font-semibold transition-colors
+           disabled:cursor-not-allowed disabled:opacity-50
+           bg-amber-700 text-white
+           hover:bg-amber-600 active:bg-amber-800
+           disabled:hover:bg-amber-700;
+  }
+
+  /* Ghost button — transparent with hover effect */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded px-4 py-2
+           text-sm font-semibold transition-colors
+           disabled:cursor-not-allowed disabled:opacity-50
+           bg-transparent text-gray-300
+           hover:bg-gray-800 hover:text-gray-100
+           disabled:hover:bg-transparent;
+  }
+
+  /* ============================================================================
+     TAGS & BADGES
+     ============================================================================ */
+
+  /* Standard tag — for keyword badges, status indicators */
+  .tag {
+    @apply rounded bg-gray-700 px-1.5 py-0.5 text-xs text-gray-300;
+  }
+
+  /* Small tag — for space-constrained areas */
+  .tag-sm {
+    @apply rounded bg-gray-700 px-1 py-0.5 text-[10px] leading-tight text-gray-300;
+  }
+
+  /* Warning tag variant */
+  .tag-warning {
+    @apply rounded bg-amber-900/40 px-1.5 py-0.5 text-xs text-amber-300;
+  }
+
+  /* Success tag variant */
+  .tag-success {
+    @apply rounded bg-green-900/50 px-1.5 py-0.5 text-xs text-green-300;
+  }
+
+  /* Info tag variant */
+  .tag-info {
+    @apply rounded bg-blue-900/50 px-1.5 py-0.5 text-xs text-blue-300;
+  }
+
+  /* ============================================================================
+     TABLE STYLING
+     ============================================================================ */
+
+  /* Table row — odd rows (darker) */
+  .table-row-odd {
+    @apply bg-gray-900;
+  }
+
+  /* Table row — even rows (lighter) */
+  .table-row-even {
+    @apply bg-gray-800/30;
+  }
+
+  /* Table row hover effect */
+  .table-row-hover {
+    @apply transition-colors hover:bg-gray-800/50;
+  }
+
+  /* Table header row */
+  .table-header {
+    @apply bg-gray-800 text-left text-xs font-medium uppercase tracking-wider text-gray-400;
+  }
+
+  /* ============================================================================
+     KEYWORD GRIDS
+     ============================================================================ */
 
   /* Keyword spinner grid — single column on mobile, 2-column on sm+ */
   .keyword-grid {
@@ -42,5 +171,20 @@
   /* Wide checkbox keyword grid — fills full-width panels with 3–4 columns */
   .checkbox-grid-wide {
     @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-1.5;
+  }
+
+  /* ============================================================================
+     CARDS & SURFACES
+     ============================================================================ */
+
+  /* Stat card — metric display cards */
+  .stat-card {
+    @apply rounded-lg bg-gray-800 p-3 md:p-2 shadow-sm transition-colors hover:bg-gray-800/80;
+  }
+
+  /* Stat row — inline stat displays */
+  .stat-row {
+    @apply flex items-center justify-between rounded-lg bg-gray-800/50 px-3 py-1.5
+           transition-colors hover:bg-gray-800/70;
   }
 }

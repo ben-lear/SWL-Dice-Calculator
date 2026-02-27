@@ -1,42 +1,18 @@
-import {
-  CoverType,
-  DefenseDieColor,
-  DefenseSurgeChart,
-} from '../../engine/types';
 import { useDefenderStore } from '../../hooks/useDefenderStoreContext';
 import { useDefenderKeywordDisabled } from '../../hooks/useKeywordDisabled';
 import NumberSpinner from '../shared/NumberSpinner';
 import SectionHeader from '../shared/SectionHeader';
 import Select from '../shared/Select';
-import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
+import SegmentedControl from '../shared/SegmentedControl';
 import Toggle from '../shared/Toggle';
 import Checkbox from '../shared/Checkbox';
-
-// UI-only type for defense die selector (includes 'none' option)
-type DefenseDieOption = 'none' | DefenseDieColor;
-
-const DEFENSE_DIE_OPTIONS: SegmentedControlOption<DefenseDieOption>[] = [
-  { value: 'none', label: 'None' },
-  { value: DefenseDieColor.White, label: 'White' },
-  { value: DefenseDieColor.Red, label: 'Red' },
-];
-
-// Guardian die color options (no 'none' option for Guardian)
-const GUARDIAN_DIE_OPTIONS = [
-  { value: DefenseDieColor.White, label: 'White' },
-  { value: DefenseDieColor.Red, label: 'Red' },
-];
-
-const DEFENSE_SURGE_OPTIONS: SegmentedControlOption<DefenseSurgeChart>[] = [
-  { value: DefenseSurgeChart.None, label: 'None' },
-  { value: DefenseSurgeChart.ToBlock, label: 'Block' },
-];
-
-const COVER_OPTIONS: SegmentedControlOption<CoverType>[] = [
-  { value: CoverType.None, label: 'None' },
-  { value: CoverType.Light, label: 'Light' },
-  { value: CoverType.Heavy, label: 'Heavy' },
-];
+import {
+  DEFENSE_DIE_OPTIONS,
+  DEFENSE_SURGE_OPTIONS,
+  COVER_OPTIONS,
+  GUARDIAN_DIE_OPTIONS,
+  type DefenseDieOption,
+} from '../../constants/uiOptions';
 
 interface DefenderCustomPoolViewProps {
   /** When true, the Defense section is rendered elsewhere and hidden here. */

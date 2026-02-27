@@ -27,7 +27,8 @@ describe('App', () => {
   it('renders the app shell', () => {
     renderWithRouter();
 
-    expect(screen.getByText(/Just Roll Crits/i)).toBeInTheDocument();
+    // "Just Roll Crits" appears in both header and footer — check that at least one exists
+    expect(screen.getAllByText(/Just Roll Crits/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByLabelText('Attack Type')).toBeInTheDocument();
     expect(screen.getByText('Attacker')).toBeInTheDocument();
     expect(screen.getByText('Defender')).toBeInTheDocument();

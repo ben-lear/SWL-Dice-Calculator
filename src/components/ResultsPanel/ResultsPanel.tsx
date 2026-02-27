@@ -113,12 +113,12 @@ export default function ResultsPanel() {
         <button
           onClick={runSimulation}
           disabled={loading || isFull}
-          className="w-full sm:w-auto sm:flex-1 flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-400"
+          className="w-full sm:w-auto sm:flex-1 flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-blue-600"
         >
           {loading ? (
             <>
               <svg
-                className="h-5 w-5 animate-spin text-gray-400"
+                className="h-5 w-5 animate-spin text-indigo-400"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

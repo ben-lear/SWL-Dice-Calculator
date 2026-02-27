@@ -114,7 +114,7 @@ export default function UnitDetailView({
 
       {/* Stat Cards */}
       {resolved && (
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-3">
           <StatCard label="Points" value={String(totalCost)} tooltip="Total unit cost including equipped upgrades" />
           <StatCard label="Health" value={String(resolved.health)} tooltip="Wound threshold per miniature" />
           <StatCard label="Figures" value={String(resolved.figures)} tooltip="Number of miniatures in this unit" />
@@ -153,7 +153,7 @@ export default function UnitDetailView({
       {/* Keywords */}
       {keywordEntries.length > 0 && (
         <div>
-          <h3 className="mb-1 text-xs uppercase tracking-wide text-gray-500">
+          <h3 className="mb-1 text-xs font-bold uppercase tracking-wider text-gray-500">
             Keywords
           </h3>
           <p className="text-sm text-gray-300">
@@ -165,7 +165,7 @@ export default function UnitDetailView({
       {/* Weapons */}
       {resolved && resolved.weapons.length > 0 && (
         <div>
-          <h3 className="mb-2 text-xs uppercase tracking-wide text-gray-500">
+          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500">
             Weapons
           </h3>
           <div className="space-y-2">
@@ -235,7 +235,7 @@ export default function UnitDetailView({
         return displayDice.some((r) => r.totalDice > 0) ? (
           <div>
             <div className="mb-2 flex items-center gap-2">
-              <h3 className="text-xs uppercase tracking-wide text-gray-500">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">
                 Dice Output by Range
               </h3>
               {isLoading && (
@@ -264,7 +264,7 @@ export default function UnitDetailView({
 
       {/* Equipped Upgrades */}
       <div>
-        <h3 className="mb-2 text-xs uppercase tracking-wide text-gray-500">
+        <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500">
           Equipped Upgrades
         </h3>
         {unit.rawUpgradeNames.length === 0 ? (

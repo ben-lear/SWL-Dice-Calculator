@@ -12,6 +12,7 @@ import type { DistributionEntry } from '../../engine/types';
 import { formatPercent } from '../../utils/format';
 import DeferredMount from '../shared/DeferredMount';
 import { getSeriesColor } from '../../utils/seriesColors';
+import { CHART_GRID, CHART_AXIS, CHART_CURSOR, CHART_BAR } from '../../utils/chartTheme';
 
 // ============================================================================
 // Types
@@ -135,40 +136,40 @@ export default function WoundDistributionChart({
           margin={{ top: 10, right: 10, left: 0, bottom: 4 }}
         >
           <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="#374151"
+            strokeDasharray={CHART_GRID.strokeDasharray}
+            stroke={CHART_GRID.stroke}
             vertical={false}
           />
           <XAxis
             dataKey="wounds"
-            tick={{ fill: '#9ca3af', fontSize: 11 }}
-            axisLine={{ stroke: '#4b5563' }}
-            tickLine={{ stroke: '#4b5563' }}
+            tick={{ fill: CHART_AXIS.tickFill, fontSize: CHART_AXIS.tickFontSize }}
+            axisLine={{ stroke: CHART_AXIS.stroke }}
+            tickLine={{ stroke: CHART_AXIS.stroke }}
             label={{
               value: 'Wounds',
               position: 'insideBottom',
               offset: -2,
-              fill: '#9ca3af',
-              fontSize: 12,
+              fill: CHART_AXIS.labelFill,
+              fontSize: CHART_AXIS.labelFontSize,
             }}
           />
           <YAxis
-            tick={{ fill: '#9ca3af', fontSize: 11 }}
-            axisLine={{ stroke: '#4b5563' }}
-            tickLine={{ stroke: '#4b5563' }}
+            tick={{ fill: CHART_AXIS.tickFill, fontSize: CHART_AXIS.tickFontSize }}
+            axisLine={{ stroke: CHART_AXIS.stroke }}
+            tickLine={{ stroke: CHART_AXIS.stroke }}
             tickFormatter={(v: number) => `${v}%`}
             label={{
               value: 'Probability',
               angle: -90,
               position: 'insideLeft',
               offset: 20,
-              fill: '#9ca3af',
-              fontSize: 12,
+              fill: CHART_AXIS.labelFill,
+              fontSize: CHART_AXIS.labelFontSize,
             }}
           />
           <Tooltip
             content={<MultiSeriesTooltip series={series} />}
-            cursor={{ fill: 'rgba(99, 102, 241, 0.1)' }}
+            cursor={{ fill: CHART_CURSOR.fill }}
           />
 
           {/* Render one Bar per series */}
@@ -178,7 +179,7 @@ export default function WoundDistributionChart({
               <Bar
                 key={s.label}
                 dataKey={s.label}
-                radius={[2, 2, 0, 0]}
+                radius={CHART_BAR.radius}
                 fill={colors.base}
               >
                 {data.map((entry, index) => {

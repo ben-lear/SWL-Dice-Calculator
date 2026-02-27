@@ -8,11 +8,11 @@ export default function Footer() {
   const [isBugReportOpen, setIsBugReportOpen] = useState(false);
 
   return (
-    <footer className="border-t border-gray-700 bg-gray-900">
+    <footer className="border-t border-gray-800 bg-gray-900">
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 px-4 py-4 sm:grid-cols-3 sm:gap-6">
         {/* Contact */}
         <div className="flex flex-col gap-1">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-400">Contact</h3>
+          <h3 className="section-heading">Contact</h3>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="text-sm text-blue-400 underline transition-colors hover:text-blue-300"
@@ -23,7 +23,7 @@ export default function Footer() {
 
         {/* Bug Report */}
         <div className="flex flex-col gap-1">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-400">Found a Bug?</h3>
+          <h3 className="section-heading">Found a Bug?</h3>
           <p className="text-xs text-gray-400">
             Help us improve by reporting issues you encounter.
           </p>
@@ -37,7 +37,7 @@ export default function Footer() {
 
         {/* About */}
         <div className="flex flex-col gap-1">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+          <h3 className="section-heading">
             Just Roll Crits
           </h3>
           <p className="text-xs text-gray-400">

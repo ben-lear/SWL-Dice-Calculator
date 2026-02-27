@@ -1,25 +1,14 @@
 import { useMemo } from 'react';
-import { AttackSurgeChart, RerollStrategy } from '../../engine/types';
 import { getAttackerPresetById, getAttackerPresets, getFactionOptions } from '../../data/presetHelpers';
 import type { AttackerPreset, Faction } from '../../data/presets';
 import { useAttackConfigStore } from '../../stores/attackConfigStore';
-import SegmentedControl, { type SegmentedControlOption } from '../shared/SegmentedControl';
+import SegmentedControl from '../shared/SegmentedControl';
 import UnitPresetSection from '../shared/UnitPresetSection';
 import PanelShell, { MODE_OPTIONS } from '../shared/PanelShell';
 import NumberSpinner from '../shared/NumberSpinner';
 import AttackerCustomPoolView from './AttackerCustomPoolView';
 import AttackerUnitBuilderView from './AttackerUnitBuilderView';
-
-const REROLL_STRATEGY_OPTIONS: SegmentedControlOption<RerollStrategy>[] = [
-  { value: RerollStrategy.Conservative, label: 'Conservative' },
-  { value: RerollStrategy.CritFishing, label: 'Crit Fishing' },
-];
-
-const ATTACK_SURGE_OPTIONS: SegmentedControlOption<AttackSurgeChart>[] = [
-  { value: AttackSurgeChart.None, label: 'None' },
-  { value: AttackSurgeChart.ToHit, label: 'Hit' },
-  { value: AttackSurgeChart.ToCrit, label: 'Crit' },
-];
+import { ATTACK_SURGE_OPTIONS, REROLL_STRATEGY_OPTIONS } from '../../constants/uiOptions';
 
 export default function AttackerPanel() {
   const store = useAttackConfigStore();
