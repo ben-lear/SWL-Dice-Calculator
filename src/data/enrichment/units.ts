@@ -1301,6 +1301,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 1,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     keywords: {
       preciseX: 1,
@@ -1324,6 +1325,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 3,
     keywords: {
       preciseX: 1,
