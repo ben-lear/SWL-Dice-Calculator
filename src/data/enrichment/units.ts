@@ -1229,6 +1229,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     weapons: [
       {
@@ -1252,6 +1253,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 1,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     weapons: [
       {
@@ -1272,6 +1274,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     keywords: {
       holdTheLine: true,
@@ -1820,6 +1823,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       sharpshooterX: 1,
       scoutX: 1,
@@ -1845,6 +1849,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       sharpshooterX: 1,
     },
@@ -2086,6 +2091,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     weapons: [
       {
@@ -2106,6 +2112,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     keywords: {
       marksman: true,
