@@ -923,6 +923,113 @@ describe('computeUnitDiceByRange', () => {
     expect(r1.whiteDice).toBe(0);
     expect(r1.totalDice).toBe(6);
   });
+
+  // -------------------------------------------------------------------
+  // Longshot keyword: extends weapon max range by 1
+  // -------------------------------------------------------------------
+
+  it('longshot weapon extends max range by 1', () => {
+    const unit = makeMinimalUnit({
+      figures: 1,
+      weapons: [makeWeapon({
+        name: 'Sniper Rifle',
+        blackDice: 2,
+        minRange: 1,
+        maxRange: 4,
+        keywords: { longshot: true },
+      })],
+    });
+
+    const results = computeUnitDiceByRange(unit, []);
+
+    // Should be eligible at R4 (normal) AND R5 (via longshot)
+    const r4 = getDiceAtRange(results, 'R4');
+    expect(r4.blackDice).toBe(2);
+    expect(r4.totalDice).toBe(2);
+
+    const r5 = getDiceAtRange(results, 'R5');
+    expect(r5.blackDice).toBe(2);
+    expect(r5.totalDice).toBe(2);
+  });
+
+  it('non-longshot weapon does NOT extend past max range', () => {
+    const unit = makeMinimalUnit({
+      figures: 1,
+      weapons: [makeWeapon({
+        name: 'Blaster',
+        blackDice: 2,
+        minRange: 1,
+        maxRange: 3,
+        keywords: {},
+      })],
+    });
+
+    const r3 = getDiceAtRange(computeUnitDiceByRange(unit, []), 'R3');
+    expect(r3.blackDice).toBe(2);
+
+    const r4 = getDiceAtRange(computeUnitDiceByRange(unit, []), 'R4');
+    expect(r4.totalDice).toBe(0);
+  });
+
+  it('longshot weapon on multi-mini unit extends range for all base minis', () => {
+    const unit = makeMinimalUnit({
+      figures: 3,
+      weapons: [makeWeapon({
+        name: 'Longshot Rifle',
+        whiteDice: 1,
+        minRange: 1,
+        maxRange: 3,
+        keywords: { longshot: true },
+      })],
+    });
+
+    const results = computeUnitDiceByRange(unit, []);
+
+    // R3 = normal range: all 3 minis fire
+    const r3 = getDiceAtRange(results, 'R3');
+    expect(r3.whiteDice).toBe(3);
+    expect(r3.totalDice).toBe(3);
+
+    // R4 = longshot-extended range: all 3 minis still fire
+    const r4 = getDiceAtRange(results, 'R4');
+    expect(r4.whiteDice).toBe(3);
+    expect(r4.totalDice).toBe(3);
+
+    // R5 = beyond longshot: no dice
+    const r5 = getDiceAtRange(results, 'R5');
+    expect(r5.totalDice).toBe(0);
+  });
+
+  it('longshot upgrade weapon contributes at extended range', () => {
+    const unit = makeMinimalUnit({
+      figures: 1,
+      weapons: [makeWeapon({ name: 'Blaster', blackDice: 1, maxRange: 3 })],
+    });
+
+    const ordnance = makeMinimalUpgrade({
+      upgradeSlot: UpgradeSlot.Ordnance,
+      addsMiniature: 0,
+      weapons: [makeWeapon({
+        name: 'Long Range Cannon',
+        redDice: 2,
+        minRange: 1,
+        maxRange: 4,
+        keywords: { longshot: true },
+      })],
+    });
+
+    const results = computeUnitDiceByRange(unit, [ordnance]);
+
+    // R4: base weapon out of range, ordnance in normal range
+    const r4 = getDiceAtRange(results, 'R4');
+    expect(r4.redDice).toBe(2);
+    expect(r4.blackDice).toBe(0);
+
+    // R5: base weapon out of range, ordnance reaches via longshot
+    const r5 = getDiceAtRange(results, 'R5');
+    expect(r5.redDice).toBe(2);
+    expect(r5.blackDice).toBe(0);
+  });
 });
 
 // ============================================================================

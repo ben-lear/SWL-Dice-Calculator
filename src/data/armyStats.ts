@@ -117,10 +117,12 @@ export function computeAttackDieSuccessRate(
 /** Range bands used for aggregation */
 const RANGE_BANDS = ['Overrun', 'Melee', 'R1', 'R2', 'R3', 'R4', 'R5'] as const;
 
-/** Check if a weapon is eligible for a given range band */
+/** Check if a weapon is eligible for a given range band.
+ *  When considerLongshot is true (default), Longshot weapons get +1 max range. */
 function weaponCoversRange(
   weapon: WeaponProfile,
   rangeBand: string,
+  considerLongshot = true,
 ): boolean {
   if (rangeBand === 'Overrun') {
     return weapon.weaponType === AttackType.Overrun;
@@ -144,7 +146,27 @@ function weaponCoversRange(
 
   const minRange = weapon.minRange ?? 1;
   const maxRange = weapon.maxRange ?? 0;
-  return band >= minRange && band <= maxRange;
+  // Longshot lets the unit spend 1 aim token to extend max range by 1
+  const effectiveMaxRange = (considerLongshot && weapon.keywords.longshot)
+    ? maxRange + 1
+    : maxRange;
+  return band >= minRange && band <= effectiveMaxRange;
+}
+
+/**
+ * Check whether a weapon only reaches the given range band via Longshot
+ * (i.e., the band is exactly maxRange + 1 and the weapon has Longshot).
+ * When true, using this weapon at this band costs 1 aim token.
+ */
+function weaponNeedsLongshot(
+  weapon: WeaponProfile,
+  rangeBand: string,
+): boolean {
+  if (rangeBand === 'Overrun' || rangeBand === 'Melee') return false;
+  if (!weapon.keywords.longshot) return false;
+  const band = parseInt(rangeBand.slice(1), 10);
+  const maxRange = weapon.maxRange ?? 0;
+  return band === maxRange + 1;
 }
 
 /**
@@ -655,10 +677,17 @@ export function computeUnitDiceByRange(
     // Determine the attack type for this range band
     const bandAttackType = rangeBand === 'Melee' ? AttackType.Melee : AttackType.Ranged;
 
+    // If any contributed weapon needed Longshot to reach this band,
+    // that costs 1 aim token that can't be used for rerolls.
+    const longshotUsedAtBand = contributedWeapons.some(w => weaponNeedsLongshot(w, rangeBand));
+    const bandEstimationAttacker = longshotUsedAtBand
+      ? { ...estimationAttacker, aimTokens: Math.max(0, estimationAttacker.aimTokens - 1) }
+      : estimationAttacker;
+
     // Adjusted: factor in offensive keywords via engine estimation
     const bandPoolKw = aggregateDataWeaponKeywords(contributedWeapons);
     const bandEstimation = totalDice > 0
-      ? estimateExpectedAttackSuccesses(redDice, blackDice, whiteDice, estimationAttacker, bandPoolKw, bandAttackType)
+      ? estimateExpectedAttackSuccesses(redDice, blackDice, whiteDice, bandEstimationAttacker, bandPoolKw, bandAttackType)
       : { expectedSuccesses: 0 };
 
     return {
@@ -1462,6 +1491,8 @@ export function buildUnitRangeBandConfigs(
   for (const rangeBand of RANGE_BANDS) {
     const acc = { redDice: 0, blackDice: 0, whiteDice: 0 };
     const engineWeapons: import('../engine/types').WeaponProfile[] = [];
+    // Track data-layer weapons to detect longshot usage at extended range
+    const contributedDataWeapons: WeaponProfile[] = [];
 
     if (rangeBand === 'Overrun') {
       // Overrun: single best weapon, scaled by overrunX
@@ -1480,6 +1511,7 @@ export function buildUnitRangeBandConfigs(
         for (let i = 0; i < overrunX; i++) {
           engineWeapons.push(toEngineWeapon(best));
         }
+        contributedDataWeapons.push(best);
       }
     } else {
       // --- Base minis ---
@@ -1488,6 +1520,7 @@ export function buildUnitRangeBandConfigs(
         for (const w of chosen) {
           addWeaponDice(w, 1, acc);
           engineWeapons.push(toEngineWeapon(w));
+          contributedDataWeapons.push(w);
         }
       } else if (baseMiniCount > 1) {
         const chosen = selectBestWeapons(baseMiniWeaponPool, rangeBand, attackSurge, 1);
@@ -1496,6 +1529,7 @@ export function buildUnitRangeBandConfigs(
           for (let i = 0; i < baseMiniCount; i++) {
             engineWeapons.push(toEngineWeapon(chosen[0]));
           }
+          contributedDataWeapons.push(chosen[0]);
         }
       }
 
@@ -1507,6 +1541,7 @@ export function buildUnitRangeBandConfigs(
           for (let i = 0; i < group.count; i++) {
             engineWeapons.push(toEngineWeapon(upgradeEligible[0]));
           }
+          contributedDataWeapons.push(upgradeEligible[0]);
         } else if (rangeBand === 'Melee') {
           const fallback = selectBestWeapons(unit.weapons, rangeBand, attackSurge, 1);
           if (fallback.length > 0) {
@@ -1514,6 +1549,7 @@ export function buildUnitRangeBandConfigs(
             for (let i = 0; i < group.count; i++) {
               engineWeapons.push(toEngineWeapon(fallback[0]));
             }
+            contributedDataWeapons.push(fallback[0]);
           }
         }
       }
@@ -1523,6 +1559,7 @@ export function buildUnitRangeBandConfigs(
         if (weaponCoversRange(w, rangeBand)) {
           addWeaponDice(w, 1, acc);
           engineWeapons.push(toEngineWeapon(w));
+          contributedDataWeapons.push(w);
         }
       }
 
@@ -1531,6 +1568,7 @@ export function buildUnitRangeBandConfigs(
         if (weaponCoversRange(w, rangeBand)) {
           addWeaponDice(w, 1, acc);
           engineWeapons.push(toEngineWeapon(w));
+          contributedDataWeapons.push(w);
         }
       }
 
@@ -1562,6 +1600,7 @@ export function buildUnitRangeBandConfigs(
           )[0];
           addWeaponDice(best, 1, acc);
           engineWeapons.push(toEngineWeapon(best));
+          contributedDataWeapons.push(best);
         }
       }
     }
@@ -1587,10 +1626,17 @@ export function buildUnitRangeBandConfigs(
       dodgeTokensAttacker: 0,
     };
 
+    // If any weapon at this band is only reachable via Longshot, that costs
+    // 1 aim token (which can't be used for rerolls).
+    const longshotUsedAtBand = contributedDataWeapons.some(w => weaponNeedsLongshot(w, rangeBand));
+    const adjustedAimTokens = longshotUsedAtBand
+      ? Math.max(0, bonusTokens.bonusAimTokens - 1)
+      : bonusTokens.bonusAimTokens;
+
     const adjustedAttacker: AttackerConfig = {
       ...baseAttackerFields,
       weapons: engineWeapons,
-      aimTokens: bonusTokens.bonusAimTokens,
+      aimTokens: adjustedAimTokens,
       surgeTokens: bonusTokens.bonusSurgeTokens,
       observationTokens: bonusTokens.bonusObservationTokens,
       dodgeTokensAttacker: bonusTokens.bonusDodgeTokens,
