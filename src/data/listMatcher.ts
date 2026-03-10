@@ -87,16 +87,52 @@ export function matchUnitByName(
       return { match: nameOnlyMatch, confidence: 'exact', warnings: [] };
     }
 
-    // 4. Substring containment
-    const substringMatch = candidates.find((u) => {
-      const unitNorm = normalize(unitDisplayName(u));
-      return (
-        unitNorm.includes(normalizedInput) ||
-        normalizedInput.includes(unitNorm)
-      );
-    });
-    if (substringMatch) {
-      return { match: substringMatch, confidence: 'fuzzy', warnings: [] };
+    // 4. Token containment — all tokens of one name appear in the other
+    //    (handles cases like "Clone Commandos Delta Squad" matching
+    //     "Clone Commandos (DS) Delta Squad" where substring fails due to "(DS)")
+    const inputTokens = normalizedInput.split(' ');
+    const tokenMatches = candidates
+      .map((u) => {
+        const unitNorm = normalize(unitDisplayName(u));
+        const unitTokens = unitNorm.split(' ');
+        const inputInUnit = inputTokens.every((t) => unitTokens.includes(t));
+        const unitInInput = unitTokens.every((t) => inputTokens.includes(t));
+        if (!inputInUnit && !unitInInput) return null;
+        // Score: count of shared tokens (higher = more specific match)
+        const shared = inputTokens.filter((t) => unitTokens.includes(t)).length;
+        return { unit: u, shared };
+      })
+      .filter(Boolean) as { unit: ResolvedUnit; shared: number }[];
+
+    if (tokenMatches.length > 0) {
+      // Pick the candidate with the most shared tokens
+      tokenMatches.sort((a, b) => b.shared - a.shared);
+      return {
+        match: tokenMatches[0].unit,
+        confidence: 'fuzzy',
+        warnings: [],
+      };
+    }
+
+    // 5. Substring containment — prefer the longest (most specific) match
+    const substringMatches = candidates
+      .map((u) => {
+        const unitNorm = normalize(unitDisplayName(u));
+        const matches =
+          unitNorm.includes(normalizedInput) ||
+          normalizedInput.includes(unitNorm);
+        return matches ? { unit: u, len: unitNorm.length } : null;
+      })
+      .filter(Boolean) as { unit: ResolvedUnit; len: number }[];
+
+    if (substringMatches.length > 0) {
+      // Prefer longest normalized name (most specific unit)
+      substringMatches.sort((a, b) => b.len - a.len);
+      return {
+        match: substringMatches[0].unit,
+        confidence: 'fuzzy',
+        warnings: [],
+      };
     }
   }
 

@@ -15,7 +15,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'autoUpdate',
+      // Disable service worker to prevent stale caching — always fetch fresh content
+      selfDestroying: true,
       includeAssets: ['justrollcrits_noburst_compressed.png', 'justrollcrits_compressed.png'],
       manifest: {
         name: 'Just Roll Crits',
@@ -45,9 +46,6 @@ export default defineConfig({
             purpose: 'maskable',
           },
         ],
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
       },
     }),
     // Step 5 — Pre-compressed assets (gzip + Brotli) for static hosting

@@ -55,6 +55,20 @@ describe('matchUnitByName', () => {
     expect(result.match).not.toBeNull();
     expect(result.match?.name).toBe('Darth Vader');
   });
+
+  it('matches "Clone Commandos Delta Squad" to Clone Commandos (DS), not regular Clone Commandos', () => {
+    const result = matchUnitByName('Clone Commandos Delta Squad', Faction.Republic);
+    expect(result.match).not.toBeNull();
+    expect(result.match?.name).toBe('Clone Commandos (DS)');
+    expect(result.match?.title).toBe('Delta Squad');
+  });
+
+  it('still matches regular Clone Commandos by exact name', () => {
+    const result = matchUnitByName('Clone Commandos', Faction.Republic);
+    expect(result.match).not.toBeNull();
+    expect(result.match?.name).toBe('Clone Commandos');
+    expect(result.match?.title).toBeNull();
+  });
 });
 
 // ============================================================================

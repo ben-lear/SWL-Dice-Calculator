@@ -223,7 +223,11 @@ export function useDisplayWeapons(): DisplayWeaponsResult {
 
     for (let i = 0; i < compatibleBaseWeapons.length; i++) {
       const w = compatibleBaseWeapons[i];
-      const defaultCount = i === 0 ? firstBaseWeaponDefault : 0;
+      // Arsenal X: for single-mini units with Arsenal X, default up to arsenalX
+      // base weapons to count 1 (e.g., BARC Speeder with Arsenal 2 enables both weapons)
+      const defaultCount = i === 0
+        ? firstBaseWeaponDefault
+        : (isSingleMini && arsenalX > 0 && i < arsenalX) ? 1 : 0;
       const maxCount = i === 0 ? firstBaseWeaponMaxCount : baseMiniatureCount;
 
       // Sidearm enforcement for base weapons (unusual but possible)

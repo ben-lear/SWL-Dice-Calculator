@@ -354,6 +354,58 @@ describe('useDisplayWeapons', () => {
     expect(sidearmRow).toBeUndefined();
   });
 
+  // ── Arsenal X pre-selection ──────────────────────────────────────────────
+
+  it('arsenalX=2: pre-selects first 2 base weapons (BARC Speeder pattern)', () => {
+    setAttackType(AttackType.Ranged);
+    setStoreState({
+      unitBaseWeapons: [
+        makeDataWeapon('DC-15A Blaster Rifle', AttackType.Ranged),
+        makeDataWeapon('Twin Blaster Cannon', AttackType.Ranged),
+      ],
+      baseMiniatureCount: 1,
+      arsenalX: 2,
+    });
+    const { result } = renderHook(() => useDisplayWeapons());
+    expect(result.current.weapons).toHaveLength(2);
+    expect(result.current.weapons[0].count).toBe(1);
+    expect(result.current.weapons[1].count).toBe(1);
+  });
+
+  it('arsenalX=1: only pre-selects first base weapon', () => {
+    setAttackType(AttackType.Ranged);
+    setStoreState({
+      unitBaseWeapons: [
+        makeDataWeapon('Blaster A', AttackType.Ranged),
+        makeDataWeapon('Blaster B', AttackType.Ranged),
+      ],
+      baseMiniatureCount: 1,
+      arsenalX: 1,
+    });
+    const { result } = renderHook(() => useDisplayWeapons());
+    expect(result.current.weapons).toHaveLength(2);
+    expect(result.current.weapons[0].count).toBe(1);
+    expect(result.current.weapons[1].count).toBe(0);
+  });
+
+  it('arsenalX=3: pre-selects up to 3 base weapons', () => {
+    setAttackType(AttackType.Ranged);
+    setStoreState({
+      unitBaseWeapons: [
+        makeDataWeapon('Weapon A', AttackType.Ranged),
+        makeDataWeapon('Weapon B', AttackType.Ranged),
+        makeDataWeapon('Weapon C', AttackType.Ranged),
+      ],
+      baseMiniatureCount: 1,
+      arsenalX: 3,
+    });
+    const { result } = renderHook(() => useDisplayWeapons());
+    expect(result.current.weapons).toHaveLength(3);
+    expect(result.current.weapons[0].count).toBe(1);
+    expect(result.current.weapons[1].count).toBe(1);
+    expect(result.current.weapons[2].count).toBe(1);
+  });
+
   // ── Arsenal X cap ───────────────────────────────────────────────────────
 
   // Note: Arsenal X and multi-mini (addsMiniature > 0) are mutually exclusive in the
