@@ -436,4 +436,124 @@ describe('upgradeApplicator', () => {
       expect(result.weapons).toHaveLength(1);
     });
   });
+
+  describe('Arsenal X — single-mini multi-weapon pool', () => {
+    // Boba Fett-style: single mini, 2 ranged weapons, Arsenal 2
+    const bobaBaseWeapons: DataLayerWeaponProfile[] = [
+      {
+        name: 'Boot Spikes',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+        blackDice: 0,
+        whiteDice: 0,
+        keywords: {},
+      },
+      {
+        name: 'Integrated Rockets',
+        weaponType: AttackType.Ranged,
+        redDice: 0,
+        blackDice: 3,
+        whiteDice: 0,
+        keywords: { impactX: 1 },
+      },
+      {
+        name: 'EE-3 Carbine Rifle',
+        weaponType: AttackType.Ranged,
+        redDice: 0,
+        blackDice: 2,
+        whiteDice: 0,
+        keywords: { pierceX: 1 },
+      },
+    ];
+
+    it('Arsenal 2 single-mini includes both ranged weapons by default', () => {
+      const config = {
+        unitCost: 140,
+        weapons: [] as WeaponProfile[],
+        arsenalX: 2,
+      };
+      const result = applyAttackerUpgrades(
+        config,
+        [],
+        AttackType.Ranged,
+        bobaBaseWeapons,
+        1,
+      );
+      // Arsenal 2 + baseMiniCount 1 → should include both ranged weapons
+      expect(result.weapons).toHaveLength(2);
+      expect(result.weapons[0].name).toBe('Integrated Rockets');
+      expect(result.weapons[1].name).toBe('EE-3 Carbine Rifle');
+    });
+
+    it('Arsenal 1 single-mini includes only first ranged weapon', () => {
+      const config = {
+        unitCost: 100,
+        weapons: [] as WeaponProfile[],
+        arsenalX: 1,
+      };
+      const result = applyAttackerUpgrades(
+        config,
+        [],
+        AttackType.Ranged,
+        bobaBaseWeapons,
+        1,
+      );
+      // Arsenal 1 → only 1 weapon
+      expect(result.weapons).toHaveLength(1);
+      expect(result.weapons[0].name).toBe('Integrated Rockets');
+    });
+
+    it('Arsenal 0 (no arsenal) single-mini defaults to 1 weapon', () => {
+      const config = {
+        unitCost: 100,
+        weapons: [] as WeaponProfile[],
+        arsenalX: 0,
+      };
+      const result = applyAttackerUpgrades(
+        config,
+        [],
+        AttackType.Ranged,
+        bobaBaseWeapons,
+        1,
+      );
+      expect(result.weapons).toHaveLength(1);
+      expect(result.weapons[0].name).toBe('Integrated Rockets');
+    });
+
+    it('Arsenal X does not affect multi-mini units', () => {
+      const config = {
+        unitCost: 100,
+        weapons: [] as WeaponProfile[],
+        arsenalX: 2,
+      };
+      const result = applyAttackerUpgrades(
+        config,
+        [],
+        AttackType.Ranged,
+        bobaBaseWeapons,
+        4,
+      );
+      // Multi-mini: each mini uses first compatible weapon, arsenalX ignored
+      expect(result.weapons).toHaveLength(4);
+      expect(result.weapons.every(w => w.name === 'Integrated Rockets')).toBe(true);
+    });
+
+    it('Arsenal X melee attack uses only melee weapons', () => {
+      const config = {
+        unitCost: 140,
+        weapons: [] as WeaponProfile[],
+        arsenalX: 2,
+      };
+      const result = applyAttackerUpgrades(
+        config,
+        [],
+        AttackType.Melee,
+        bobaBaseWeapons,
+        1,
+      );
+      // Only 1 melee weapon available (Boot Spikes), Arsenal 2 can't exceed that
+      expect(result.weapons).toHaveLength(1);
+      expect(result.weapons[0].name).toBe('Boot Spikes');
+    });
+  });
 });

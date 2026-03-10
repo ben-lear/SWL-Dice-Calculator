@@ -200,13 +200,25 @@ function applyUpgrades<T extends ConfigWithCost>(
     // Unit Builder mode: expand base minis with attack-type-appropriate weapons
     const baseWeaponForAttackType = unitBaseWeapons
       .filter(w => isWeaponUsableForAttackType(w.weaponType, attackType));
-    const defaultBaseWeapon = baseWeaponForAttackType[0];
-    if (defaultBaseWeapon) {
-      weapons = Array.from({ length: baseMiniCount }, () =>
-        normalizeToEngineWeapon(defaultBaseWeapon)
-      );
+
+    if (baseMiniCount === 1) {
+      // Single-mini unit: Arsenal X allows firing multiple weapons.
+      // Include up to arsenalX compatible base weapons by default so
+      // the engine pool matches what the display hook shows.
+      const arsenalX = typeof config['arsenalX'] === 'number' ? config['arsenalX'] as number : 0;
+      const weaponLimit = Math.max(1, arsenalX);
+      const weaponsToInclude = baseWeaponForAttackType.slice(0, weaponLimit);
+      weapons = weaponsToInclude.map(w => normalizeToEngineWeapon(w));
     } else {
-      weapons = []; // No base weapon for this attack type
+      // Multi-mini unit: each mini uses the first compatible base weapon
+      const defaultBaseWeapon = baseWeaponForAttackType[0];
+      if (defaultBaseWeapon) {
+        weapons = Array.from({ length: baseMiniCount }, () =>
+          normalizeToEngineWeapon(defaultBaseWeapon)
+        );
+      } else {
+        weapons = [];
+      }
     }
   } else {
     // Custom Pool mode or no unit context: use config.weapons as-is

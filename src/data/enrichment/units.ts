@@ -1182,7 +1182,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Integrated Rockets',
         weaponType: AttackType.Ranged,
-        blackDice: 2,
+        blackDice: 3,
         maxRange: 2,
         keywords: {
           impactX: 1,
@@ -3881,7 +3881,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       {
         name: 'Integrated Rockets',
         weaponType: AttackType.Ranged,
-        blackDice: 2,
+        blackDice: 3,
         maxRange: 2,
         keywords: {
           impactX: 1,
