@@ -179,7 +179,7 @@ const DISPLAY_UNIT_KEYWORD_MAP: Record<string, string> = {
   'Attack Run': 'attackRun',
   Authoritative: 'authoritative',
   Bounty: 'bounty',
-  Cache: 'cache',
+  // Cache is skipped — API keyword maps to cacheSurgeX/cacheDodgeX/cacheAimX which require human curation
   '\u27a6Calculate Odds': 'calculateOdds',
   Compel: 'compel',
   Detachment: 'detachment',
@@ -350,9 +350,78 @@ interface MissingKeywords {
   fields: Record<string, string>; // fieldName → default value string
 }
 
+// ============================================================================
+// Depth-Aware Keyword Block Finder
+// ============================================================================
+
+/**
+ * Find the top-level (unit/upgrade-level) `keywords: { ... }` block within an
+ * entry. Uses brace-depth tracking so it skips weapon-level keyword blocks that
+ * are nested inside `weapons: [{ keywords: { ... } }]`.
+ *
+ * The top-level keywords block sits at brace depth 1 inside the entry:
+ *
+ *   'entry-id': {                    // depth 0 → 1
+ *     keywords: { ... },             // ← depth 1 (this is what we want)
+ *     weapons: [
+ *       { keywords: { ... } }        // ← depth 2+ (skip these)
+ *     ]
+ *   }
+ *
+ * Returns absolute positions into `source`, or null if no top-level keywords
+ * block was found.
+ */
+function findTopLevelKeywordsBlock(
+  source: string,
+  entryOpenBraceEnd: number, // position right AFTER the opening { of the entry
+): { contentStart: number; contentEnd: number } | null {
+  let depth = 1; // we are inside the entry's opening {
+  let i = entryOpenBraceEnd;
+
+  while (i < source.length && depth > 0) {
+    const ch = source[i];
+
+    if (ch === '{') {
+      depth++;
+      i++;
+      continue;
+    }
+    if (ch === '}') {
+      depth--;
+      if (depth === 0) break; // end of entry
+      i++;
+      continue;
+    }
+
+    // At depth 1 (top-level of the entry), look for `keywords` property
+    if (depth === 1) {
+      const kwMatch = /^keywords\s*:\s*\{/.exec(source.slice(i));
+      if (kwMatch) {
+        const contentStart = i + kwMatch[0].length; // right after the opening {
+
+        // Find the matching closing }
+        let blockDepth = 1;
+        let j = contentStart;
+        while (j < source.length && blockDepth > 0) {
+          if (source[j] === '{') blockDepth++;
+          else if (source[j] === '}') blockDepth--;
+          j++;
+        }
+        return { contentStart, contentEnd: j - 1 };
+      }
+    }
+
+    i++;
+  }
+
+  return null;
+}
+
 /**
  * Read an enrichment .ts file and extract the set of keyword field names
- * already present for a given entry ID.
+ * already present in the TOP-LEVEL keywords block for a given entry ID.
+ *
+ * Skips weapon-level keyword blocks by using brace-depth tracking.
  */
 function getExistingKeywordFields(
   fileContent: string,
@@ -368,22 +437,11 @@ function getExistingKeywordFields(
   const entryMatch = entryPattern.exec(fileContent);
   if (!entryMatch) return fields;
 
-  // Find the keywords block within this entry
-  const afterEntry = fileContent.slice(entryMatch.index);
-  const keywordsMatch = /keywords\s*:\s*\{/.exec(afterEntry);
-  if (!keywordsMatch) return fields;
+  const entryOpenBraceEnd = entryMatch.index + entryMatch[0].length;
+  const block = findTopLevelKeywordsBlock(fileContent, entryOpenBraceEnd);
+  if (!block) return fields;
 
-  // Extract the keywords block content (handle nested braces carefully)
-  const keywordsStart = keywordsMatch.index + keywordsMatch[0].length;
-  let depth = 1;
-  let pos = keywordsStart;
-  const src = afterEntry;
-  while (pos < src.length && depth > 0) {
-    if (src[pos] === '{') depth++;
-    else if (src[pos] === '}') depth--;
-    pos++;
-  }
-  const keywordsContent = src.slice(keywordsStart, pos - 1);
+  const keywordsContent = fileContent.slice(block.contentStart, block.contentEnd);
 
   // Extract field names (identifiers before colons)
   const fieldPattern = /(\w+)\s*:/g;
@@ -400,18 +458,32 @@ function computeMissingKeywords(
   fileContent: string,
   includeWeaponKeywords: boolean,
 ): MissingKeywords[] {
+  // Deduplicate entries by ID — processed data can have benign duplicates
+  // (same card scoped to different units). Merge their keyword lists.
+  const mergedEntries = new Map<string, string[]>();
+  for (const entry of entries) {
+    const existing = mergedEntries.get(entry.id);
+    if (existing) {
+      for (const kw of entry.keywordNames) {
+        if (!existing.includes(kw)) existing.push(kw);
+      }
+    } else {
+      mergedEntries.set(entry.id, [...entry.keywordNames]);
+    }
+  }
+
   const results: MissingKeywords[] = [];
 
-  for (const entry of entries) {
+  for (const [entryId, keywordNames] of mergedEntries) {
     // Only process entries that exist in the enrichment file
-    const escapedId = entry.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapedId = entryId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const entryPattern = new RegExp(`['"]${escapedId}['"]\\s*:`);
     if (!entryPattern.test(fileContent)) continue;
 
-    const existingFields = getExistingKeywordFields(fileContent, entry.id);
+    const existingFields = getExistingKeywordFields(fileContent, entryId);
     const missingFields: Record<string, string> = {};
 
-    for (const kwName of entry.keywordNames) {
+    for (const kwName of keywordNames) {
       const meta = keywordByName.get(kwName);
       // Skip weapon keywords on units (they go on weapon profiles)
       if (!includeWeaponKeywords && meta?.isWeaponKeyword) continue;
@@ -430,7 +502,7 @@ function computeMissingKeywords(
     }
 
     if (Object.keys(missingFields).length > 0) {
-      results.push({ entryId: entry.id, fields: missingFields });
+      results.push({ entryId, fields: missingFields });
     }
   }
 
@@ -455,53 +527,36 @@ function patchFileContent(
     const entryMatch = entryPattern.exec(result);
     if (!entryMatch) continue;
 
-    const afterEntry = result.slice(entryMatch.index);
+    const entryOpenBraceEnd = entryMatch.index + entryMatch[0].length;
 
-    // Find keywords block
-    const keywordsMatch = /keywords\s*:\s*\{/.exec(afterEntry);
-    if (!keywordsMatch) {
-      // Entry exists but has no keywords property — add one.
-      // Find the opening brace of the entry and add keywords after it.
-      const openBraceIdx = entryMatch.index + entryMatch[0].length;
-      const fieldLines = Object.entries(fields)
-        .map(([name, val]) => `      ${name}: ${val},`)
-        .join('\n');
-      const insertion = `\n    keywords: {\n${fieldLines}\n    },`;
-      result =
-        result.slice(0, openBraceIdx) +
-        insertion +
-        result.slice(openBraceIdx);
-      continue;
-    }
-
-    // Locate the keywords block in the result string
-    const kwAbsStart =
-      entryMatch.index + keywordsMatch.index + keywordsMatch[0].length;
-
-    // Find closing brace
-    let depth = 1;
-    let pos = kwAbsStart;
-    while (pos < result.length && depth > 0) {
-      if (result[pos] === '{') depth++;
-      else if (result[pos] === '}') depth--;
-      pos++;
-    }
-    const kwAbsEnd = pos - 1; // position of the closing }
-
-    const kwContent = result.slice(kwAbsStart, kwAbsEnd);
-
-    // Check if the keywords block is empty
-    const isEmpty = kwContent.trim() === '';
+    // Find the top-level keywords block (depth-aware, skips weapon keywords)
+    const block = findTopLevelKeywordsBlock(result, entryOpenBraceEnd);
 
     const fieldLines = Object.entries(fields)
       .map(([name, val]) => `      ${name}: ${val},`)
       .join('\n');
 
+    if (!block) {
+      // Entry exists but has no top-level keywords property — add one.
+      // Insert right after the opening brace of the entry.
+      const insertion = `\n    keywords: {\n${fieldLines}\n    },`;
+      result =
+        result.slice(0, entryOpenBraceEnd) +
+        insertion +
+        result.slice(entryOpenBraceEnd);
+      continue;
+    }
+
+    const kwContent = result.slice(block.contentStart, block.contentEnd);
+
+    // Check if the keywords block is empty
+    const isEmpty = kwContent.trim() === '';
+
     if (isEmpty) {
       // Empty keywords: {} → expand to multi-line
       const replacement = `\n${fieldLines}\n    `;
       result =
-        result.slice(0, kwAbsStart) + replacement + result.slice(kwAbsEnd);
+        result.slice(0, block.contentStart) + replacement + result.slice(block.contentEnd);
     } else {
       // Non-empty: append before closing brace
       // Find the last non-whitespace before the closing }
@@ -512,7 +567,7 @@ function patchFileContent(
 
       const insertion = `${comma}\n${fieldLines}`;
       // Insert at the end of existing content (before trailing whitespace + closing })
-      const insertPos = kwAbsStart + trimmedContent.length;
+      const insertPos = block.contentStart + trimmedContent.length;
       result =
         result.slice(0, insertPos) + insertion + result.slice(insertPos);
     }
@@ -536,11 +591,12 @@ let upgradesContent = fs.readFileSync(upgradesFilePath, 'utf-8');
 // Compute missing keywords for units (exclude weapon keywords — those go on weapon profiles)
 const unitMissing = computeMissingKeywords(processedUnits, unitsContent, false);
 
-// Compute missing keywords for upgrades (include weapon keywords — per enrichment convention)
+// Compute missing keywords for upgrades (exclude weapon keywords — those go on weapon profiles,
+// not the upgrade-level keywords block. Weapon keywords must be manually placed on weapons[].)
 const upgradeMissing = computeMissingKeywords(
   processedUpgrades,
   upgradesContent,
-  true,
+  false,
 );
 
 console.log(`\n=== Backfill Enrichment Keywords ===\n`);

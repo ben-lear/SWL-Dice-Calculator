@@ -4079,7 +4079,7 @@
     "name": "Grand Admiral Thrawn",
     "title": "Imperial High Command",
     "faction": "galactic-empire",
-    "cost": 0,
+    "cost": 110,
     "health": 5,
     "figures": 1,
     "defenseDieColor": "white",
@@ -4095,7 +4095,13 @@
       "One Step Ahead",
       "Tactical X"
     ],
-    "upgradeBar": []
+    "upgradeBar": [
+      "command",
+      "command",
+      "command",
+      "training",
+      "gear"
+    ]
   },
   {
     "apiId": "32589",
@@ -4103,7 +4109,7 @@
     "name": "Grand Moff Tarkin",
     "title": "Imperial High Command",
     "faction": "galactic-empire",
-    "cost": 0,
+    "cost": 95,
     "health": 6,
     "figures": 1,
     "defenseDieColor": "white",
@@ -4114,7 +4120,11 @@
       "➦Pulling the Strings",
       "Entourage"
     ],
-    "upgradeBar": []
+    "upgradeBar": [
+      "command",
+      "command",
+      "command"
+    ]
   },
   {
     "apiId": "32590",
@@ -4194,7 +4204,7 @@
     "name": "Luke Skywalker",
     "title": "Commander Skywalker",
     "faction": "rebel-alliance",
-    "cost": 0,
+    "cost": 110,
     "health": 6,
     "figures": 1,
     "defenseDieColor": "white",
@@ -4216,7 +4226,12 @@
       "Ram X",
       "Long Shot"
     ],
-    "upgradeBar": []
+    "upgradeBar": [
+      "force",
+      "command",
+      "training",
+      "comms"
+    ]
   },
   {
     "apiId": "32594",
@@ -4224,7 +4239,7 @@
     "name": "Han Solo",
     "title": "Reluctant Hero",
     "faction": "rebel-alliance",
-    "cost": 0,
+    "cost": 90,
     "health": 6,
     "figures": 1,
     "defenseDieColor": "white",
@@ -4243,7 +4258,12 @@
       "Pierce X",
       "Versatile"
     ],
-    "upgradeBar": []
+    "upgradeBar": [
+      "command",
+      "training",
+      "comms",
+      "gear"
+    ]
   },
   {
     "apiId": "32595",
@@ -4251,7 +4271,7 @@
     "name": "TSMEU-6 Wheel Bikes",
     "title": null,
     "faction": "separatist-alliance",
-    "cost": 0,
+    "cost": 90,
     "health": 3,
     "figures": 0,
     "defenseDieColor": "white",
@@ -4264,6 +4284,63 @@
       "Climbing Vehicle",
       "Mobile"
     ],
-    "upgradeBar": []
+    "upgradeBar": [
+      "pilot",
+      "training",
+      "comms",
+      "gear"
+    ]
+  },
+  {
+    "apiId": "33575",
+    "id": "mace-windu-jedi-council",
+    "name": "Mace Windu",
+    "title": "Jedi Council",
+    "faction": "republic",
+    "cost": 165,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "affiliation": null,
+    "keywordNames": [
+      "Jump",
+      "Charge",
+      "Compel",
+      "Deflect",
+      "Immune: Pierce",
+      "Master of the Force"
+    ],
+    "upgradeBar": [
+      "force",
+      "force",
+      "force",
+      "command",
+      "training",
+      "training"
+    ]
+  },
+  {
+    "apiId": "33593",
+    "id": "general-tagge-imperial-high-command",
+    "name": "General Tagge",
+    "title": "Imperial High Command",
+    "faction": "galactic-empire",
+    "cost": 85,
+    "health": 6,
+    "figures": 1,
+    "defenseDieColor": "white",
+    "rank": "commander",
+    "unitType": "trooper",
+    "affiliation": null,
+    "keywordNames": [],
+    "upgradeBar": [
+      "command",
+      "command",
+      "command",
+      "training",
+      "gear"
+    ]
   }
 ]

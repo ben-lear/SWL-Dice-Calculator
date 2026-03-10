@@ -62,14 +62,26 @@ src/data/
 
 ## Enrichment System
 
+### ⚠️ Enrichment Files Are Never Overwritten
+
+**`src/data/enrichment/units.ts` and `src/data/enrichment/upgrades.ts` contain manually curated data that CANNOT be regenerated from the API.** This includes weapon profiles (dice pools, keywords), defense stats, surge charts, and keyword magnitude values.
+
+**Rules for enrichment file changes:**
+- **ADDITIVE ONLY** — only add NEW entries for units/upgrades that appear in processed data but have no enrichment entry yet.
+- **NEVER overwrite, reformat, or regenerate** existing entries. Human-curated values (weapons, surge charts, defense stats, keyword magnitudes) would be destroyed.
+- **NEVER replace typed keyword fields** (e.g., `cacheSurgeX`, `cacheDodgeX`, `cacheAimX`) with generic API keyword names (e.g., `cache`). The API uses a single keyword name but the engine models these as distinct typed fields requiring human curation.
+- **Scripts must not write enrichment files** unless they can guarantee they only insert new entries without touching existing content.
+- `generateEnrichmentSkeleton.ts` is for **initial scaffolding only** — it refuses to run if enrichment files already exist (use `--force` to override, which is destructive).
+- `backfillEnrichmentKeywords.ts` is the safe additive script — it detects missing keyword fields on existing entries and appends them without modifying existing values.
+
 ### The `'<need human>'` Sentinel
 
 Enrichment files use the string `'<need human>'` as a placeholder for values that require manual curation. When you see this, it means the automated pipeline couldn't derive the value — a human needs to look up the game rules and fill it in.
 
 ### Adding a New Unit Enrichment
 
-1. Run `npx tsx scripts/generateEnrichmentSkeleton.ts` to find units missing enrichment.
-2. Add an entry in `src/data/enrichment/units.ts` keyed by the unit's **slugified ID** (matching `processed/units.json`).
+1. Check `processed/units.json` for the unit's **slugified ID**.
+2. Add a new entry in `src/data/enrichment/units.ts` keyed by that ID (do NOT modify existing entries).
 3. Fill in:
    - `defenseStats` — die color, surge chart
    - `weapons` — array of weapon profiles with dice and keywords
@@ -79,7 +91,7 @@ Enrichment files use the string `'<need human>'` as a placeholder for values tha
 
 ### Adding a New Upgrade Enrichment
 
-Same flow but in `src/data/enrichment/upgrades.ts`. Upgrade enrichment primarily provides:
+Same flow but in `src/data/enrichment/upgrades.ts`. Do NOT modify existing entries. Upgrade enrichment primarily provides:
 - `keywords` — combat-relevant keywords granted by the upgrade
 - `weapons` — weapon profiles added by the upgrade (e.g., heavy weapons)
 
@@ -126,8 +138,12 @@ There's also a `DISPLAY_KEYWORD_FIELD_MAP` for non-combat keywords used only for
 |--------|---------|-------------|
 | `fetchApiData.ts` | Download from TableTopAdmiral API | When API data updates |
 | `processApiData.ts` | Transform raw → processed | After fetching new data |
-| `generateEnrichmentSkeleton.ts` | Find units missing enrichment | When adding new units |
-| `backfillEnrichmentKeywords.ts` | Pre-populate keyword data from API | After processing new data |
+| `generateEnrichmentSkeleton.ts` | **Initial scaffolding only** — generates empty enrichment files. Refuses to run if files exist (safety guard). | Only for brand-new projects |
+| `backfillEnrichmentKeywords.ts` | Additively append missing keyword fields to existing enrichment entries | After processing new data |
+
+> **Safe data refresh workflow:** `fetchApiData.ts` → `processApiData.ts` → `backfillEnrichmentKeywords.ts` (with `--dry-run` first to preview)
+> 
+> **Never run `generateEnrichmentSkeleton.ts`** on a project with existing enrichment data — it will destroy all curated content.
 
 ### Validation Scripts
 | Script | Purpose |

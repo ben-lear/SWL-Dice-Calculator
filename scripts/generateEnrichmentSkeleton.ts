@@ -202,7 +202,7 @@ const DISPLAY_UNIT_KEYWORD_MAP: Record<string, string> = {
   'Attack Run': 'attackRun',
   Authoritative: 'authoritative',
   Bounty: 'bounty',
-  Cache: 'cache',
+  // Cache is skipped — API keyword maps to cacheSurgeX/cacheDodgeX/cacheAimX which require human curation
   '\u27a6Calculate Odds': 'calculateOdds',
   Compel: 'compel',
   Detachment: 'detachment',
@@ -525,8 +525,32 @@ ${upgradeEntries.join(',\n\n')}
 };
 `;
 
-fs.writeFileSync('src/data/enrichment/units.ts', unitsOutput);
-fs.writeFileSync('src/data/enrichment/upgrades.ts', upgradesOutput);
+// ============================================================================
+// Safety Guard: never overwrite existing enrichment files
+// ============================================================================
+// Enrichment files contain manually curated weapon profiles, surge charts,
+// defense stats, and keyword values that CANNOT be regenerated from the API.
+// This script is for INITIAL scaffolding only. To update enrichment with new
+// entries, use backfillEnrichmentKeywords.ts instead.
+const forceOverwrite = process.argv.includes('--force');
+const unitsPath = 'src/data/enrichment/units.ts';
+const upgradesPath = 'src/data/enrichment/upgrades.ts';
+
+if (!forceOverwrite && (fs.existsSync(unitsPath) || fs.existsSync(upgradesPath))) {
+  console.error(
+    '\n❌ Enrichment files already exist. This script would DESTROY manually curated data.\n' +
+    '   Enrichment files contain human-curated weapon profiles, surge charts, and keyword\n' +
+    '   values that cannot be regenerated from the API.\n\n' +
+    '   To add NEW entries for newly discovered units/upgrades, use:\n' +
+    '     npx tsx scripts/backfillEnrichmentKeywords.ts\n\n' +
+    '   To force overwrite (DESTRUCTIVE — you will lose all curated data), use:\n' +
+    '     npx tsx scripts/generateEnrichmentSkeleton.ts --force\n',
+  );
+  process.exit(1);
+}
+
+fs.writeFileSync(unitsPath, unitsOutput);
+fs.writeFileSync(upgradesPath, upgradesOutput);
 
 console.log(`Generated units (raw): ${processedUnits.length}`);
 console.log(`Generated units (unique keys): ${mergedUnitKeywords.size}`);

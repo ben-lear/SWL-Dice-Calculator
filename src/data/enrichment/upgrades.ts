@@ -11,11 +11,15 @@ import type { UpgradeEnrichment } from './types';
 
 export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'armament-a-180': {
-    keywords: {},
+    keywords: {
+      reconfigure: true,
+    },
   },
 
   'armament-a-300': {
-    keywords: {},
+    keywords: {
+      reconfigure: true,
+    },
   },
 
   'armament-a280-rifle-config': {
@@ -296,6 +300,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'armament-j-19-bo-rifle': {
     keywords: {
       immunePierce: true,
+      reconfigure: true,
+      charge: true,
     },
   },
 
@@ -498,7 +504,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'armament-the-darksaber-sabine-wren': {
     keywords: {
       dauntless: true,
-      immuneMeleePierce: true
+      immuneMeleePierce: true,
+      immunePierce: true,
     },
     weapons: [
       {
@@ -536,7 +543,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'armament-the-darksaber-moff-gideon': {
     keywords: {
       demoralizeX: 1,
-      immuneMeleePierce: true
+      immuneMeleePierce: true,
+      immunePierce: true,
     },
     weapons: [
       {
@@ -636,7 +644,6 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'comms-command-control-array': {
-    keywords: {},
   },
 
   'comms-comms-jammer': {
@@ -840,7 +847,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
       aid: 'rebel trooper unit',
       indomitable: true,
       spur: true,
-      tacticalX: 1
+      tacticalX: 1,
+      dauntless: true,
     },
   },
 
@@ -853,11 +861,15 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'doctrine-jedi-consular': {
-    keywords: {},
+    keywords: {
+      steady: true,
+    },
   },
 
   'doctrine-jedi-guardian': {
-    keywords: {},
+    keywords: {
+      charge: true,
+    },
   },
 
   'doctrine-jedi-negotiator': {
@@ -882,6 +894,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       quickThinking: true,
       exemplar: true,
+      reinforcements: true,
     },
   },
 
@@ -958,7 +971,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'force-hope': {
-    keywords: {},
+    keywords: {
+      inspireX: 1,
+    },
   },
 
   'force-jedi-mind-trick': {
@@ -988,7 +1003,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'gear-ascension-cables': {
-    keywords: {},
+    keywords: {
+      scale: true,
+    },
   },
 
   'gear-boba-s-flame-projector': {
@@ -1510,6 +1527,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'hardpoint-nose-mounted-ion-blaster': {
+    keywords: {
+      cycle: true,
+    },
     weapons: [
       {
         name: 'Ion Blaster',
@@ -1589,6 +1609,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   // Infantry Support Platform variant (Gunslinger, Critical 2, cost 25)
   'hardpoint-twin-blaster-cannons-infantry-support-platform': {
+    keywords: {
+      gunslinger: true,
+    },
     weapons: [
       {
         name: 'Blaster Cannons',
@@ -1618,6 +1641,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'hardpoint-twin-missile-pods': {
+    keywords: {
+      gunslinger: true,
+    },
     weapons: [
       {
         name: 'Missile Pods',
@@ -1854,6 +1880,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'heavy-weapon-del-meeko': {
     keywords: {
       repairXCapacity1: 2,
+      restore: true,
     },
     weapons: [
       {
@@ -2106,6 +2133,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-electrostaff-guard': {
+    keywords: {
+      immunePierce: true,
+    },
   },
 
   'heavy-weapon-flametrooper': {
@@ -2369,7 +2399,10 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'heavy-weapon-pao': {
-    keywords: {},
+    keywords: {
+      inspireX: 1,
+      leader: true,
+    },
   },
 
   'heavy-weapon-proton-charge-saboteur': {
@@ -2855,6 +2888,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       noncombatant: true,
       treatXCapacity2: 1,
+      noncombatantKeyword: true,
+      restore: true,
     },
   },
 
@@ -2869,6 +2904,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       noncombatant: true,
       repairXCapacity2: 1,
+      noncombatantKeyword: true,
     },
   },
 
@@ -2876,6 +2912,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       noncombatant: true,
       repairXCapacity2: 1,
+      noncombatantKeyword: true,
+      restore: true,
     },
   },
 
@@ -2912,7 +2950,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'personnel-black-sun-vigo': {
     keywords: {
       leader: true,
-      independentSurgeX: 1
+      independentSurgeX: 1,
     },
   },
 
@@ -2925,6 +2963,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'personnel-clone-engineer': {
     keywords: {
       repairXCapacity1: 1,
+      restore: true,
     },
   },
 
@@ -2960,6 +2999,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       noncombatant: true,
       treatXCapacity2: 1,
+      noncombatantKeyword: true,
+      restore: true,
     },
   },
 
@@ -2996,6 +3037,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       noncombatant: true,
       treatXCapacity2: 1,
+      noncombatantKeyword: true,
+      restore: true,
     },
   },
 
@@ -3035,6 +3078,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       noncombatant: true,
       repairXCapacity2: 1,
+      noncombatantKeyword: true,
+      restore: true,
     },
   },
 
@@ -3055,6 +3100,8 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
     keywords: {
       noncombatant: true,
       repairXCapacity2: 1,
+      noncombatantKeyword: true,
+      restore: true,
     },
   },
 
@@ -3286,7 +3333,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-plo-koon': {
-    keywords: {},
+    keywords: {
+      agileX: 2,
+    },
   },
 
   'pilot-raiding-party-leader': {
@@ -3318,7 +3367,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'pilot-wedge-antilles': {
-    keywords: {},
+    keywords: {
+      fieldCommander: true,
+    },
   },
 
   'counterpart-c-3po': {
@@ -3437,7 +3488,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'protocol-programmed-loyalty': {
-    keywords: {},
+    keywords: {
+      retinue: 'Commander',
+    },
   },
 
   'protocol-sliced-comms': {
@@ -3519,6 +3572,7 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   'squad-leader-clone-medic': {
     keywords: {
       treatXCapacity1: 1,
+      restore: true,
     },
   },
 
@@ -3566,7 +3620,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'training-call-to-arms': {
-    keywords: {},
+    keywords: {
+      charge: true,
+    },
   },
 
   'training-duck-and-cover': {
@@ -3600,7 +3656,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'training-inquisitorius-training': {
-    keywords: {},
+    keywords: {
+      demoralizeX: 1,
+    },
   },
 
   'training-insatiable-curiosity': {
@@ -3667,7 +3725,9 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
   },
 
   'training-overwatch': {
-    keywords: {},
+    keywords: {
+      sentinel: true,
+    },
   },
 
   'training-protector': {

@@ -295,6 +295,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       reposition: true,
       spur: true,
       unhindered: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -409,6 +410,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       inconspicuous: true,
       infiltrate: true,
       restore: true,
+      repair: '<need human>',
     },
     weapons: [
       {
@@ -431,6 +433,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentDodgeX: 1,
       nimble: true,
       equip: 'Doctrine',
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -2252,6 +2255,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       reliableX: 3,
       myMoodIsBasedOnProfit: true,
       disengage: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -2315,6 +2319,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       inconspicuous: true,
       infiltrate: true,
       restore: true,
+      repair: '<need human>',
     },
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
@@ -2419,6 +2424,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentAimX: 1,
       charge: true,
       selfPreservation: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3079,6 +3085,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentDodgeX: 1,
       jumpX: 2,
       relentless: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3708,6 +3715,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentAimX: 1,
       aid: 'Black Sun',
       dauntless: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3774,6 +3782,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       inspireX: 2,
       nimble: true,
       aid: 'Ewok Trooper',
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3795,6 +3804,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       dangerSenseX: 2,
       independentDodgeX: 1,
       aid: 'Pyke Syndicate',
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3823,6 +3833,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       nimble: true,
       unhindered: true,
       relentless: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3858,6 +3869,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentAimOrDodgeX: 1,
       jumpX: 2,
       bounty: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3898,6 +3910,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentStandbyX: 1,
       jumpX: 1,
       sentinel: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3928,6 +3941,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       enrageX: 3,
       regenerateX: 3,
       scale: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3966,6 +3980,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       jumpX: 1,
       bounty: true,
       steady: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -3996,6 +4011,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentAimX: 1,
       independentDodgeX: 1,
       bounty: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -4165,6 +4181,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentAimX: 1,
       dauntless: true,
       selfPreservation: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -4210,6 +4227,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       dangerSenseX: 2,
       independentDodgeX: 1,
       selfPreservation: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -4236,6 +4254,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentSurgeX: 1,
       targetX: 1,
       unhindered: true,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -4265,6 +4284,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentAimX: 1,
       defendX: 1,
       jumpX: 2,
+      independent: '<need human>',
     },
     weapons: [
       {
@@ -4293,6 +4313,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
       independentAimOrDodgeX: 1,
       reinforcements: true,
       speederX: 1,
+      independent: '<need human>',
     },
     weapons: [
       {

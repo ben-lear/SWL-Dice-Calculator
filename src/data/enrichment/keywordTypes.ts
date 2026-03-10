@@ -239,6 +239,7 @@ export interface DisplayUnitKeywords {
   wheelMode?: boolean;
   immuneEnemyEffects?: boolean;
   immuneRange1Weapons?: boolean;
+  transport?: boolean;
 
   // Non-combat action keywords (display/tagging only — Repair and Treat happen outside attack sequence)
   noncombatant?: boolean;
@@ -313,7 +314,6 @@ export interface DisplayUnitKeywords {
   repair?: string;
   treat?: string;
   hover?: string;
-  transport?: string;
 }
 
 // ============================================================================

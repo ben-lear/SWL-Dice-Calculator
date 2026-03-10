@@ -68,7 +68,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "69",
+    "apiId": "59",
     "id": "armament-a-180",
     "name": "A-180",
     "cost": 0,
@@ -93,7 +93,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "59",
+    "apiId": "69",
     "id": "armament-a-180",
     "name": "A-180",
     "cost": 0,
@@ -174,7 +174,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "73",
+    "apiId": "60",
     "id": "armament-a-300",
     "name": "A-300",
     "cost": 0,
@@ -197,7 +197,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "60",
+    "apiId": "73",
     "id": "armament-a-300",
     "name": "A-300",
     "cost": 0,
@@ -1711,26 +1711,6 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "20282",
-    "id": "gear-combat-armor",
-    "name": "Combat Armor",
-    "cost": 15,
-    "upgradeSlot": "gear",
-    "factionRestrictions": [],
-    "rankRestrictions": [],
-    "unitTypeRestrictions": [],
-    "unitRestrictions": [
-      31669,
-      31670
-    ],
-    "affiliationRestrictions": [],
-    "alignmentRestriction": null,
-    "unitsDisallowedOn": [],
-    "keywordNames": [],
-    "addsUpgradeSlot": [],
-    "requiredUpgradeSlot": null
-  },
-  {
     "apiId": "20272",
     "id": "gear-combat-armor",
     "name": "Combat Armor",
@@ -1742,6 +1722,26 @@
     "unitRestrictions": [
       31667,
       31668
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
+    "apiId": "20282",
+    "id": "gear-combat-armor",
+    "name": "Combat Armor",
+    "cost": 15,
+    "upgradeSlot": "gear",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669,
+      31670
     ],
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
@@ -1856,7 +1856,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "15989",
+    "apiId": "15009",
     "id": "heavy-weapon-crosshair",
     "name": "Crosshair",
     "cost": 0,
@@ -1881,7 +1881,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "15009",
+    "apiId": "15989",
     "id": "heavy-weapon-crosshair",
     "name": "Crosshair",
     "cost": 0,
@@ -2375,47 +2375,6 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "20319",
-    "id": "training-dug-in",
-    "name": "Dug In",
-    "cost": 6,
-    "upgradeSlot": "training",
-    "factionRestrictions": [],
-    "rankRestrictions": [],
-    "unitTypeRestrictions": [],
-    "unitRestrictions": [
-      31669,
-      31670
-    ],
-    "affiliationRestrictions": [],
-    "alignmentRestriction": null,
-    "unitsDisallowedOn": [],
-    "keywordNames": [],
-    "addsUpgradeSlot": [],
-    "requiredUpgradeSlot": null
-  },
-  {
-    "apiId": "19897",
-    "id": "training-dug-in",
-    "name": "Dug In",
-    "cost": 6,
-    "upgradeSlot": "training",
-    "factionRestrictions": [],
-    "rankRestrictions": [],
-    "unitTypeRestrictions": [],
-    "unitRestrictions": [
-      36,
-      39,
-      32248
-    ],
-    "affiliationRestrictions": [],
-    "alignmentRestriction": null,
-    "unitsDisallowedOn": [],
-    "keywordNames": [],
-    "addsUpgradeSlot": [],
-    "requiredUpgradeSlot": null
-  },
-  {
     "apiId": "20697",
     "id": "training-dug-in",
     "name": "Dug In",
@@ -2455,6 +2414,47 @@
     "requiredUpgradeSlot": null
   },
   {
+    "apiId": "19897",
+    "id": "training-dug-in",
+    "name": "Dug In",
+    "cost": 6,
+    "upgradeSlot": "training",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      36,
+      39,
+      32248
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
+    "apiId": "20319",
+    "id": "training-dug-in",
+    "name": "Dug In",
+    "cost": 6,
+    "upgradeSlot": "training",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31669,
+      31670
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
     "apiId": "24",
     "id": "hardpoint-dw-3-concussion-grenade-launcher",
     "name": "DW-3 Concussion Grenade Launcher",
@@ -2479,7 +2479,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "86",
+    "apiId": "85",
     "id": "armament-e-11d",
     "name": "E-11D",
     "cost": 0,
@@ -2504,7 +2504,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "85",
+    "apiId": "86",
     "id": "armament-e-11d",
     "name": "E-11D",
     "cost": 0,
@@ -4080,6 +4080,25 @@
     "requiredUpgradeSlot": null
   },
   {
+    "apiId": "21489",
+    "id": "pilot-ig-100-magnaguard-pilot",
+    "name": "IG-100 MagnaGuard Pilot",
+    "cost": 10,
+    "upgradeSlot": "pilot",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      32595
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
     "apiId": "30",
     "id": "grenades-impact-grenades",
     "name": "Impact Grenades",
@@ -4163,26 +4182,6 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "19896",
-    "id": "training-imperial-march",
-    "name": "Imperial March",
-    "cost": 6,
-    "upgradeSlot": "training",
-    "factionRestrictions": [],
-    "rankRestrictions": [],
-    "unitTypeRestrictions": [],
-    "unitRestrictions": [
-      30,
-      17
-    ],
-    "affiliationRestrictions": [],
-    "alignmentRestriction": null,
-    "unitsDisallowedOn": [],
-    "keywordNames": [],
-    "addsUpgradeSlot": [],
-    "requiredUpgradeSlot": null
-  },
-  {
     "apiId": "19828",
     "id": "training-imperial-march",
     "name": "Imperial March",
@@ -4196,6 +4195,26 @@
     ],
     "unitTypeRestrictions": [],
     "unitRestrictions": [],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
+    "apiId": "19896",
+    "id": "training-imperial-march",
+    "name": "Imperial March",
+    "cost": 6,
+    "upgradeSlot": "training",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      30,
+      17
+    ],
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
     "unitsDisallowedOn": [],
@@ -4343,7 +4362,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "186",
+    "apiId": "187",
     "id": "armament-j-19-bo-rifle",
     "name": "J-19 Bo-rifle",
     "cost": 5,
@@ -4370,7 +4389,7 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "187",
+    "apiId": "186",
     "id": "armament-j-19-bo-rifle",
     "name": "J-19 Bo-rifle",
     "cost": 5,
@@ -4421,29 +4440,6 @@
     "requiredUpgradeSlot": null
   },
   {
-    "apiId": "20431",
-    "id": "doctrine-jedi-guardian",
-    "name": "Jedi Guardian",
-    "cost": 10,
-    "upgradeSlot": "doctrine",
-    "factionRestrictions": [],
-    "rankRestrictions": [],
-    "unitTypeRestrictions": [],
-    "unitRestrictions": [
-      31842,
-      31843
-    ],
-    "affiliationRestrictions": [],
-    "alignmentRestriction": null,
-    "unitsDisallowedOn": [],
-    "keywordNames": [
-      "Charge",
-      "Lethal X"
-    ],
-    "addsUpgradeSlot": [],
-    "requiredUpgradeSlot": null
-  },
-  {
     "apiId": "18478",
     "id": "squad-leader-jedi-guardian",
     "name": "Jedi Guardian",
@@ -4462,6 +4458,29 @@
       "Charge",
       "Leader",
       "Sidearm: Melee/Ranged"
+    ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
+    "apiId": "20431",
+    "id": "doctrine-jedi-guardian",
+    "name": "Jedi Guardian",
+    "cost": 10,
+    "upgradeSlot": "doctrine",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      31842,
+      31843
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [
+      "Charge",
+      "Lethal X"
     ],
     "addsUpgradeSlot": [],
     "requiredUpgradeSlot": null
@@ -4830,6 +4849,25 @@
     "keywordNames": [
       "Target"
     ],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
+    "apiId": "21594",
+    "id": "training-logistical-prowess",
+    "name": "Logistical Prowess",
+    "cost": 0,
+    "upgradeSlot": "training",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      33593
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [],
     "addsUpgradeSlot": [],
     "requiredUpgradeSlot": null
   },
@@ -6650,6 +6688,25 @@
     "requiredUpgradeSlot": null
   },
   {
+    "apiId": "21595",
+    "id": "training-security-detail",
+    "name": "Security Detail",
+    "cost": 5,
+    "upgradeSlot": "training",
+    "factionRestrictions": [],
+    "rankRestrictions": [],
+    "unitTypeRestrictions": [],
+    "unitRestrictions": [
+      30
+    ],
+    "affiliationRestrictions": [],
+    "alignmentRestriction": null,
+    "unitsDisallowedOn": [],
+    "keywordNames": [],
+    "addsUpgradeSlot": [],
+    "requiredUpgradeSlot": null
+  },
+  {
     "apiId": "20450",
     "id": "doctrine-seek-and-destroy",
     "name": "Seek and Destroy",
@@ -7784,7 +7841,8 @@
     "rankRestrictions": [],
     "unitTypeRestrictions": [],
     "unitRestrictions": [
-      32232
+      32232,
+      32595
     ],
     "affiliationRestrictions": [],
     "alignmentRestriction": null,
