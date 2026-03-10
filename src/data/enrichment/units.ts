@@ -1862,6 +1862,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    healthOverride: 8,
     keywords: {
       armorX: 5,
       arsenalX: 2,
@@ -4423,5 +4424,70 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
         }
       }
     ],
-  }
+  },
+
+  // TODO: enrich — Mace Windu
+  'mace-windu-jedi-council': {
+    healthOverride: 6,
+    courage: 3,
+    attackSurgeChart: AttackSurgeChart.ToCrit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    keywords: {
+      jumpX: 1,
+      charge: true,
+      compel: true,
+      deflect: true,
+      immunePierce: true,
+      masterOfTheForceX: 1,
+    },
+    weapons: [
+      {
+        name: 'Windu\'s Lightsaber',
+        weaponType: AttackType.Melee,
+        redDice: 3,
+        whiteDice: 1,
+        blackDice: 2,
+        keywords: {
+          impactX: 2,
+          pierceX: 2,
+        }
+      },
+      {
+        name: 'Force Crush',
+        weaponType: AttackType.Melee,
+        blackDice: 4,
+        keywords: {
+          blast: true,
+          immobilizeX: 1,
+          suppressive: true
+        }
+      }
+    ],
+  },
+
+  // TODO: enrich — General Tagge
+  'general-tagge-imperial-high-command': {
+    healthOverride: 6,
+    courage: 2,
+    attackSurgeChart: AttackSurgeChart.ToHit,
+    defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    keywords: {
+      calculateOdds: true,
+      equip: 'Logistical Prowess',
+      exemplar: true,
+      inspireX: 1
+    },
+    weapons: [
+      {
+        name: 'Unarmed',
+        weaponType: AttackType.Melee,
+        blackDice: 1
+      },
+      {
+        name: 'Tagge\'s Blaster',
+        weaponType: AttackType.Ranged,
+        blackDice: 3,
+      }
+    ],
+  },
 };

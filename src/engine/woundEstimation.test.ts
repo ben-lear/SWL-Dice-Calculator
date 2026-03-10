@@ -305,8 +305,8 @@ describe('woundEstimation', () => {
         expect(withBlank).toBeGreaterThanOrEqual(withoutBlank);
       });
 
-      it('Ram X does not apply in Ranged attacks', () => {
-        // Same setup, but as Ranged — Ram should not activate
+      it('Ram X applies in Ranged attacks (no attack-type restriction)', () => {
+        // Same setup, but as Ranged — Ram should activate just like Melee
         const configRanged = makeConfig(
           {},
           { armorX: 1, dieColor: DefenseDieColor.White },
@@ -315,11 +315,12 @@ describe('woundEstimation', () => {
         const poolWithRam = createMinimalPoolKeywords({ ramX: 2 });
         const poolNoRam = createMinimalPoolKeywords();
 
+        // Ram converts blanks→crits (bypassing Armor) — wounds should be higher with Ram
         const ramRanged = estimateExpectedWounds(1, 0, configRanged, poolWithRam, 0, 2);
         const noRamRanged = estimateExpectedWounds(1, 0, configRanged, poolNoRam, 0, 2);
 
-        // No Ram effect in Ranged — blanks passed but not converted
-        expect(ramRanged).toBe(noRamRanged);
+        // Ram converts 2 blanks→crits; crits bypass Armor. So wounds should increase.
+        expect(ramRanged).toBeGreaterThan(noRamRanged);
       });
 
       it('Weak Point X adds to effective Impact', () => {

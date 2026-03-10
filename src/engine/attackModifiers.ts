@@ -44,16 +44,14 @@ export function modifyAttackDice(
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // 1. Ram X — Convert up to X results (any face) to crits (Melee/Overrun only)
+  // 1. Ram X — Convert up to X results (any face) to crits (any attack type)
   // ═══════════════════════════════════════════════════════════════════════════
-  // Per rulebook: "While this unit is performing a melee or overrun attack, 
-  // change X attack die results to crit results."
+  // Per rulebook: "While a unit makes an attack with an Attack Pool that has
+  // the Ram X keyword, during the Modify Attack Dice step, it may change X
+  // results to crit results." No attack-type restriction in the rulebook.
   // Priority: blanks first (free value), then hits (upgrade)
   // Crits are already crits — skipped.
-  const isMeleeOrOverrun = config.attackType === AttackType.Melee || 
-                           config.attackType === AttackType.Overrun;
-  
-  if (poolKeywords.ramX > 0 && isMeleeOrOverrun) {
+  if (poolKeywords.ramX > 0) {
     let ramRemaining = poolKeywords.ramX;
 
     // Convert blanks → crits

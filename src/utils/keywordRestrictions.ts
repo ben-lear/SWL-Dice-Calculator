@@ -58,7 +58,7 @@ export const WEAPON_KEYWORD_RESTRICTIONS: Record<string, KeywordRestriction> = {
   lethalX: 'all',
   pierceX: 'all',
   impactX: 'all',
-  ramX: 'melee-overrun',     // Ram X only applies during Melee/Overrun attacks (per rulebook)
+  ramX: 'all',               // Ram X applies to any attack type (no restriction per rulebook)
   blast: 'all',
   suppressive: 'all',
   spray: 'all',

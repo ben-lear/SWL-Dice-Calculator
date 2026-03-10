@@ -179,7 +179,7 @@ describe('computeEffectiveWounds', () => {
     expect(ewWithSurge).toBeGreaterThan(ewNoSurge);
   });
 
-  it('accounts for armor keyword', () => {
+  it('does not factor in keywords like armor', () => {
     const noArmor = makeMinimalUnit({ health: 3, keywords: {} });
     const withArmor = makeMinimalUnit({
       health: 3,
@@ -189,7 +189,8 @@ describe('computeEffectiveWounds', () => {
     const ewNoArmor = computeEffectiveWounds(noArmor, []);
     const ewArmor = computeEffectiveWounds(withArmor, []);
 
-    expect(ewArmor).toBeGreaterThan(ewNoArmor);
+    // Keywords are not factored into effective wounds — pure die-based calculation
+    expect(ewArmor).toBe(ewNoArmor);
   });
 
   it('includes combat upgrade minis in effective wounds', () => {

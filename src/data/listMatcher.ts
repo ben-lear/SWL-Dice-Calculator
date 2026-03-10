@@ -155,7 +155,32 @@ export interface UpgradeMatchResult {
 }
 
 /**
+ * When multiple upgrade candidates match, prefer the one restricted to the
+ * current unit (via unitRestrictions) to disambiguate variants like
+ * "The Darksaber" for Sabine vs Moff Gideon.
+ */
+function preferUnitRestricted(
+  candidates: ResolvedUpgrade[],
+  resolvedUnit: ResolvedUnit | null,
+): ResolvedUpgrade {
+  if (resolvedUnit && candidates.length > 1) {
+    const unitScoped = candidates.find(
+      (u) =>
+        u.unitRestrictions.length > 0 &&
+        u.unitRestrictions.includes(resolvedUnit.apiId),
+    );
+    if (unitScoped) return unitScoped;
+  }
+  return candidates[0];
+}
+
+/**
  * Match an upgrade name from a list builder to a ResolvedUpgrade.
+ *
+ * Strategy:
+ * 1. Exact normalized name match (prefer unit-restricted if ambiguous)
+ * 2. Slug match: slugify(input) contained in upgrade.id
+ * 3. Substring/fuzzy (prefer unit-restricted, then longest match)
  *
  * @param upgradeName - The raw upgrade name from the imported JSON
  * @param resolvedUnit - The matched unit this upgrade belongs to (for context filtering)
@@ -171,51 +196,88 @@ export function matchUpgradeByName(
   }
 
   const normalizedInput = normalize(upgradeName);
+  const slugInput = slugify(upgradeName);
   const allUpgrades = getAllResolvedUpgrades();
 
-  // Try matching against all upgrades by name
-  const nameMatch = allUpgrades.find(
+  // 1. Exact normalized name match — collect all candidates and disambiguate
+  const exactNameMatches = allUpgrades.filter(
     (u) => normalize(u.name) === normalizedInput,
   );
 
-  if (!nameMatch) {
-    // Try substring/fuzzy
-    const fuzzyMatch = allUpgrades.find((u) => {
-      const upgNorm = normalize(u.name);
-      return (
-        upgNorm.includes(normalizedInput) ||
-        normalizedInput.includes(upgNorm)
-      );
-    });
-
-    if (fuzzyMatch) {
-      const slotIndex = findAvailableSlot(
-        fuzzyMatch,
-        resolvedUnit,
-        consumedSlots,
-      );
-      return {
-        match: fuzzyMatch,
-        slotIndex,
-        confidence: 'fuzzy',
-        warnings: [],
-      };
-    }
-
+  if (exactNameMatches.length > 0) {
+    const best = preferUnitRestricted(exactNameMatches, resolvedUnit);
+    const slotIndex = findAvailableSlot(best, resolvedUnit, consumedSlots);
     return {
-      match: null,
-      slotIndex: -1,
-      confidence: 'none',
-      warnings: [`Upgrade "${upgradeName}" could not be matched`],
+      match: best,
+      slotIndex,
+      confidence: 'exact',
+      warnings: [],
     };
   }
 
-  const slotIndex = findAvailableSlot(nameMatch, resolvedUnit, consumedSlots);
+  // 2. Slug match: slugify(input) matches or is contained in upgrade.id
+  const slugMatch = allUpgrades.find((u) => u.id === slugInput);
+  if (slugMatch) {
+    const slotIndex = findAvailableSlot(slugMatch, resolvedUnit, consumedSlots);
+    return {
+      match: slugMatch,
+      slotIndex,
+      confidence: 'exact',
+      warnings: [],
+    };
+  }
+
+  // 3. Substring/fuzzy — collect all candidates, prefer unit-restricted, then longest
+  const fuzzyMatches = allUpgrades
+    .map((u) => {
+      const upgNorm = normalize(u.name);
+      const matches =
+        upgNorm.includes(normalizedInput) ||
+        normalizedInput.includes(upgNorm);
+      return matches ? { upgrade: u, len: upgNorm.length } : null;
+    })
+    .filter(Boolean) as { upgrade: ResolvedUpgrade; len: number }[];
+
+  if (fuzzyMatches.length > 0) {
+    // First try unit-restricted disambiguation
+    if (resolvedUnit && fuzzyMatches.length > 1) {
+      const unitScoped = fuzzyMatches.find(
+        (m) =>
+          m.upgrade.unitRestrictions.length > 0 &&
+          m.upgrade.unitRestrictions.includes(resolvedUnit.apiId),
+      );
+      if (unitScoped) {
+        const slotIndex = findAvailableSlot(
+          unitScoped.upgrade,
+          resolvedUnit,
+          consumedSlots,
+        );
+        return {
+          match: unitScoped.upgrade,
+          slotIndex,
+          confidence: 'fuzzy',
+          warnings: [],
+        };
+      }
+    }
+
+    // Fall back to longest (most specific) match
+    fuzzyMatches.sort((a, b) => b.len - a.len);
+    const best = fuzzyMatches[0].upgrade;
+    const slotIndex = findAvailableSlot(best, resolvedUnit, consumedSlots);
+    return {
+      match: best,
+      slotIndex,
+      confidence: 'fuzzy',
+      warnings: [],
+    };
+  }
+
   return {
-    match: nameMatch,
-    slotIndex,
-    confidence: 'exact',
-    warnings: [],
+    match: null,
+    slotIndex: -1,
+    confidence: 'none',
+    warnings: [`Upgrade "${upgradeName}" could not be matched`],
   };
 }
 

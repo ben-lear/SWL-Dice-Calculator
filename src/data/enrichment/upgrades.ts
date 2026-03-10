@@ -3768,5 +3768,25 @@ export const UPGRADE_ENRICHMENTS: Record<string, UpgradeEnrichment> = {
 
   'training-up-close-and-personal': {
     keywords: {},
-  }
+  },
+
+  'pilot-ig-100-magnaguard-pilot': {
+    keywords: {
+      immuneMeleePierce: true
+    },
+  },
+
+  'training-logistical-prowess': {
+    keywords: {
+      cacheAimX: 1,
+      cacheDodgeX: 1,
+    },
+  },
+
+  'training-security-detail': {
+    keywords: {
+      guardianX: 2,
+      retinue: 'Commander',
+    },
+  },
 };

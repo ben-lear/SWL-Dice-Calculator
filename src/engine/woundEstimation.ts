@@ -100,7 +100,6 @@ export function estimateExpectedWounds(
   let effectiveHits = hits;
   let effectiveCrits = crits;
 
-  const isMeleeOrOverrun = attackType === AttackType.Melee || attackType === AttackType.Overrun;
   const isMelee = attackType === AttackType.Melee;
   const isRanged = attackType === AttackType.Ranged;
 
@@ -194,10 +193,11 @@ export function estimateExpectedWounds(
     effectiveShieldedX -= shieldsFlipped;
   }
 
-  // ── 6.1: Ram X (converts blanks→crits first, then hits→crits; melee/overrun only) ──
-  // Per rulebook: convert up to X blank results to crits first (free value — blanks
-  // would contribute nothing otherwise), then convert up to X remaining hits to crits.
-  if (poolKeywords.ramX > 0 && isMeleeOrOverrun) {
+  // ── 6.1: Ram X (converts blanks→crits first, then hits→crits; any attack type) ──
+  // Per rulebook: "While a unit makes an attack with an Attack Pool that has
+  // the Ram X keyword... it may change X results to crit results."
+  // No attack-type restriction in rulebook.
+  if (poolKeywords.ramX > 0) {
     let ramRemaining = poolKeywords.ramX;
 
     // Convert blanks → crits first (net addition; blanks are not counted in hits/crits)

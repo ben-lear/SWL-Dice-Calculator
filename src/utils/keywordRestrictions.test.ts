@@ -116,8 +116,8 @@ describe('WEAPON_KEYWORD_RESTRICTIONS', () => {
     expect(WEAPON_KEYWORD_RESTRICTIONS['blast']).toBe('all');
   });
 
-  it('ramX is melee-overrun (only applies during Melee/Overrun attacks)', () => {
-    expect(WEAPON_KEYWORD_RESTRICTIONS['ramX']).toBe('melee-overrun');
+  it('ramX is unrestricted (applies to any attack type per rulebook)', () => {
+    expect(WEAPON_KEYWORD_RESTRICTIONS['ramX']).toBe('all');
   });
 });
 

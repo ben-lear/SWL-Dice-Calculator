@@ -77,7 +77,6 @@ export function estimateExpectedAttackSuccesses(
     return { expectedHits: 0, expectedCrits: 0, expectedSuccesses: 0 };
   }
 
-  const isMeleeOrOverrun = attackType === AttackType.Melee || attackType === AttackType.Overrun;
   const isMelee = attackType === AttackType.Melee;
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -196,12 +195,12 @@ export function estimateExpectedAttackSuccesses(
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // Step 6: Ram X (Step 6.1 — melee/overrun only)
+  // Step 6: Ram X (any attack type)
   // Mirrors woundEstimation.ts: blank→crit first (adds successes),
   // then hit→crit (no net success change).
   // ═══════════════════════════════════════════════════════════════════════════
 
-  if (poolKeywords.ramX > 0 && isMeleeOrOverrun) {
+  if (poolKeywords.ramX > 0) {
     let ramRemaining = poolKeywords.ramX;
 
     // Convert blanks → crits first (net addition to successes)

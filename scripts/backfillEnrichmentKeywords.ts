@@ -1,8 +1,11 @@
 /**
- * Backfill enrichment files with missing API keywords.
+ * Backfill enrichment files with missing API keywords and missing entries.
  *
- * This script additively patches existing enrichment entries with keywords
- * detected from the API that are not yet present in the enrichment data.
+ * This script:
+ * 1. Adds stub entries for units/upgrades present in processed data but missing
+ *    from the enrichment files.
+ * 2. Additively patches existing entries with keywords detected from the API
+ *    that are not yet present in the enrichment data.
  *
  * Rules:
  * - ADDITIVE ONLY — never overwrite existing values, never remove fields
@@ -453,6 +456,136 @@ function getExistingKeywordFields(
   return fields;
 }
 
+// ============================================================================
+// Detect Missing Entries
+// ============================================================================
+
+interface MissingEntry {
+  id: string;
+  name: string;
+  keywordNames: string[];
+}
+
+/**
+ * Find processed entries that have no corresponding entry in the enrichment file.
+ * Deduplicates by ID (same card scoped to multiple units).
+ */
+function computeMissingEntries(
+  entries: { id: string; name: string; keywordNames: string[] }[],
+  fileContent: string,
+): MissingEntry[] {
+  const seen = new Set<string>();
+  const results: MissingEntry[] = [];
+
+  for (const entry of entries) {
+    if (seen.has(entry.id)) continue;
+    seen.add(entry.id);
+
+    const escapedId = entry.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const entryPattern = new RegExp(`['"]${escapedId}['"]\\s*:`);
+    if (!entryPattern.test(fileContent)) {
+      results.push({ id: entry.id, name: entry.name, keywordNames: entry.keywordNames });
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Generate a stub enrichment entry for a unit.
+ * Includes auto-detectable keywords from the API.
+ */
+function generateUnitStub(entry: MissingEntry): string {
+  const keywordLines: string[] = [];
+
+  for (const kwName of entry.keywordNames) {
+    const meta = keywordByName.get(kwName);
+    // Skip weapon keywords on units (they go on weapon profiles)
+    if (meta?.isWeaponKeyword) continue;
+
+    const fieldValue = ALL_KEYWORD_MAP[kwName];
+    if (!fieldValue) continue;
+
+    for (const fieldName of toFieldNames(fieldValue)) {
+      if (WEAPON_FIELDS.has(fieldName)) continue;
+      keywordLines.push(`      ${fieldName}: ${defaultValue(fieldName)},`);
+    }
+  }
+
+  const keywordsBlock = keywordLines.length > 0
+    ? `    keywords: {\n${keywordLines.join('\n')}\n    },`
+    : `    keywords: {},`;
+
+  return [
+    `  // TODO: enrich — ${entry.name}`,
+    `  '${entry.id}': {`,
+    `    courage: '<need human>',`,
+    `    // attackSurgeChart: '<need human>',`,
+    `    // defenseSurgeChart: '<need human>',`,
+    keywordsBlock,
+    `    weapons: [],`,
+    `  },`,
+  ].join('\n');
+}
+
+/**
+ * Generate a stub enrichment entry for an upgrade.
+ * Includes auto-detectable keywords from the API.
+ */
+function generateUpgradeStub(entry: MissingEntry): string {
+  const keywordLines: string[] = [];
+
+  for (const kwName of entry.keywordNames) {
+    const fieldValue = ALL_KEYWORD_MAP[kwName];
+    if (!fieldValue) continue;
+
+    for (const fieldName of toFieldNames(fieldValue)) {
+      // Skip weapon fields on upgrade keywords block
+      if (WEAPON_FIELDS.has(fieldName)) continue;
+      keywordLines.push(`      ${fieldName}: ${defaultValue(fieldName)},`);
+    }
+  }
+
+  const keywordsBlock = keywordLines.length > 0
+    ? `    keywords: {\n${keywordLines.join('\n')}\n    },`
+    : `    keywords: {},`;
+
+  return [
+    `  // TODO: enrich — ${entry.name}`,
+    `  '${entry.id}': {`,
+    keywordsBlock,
+    `  },`,
+  ].join('\n');
+}
+
+/**
+ * Insert stub entries into the enrichment file content.
+ * Appends new entries before the final closing `};`.
+ */
+function insertMissingEntries(
+  content: string,
+  stubs: string[],
+): string {
+  if (stubs.length === 0) return content;
+
+  // Find the last `};` which closes the record
+  const closingIndex = content.lastIndexOf('};');
+  if (closingIndex === -1) {
+    console.error('Could not find closing }; in enrichment file');
+    return content;
+  }
+
+  // Check if we need a comma after the last existing entry
+  // Look backward from closingIndex for content
+  const beforeClosing = content.slice(0, closingIndex).trimEnd();
+  const needsComma = beforeClosing.length > 0 && !beforeClosing.endsWith(',') && !beforeClosing.endsWith('{');
+  const comma = needsComma ? ',' : '';
+
+  const insertion = '\n\n' + stubs.join('\n\n') + '\n';
+
+  return beforeClosing + comma + insertion + content.slice(closingIndex);
+}
+
 function computeMissingKeywords(
   entries: { id: string; keywordNames: string[] }[],
   fileContent: string,
@@ -588,6 +721,51 @@ const upgradesFilePath = 'src/data/enrichment/upgrades.ts';
 let unitsContent = fs.readFileSync(unitsFilePath, 'utf-8');
 let upgradesContent = fs.readFileSync(upgradesFilePath, 'utf-8');
 
+// ── Step 1: Detect and insert entirely missing entries ──
+
+const missingUnitEntries = computeMissingEntries(processedUnits, unitsContent);
+const missingUpgradeEntries = computeMissingEntries(processedUpgrades, upgradesContent);
+
+console.log(`\n=== Backfill Enrichment ===\n`);
+console.log(`Missing unit entries: ${missingUnitEntries.length}`);
+console.log(`Missing upgrade entries: ${missingUpgradeEntries.length}`);
+
+if (missingUnitEntries.length > 0) {
+  console.log(`\n--- New Unit Entries ---`);
+  for (const e of missingUnitEntries) {
+    console.log(`  + ${e.id} (${e.name})`);
+  }
+}
+
+if (missingUpgradeEntries.length > 0) {
+  console.log(`\n--- New Upgrade Entries ---`);
+  for (const e of missingUpgradeEntries) {
+    console.log(`  + ${e.id} (${e.name})`);
+  }
+}
+
+if (!dryRun) {
+  if (missingUnitEntries.length > 0) {
+    const unitStubs = missingUnitEntries.map(e => generateUnitStub(e));
+    unitsContent = insertMissingEntries(unitsContent, unitStubs);
+    fs.writeFileSync(unitsFilePath, unitsContent, 'utf-8');
+    console.log(`\n✓ Inserted ${missingUnitEntries.length} new unit entries into ${unitsFilePath}`);
+  }
+
+  if (missingUpgradeEntries.length > 0) {
+    const upgradeStubs = missingUpgradeEntries.map(e => generateUpgradeStub(e));
+    upgradesContent = insertMissingEntries(upgradesContent, upgradeStubs);
+    fs.writeFileSync(upgradesFilePath, upgradesContent, 'utf-8');
+    console.log(`✓ Inserted ${missingUpgradeEntries.length} new upgrade entries into ${upgradesFilePath}`);
+  }
+
+  // Re-read files after inserting new entries so keyword backfill sees them
+  unitsContent = fs.readFileSync(unitsFilePath, 'utf-8');
+  upgradesContent = fs.readFileSync(upgradesFilePath, 'utf-8');
+}
+
+// ── Step 2: Backfill missing keywords on existing entries ──
+
 // Compute missing keywords for units (exclude weapon keywords — those go on weapon profiles)
 const unitMissing = computeMissingKeywords(processedUnits, unitsContent, false);
 
@@ -599,8 +777,7 @@ const upgradeMissing = computeMissingKeywords(
   false,
 );
 
-console.log(`\n=== Backfill Enrichment Keywords ===\n`);
-console.log(`Units with missing keywords: ${unitMissing.length}`);
+console.log(`\nUnits with missing keywords: ${unitMissing.length}`);
 console.log(`Upgrades with missing keywords: ${upgradeMissing.length}`);
 
 if (unitMissing.length > 0) {

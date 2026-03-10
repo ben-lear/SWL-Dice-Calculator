@@ -74,46 +74,7 @@ export function computeEffectiveWounds(
   const figures = unit.figures + extraMinis;
   const totalHealth = unit.health * figures;
 
-  // Keyword-based bonus health
-  let bonusHealth = 0;
-  const keywords = unit.keywords;
-
-  // Merge upgrade keywords
-  const mergedKeywords: Record<string, number | boolean | string> = { ...keywords };
-  for (const upg of upgrades) {
-    for (const [key, value] of Object.entries(upg.keywords)) {
-      const existing = mergedKeywords[key];
-      if (typeof value === 'number' && typeof existing === 'number') {
-        mergedKeywords[key] = existing + value;
-      } else if (typeof value === 'boolean' && value) {
-        mergedKeywords[key] = true;
-      } else if (mergedKeywords[key] === undefined) {
-        mergedKeywords[key] = value;
-      }
-    }
-  }
-
-  const shieldedX = typeof mergedKeywords['shieldedX'] === 'number' ? mergedKeywords['shieldedX'] : 0;
-  if (shieldedX > 0) {
-    bonusHealth += shieldedX * figures;
-  }
-
-  const armorX = typeof mergedKeywords['armorX'] === 'number' ? mergedKeywords['armorX'] : 0;
-  if (armorX > 0) {
-    bonusHealth += totalHealth * 0.2;
-  }
-
-  if (mergedKeywords['impervious'] === true) {
-    bonusHealth += totalHealth * 0.1;
-  }
-
-  const dangerSenseX = typeof mergedKeywords['dangerSenseX'] === 'number' ? mergedKeywords['dangerSenseX'] : 0;
-  if (dangerSenseX > 0) {
-    const bonusDice = Math.min(dangerSenseX, 1);
-    bonusHealth += bonusDice * baseSave * totalHealth;
-  }
-
-  return (totalHealth + bonusHealth) / (1 - baseSave);
+  return totalHealth / (1 - baseSave);
 }
 
 // ============================================================================

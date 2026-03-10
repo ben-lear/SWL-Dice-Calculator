@@ -119,6 +119,40 @@ describe('matchUpgradeByName', () => {
     expect(typeof result.slotIndex).toBe('number');
   });
 
+  it('disambiguates unit-restricted upgrades via unit context (Darksaber variants)', () => {
+    // "The Darksaber (Gideon)" from TTA should match Moff Gideon's version,
+    // not the Sabine Wren version — both have processed name "The Darksaber"
+    const gideonUnit = matchUnitByName(
+      'Moff Gideon Long Live the Empire',
+      Faction.GalacticEmpire,
+    );
+    expect(gideonUnit.match).not.toBeNull();
+
+    const result = matchUpgradeByName(
+      'The Darksaber (Gideon)',
+      gideonUnit.match,
+      new Set(),
+    );
+    expect(result.match).not.toBeNull();
+    expect(result.match?.id).toBe('armament-the-darksaber-moff-gideon');
+  });
+
+  it('disambiguates The Darksaber for Sabine via unit context', () => {
+    const sabineUnit = matchUnitByName(
+      'Sabine Wren Explosive Artist',
+      Faction.RebelAlliance,
+    );
+    expect(sabineUnit.match).not.toBeNull();
+
+    const result = matchUpgradeByName(
+      'The Darksaber',
+      sabineUnit.match,
+      new Set(),
+    );
+    expect(result.match).not.toBeNull();
+    expect(result.match?.id).toBe('armament-the-darksaber-sabine-wren');
+  });
+
   it('respects consumed slots for sequential assignment', () => {
     const unitResult = matchUnitByName('Luke Skywalker', Faction.RebelAlliance);
     expect(unitResult.match).not.toBeNull();

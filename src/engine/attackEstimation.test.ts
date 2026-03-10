@@ -419,7 +419,7 @@ describe('estimateExpectedAttackSuccesses', () => {
     expect(result.expectedSuccesses).toBeGreaterThan(baseline.expectedSuccesses);
   });
 
-  it('ramX has no effect at Ranged', () => {
+  it('ramX increases successes at Ranged (no attack-type restriction)', () => {
     const result = estimateExpectedAttackSuccesses(
       0, 4, 0,
       createMinimalAttacker(),
@@ -433,7 +433,8 @@ describe('estimateExpectedAttackSuccesses', () => {
       AttackType.Ranged,
     );
 
-    expect(result.expectedSuccesses).toBeCloseTo(baseline.expectedSuccesses, 2);
+    // Ram blank→crit adds to total successes regardless of attack type
+    expect(result.expectedSuccesses).toBeGreaterThan(baseline.expectedSuccesses);
   });
 
   it('ramX hit→crit conversion does not change total successes', () => {

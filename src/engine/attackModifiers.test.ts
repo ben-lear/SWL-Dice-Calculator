@@ -35,7 +35,7 @@ describe('attackModifiers', () => {
     expect(totalWounds).toBeGreaterThan(0);
   });
 
-  it('handles Ram correctly (Melee only)', () => {
+  it('handles Ram correctly (all attack types)', () => {
     const configMelee: AttackConfig = {
       attacker: createAttackerWithWeapon(
         { redDice: 2, keywords: { ramX: 2 } },
@@ -58,19 +58,45 @@ describe('attackModifiers', () => {
       attackType: AttackType.Ranged,
     };
 
+    const configMeleeNoRam: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        { redDice: 2 },
+        { surgeChart: AttackSurgeChart.ToHit }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+      }),
+      attackType: AttackType.Melee,
+    };
+
+    const configRangedNoRam: AttackConfig = {
+      attacker: createAttackerWithWeapon(
+        { redDice: 2 },
+        { surgeChart: AttackSurgeChart.ToHit }
+      ),
+      defender: createMinimalDefender({
+        dieColor: DefenseDieColor.White,
+      }),
+      attackType: AttackType.Ranged,
+    };
+
     // Run multiple times to reduce statistical variance
     const iterations = 200;
     let woundsMelee = 0;
     let woundsRanged = 0;
+    let woundsMeleeNoRam = 0;
+    let woundsRangedNoRam = 0;
 
     for (let i = 0; i < iterations; i++) {
       woundsMelee += executeAttackSequence(configMelee).totalWounds;
       woundsRanged += executeAttackSequence(configRanged).totalWounds;
+      woundsMeleeNoRam += executeAttackSequence(configMeleeNoRam).totalWounds;
+      woundsRangedNoRam += executeAttackSequence(configRangedNoRam).totalWounds;
     }
 
-    // Ram should add hits in Melee but not Ranged
-    // With enough iterations, melee should consistently do more damage
-    expect(woundsMelee).toBeGreaterThan(woundsRanged);
+    // Ram should add wounds in both Melee and Ranged
+    expect(woundsMelee).toBeGreaterThan(woundsMeleeNoRam);
+    expect(woundsRanged).toBeGreaterThan(woundsRangedNoRam);
   });
 
   it('Ram X converts blanks to crits before spending budget on hits (Melee)', () => {
