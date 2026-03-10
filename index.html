@@ -8,6 +8,26 @@
     <link rel="icon" type="image/png" href="/justrollcrits_noburst_compressed.png" />
     <link rel="apple-touch-icon" href="/justrollcrits_noburst_compressed.png" />
     <title>Just Roll Crits</title>
+    <!-- One-time cache cleanup: unregister old service workers and clear stale caches.
+         Runs once per device, tracked via localStorage flag. Safe to remove after ~2 months. -->
+         <!-- TODO: remove this script after 2026-05 -->
+    <script>
+      (function() {
+        var FLAG = 'jrc_cache_cleared_v1';
+        if (localStorage.getItem(FLAG)) return;
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            regs.forEach(function(r) { r.unregister(); });
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(keys) {
+            keys.forEach(function(k) { caches.delete(k); });
+          });
+        }
+        localStorage.setItem(FLAG, '1');
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
