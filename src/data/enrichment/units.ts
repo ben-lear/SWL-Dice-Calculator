@@ -455,6 +455,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       impervious: true,
       jumpX: 2,
@@ -579,6 +580,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 3,
     keywords: {
       impervious: true,
@@ -599,6 +601,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 1,
     keywords: {
       impervious: true,
@@ -917,6 +920,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     healthOverride: 8,
     keywords: {
       deflect: true,
@@ -968,6 +972,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       sharpshooterX: 1,
       inspireX: 1,
@@ -1107,6 +1112,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       sharpshooterX: 1,
       tacticalX: 1,
@@ -1137,6 +1143,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       immuneMeleePierce: true,
       observeX: 2,
@@ -1165,6 +1172,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       impervious: true,
       sharpshooterX: 2,
@@ -1241,6 +1249,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     healthOverride: 7,
     keywords: {
       deflect: true,
@@ -1533,6 +1542,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     keywords: {
       preciseX: 2,
@@ -1587,6 +1597,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       marksman: true,
       infiltrate: true,
@@ -1611,6 +1622,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       marksman: true,
       equip: 'Gideon Hask, Del Meeko',
@@ -1719,6 +1731,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       armorX: 1,
       relentless: true,
@@ -1749,6 +1762,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     weapons: [
       {
         name: 'Unarmed',
@@ -1934,6 +1948,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       armorX: 5,
       arsenalX: 2,
@@ -1995,6 +2010,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       djemSoMastery: true,
       immunePierce: true,
@@ -2215,6 +2231,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 4,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       immunePierce: true,
       deflect: true,
@@ -2451,6 +2468,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     keywords: {
       impervious: true,
@@ -2499,6 +2517,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     keywords: {
       lowProfile: true,
@@ -2613,6 +2632,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       coverX: 1,
       arsenalX: 2,
@@ -2801,6 +2821,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       outmaneuver: true,
       armorX: 5,
@@ -2827,6 +2848,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -2863,6 +2885,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       jediHunter: true,
       block: true,
@@ -2903,6 +2926,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       armorX: 1,
       immuneMeleePierce: true,
@@ -3137,6 +3161,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -3251,6 +3276,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
     miniatureCount: 3,
+    defenseDieColor: DefenseDieColor.Red,
     weapons: [
       {
         name: 'Wrist Rockets',
@@ -3301,6 +3327,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       impervious: true,
       sharpshooterX: 1,
@@ -3329,6 +3356,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       impervious: true,
       sharpshooterX: 1,
@@ -3381,6 +3409,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 2,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 3,
     keywords: {
       immuneMeleePierce: true,
@@ -3573,6 +3602,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       armorX: 5,
       arsenalX: 2,
@@ -3865,6 +3895,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       impervious: true,
       sharpshooterX: 2,
@@ -3905,6 +3936,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.ToCrit,
     defenseSurgeChart: DefenseSurgeChart.ToBlock,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       impervious: true,
       sharpshooterX: 1,
@@ -4123,6 +4155,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       deflect: true,
       immunePierce: true,
@@ -4178,6 +4211,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 1,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     miniatureCount: 4,
     keywords: {
       preciseX: 1,
