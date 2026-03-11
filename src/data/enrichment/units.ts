@@ -2152,6 +2152,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: 3,
     attackSurgeChart: AttackSurgeChart.None,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       immunePierce: true,
       soresuMastery: true,
@@ -2578,6 +2579,7 @@ export const UNIT_ENRICHMENTS: Record<string, UnitEnrichment> = {
     courage: Infinity,
     attackSurgeChart: AttackSurgeChart.ToHit,
     defenseSurgeChart: DefenseSurgeChart.None,
+    defenseDieColor: DefenseDieColor.Red,
     keywords: {
       armorX: 2,
       scoutX: 1,
